@@ -1,0 +1,30 @@
+{
+  "plugins": ["stylelint-color-format"],
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-recommended-vue",
+    "stylelint-config-recess-order"
+  ],
+  "rules": {
+    "selector-pseudo-element-no-unknown": [
+      true,
+      {
+        "ignorePseudoElements": ["v-deep"]
+      }
+    ],
+    "at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": ["apply", "variants", "responsive", "screen"]
+      }
+    ],
+    "no-empty-source": null,
+    "property-no-unknown": true,
+    "color-format/format": {
+      "format": "rgb"
+    },
+    "media-feature-range-notation": null,
+    "selector-class-pattern": null,
+    "value-keyword-case": null
+  }
+}
