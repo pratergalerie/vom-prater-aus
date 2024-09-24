@@ -1,13 +1,13 @@
-<script setup></script>
+<script setup lang="ts"></script>
 
 <template>
-  <div>
+  <main>
     <BaseButton
       label="test"
       type="primary"
       variant="label"
     />
-  </div>
+  </main>
 </template>
 
 <style scoped></style>

@@ -11,4 +11,16 @@
   --white: rgb(255 255 255 / 100%);
   --black: rgb(0 0 0 / 100%);
   --grey: rgb(100 100 100 / 100%);
+
+  /* --- Typography colors --- */
+  --text-color: var(--black);
+
+  /* *------------------------------ Fonts --------------------------------* */
+
+  --font-family: 'Roboto', sans-serif;
+  --font-size: 16px;
+
+  /* *------------------------------ Spacing --------------------------------* */
+
+  --padding: 1rem;
 }

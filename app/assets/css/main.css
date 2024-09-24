@@ -11,7 +11,6 @@ body {
   scrollbar-width: none;
 }
 
-.noise {
-  /* ... */
-  background: color(srgb red green blue), url('../svgs/noise.svg');
+main {
+  padding: var(--padding);
 }
