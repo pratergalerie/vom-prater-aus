@@ -17,7 +17,9 @@
 
   /* *------------------------------ Fonts --------------------------------* */
 
-  --font-family: 'Roboto', sans-serif;
+  --text-font: 'Crimson Pro', sans-serif;
+  --title-font: 'Helvetica', sans-serif;
+  --button-font: 'Sometype Mono', monospace;
   --font-size: 16px;
 
   /* *------------------------------ Spacing --------------------------------* */
