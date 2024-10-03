@@ -56,4 +56,5 @@ export default withNuxt(...pluginVueA11y.configs['flat/recommended'], {
     'vuejs-accessibility/media-has-caption': 'off',
     'vuejs-accessibility/aria-props': 'error',
   },
+  ignores: ['node_modules/'],
 })
