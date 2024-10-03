@@ -1,4 +1,12 @@
 {
-  "cSpell.words": ["nuxtjs", "pinia", "Sometype", "svgs", "vueuse"],
+  "cSpell.words": [
+    "iconify",
+    "nuxtjs",
+    "persistedstate",
+    "pinia",
+    "Sometype",
+    "svgs",
+    "vueuse"
+  ],
   "typescript.tsdk": "node_modules/typescript/lib"
 }
