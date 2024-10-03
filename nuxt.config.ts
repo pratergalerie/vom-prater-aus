@@ -16,7 +16,15 @@ export default defineNuxtConfig({
   css: ['@/assets/css/main.css'],
   modules: [
     '@pinia/nuxt',
-    '@nuxtjs/google-fonts',
+    [
+      '@nuxtjs/google-fonts',
+      {
+        families: {
+          'Sometype Mono': true,
+          'Crimson Pro': true,
+        },
+      },
+    ],
     '@nuxt/eslint',
     'pinia-plugin-persistedstate',
     '@vueuse/nuxt',
@@ -24,5 +32,6 @@ export default defineNuxtConfig({
     '@nuxt/test-utils',
     '@nuxt/image',
     '@nuxtjs/device',
+    '@nuxt/icon',
   ],
 })
