@@ -7,9 +7,10 @@
       type="secondary"
       variant="label"
     />
-    <IconButton
-      icon="home"
-      type="primary"
+    <BaseButton
+      icon="account"
+      type="secondary"
+      variant="icon"
     />
   </div>
 </template>
