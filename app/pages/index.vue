@@ -2,6 +2,7 @@
 
 <template>
   <div>
+    <Logo />
     <BaseButton
       label="Test label"
       type="secondary"
