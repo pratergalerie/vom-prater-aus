@@ -20,6 +20,7 @@
     "vue-router": "latest"
   },
   "devDependencies": {
+    "@iconify-json/mdi": "^1.2.0",
     "@nuxt/eslint": "^0.5.7",
     "@nuxt/icon": "^1.5.2",
     "@nuxt/image": "^1.8.0",
