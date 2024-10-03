@@ -1,13 +1,17 @@
 <script setup lang="ts"></script>
 
 <template>
-  <main>
+  <div>
     <BaseButton
-      label="test"
-      type="primary"
+      label="Test label"
+      type="secondary"
       variant="label"
     />
-  </main>
+    <IconButton
+      icon="home"
+      type="primary"
+    />
+  </div>
 </template>
 
 <style scoped></style>
