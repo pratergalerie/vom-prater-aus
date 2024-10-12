@@ -2,8 +2,56 @@
 
 html,
 body {
-  font-family: var(--font-family);
-  font-size: var(--font-size);
+  font-family: var(--text-font);
+  font-size: var(--base-font-size);
   line-height: 1.5;
   color: var(--text-color);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-family: var(--heading-font);
+  color: var(--heading-color);
+}
+
+p {
+  margin: 0;
+  font-family: var(--text-font);
+  font-size: var(--font-size);
+  color: var(--text-color);
+}
+
+a {
+  font-family: var(--links-font);
+  color: var(--links-color);
+  text-decoration: underline;
+}
+
+a:hover,
+a.highlight {
+  width: fit-content;
+  margin: 0;
+  text-shadow: 0 0 0.5rem var(--light-beige);
+  background: linear-gradient(
+      104deg,
+      rgb(90 171 130 / 0%) 0.9%,
+      rgb(90 171 130 / 125%) 2.4%,
+      rgb(90 171 130 / 50%) 5.8%,
+      rgb(90 171 130 / 10%) 93%,
+      rgb(90 171 130 / 70%) 96%,
+      rgb(90 171 130 / 0%) 98%
+    ),
+    linear-gradient(
+      183deg,
+      rgb(90 171 130 / 0%) 0%,
+      rgb(90 171 130 / 30%) 7.9%,
+      rgb(90 171 130 / 0%) 15%
+    );
+  border-radius: 5.5px;
+  box-decoration-break: clone;
 }

@@ -18,9 +18,11 @@
   /* *------------------------------ Fonts --------------------------------* */
 
   --text-font: 'Crimson Pro', sans-serif;
-  --title-font: 'Helvetica', sans-serif;
+  --heading-font: 'Helvetica', sans-serif;
   --button-font: 'Sometype Mono', monospace;
-  --font-size: 16px;
+  --links-font: 'Sometype Mono', monospace;
+  --base-font-size: 16px;
+  --heading-color: var(--black);
 
   /* *------------------------------ Spacing --------------------------------* */
 
