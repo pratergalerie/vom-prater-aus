@@ -14,12 +14,13 @@
   "dependencies": {
     "@nuxtjs/google-fonts": "^3.2.0",
     "@pinia/nuxt": "^0.5.4",
-    "nuxt": "^3.13.2",
+    "nuxt": "^3.14.159",
     "pinia": "^2.2.2",
     "vue": "latest",
     "vue-router": "latest"
   },
   "devDependencies": {
+    "@awmottaz/prettier-plugin-void-html": "^1.6.1",
     "@iconify-json/mdi": "^1.2.0",
     "@nuxt/eslint": "^0.5.7",
     "@nuxt/icon": "^1.5.2",
