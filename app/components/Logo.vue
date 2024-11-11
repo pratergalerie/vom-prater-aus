@@ -1,32 +1,40 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="vpa-logo">
+  <button class="logo">
     <NuxtImg
       :src="'logos/vom-prater-aus.svg'"
       alt="Vom Prater Aus logo"
-      class="logo"
+      class="logo-image"
     />
     <div class="logotype">
       <span>Vom</span>
       <span>Prater</span>
       <span>Aus</span>
     </div>
-  </div>
+  </button>
 </template>
 
 <style scoped>
-  .vpa-logo {
+  .logo {
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 150px;
-    height: auto;
+    max-width: var(--header-height);
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    background: none;
+
+    /* Add drop shadow */
+    filter: drop-shadow(0 1rem 1rem rgb(244 238 217 / 100%));
+    border: 0;
   }
 
-  .logo {
+  .logo-image {
     width: 100%;
-    max-width: 100px;
+    max-width: 60%;
     height: auto;
   }
 
@@ -37,7 +45,7 @@
     justify-content: center;
     width: 56%;
     font-family: Helvetica, sans-serif;
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 700;
     line-height: 1.1rem;
 

@@ -56,7 +56,7 @@
 
     // return variedPath
 
-    return originalPath
+    return originalPath || ''
   }
 
   // Generate a random SVG path for the button

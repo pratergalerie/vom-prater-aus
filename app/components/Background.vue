@@ -1,12 +1,23 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="vignette" />
-  <div class="overlay" />
-  <div class="texture" />
+  <div class="background">
+    <div class="vignette" />
+    <div class="overlay" />
+    <div class="texture" />
+  </div>
 </template>
 
 <style scoped>
+  .background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+  }
+
   .texture {
     position: fixed;
     top: 0;
