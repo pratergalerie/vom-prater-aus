@@ -55,6 +55,7 @@ export default withNuxt(...pluginVueA11y.configs['flat/recommended'], {
     'vue/no-deprecated-v-on-native-modifier': 'off',
     'vuejs-accessibility/media-has-caption': 'off',
     'vuejs-accessibility/aria-props': 'error',
+    'vue/html-self-closing': 'off',
   },
   ignores: ['node_modules/'],
 })
