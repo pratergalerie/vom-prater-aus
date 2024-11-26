@@ -13,16 +13,15 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: -1;
+    z-index: -999;
+    display: grid;
     width: 100%;
     height: 100%;
   }
 
   .texture {
-    position: fixed;
-    top: 0;
-    left: 0;
     z-index: -3;
+    grid-area: 1 / 1;
     width: 100%;
     height: 100%;
     background: url('@/assets/svgs/noise.svg');
@@ -30,10 +29,8 @@
   }
 
   .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
     z-index: -2;
+    grid-area: 1 / 1;
     width: 100%;
     height: 100%;
     background: var(--light-beige);
@@ -41,10 +38,8 @@
   }
 
   .vignette {
-    position: fixed;
-    top: 0;
-    left: 0;
     z-index: -1;
+    grid-area: 1 / 1;
     width: 100%;
     height: 100%;
     box-shadow:
