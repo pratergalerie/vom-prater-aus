@@ -1,25 +1,37 @@
 {
-  "pages": {
-    "index": {},
-    "prater": {},
-    "stories": {},
-    "project": {},
-    "create": {},
-    "privacy": {},
-    "error": {}
-  },
   "components": {
+    "cookieConsentBanner": {},
+    "footer": {},
     "menu": {
       "logo": {},
       "nav": {
+        "about": "About the project",
+        "create": "Create a story",
         "index": "Main page",
         "prater": "About Berliner Prater",
-        "stories": "Discover stories",
-        "create": "Create a story",
-        "about": "About the project"
+        "stories": "Discover stories"
       }
-    },
-    "footer": {},
-    "cookieConsentBanner": {}
+    }
+  },
+  "pages": {
+    "home": {
+      "sections": {
+        "stories": {
+          "title": "Personal stories from Berliner Prater",
+          "text": "Discover stories from visitors about their personal experiences in one of Berlin's most popular and culturally rich places.",
+          "button": "See all stories"
+        },
+        "prater": {
+          "title": "A place to remember",
+          "text": "Opened as a garden restaurant at the gates of the city in 1837, the Berlin Prater has always attracted those seeking relaxation and who are keen to experience into the countryside. In the Prater Hall and on the open-air stage, the summer theater, rope dancers were performed in a convivial round: interior acrobatics and boxing matches, but it was also a place of political agitation and discussion. Even with the growing and changing city, the Prater remained central for the neighborhood, where they eaten, drank, discussed, danced and celebrated. Today the Volksbühne and Prater Gallery are located here as important places of the free art scene.",
+          "button": "Discover Berliner Prater"
+        },
+        "create": {
+          "title": "Tell your Prater story",
+          "text": "Here you can share your unforgettable moments and photos in Prater until 2007 with other visitors.",
+          "button": "Create a story"
+        }
+      }
+    }
   }
 }
