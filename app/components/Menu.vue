@@ -1,71 +1,75 @@
-<script setup>
+<script setup lang="ts">
   const illustrationImage = '/imgs/prater/prater2.jpeg'
   const navTopShape = '/svgs/menu/shapes/background/viridian/1.svg'
   const figureTopShape = '/svgs/menu/shapes/background/mustard/1.svg'
 
-  const maskedImgRef = ref(null)
+  const {
+    t,
+    locale: currentLocale,
+    locales,
+    setLocale,
+  } = useI18n({ useScope: 'global' })
 
-  onMounted(() => {
-    createMask()
-  })
+  const router = useRouter()
 
-  function createMask() {
-    // Generate an image element with the figureTopShape SVG as the top shape
-    // and a solid color rectangle as the bottom shape. The rectangle should be
-    // 30vh and the figureTopShape should be positioned at the top.
+  const order = ['index', 'prater', 'stories', 'create', 'about']
 
-    const mask = document.createElement('canvas')
-    mask.width = 1000
-    mask.height = 1000
-    const ctx = mask.getContext('2d')
-
-    const img = new Image()
-    img.src = figureTopShape
-
-    img.onload = () => {
-      ctx.drawImage(img, 0, 0, 1000, 1000)
-      ctx.fillStyle = 'var(--mustard)'
-      ctx.fillRect(0, 0, 1000, 1000)
-    }
-
-    const maskUrl = mask.toDataURL()
-    maskRef.value.style.mask = `url(${maskUrl}) no-repeat`
-  }
+  const routes = computed(() =>
+    router
+      .getRoutes()
+      .map((route) => {
+        return {
+          title: t(`components.menu.nav.${route.name as string}`),
+          path: route.path,
+          order: order.indexOf(route.name as string),
+        }
+      })
+      .sort((a, b) => a.order - b.order)
+  )
 </script>
 
 <template>
   <div class="menu">
-    <div class="illustration">
-      <figure
-        ref="maskedImgRef"
-        class="masked-image"
-      >
-        <NuxtImg :src="illustrationImage" />
-      </figure>
-      <NuxtImg
+    <MaskedImage
+      class="illustration"
+      :image-src="illustrationImage"
+      :mask-src="figureTopShape"
+      :use-mask-as-top-shape="true"
+      image-alt="Illustration of Berliner Prater"
+      :width="1920"
+      :height="1080"
+    />
+    <div class="menu-content-wrapper">
+      <img
         :src="navTopShape"
+        alt=""
         class="nav-top-shape"
       />
+      <div class="menu-content">
+        <nav>
+          <ul>
+            <li
+              v-for="(route, index) in routes"
+              :key="index"
+            >
+              <NuxtLink :to="route.path">{{ route.title }}</NuxtLink>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="lang-switcher">
+          <a
+            v-for="locale in locales"
+            :key="locale.code"
+            href="#"
+            :class="{ active: locale.code === currentLocale }"
+            @click.prevent.stop="setLocale(locale.code)"
+          >
+            {{ locale.code }}
+          </a>
+        </div>
+      </div>
     </div>
-    <nav>
-      <ul>
-        <li>
-          <NuxtLink to="/">Main page</NuxtLink>
-        </li>
-        <li>
-          <NuxtLink to="/prater">About Berliner Prater</NuxtLink>
-        </li>
-        <li>
-          <NuxtLink to="/stories">Discover the stories</NuxtLink>
-        </li>
-        <li>
-          <NuxtLink to="/create">Write your story</NuxtLink>
-        </li>
-        <li>
-          <NuxtLink to="/about">About the project</NuxtLink>
-        </li>
-      </ul>
-    </nav>
   </div>
 </template>
 
@@ -74,58 +78,44 @@
     position: fixed;
     top: var(--header-height);
     z-index: 2;
-    display: grid;
-    grid-template-areas: 'illustration' 'nav';
-    grid-template-rows: 1fr 2fr;
     width: 100%;
     height: calc(100vh - var(--header-height));
   }
 
   .illustration {
-    position: relative;
+    position: absolute;
     grid-area: illustration;
     width: 100%;
     padding: 0%;
     margin: 0;
   }
 
-  .masked-image {
+  .menu-content-wrapper {
     position: absolute;
     bottom: 0;
-    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
     width: 100%;
-    height: 100%;
+    height: 80%;
+    padding: 0;
     margin: 0;
-    background-color: var(--mustard);
-    mask: url('#mask') no-repeat;
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: grayscale(100%);
-      mix-blend-mode: multiply;
-    }
+    color: var(--light-beige);
   }
 
-  .nav-top-shape {
-    position: absolute;
-
-    /* Avoid gap between nav and top illustration */
-    bottom: -1px;
+  .menu-content {
+    height: 100%;
+    background: var(--viridian);
   }
 
   nav {
     display: flex;
     flex-direction: column;
-    grid-area: nav;
     justify-content: center;
     width: 100%;
-    height: 100%;
+    height: fit-content;
     padding: 0;
     margin: 0;
-    color: var(--light-beige);
-    background: var(--viridian);
 
     ul {
       display: flex;
@@ -137,12 +127,42 @@
 
       li {
         font-family: var(--link-font);
-        font-size: 1.5rem;
+        font-size: 1.25rem;
         font-weight: 700;
         line-height: 1.5rem;
         color: var(--light-beige);
         text-align: right;
         cursor: pointer;
+      }
+
+      li a {
+        text-decoration: none;
+      }
+    }
+  }
+
+  .lang-switcher {
+    display: flex;
+    gap: 1rem;
+    justify-content: right;
+    padding: 1rem;
+    margin: 0;
+    color: var(--light-beige);
+
+    a {
+      padding: 0 0.5rem;
+      font-family: var(--link-font);
+      font-size: 1.25rem;
+      line-height: 1.5rem;
+      color: var(--light-beige);
+      text-align: right;
+      text-decoration: none;
+      text-transform: uppercase;
+      cursor: pointer;
+
+      &.active {
+        font-weight: 700;
+        color: var(--black);
       }
     }
   }
