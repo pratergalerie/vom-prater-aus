@@ -5,6 +5,7 @@
     "nuxtjs",
     "persistedstate",
     "pinia",
+    "Pratersaal",
     "Sometype",
     "svgs",
     "vueuse",
@@ -13,5 +14,7 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "gitConfigUser.selectedProfile": "Work",
   "cSpell.language": "en,de-DE",
-  "i18n-ally.localesPaths": ["i18n", "i18n/locales"]
+  "i18n-ally.localesPaths": ["i18n", "i18n/locales"],
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.sourceLanguage": "de"
 }
