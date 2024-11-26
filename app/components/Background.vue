@@ -52,7 +52,7 @@
       inset -10px -20px 300px 0 var(--brown),
       inset 20px -10px 300px 0 var(--brown),
       inset -20px 10px 300px 0 var(--brown);
-    mix-blend-mode: color-burn;
-    opacity: 0.2;
+    mix-blend-mode: multiply;
+    opacity: 0.1;
   }
 </style>
