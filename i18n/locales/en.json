@@ -1,0 +1,25 @@
+{
+  "pages": {
+    "index": {},
+    "prater": {},
+    "stories": {},
+    "project": {},
+    "create": {},
+    "privacy": {},
+    "error": {}
+  },
+  "components": {
+    "menu": {
+      "logo": {},
+      "nav": {
+        "index": "Main page",
+        "prater": "About Berliner Prater",
+        "stories": "Discover stories",
+        "create": "Create a story",
+        "about": "About the project"
+      }
+    },
+    "footer": {},
+    "cookieConsentBanner": {}
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "pages": {
+    "index": {},
+    "prater": {},
+    "stories": {},
+    "project": {},
+    "create": {},
+    "privacy": {},
+    "error": {}
+  },
+  "components": {
+    "menu": {
+      "logo": {},
+      "nav": {
+        "index": "Hauptseite",
+        "prater": "Über Berliner Prater",
+        "stories": "Geschichten entdecken",
+        "create": "Geschichte erstellen",
+        "about": "Über das Projekt"
+      }
+    },
+    "footer": {},
+    "cookieConsentBanner": {}
+  }
+}

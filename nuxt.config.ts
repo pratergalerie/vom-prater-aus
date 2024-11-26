@@ -38,5 +38,25 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxtjs/device',
     '@nuxt/icon',
+    '@nuxtjs/i18n',
   ],
+  i18n: {
+    restructureDir: './i18n',
+    vueI18n: 'config.ts',
+    locales: [
+      {
+        code: 'en',
+        iso: 'en-UK',
+        file: 'en.json',
+      },
+      {
+        code: 'de',
+        iso: 'de-DE',
+        file: 'de.json',
+      },
+    ],
+    langDir: 'locales',
+    defaultLocale: 'en',
+    strategy: 'no_prefix',
+  },
 })
