@@ -7,7 +7,11 @@
     "pinia",
     "Sometype",
     "svgs",
-    "vueuse"
+    "vueuse",
+    "wght"
   ],
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "gitConfigUser.selectedProfile": "Work",
+  "cSpell.language": "en,de-DE",
   "i18n-ally.localesPaths": ["i18n", "i18n/locales"]
 }
