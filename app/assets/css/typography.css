@@ -27,7 +27,8 @@ p {
 }
 
 a {
-  font-family: var(--links-font);
+  font-family: var(--link-font);
+  font-weight: 400;
   color: var(--links-color);
   text-decoration: underline;
 }

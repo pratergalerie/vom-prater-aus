@@ -20,8 +20,13 @@ export default defineNuxtConfig({
       '@nuxtjs/google-fonts',
       {
         families: {
-          'Sometype Mono': true,
-          'Crimson Pro': true,
+          'Sometype Mono': {
+            wght: '400..700',
+          },
+          'Crimson Pro': {
+            wght: '200..900',
+            ital: '200',
+          },
         },
       },
     ],
