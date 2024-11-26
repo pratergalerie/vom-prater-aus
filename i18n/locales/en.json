@@ -1,9 +1,14 @@
 {
   "components": {
-    "cookieConsentBanner": {},
-    "footer": {},
+    "cookieConsentBanner": {
+    },
+    "footer": {
+      "text": "This project was conceived and produced by the Prater Gallery, part of the Art and Culture Department of the Office for Continuing Education and Culture of the Pankow district of Berlin and a member of the Arbeitsgemeinschaft der Städtischen Galerien Berlin (Association of Berlin City Galleries).",
+      "title": "Vom Prater Aus"
+    },
     "menu": {
-      "logo": {},
+      "logo": {
+      },
       "nav": {
         "about": "About the project",
         "create": "Create a story",
@@ -16,20 +21,20 @@
   "pages": {
     "home": {
       "sections": {
-        "stories": {
-          "title": "Personal stories from Berliner Prater",
-          "text": "Discover stories from visitors about their personal experiences in one of Berlin's most popular and culturally rich places.",
-          "button": "See all stories"
+        "create": {
+          "button": "Create a story",
+          "text": "Here you can share your unforgettable moments and photos in Prater until 2007 with other visitors.",
+          "title": "Tell your Prater story"
         },
         "prater": {
-          "title": "A place to remember",
+          "button": "Discover Berliner Prater",
           "text": "Opened as a garden restaurant at the gates of the city in 1837, the Berlin Prater has always attracted those seeking relaxation and who are keen to experience into the countryside. In the Prater Hall and on the open-air stage, the summer theater, rope dancers were performed in a convivial round: interior acrobatics and boxing matches, but it was also a place of political agitation and discussion. Even with the growing and changing city, the Prater remained central for the neighborhood, where they eaten, drank, discussed, danced and celebrated. Today the Volksbühne and Prater Gallery are located here as important places of the free art scene.",
-          "button": "Discover Berliner Prater"
+          "title": "A place to remember"
         },
-        "create": {
-          "title": "Tell your Prater story",
-          "text": "Here you can share your unforgettable moments and photos in Prater until 2007 with other visitors.",
-          "button": "Create a story"
+        "stories": {
+          "button": "See all stories",
+          "text": "Discover stories from visitors about their personal experiences in one of Berlin's most popular and culturally rich places.",
+          "title": "Personal stories from Berliner Prater"
         }
       }
     }

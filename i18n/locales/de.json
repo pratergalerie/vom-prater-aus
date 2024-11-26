@@ -1,9 +1,14 @@
 {
   "components": {
-    "cookieConsentBanner": {},
-    "footer": {},
+    "cookieConsentBanner": {
+    },
+    "footer": {
+      "text": "Dieses Projekt wurde von der Prater Galerie, Teil der Abteilung Kunst und Kultur im Amt für Weiterbildung und Kultur des Bezirks Pankow von Berlin und Mitglied der Arbeitsgemeinschaft der Städtischen Galerien Berlin, konzipiert und produziert.",
+      "title": "Vom Prater Aus"
+    },
     "menu": {
-      "logo": {},
+      "logo": {
+      },
       "nav": {
         "about": "Über das Projekt",
         "create": "Geschichte erstellen",
@@ -16,6 +21,11 @@
   "pages": {
     "home": {
       "sections": {
+        "create": {
+          "button": "Geschichte erstellen",
+          "text": "Hier kannst du von deinen eigenen Erlebnissen bis 2007 berichten und deine Fotos von unvergesslichen Momenten im Prater mit anderen Besucher:innen teilen.",
+          "title": "Erzähle deine Pratergeschichte"
+        },
         "prater": {
           "button": "Berliner Prater entdecken",
           "text": "1837 vor den Toren der Stadt als Gartenlokal eröffnet, lockte der Berliner Prater seit jeher Erholungssuchende und Erlebnisfreudige ins Grüne. Im Pratersaal und auf der Freilichtbühne wurden in geselliger Runde Sommertheater, Seiltänzer:innenakrobatik und Boxkämpfe dargeboten, es war aber auch ein Ort der politischen Agitation und Diskussion. Auch mit der wachsenden und sich verändernden Stadt blieb der Prater zentraler Treffpunkt für die Nachbarschaft, an dem gemeinsam gegessen, getrunken, diskutiert, getanzt und gefeiert wurde. Heute befinden sich hier die Volksbühne und die Prater Galerie als wichtige Orte der freien Kunstszene.",
@@ -25,11 +35,6 @@
           "button": "Alle Geschichte sehen",
           "text": "Entdecke Geschichten der Besucher:innen über ihre persönlichen Erlebnisse an einem der beliebtesten und kulturell reichsten Orte Berlins.",
           "title": "Persönliche Geschichten aus Berliner Prater"
-        },
-        "create": {
-          "title": "Erzähle deine Pratergeschichte",
-          "text": "Hier kannst du von deinen eigenen Erlebnissen bis 2007 berichten und deine Fotos von unvergesslichen Momenten im Prater mit anderen Besucher:innen teilen.",
-          "button": "Geschichte erstellen"
         }
       }
     }

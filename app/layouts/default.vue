@@ -29,13 +29,14 @@
         <slot />
       </main>
     </Transition>
+    <Footer />
   </div>
 </template>
 
 <style scoped>
   .layout-container {
     display: grid;
-    grid-template-areas: 'header' 'main';
+    grid-template-areas: 'header' 'main' 'footer';
     grid-template-rows: var(--header-height) 1fr;
   }
 
@@ -52,6 +53,10 @@
 
   .menu {
     grid-area: main;
+  }
+
+  .footer {
+    grid-area: footer;
   }
 
   /* slide right to left */
