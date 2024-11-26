@@ -4,7 +4,7 @@
 
   const props = defineProps<{
     type: 'primary' | 'secondary'
-    variant: 'label' | 'icon' | 'icon-label'
+    variant: 'label' | 'icon' | 'label-icon'
     label?: string
     icon?: string
     disabled?: boolean
@@ -169,6 +169,19 @@
     >
       {{ props.label }}
     </span>
+    <span
+      v-if="props.variant === 'label-icon'"
+      class="button-label-icon"
+      :class="{ secondary: props.type === 'secondary' }"
+    >
+      {{ props.label }}
+      <Icon
+        :name="iconName"
+        size="20px"
+        mode="css"
+        class="icon"
+      />
+    </span>
     <Icon
       v-if="props.variant === 'icon'"
       :name="iconName"
@@ -202,11 +215,14 @@
 
   .button-shape,
   .button-label,
-  .button-icon {
+  .button-icon,
+  .button-label-icon {
     display: flex;
     grid-area: 1 / 1;
+    gap: 0.5rem;
     align-items: center;
     justify-content: center;
+    height: 100%;
   }
 
   .button-shape,
@@ -225,9 +241,11 @@
     transform: translate(-50%, -50%);
   }
 
-  .button-label {
+  .button-label,
+  .button-label-icon {
     z-index: 1;
     font-family: var(--button-font);
+    font-size: 1rem;
 
     &.secondary {
       color: var(--white);
