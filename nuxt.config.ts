@@ -39,6 +39,7 @@ export default defineNuxtConfig({
     '@nuxtjs/device',
     '@nuxt/icon',
     '@nuxtjs/i18n',
+    'nuxt-rellax',
   ],
   i18n: {
     restructureDir: './i18n',
