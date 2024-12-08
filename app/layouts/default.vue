@@ -9,11 +9,29 @@
       document.body.style.overflow = ''
     }
   })
+
+  const footerRef = ref<HTMLElement | null>(null)
+  const isFooterVisible = useElementVisibility(footerRef)
+
+  const bottomGradientOpacity = computed(() => {
+    return isFooterVisible.value ? 0 : 1
+  })
 </script>
 
 <template>
   <div class="layout-container">
-    <Header class="header" />
+    <Header />
+    <div class="frame">
+      <GradientHalftone />
+      <GradientHalftone
+        direction="bottom"
+        class="bottom-gradient"
+        :style="{ opacity: bottomGradientOpacity }"
+      />
+    </div>
+
+    <MenuButton />
+
     <Transition name="slide">
       <Menu
         v-if="isOpen"
@@ -29,34 +47,28 @@
         <slot />
       </main>
     </Transition>
-    <Footer />
+    <Transition name="fade">
+      <Footer
+        v-if="!isOpen"
+        ref="footerRef"
+      />
+    </Transition>
   </div>
 </template>
 
 <style scoped>
-  .layout-container {
-    display: grid;
-    grid-template-areas: 'header' 'main' 'footer';
-    grid-template-rows: var(--header-height) 1fr;
-  }
-
-  main {
-    grid-area: main;
-  }
-
-  .header {
-    position: fixed;
-    top: 0;
-    z-index: 3;
-    grid-area: header;
-  }
-
-  .menu {
-    grid-area: main;
-  }
-
   .footer {
     grid-area: footer;
+  }
+
+  .frame {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 98;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
   }
 
   /* slide right to left */
