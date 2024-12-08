@@ -88,6 +88,7 @@
     width: 100%;
     height: auto;
     object-fit: contain;
+    filter: grayscale(100%);
   }
 
   .tint {
