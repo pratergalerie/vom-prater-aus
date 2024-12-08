@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  const illustrationImage = '/imgs/prater/prater2.jpeg'
+  const illustrationImage = ref<string>('')
   const navTopShape = '/svgs/menu/shapes/background/viridian/1.svg'
   const figureTopShape = '/svgs/menu/shapes/background/mustard/1.svg'
 
@@ -26,6 +26,12 @@
       })
       .sort((a, b) => a.order - b.order)
   )
+
+  // Load a random image every time the component is mounted
+  onMounted(() => {
+    const randomImage = Math.floor(Math.random() * 10) + 1
+    illustrationImage.value = `/imgs/prater/prater${randomImage}.jpeg`
+  })
 </script>
 
 <template>
@@ -77,7 +83,7 @@
   .menu {
     position: fixed;
     top: var(--header-height);
-    z-index: 2;
+    z-index: 100;
     width: 100%;
     height: calc(100vh - var(--header-height));
   }
