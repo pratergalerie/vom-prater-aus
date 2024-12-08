@@ -9,6 +9,10 @@ body {
   margin: 0;
 }
 
+html {
+  background-color: var(--light-beige);
+}
+
 main {
   padding: var(--padding);
 }
