@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:svgjs="http://svgjs.dev/svgjs" width="100%" height="100%" opacity="1">
+  <defs>
+    <filter id="noise-filter" width="100%" height="100%" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse"
+      color-interpolation-filters="linearRGB">
+      <feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="4" seed="15" stitchTiles="stitch" width="100%"
+        height="100%" result="turbulence"></feTurbulence>
+      <feSpecularLighting surfaceScale="32" specularConstant="0.6" specularExponent="20" lighting-color="#d0021b"
+        width="100%" height="100%" in="turbulence" result="specularLighting">
+        <feDistantLight azimuth="3" elevation="71"></feDistantLight>
+      </feSpecularLighting>
+      <feColorMatrix type="saturate" values="0" width="100%" height="100%" in="specularLighting" result="colormatrix">
+      </feColorMatrix>
+    </filter>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffffff"></rect>
+  <rect width="100%" height="100%" fill="#d0021b" filter="url(#noise-filter)"></rect>
+</svg>
