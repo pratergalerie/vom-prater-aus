@@ -3,11 +3,12 @@
 
   const router = useRouter()
 
-  const order = ['index', 'prater', 'stories', 'create', 'about']
+  const order = ['prater', 'stories', 'create', 'about']
 
   const routes = computed(() =>
     router
       .getRoutes()
+      .filter((route) => route.name !== 'index')
       .map((route) => {
         return {
           title: t(`components.menu.nav.${route.name as string}`),
@@ -21,6 +22,18 @@
 
 <template>
   <footer class="footer">
+    <div class="top-shape">
+      <img
+        src="/svgs/textures/noise.svg"
+        alt=""
+        class="top-texture"
+      />
+      <img
+        src="/svgs/footer/top-shape.svg"
+        alt=""
+        :style="{ filter: 'contrast(1.6) sepia(0.25)', marginBottom: '-2px' }"
+      />
+    </div>
     <div class="footer-content">
       <h2>{{ $t('components.footer.title') }}</h2>
       <nav>
@@ -62,13 +75,34 @@
 <style scoped>
   footer {
     display: grid;
+    grid-template-areas: 'top-shape' 'content';
+    grid-template-rows: 22px 1fr;
+    height: calc(100vh - var(--header-height) - var(--padding));
+  }
+
+  .top-shape {
+    display: grid;
+    grid-area: top-shape;
+    width: 100%;
+    height: 22px;
+
+    img {
+      grid-area: 1 / 1;
+      width: 100%;
+      height: 23px;
+      object-fit: cover;
+    }
+  }
+
+  .top-texture {
+    mix-blend-mode: multiply;
   }
 
   .footer-content {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    grid-area: 1 / 1;
+    grid-area: content;
     gap: 2rem;
     padding: calc(var(--padding) * 3) var(--padding) calc(var(--padding) * 3)
       var(--padding);
@@ -108,6 +142,7 @@
     gap: 1rem;
     height: 70px;
 
+    /* stylelint-disable-next-line no-descending-specificity */
     img {
       object-fit: contain;
     }
@@ -116,7 +151,7 @@
   .background {
     z-index: -1;
     display: grid;
-    grid-area: 1 / 1;
+    grid-area: content;
     width: 100%;
     height: 100%;
   }
