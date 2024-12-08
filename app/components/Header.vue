@@ -1,46 +1,18 @@
-<script setup lang="ts">
-  const { toggleMenu } = useMenuStore()
-
-  const logoBackgroundImgSrc = '/svgs/logo-background.svg'
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <header>
-    <Logo @click="toggleMenu" />
-    <div class="logo-background">
-      <img
-        :src="logoBackgroundImgSrc"
-        alt="Logo background"
-      />
-    </div>
+    <Logo />
   </header>
 </template>
 
 <style scoped>
   header {
-    position: relative;
+    position: fixed;
+    z-index: 99;
     box-sizing: border-box;
     width: 100%;
     height: var(--header-height);
     padding: var(--padding);
-  }
-
-  .logo-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    width: 50%;
-    height: 100%;
-
-    img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: -1;
-      width: auto;
-      height: 100%;
-      object-fit: cover;
-    }
   }
 </style>
