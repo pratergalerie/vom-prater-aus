@@ -13,7 +13,7 @@
     "wght"
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
-  "gitConfigUser.selectedProfile": "Work",
+  "gitConfigUser.selectedProfile": "Personal",
   "cSpell.language": "en,de-DE",
   "i18n-ally.localesPaths": ["i18n", "i18n/locales"],
   "i18n-ally.keystyle": "nested",
