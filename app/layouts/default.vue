@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  const { isOpen } = storeToRefs(useMenuStore())
+  const { isOpen } = useMenu()
 
   // Setup body scroll lock when menu is open
   watch(isOpen, (open) => {
@@ -30,15 +30,8 @@
       />
     </div>
 
-    <MenuButton />
+    <Menu />
 
-    <Transition name="slide">
-      <Menu
-        v-if="isOpen"
-        :class="{ open: isOpen }"
-        class="menu"
-      />
-    </Transition>
     <Transition name="fade">
       <main
         v-if="!isOpen"

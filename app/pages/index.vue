@@ -8,6 +8,87 @@
     vertical: true,
     horizontal: false,
   })
+
+  const carouselSlides = ref([
+    {
+      img: {
+        src: '/imgs/prater/prater11.jpeg',
+        alt: 'Berliner Prater',
+        caption: '©Autor 1',
+      },
+      quote: 'Kann diese Nachmittage im Prater nur empfehlen!',
+      link: {
+        text: 'Meine Lieblingsplätze in Berlin (2003)',
+        href: '/',
+      },
+    },
+    {
+      img: {
+        src: '/imgs/prater/prater12.jpeg',
+        alt: 'Berliner Prater',
+        caption: '©Autor 2',
+      },
+      quote: 'Ein wunderbarer Ort zum Entspannen!',
+      link: {
+        text: 'Erholung pur (1999)',
+        href: '/',
+      },
+    },
+    {
+      img: {
+        src: '/imgs/prater/prater13.jpeg',
+        alt: 'Berliner Prater',
+        caption: '©Autor 3',
+      },
+      quote: 'Ein Muss für jeden Berlin-Besucher',
+      link: {
+        text: 'Meine Berlin-Tipps (2005)',
+        href: '/',
+      },
+    },
+  ])
+
+  const slidesWithClones = computed(() => {
+    // Add clones for infinite loop
+    return [
+      carouselSlides.value[carouselSlides.value.length - 1], // Clone last slide at the start
+      ...carouselSlides.value,
+      carouselSlides.value[0], // Clone first slide at the end
+    ]
+  })
+
+  const activeSlide = ref(1) // Start at the first real slide
+  const isTransitioning = ref(false)
+
+  const totalSlidesWidth = computed(() => {
+    return (
+      slidesWithClones.value.length * 100 + slidesWithClones.value.length * 40
+    )
+  })
+
+  function nextSlide() {
+    if (isTransitioning.value) return
+    isTransitioning.value = true
+    activeSlide.value++
+
+    if (activeSlide.value === slidesWithClones.value.length - 1) {
+      // When reaching the cloned last slide, reset to first real slide
+      setTimeout(() => {
+        activeSlide.value = 1 // First real slide
+        isTransitioning.value = false
+      }, 1000) // Match the transition duration
+    } else {
+      setTimeout(() => {
+        isTransitioning.value = false
+      }, 1000) // Match the transition duration
+    }
+  }
+
+  onMounted(() => {
+    setInterval(() => {
+      nextSlide()
+    }, 1000) // Change slide every 5 seconds
+  })
 </script>
 
 <template>
@@ -16,23 +97,52 @@
     class="content-wrapper"
   >
     <section class="section stories">
-      <picture>
-        <NuxtImg
-          src="/imgs/prater/prater15.jpeg"
-          alt="Berliner Prater"
-          class="photo rellax"
-          data-rellax-speed="1"
-        />
-      </picture>
-      <span class="quote">
-        "Kann diese Nachmittage im Prater nur empfehlen!"
-      </span>
-      <a
-        href=""
-        class="highlight"
+      <div
+        class="stories-carousel rellax"
+        data-rellax-speed="0.5"
       >
-        Sonnige Nachmittage im Biergarten (2001)</a
-      >
+        <div
+          class="slides"
+          :style="{
+            transform: `translateX(-${activeSlide * 100}vw)`,
+            transition: isTransitioning ? 'transform 1s ease-in-out' : 'none',
+            width: `${totalSlidesWidth}vw`,
+          }"
+        >
+          <div
+            v-for="(slide, index) in slidesWithClones"
+            :key="index"
+            class="slide"
+          >
+            <div
+              v-if="slide"
+              class="picture-wrapper"
+            >
+              <picture>
+                <NuxtImg
+                  :src="slide.img.src"
+                  :alt="slide.img.alt"
+                  class="photo"
+                />
+              </picture>
+              <span class="copyright">{{ slide.img.caption }}</span>
+            </div>
+
+            <span
+              v-if="slide"
+              class="quote"
+            >
+              {{ slide.quote }}
+            </span>
+            <NuxtLink
+              v-if="slide"
+              :to="slide.link.href"
+            >
+              <span class="highlight">{{ slide.link.text }}</span>
+            </NuxtLink>
+          </div>
+        </div>
+      </div>
       <div class="text-block stories">
         <h1>{{ $t('pages.home.sections.stories.title') }}</h1>
         <p>
@@ -45,7 +155,7 @@
         type="primary"
         variant="label-icon"
         class="rellax"
-        data-rellax-speed="-1"
+        data-rellax-speed="-0.2"
       />
     </section>
 
@@ -148,38 +258,86 @@
     margin: 0;
 
     picture {
-      position: relative;
+      z-index: 2;
       display: grid;
       margin-right: calc(-1 * var(--padding));
       margin-left: calc(-1 * var(--padding));
-    }
-
-    .photo {
-      grid-area: image;
-      width: 100%;
-      filter: grayscale(100%);
       mix-blend-mode: multiply;
+
+      .photo {
+        grid-area: image;
+        width: 100%;
+        object-fit: cover;
+        filter: grayscale(100%);
+      }
     }
 
     &.stories {
-      picture {
-        grid-template-areas: '. image';
-        grid-template-columns: 20% 1fr;
+      .stories-carousel {
+        position: relative;
+        width: 100vw;
+        height: 360px; /* Adjust to your preferred height */
+
+        /* Add negative margins */
+        margin-left: calc(-1 * var(--padding));
+        overflow: hidden;
+        mix-blend-mode: multiply;
+      }
+
+      .slides {
+        display: flex;
+        will-change: transform; /* Optimize for performance */
+      }
+
+      .slide {
+        box-sizing: border-box;
+        display: grid;
+        grid-template-areas:
+          '. image'
+          'quote quote'
+          '. link';
+        grid-template-columns: 1fr 90%;
+        gap: 10px;
+        width: 100vw;
+        height: 100%;
+        padding: var(--padding);
+      }
+
+      .picture-wrapper {
+        flex-direction: column;
+        grid-area: image;
+        width: 100%;
+
+        picture {
+          display: block;
+          height: 225px;
+          margin-left: 0;
+          overflow: hidden;
+        }
+
+        .copyright {
+          font-size: 0.8rem;
+        }
       }
 
       .quote {
+        grid-area: quote;
         font-style: italic;
         line-height: 1.6rem;
       }
 
       a {
-        align-self: flex-end;
-        width: 60%;
+        grid-area: link;
+
+        /* Align to right */
+        justify-self: end;
+        margin-left: var(--padding);
         text-align: right;
       }
     }
 
     &.prater {
+      /* stylelint-disable-next-line no-descending-specificity */
       picture {
         grid-template-areas: 'image .';
         grid-template-columns: 1fr 70px;
@@ -191,6 +349,7 @@
     }
 
     &.create {
+      /* stylelint-disable-next-line no-descending-specificity */
       picture {
         grid-template-areas: 'image';
         grid-template-columns: 100%;
@@ -199,9 +358,9 @@
         .photo {
           width: 100%;
 
-          /* 
-          ? For some reason this transform needs to be applied 
-          ? in order to mix-blend-mode to work on Safari iOS? 
+          /*
+          ? For some reason this transform needs to be applied
+          ? in order to mix-blend-mode to work on Safari iOS?
           */
           transform: translate3d(0, 0, 0);
         }
@@ -262,7 +421,7 @@
     mix-blend-mode: multiply;
 
     &.shape-1 {
-      top: 100px;
+      top: 150px;
       left: -20px;
       width: 80%;
     }
