@@ -3,7 +3,7 @@
 
   const router = useRouter()
 
-  const order = ['prater', 'stories', 'create', 'about']
+  const order = ['prater', 'stories', 'create', 'about', 'legal', 'privacy']
 
   const routes = computed(() =>
     router

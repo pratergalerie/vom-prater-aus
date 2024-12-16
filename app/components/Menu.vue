@@ -10,7 +10,15 @@
   } = useI18n({ useScope: 'global' })
 
   const router = useRouter()
-  const order = ['index', 'prater', 'stories', 'create', 'about']
+  const order = [
+    'index',
+    'prater',
+    'stories',
+    'create',
+    'about',
+    'legal',
+    'privacy',
+  ]
   const routes = computed(() =>
     router
       .getRoutes()
@@ -159,7 +167,7 @@
         :image-src="illustrationImage"
         :mask-src="figureTopShape"
         :use-mask-as-top-shape="true"
-        image-alt="Illustration of Berliner Prater"
+        image-alt="Berliner Prater"
         :width="1920"
         :height="1080"
         :style="{ clipPath: clipPath }"
@@ -260,6 +268,7 @@
     position: absolute;
     grid-area: illustration;
     width: 100%;
+    height: 300px;
     padding: 0%;
     margin: 0;
 
