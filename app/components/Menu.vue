@@ -132,6 +132,17 @@
       }, 50)
     }
   })
+
+  function closeMenu() {
+    closingMenu.value = true
+    revealIllustration.value = false
+    isTransitioning.value = true
+    setTimeout(() => {
+      isTransitioning.value = false
+      closingMenu.value = false
+      toggleMenu()
+    }, 700)
+  }
 </script>
 
 <template>
@@ -194,7 +205,12 @@
                 }"
                 :class="{ 'slide-out': closingMenu }"
               >
-                <NuxtLink :to="route.path">{{ route.title }}</NuxtLink>
+                <NuxtLink
+                  :to="route.path"
+                  @click="closeMenu"
+                >
+                  {{ route.title }}
+                </NuxtLink>
               </li>
             </ul>
           </nav>
