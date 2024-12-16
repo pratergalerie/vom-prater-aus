@@ -1,4 +1,14 @@
 <script setup lang="ts">
+  useHead({
+    title: 'Vom Prater Aus',
+    meta: [
+      {
+        name: 'description',
+        content: 'Home page',
+      },
+    ],
+  })
+
   const containerRef = ref<HTMLElement | undefined>(undefined)
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
