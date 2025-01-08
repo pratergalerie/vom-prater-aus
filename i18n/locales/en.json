@@ -12,7 +12,7 @@
         "create": "Create a story",
         "index": "Main page",
         "prater": "About Berliner Prater",
-        "stories": "Discover stories",
+        "stories-explorer": "Discover stories",
         "legal": "Legal notice",
         "privacy": "Privacy policy"
       }
@@ -28,7 +28,7 @@
         },
         "prater": {
           "button": "Discover Berliner Prater",
-          "text": "Opened as a garden restaurant at the gates of the city in 1837, the Berlin Prater has always attracted those seeking relaxation and who are keen to experience into the countryside. In the Prater Hall and on the open-air stage, the summer theater, rope dancers were performed in a convivial round: interior acrobatics and boxing matches, but it was also a place of political agitation and discussion. Even with the growing and changing city, the Prater remained central for the neighborhood, where they eaten, drank, discussed, danced and celebrated. Today the Volksbühne and Prater Gallery are located here as important places of the free art scene.",
+          "text": "Opened in 1837 as a garden venue, the Berlin Prater attracted those seeking relaxation in nature. It featured summer theater, acrobatics, boxing matches, and a space for political discussions. Today, it remains a central gathering place, now home to the Volksbühne and Prater Gallery, key venues for the independent art scene.",
           "title": "A place to remember"
         },
         "stories": {

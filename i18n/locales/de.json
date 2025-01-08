@@ -12,7 +12,7 @@
         "create": "Geschichte erstellen",
         "index": "Hauptseite",
         "prater": "Über Berliner Prater",
-        "stories": "Geschichten entdecken",
+        "stories-explorer": "Geschichten entdecken",
         "legal": "Impressum",
         "privacy": "Datenschutzerklärung"
       }
@@ -28,7 +28,7 @@
         },
         "prater": {
           "button": "Berliner Prater entdecken",
-          "text": "1837 vor den Toren der Stadt als Gartenlokal eröffnet, lockte der Berliner Prater seit jeher Erholungssuchende und Erlebnisfreudige ins Grüne. Im Pratersaal und auf der Freilichtbühne wurden in geselliger Runde Sommertheater, Seiltänzer:innenakrobatik und Boxkämpfe dargeboten, es war aber auch ein Ort der politischen Agitation und Diskussion. Auch mit der wachsenden und sich verändernden Stadt blieb der Prater zentraler Treffpunkt für die Nachbarschaft, an dem gemeinsam gegessen, getrunken, diskutiert, getanzt und gefeiert wurde. Heute befinden sich hier die Volksbühne und die Prater Galerie als wichtige Orte der freien Kunstszene.",
+          "text": "1837 als Gartenlokal eröffnet, lockte der Berliner Prater Erholungssuchende ins Grüne. Er bot Sommertheater, Artistik, Boxkämpfe und Raum für politische Diskussionen. Bis heute ist er ein zentraler Treffpunkt, nun mit Volksbühne und Prater Galerie als Orte der freien Kunstszene.",
           "title": "Ein Ort voller Erinnerungen"
         },
         "stories": {
