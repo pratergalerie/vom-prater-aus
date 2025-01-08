@@ -20,6 +20,7 @@
     >
       <mask :id="uniqueId">
         <image
+          class="svg-image"
           :href="maskSrc"
           x="0"
           y="0"
@@ -88,7 +89,7 @@
     width: 100%;
     height: auto;
     object-fit: contain;
-    filter: grayscale(100%);
+    filter: grayscale(1);
   }
 
   .tint {
@@ -102,5 +103,6 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    filter: grayscale(1);
   }
 </style>
