@@ -7,6 +7,7 @@
     variant: 'label' | 'icon' | 'label-icon'
     label?: string
     icon?: string
+    href?: string
     disabled?: boolean
   }>()
 
@@ -64,8 +65,8 @@
 
   const textureSrc = computed(() => {
     return props.type === 'primary'
-      ? './imgs/textures/halftone-texture-white.webp'
-      : './imgs/textures/halftone-texture-black.webp'
+      ? '/imgs/textures/halftone-texture-white.webp'
+      : '/imgs/textures/halftone-texture-black.webp'
   })
 
   const dropShadow = computed(() => {
@@ -174,7 +175,17 @@
       class="button-label-icon"
       :class="{ secondary: props.type === 'secondary' }"
     >
-      {{ props.label }}
+      <NuxtLink
+        v-if="href"
+        :to="href"
+      >
+        {{ props.label }}
+      </NuxtLink>
+
+      <span v-else>
+        {{ props.label }}
+      </span>
+
       <Icon
         :name="iconName"
         size="20px"
@@ -206,6 +217,11 @@
     cursor: pointer;
     background: none;
     border: none;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
     &.icon {
       max-width: 50px;
