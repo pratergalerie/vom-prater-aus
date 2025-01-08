@@ -3,36 +3,12 @@
   const figureTopShape = '/svgs/menu/shapes/background/mustard/1.svg'
 
   const {
-    t,
     locale: currentLocale,
     locales,
     setLocale,
   } = useI18n({ useScope: 'global' })
 
-  const router = useRouter()
-  const order = [
-    'index',
-    'prater',
-    'stories',
-    'create',
-    'about',
-    'legal',
-    'privacy',
-  ]
-  const routes = computed(() =>
-    router
-      .getRoutes()
-      .map((route) => {
-        return {
-          title: t(`components.menu.nav.${route.name as string}`),
-          path: route.path,
-          order: order.indexOf(route.name as string),
-        }
-      })
-      .sort((a, b) => a.order - b.order)
-  )
-
-  const { isOpen, toggleMenu } = useMenu()
+  const { isOpen, toggleMenu, menuRoutes } = useMenu()
   const buttonImgSrc = computed(() => {
     return isOpen.value
       ? '/svgs/menu/button/to-close.svg'
@@ -196,7 +172,7 @@
           <nav>
             <ul>
               <li
-                v-for="(route, index) in routes"
+                v-for="(route, index) in menuRoutes"
                 :key="index"
                 :style="{
                   'animation-delay': closingMenu
@@ -238,7 +214,7 @@
     top: var(--header-height);
     z-index: 100;
     width: 100%;
-    height: calc(100vh - var(--header-height));
+    height: calc(100vh);
     pointer-events: none;
   }
 
@@ -282,6 +258,7 @@
 
   .illustration {
     position: absolute;
+    top: -50px;
     grid-area: illustration;
     width: 100%;
     height: 300px;
@@ -291,8 +268,6 @@
     /* Initial state: Fully hidden */
     clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
     transition: clip-path 0.1s ease-in-out;
-
-    /* Smooth transition for visibility */
   }
 
   .illustration.reveal {
@@ -313,7 +288,7 @@
     flex-direction: column;
     gap: 0;
     width: 100%;
-    height: 60%;
+    height: 80%;
     padding: 0;
     margin: 0;
     color: var(--light-beige);

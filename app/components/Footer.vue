@@ -1,23 +1,5 @@
 <script setup lang="ts">
-  const { t } = useI18n({ useScope: 'global' })
-
-  const router = useRouter()
-
-  const order = ['prater', 'stories', 'create', 'about', 'legal', 'privacy']
-
-  const routes = computed(() =>
-    router
-      .getRoutes()
-      .filter((route) => route.name !== 'index')
-      .map((route) => {
-        return {
-          title: t(`components.menu.nav.${route.name as string}`),
-          path: route.path,
-          order: order.indexOf(route.name as string),
-        }
-      })
-      .sort((a, b) => a.order - b.order)
-  )
+  const { menuRoutes } = useMenu()
 </script>
 
 <template>
@@ -39,7 +21,7 @@
       <nav>
         <ul>
           <li
-            v-for="(route, index) in routes"
+            v-for="(route, index) in menuRoutes"
             :key="index"
           >
             <NuxtLink :to="route.path">{{ route.title }}</NuxtLink>
@@ -77,7 +59,7 @@
     display: grid;
     grid-template-areas: 'top-shape' 'content';
     grid-template-rows: 22px 1fr;
-    height: calc(100vh - var(--header-height) - var(--padding));
+    height: calc(100vh - var(--header-height));
   }
 
   .top-shape {
@@ -104,10 +86,13 @@
     flex-direction: column;
     grid-area: content;
     gap: 2rem;
-    padding: calc(var(--padding) * 3) var(--padding) calc(var(--padding) * 3)
-      var(--padding);
+    padding: var(--padding);
     overflow: hidden;
     color: var(--light-beige);
+
+    @media (max-height: 700px) {
+      gap: 1rem;
+    }
   }
 
   h2 {
@@ -124,6 +109,10 @@
       padding: 0;
       margin: 0;
       list-style-type: none;
+
+      @media (max-height: 700px) {
+        gap: 0.5rem;
+      }
     }
 
     a {
@@ -140,10 +129,12 @@
   .logos {
     display: flex;
     gap: 1rem;
+    max-width: 100%;
     height: 70px;
 
     /* stylelint-disable-next-line no-descending-specificity */
     img {
+      max-width: 30%;
       object-fit: contain;
     }
   }
