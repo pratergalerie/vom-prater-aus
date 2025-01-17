@@ -233,6 +233,30 @@
       animation-name: scale-down-and-rotate;
       animation-duration: 0.5s;
       animation-delay: 0.3s;
+
+      @media screen and (prefers-reduced-motion: reduce) {
+        animation: none;
+        animation-duration: 0.5s;
+        animation-delay: 0.3s;
+      }
+    }
+
+    @media screen and (prefers-reduced-motion: reduce) {
+      position: absolute;
+      right: 17px;
+      bottom: 17px;
+      z-index: 1;
+      width: 50px;
+      height: 50px;
+      transform: rotate(90deg) scale(25);
+      animation: none;
+      animation-duration: 1s;
+
+      &.closed {
+        animation-name: scale-down-and-rotate;
+        animation-duration: 0.5s;
+        animation-delay: 0.3s;
+      }
     }
   }
 
@@ -268,17 +292,25 @@
     /* Initial state: Fully hidden */
     clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
     transition: clip-path 0.1s ease-in-out;
-  }
 
-  .illustration.reveal {
-    /* Fully visible state */
-    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-  }
+    @media screen and (prefers-reduced-motion: reduce) {
+      position: absolute;
+      top: -50px;
+      grid-area: illustration;
+      width: 100%;
+      height: 300px;
+      padding: 0%;
+      margin: 0;
 
-  .illustration.hide {
-    /* Hidden state */
-    opacity: 0;
-    transition: clip-path 0.1s ease-in;
+      /* Initial state: Fully hidden */
+      clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+      transition: none;
+    }
+
+    &.reveal {
+      /* Fully visible state */
+      clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    }
   }
 
   .menu-content-wrapper {
@@ -334,11 +366,33 @@
 
         &.slide-out {
           animation: slide-out 0.1s ease forwards;
-        }
-      }
 
-      li a {
-        text-decoration: none;
+          @media screen and (prefers-reduced-motion: reduce) {
+            animation: none;
+          }
+        }
+
+        @media screen and (prefers-reduced-motion: reduce) {
+          font-family: var(--link-font);
+          font-size: 1.25rem;
+          font-weight: 700;
+          line-height: 1.5rem;
+          color: var(--light-beige);
+          text-align: right;
+          cursor: pointer;
+          opacity: 0;
+          transform: translateX(10%);
+          animation: none;
+          animation-direction: normal;
+
+          &.slide-out {
+            animation: slide-out 0.1s ease forwards;
+          }
+        }
+
+        & a {
+          text-decoration: none;
+        }
       }
     }
   }
@@ -419,6 +473,20 @@
       &.rotated {
         transform: rotate(90deg);
       }
+
+      @media screen and (prefers-reduced-motion: reduce) {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        filter: drop-shadow(0 5px 5px rgb(0 0 0 / 20%));
+        transition: none;
+        transform: rotate(0deg);
+        transform-origin: center;
+
+        &.rotated {
+          transform: rotate(90deg);
+        }
+      }
     }
 
     .hamburger {
@@ -441,6 +509,13 @@
         transition:
           transform 0.3s ease,
           opacity 0.3s ease;
+
+        @media screen and (prefers-reduced-motion: reduce) {
+          width: 100%;
+          height: 2px;
+          background: var(--light-beige);
+          transition: none;
+        }
       }
 
       &.open {
@@ -455,6 +530,45 @@
 
           &:nth-child(3) {
             transform: translateY(-6px) rotate(-45deg);
+          }
+        }
+      }
+
+      @media screen and (prefers-reduced-motion: reduce) {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+        justify-content: space-between;
+        width: 15px;
+        height: 15px;
+        transition: none;
+        transform: translate(-50%, -50%);
+
+        span {
+          width: 100%;
+          height: 2px;
+          background: var(--light-beige);
+          transition:
+            transform 0.3s ease,
+            opacity 0.3s ease;
+        }
+
+        &.open {
+          span {
+            &:nth-child(1) {
+              transform: translateY(7px) rotate(45deg);
+            }
+
+            &:nth-child(2) {
+              opacity: 0;
+            }
+
+            &:nth-child(3) {
+              transform: translateY(-6px) rotate(-45deg);
+            }
           }
         }
       }

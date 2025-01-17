@@ -150,7 +150,6 @@
     position: absolute;
     inset: 0%;
     z-index: -2;
-    content: '';
     backdrop-filter: blur(2px);
     mask: v-bind(blurMask);
   }

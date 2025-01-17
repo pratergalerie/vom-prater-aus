@@ -253,7 +253,7 @@
     top: 50%;
     left: 50%;
     z-index: 1;
-    line-height: 20px;
+    line-height: 1.5;
     transform: translate(-50%, -50%);
   }
 

@@ -68,6 +68,10 @@
   .slide-enter-active,
   .slide-leave-active {
     transition: transform 0.5s;
+
+    @media screen and (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
   }
 
   .slide-enter-from,
@@ -84,6 +88,10 @@
   .fade-enter-active,
   .fade-leave-active {
     transition: opacity 0.5s;
+
+    @media screen and (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
   }
 
   .fade-enter-from,
