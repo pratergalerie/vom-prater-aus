@@ -17,8 +17,8 @@
 
   function generateRandomSVGPath(): string {
     // Helper function to generate a random float within a defined range
-    // const randomInRange = (min: number, max: number) =>
-    //   Math.random() * (max - min) + min
+    const randomInRange = (min: number, max: number) =>
+      Math.random() * (max - min) + min
 
     // Pick one of the paths at random
     const originalPath =
@@ -27,35 +27,35 @@
     // TODO - Implement path variation, below generates an error
     // Error: <path> attribute d: Expected path command, "….0495 34.1652 Z 0".
 
-    // // Parse the original path to extract commands and numbers
-    // const pathParts = originalPath
-    //   ? originalPath.match(/[a-zA-Z][^a-zA-Z]*/g) || []
-    //   : []
+    // Parse the original path to extract commands and numbers
+    const pathParts = originalPath
+      ? originalPath.match(/[a-zA-Z][^a-zA-Z]*/g) || []
+      : []
 
-    // const variedPathParts = pathParts.map((part) => {
-    //   const command = part[0] // Get the command (M, C, Z, etc.)
-    //   const numbers = part
-    //     .slice(1)
-    //     .trim()
-    //     .split(/[\s,]+/)
-    //     .map((num) => parseFloat(num)) // Extract numbers
+    const variedPathParts = pathParts.map((part) => {
+      const command = part[0] // Get the command (M, C, Z, etc.)
+      const numbers = part
+        .slice(1)
+        .trim()
+        .split(/[\s,]+/)
+        .map((num) => parseFloat(num)) // Extract numbers
 
-    //   // Apply random variations to the numbers
-    //   const variedNumbers = numbers.map((num) => {
-    //     const newNum = num + randomInRange(-1.0, 1.0)
-    //     return isNaN(newNum) ? 0 : newNum.toFixed(4) // Default to 0 if NaN
-    //   })
+      // Apply random variations to the numbers
+      const variedNumbers = numbers.map((num) => {
+        const newNum = num + randomInRange(-1.0, 1.0)
+        return isNaN(newNum) ? 0 : newNum.toFixed(4) // Default to 0 if NaN
+      })
 
-    //   const newPart = `${command} ${variedNumbers.join(' ')}`
+      const newPart = `${command} ${variedNumbers.join(' ')}`
 
-    //   // Construct the varied path part
-    //   return newPart
-    // })
+      // Construct the varied path part
+      return newPart
+    })
 
-    // // Join the varied parts back into a single path string
-    // const variedPath = variedPathParts.join(' ')
+    // Join the varied parts back into a single path string
+    const variedPath = variedPathParts.join(' ')
 
-    // return variedPath
+    return variedPath
 
     return originalPath || ''
   }
@@ -97,6 +97,7 @@
         }"
         :viewBox="props.variant === 'icon' ? '0 0 40 40' : '0 0 349 55'"
         fill="none"
+        preserveAspectRatio="none"
       >
         <defs>
           <pattern
@@ -212,7 +213,7 @@
     max-width: 380px;
     height: 60px;
     max-height: 60px;
-    padding: 0;
+    padding: 10px 20px;
     color: var(--black);
     cursor: pointer;
     background: none;
@@ -241,7 +242,6 @@
     height: 100%;
   }
 
-  .button-shape,
   .button-label {
     width: 100%;
     height: 100%;
@@ -269,6 +269,9 @@
   }
 
   .button-shape {
+    width: calc(100% + 40px);
+    height: calc(100% + 20px);
+    margin: -10px -20px;
     overflow: visible;
     filter: v-bind(dropShadow);
   }
