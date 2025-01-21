@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import { BaseCheckbox } from '#components'
+
   useHead({
     title: 'Vom Prater Aus - Write your own story',
     meta: [
@@ -14,13 +16,11 @@
   })
 
   type Author = {
-    id: number
     name: string
     email: string
   }
 
   type Story = {
-    id: number
     title: string
     author: Author
     keywords: string[]
@@ -33,11 +33,15 @@
     }[]
   }
 
+  enum InputType {
+    Text = 'text',
+    Email = 'email',
+    Password = 'password',
+  }
+
   const story = ref<Story>({
-    id: 0,
     title: '',
     author: {
-      id: 0,
       name: '',
       email: '',
     },
@@ -71,21 +75,21 @@
           inputs: [
             {
               key: 'authorName',
+              type: InputType.Text,
               label: t(
                 'pages.create.form.steps.authorInfo.inputs.authorName.label'
               ),
               placeholder: t(
                 'pages.create.form.steps.authorInfo.inputs.authorName.placeholder'
               ),
-              model: story.value.title,
             },
             {
               key: 'email',
+              type: InputType.Email,
               label: t('pages.create.form.steps.authorInfo.inputs.email.label'),
               placeholder: t(
                 'pages.create.form.steps.authorInfo.inputs.email.placeholder'
               ),
-              model: story.value.author.email,
             },
           ],
         },
@@ -94,21 +98,21 @@
           inputs: [
             {
               key: 'title',
+              type: InputType.Text,
               label: t('pages.create.form.steps.storyInfo.inputs.title.label'),
               placeholder: t(
                 'pages.create.form.steps.storyInfo.inputs.title.placeholder'
               ),
-              model: story.value.title,
             },
             {
               key: 'keywords',
+              type: InputType.Text,
               label: t(
                 'pages.create.form.steps.storyInfo.inputs.keywords.label'
               ),
               placeholder: t(
                 'pages.create.form.steps.storyInfo.inputs.keywords.placeholder'
               ),
-              model: story.value.keywords.join(', '),
             },
           ],
         },
@@ -148,6 +152,32 @@
   function openInfoModal() {
     console.log('openInfoModal')
   }
+
+  const termsAccepted = ref(false)
+
+  type InputValues = {
+    authorName: string
+    email: string
+    title: string
+    keywords: string
+  }
+
+  const inputValues = ref({
+    authorName: '',
+    email: '',
+    title: '',
+    keywords: '',
+  }) as Ref<InputValues>
+
+  watch(inputValues.value, (newValue) => {
+    if (step.value === 0) {
+      story.value.author.name = newValue.authorName
+      story.value.author.email = newValue.email
+    } else if (step.value === 1) {
+      story.value.title = newValue.title
+      story.value.keywords = newValue.keywords.split(',')
+    }
+  })
 </script>
 
 <template>
@@ -172,14 +202,13 @@
             />
             {{ currentStep.info.link }}
           </button>
-          <label for="checkbox">
-            <input
+          <div class="terms-privacy-check">
+            <BaseCheckbox
               id="checkbox"
-              v-model="currentStep.info.checkbox"
-              type="checkbox"
+              v-model="termsAccepted"
             />
             <i18n-t
-              path="pages.create.form.steps.authorInfo.info.checkbox"
+              keypath="pages.create.form.steps.authorInfo.info.checkbox"
               tag="span"
             >
               <template #termsOfUse>
@@ -193,13 +222,14 @@
                 }}</NuxtLink>
               </template>
             </i18n-t>
-          </label>
+          </div>
         </template>
-        <BaseInput
+        <BaseTextInput
           v-for="input in currentStep.inputs"
           :id="input.key"
           :key="input.key"
-          v-model="input.model"
+          v-model="inputValues[input.key as keyof InputValues]"
+          :type="input.type"
           :label="input.label"
           :placeholder="input.placeholder"
         />
@@ -304,6 +334,22 @@
 
     .info-icon {
       padding: 0;
+    }
+  }
+
+  .terms-privacy-check {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    height: 1rem;
+    font-size: 0.8rem;
+
+    &:deep(label) {
+      flex: 0;
+    }
+
+    a {
+      margin: 0 0.2rem;
     }
   }
 </style>
