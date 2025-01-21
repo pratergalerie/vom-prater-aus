@@ -436,8 +436,8 @@
       line-height: 1.5rem;
       color: var(--light-beige);
       text-align: right;
-      text-decoration: none;
       text-transform: uppercase;
+      text-decoration: none;
       cursor: pointer;
 
       &.active {
@@ -466,9 +466,9 @@
       height: 100%;
       object-fit: contain;
       filter: drop-shadow(0 5px 5px rgb(0 0 0 / 20%));
-      transition: transform 0.5s ease-in-out;
       transform: rotate(0deg);
       transform-origin: center;
+      transition: transform 0.5s ease-in-out;
 
       &.rotated {
         transform: rotate(90deg);
@@ -479,9 +479,9 @@
         height: 100%;
         object-fit: contain;
         filter: drop-shadow(0 5px 5px rgb(0 0 0 / 20%));
-        transition: none;
         transform: rotate(0deg);
         transform-origin: center;
+        transition: none;
 
         &.rotated {
           transform: rotate(90deg);
@@ -499,8 +499,8 @@
       justify-content: space-between;
       width: 15px;
       height: 15px;
-      transition: transform 0.3s ease;
       transform: translate(-50%, -50%);
+      transition: transform 0.3s ease;
 
       span {
         width: 100%;
@@ -528,7 +528,7 @@
             opacity: 0;
           }
 
-          &:nth-child(3) {
+          - &:nth-child(3) {
             transform: translateY(-6px) rotate(-45deg);
           }
         }
@@ -544,8 +544,8 @@
         justify-content: space-between;
         width: 15px;
         height: 15px;
-        transition: none;
         transform: translate(-50%, -50%);
+        transition: none;
 
         span {
           width: 100%;
