@@ -24,6 +24,7 @@ p {
   font-family: var(--text-font);
   font-size: var(--font-size);
   color: var(--text-color);
+  line-height: calc(1rem * 1.3);
 }
 
 a {
