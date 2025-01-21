@@ -1,16 +1,23 @@
 <script lang="ts" setup>
+  enum InputType {
+    Text = 'text',
+    Email = 'email',
+    Password = 'password',
+  }
+
   defineProps<{
     id: string
-    label: string
-    placeholder: string
+    type: InputType
+    label?: string
+    placeholder?: string
   }>()
 
-  const value = defineModel('value', {
+  const value = defineModel({
     type: String,
     default: '',
   })
 
-  const baseSvg =
+  const baseTextInputSvg =
     '<svg viewBox="0 0 352 53" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M2.00004 30.5C2.00004 26.9 4.00003 9.16667 4.00003 0C7.33336 1.16667 14.7 3.5 17.5 3.5H113H169C202 3.5 201 0 240.5 0H351.5V43.5L321.5 49H220C191.5 49 202.5 49.5 191.5 49C180.5 48.5 172.5 51 134 46.5C95.5 42 2 43.5 2 43.5L2.00004 30.5Z" fill="white" /></svg>'
 
   function normalizePathWidth(pathData: string, targetWidth: number): string {
@@ -38,7 +45,7 @@
   function generateRandomSvg() {
     const targetWidth = 352 // Width of the original SVG
 
-    return baseSvg.replace(
+    return baseTextInputSvg.replace(
       /<path[^>]+d="([^"]+)"[^>]*>/g,
       (match, pathData) => {
         // Modify the `d` attribute (pathData)
@@ -64,7 +71,7 @@
     )
   }
 
-  const randomSvg = ref(baseSvg)
+  const randomSvg = ref(baseTextInputSvg)
 
   onMounted(() => {
     const generated = generateRandomSvg()
@@ -90,19 +97,19 @@
 
 <template>
   <label :for="id">
-    <span>{{ label }}</span>
+    <span v-if="label">{{ label }}</span>
     <input
       :id="id"
       v-model="value"
-      type="text"
+      :type="type"
       :placeholder="placeholder"
     />
     <div
-      class="svg-layer foreground"
+      class="svg-layer text-input foreground"
       :style="{ backgroundImage: svgForeground }"
     />
     <div
-      class="svg-layer background"
+      class="svg-layer text-input background"
       :style="{ backgroundImage: svgBackground }"
     />
   </label>
@@ -115,7 +122,7 @@
     flex-direction: column;
     gap: 5px;
     width: 100%;
-    height: 60px;
+    height: 100%;
   }
 
   input {
@@ -131,21 +138,24 @@
 
   .svg-layer {
     position: absolute;
-    top: 25px;
-    left: -5px;
-    width: 100%;
-    height: 50px;
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100% 100%;
-  }
 
-  .foreground {
-    z-index: -1;
-  }
+    &.text-input {
+      top: 25px;
+      left: -5px;
+      width: 100%;
+      height: 50px;
+    }
 
-  .background {
-    z-index: -2;
-    transform: translate(-5px, 5px);
+    &.foreground {
+      z-index: -1;
+    }
+
+    &.background {
+      z-index: -2;
+      transform: translate(-5px, 5px);
+    }
   }
 </style>
