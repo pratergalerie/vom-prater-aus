@@ -1,13 +1,16 @@
 <script setup lang="ts"></script>
 
 <template>
-  <button class="logo">
+  <NuxtLink
+    class="logo"
+    to="/"
+  >
     <NuxtImg
       :src="'logos/vom-prater-aus.svg'"
       alt="Vom Prater Aus logo"
       class="logo-image"
     />
-  </button>
+  </NuxtLink>
 </template>
 
 <style scoped>
