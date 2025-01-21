@@ -190,8 +190,8 @@
     img {
       width: 100%;
       object-fit: cover;
-      filter: grayscale(100%);
       mix-blend-mode: multiply;
+      filter: grayscale(100%);
     }
 
     .text-block {
