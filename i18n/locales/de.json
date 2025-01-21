@@ -11,14 +11,58 @@
         "about": "Über das Projekt",
         "create": "Geschichte erstellen",
         "index": "Hauptseite",
-        "prater": "Über Berliner Prater",
-        "stories-explorer": "Geschichten entdecken",
         "legal": "Impressum",
-        "privacy": "Datenschutzerklärung"
+        "prater": "Über Berliner Prater",
+        "privacy": "Datenschutzerklärung",
+        "stories-explorer": "Geschichten entdecken"
       }
     }
   },
   "pages": {
+    "create": {
+      "form": {
+        "title": "Schreib deine Prater-Geschichte",
+        "steps": {
+          "authorInfo": {
+            "text": "Erstmal ein paar Infos von dir. Der Autorenname wird zusammen mit deiner Geschichte veröffentlicht, und muss nicht dein echter Name sein. Deine E-Mail wird nicht veröffentlicht. Weitere Informationen findest du in der Datenschutzerklärung.",
+            "inputs": {
+              "authorName": {
+                "label": "Name",
+                "placeholder": "Gib deinen Autorennamen ein"
+              },
+              "email": {
+                "label": "Email",
+                "placeholder": "Gib deine E-Mail-Adresse ein"
+              }
+            },
+            "info": {
+              "link": "Warum brauchen wir diese Informationen?",
+              "checkbox": "Ich stimme den {termsOfUse} und der {privacyAgreement} zu.",
+              "termsOfUse": "Nutzungsbedingungen",
+              "privacyPolicy": "Datenschutzerklärung"
+            }
+          },
+          "storyInfo": {
+            "text": "Jetzt die ersten Details deiner Geschichte. Keine Sorge, du kannst sie später ändern, wenn du deine Meinung änderst.",
+            "inputs": {
+              "title": {
+                "label": "Titel",
+                "placeholder": "Gib einen Titel für deine Geschichte ein"
+              },
+              "keywords": {
+                "label": "Schlagwörter",
+                "placeholder": "Gib Schlagwörter durch Kommas getrennt ein"
+              }
+            }
+          }
+        },
+        "buttons": {
+          "next": "Weiter",
+          "back": "Zurück",
+          "create": "Weiter"
+        }
+      }
+    },
     "home": {
       "sections": {
         "create": {

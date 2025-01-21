@@ -11,14 +11,58 @@
         "about": "About the project",
         "create": "Create a story",
         "index": "Main page",
-        "prater": "About Berliner Prater",
-        "stories-explorer": "Discover stories",
         "legal": "Legal notice",
-        "privacy": "Privacy policy"
+        "prater": "About Berliner Prater",
+        "privacy": "Privacy policy",
+        "stories-explorer": "Discover stories"
       }
     }
   },
   "pages": {
+    "create": {
+      "form": {
+        "title": "Write your Prater story",
+        "steps": {
+          "authorInfo": {
+            "text": "First of all, a few details about you. The author name will be published together with your story, and does not have to be your real name. Your e-mail address will not be published. Further information can be found in the privacy policy.",
+            "inputs": {
+              "authorName": {
+                "label": "Name",
+                "placeholder": "Enter your author name"
+              },
+              "email": {
+                "label": "Email",
+                "placeholder": "Enter your email address"
+              }
+            },
+            "info": {
+              "link": "Why do we need this information?",
+              "checkbox": "I agree to the {termsOfUse} and {privacyAgreement}.",
+              "termsOfUse": "Terms of Use",
+              "privacyPolicy": "Privacy Policy"
+            }
+          },
+          "storyInfo": {
+            "text": "Now the first details of your story. Don't worry, you can change it later if you change your mind.",
+            "inputs": {
+              "title": {
+                "label": "Title",
+                "placeholder": "Enter a title for your story"
+              },
+              "keywords": {
+                "label": "Keywords",
+                "placeholder": "Enter keywords separated by commas"
+              }
+            }
+          }
+        },
+        "buttons": {
+          "next": "Next",
+          "back": "Back",
+          "create": "Continue"
+        }
+      }
+    },
     "home": {
       "sections": {
         "create": {
