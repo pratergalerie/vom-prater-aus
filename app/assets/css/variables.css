@@ -15,6 +15,8 @@
   /* --- Typography colors --- */
   --text-color: var(--black);
 
+  --highlight-color: var(--mustard);
+
   /* *------------------------------ Fonts --------------------------------* */
 
   --text-font: 'Crimson Pro', sans-serif;
