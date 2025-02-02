@@ -8,15 +8,15 @@ export const useMenu = () => {
   const { t } = useI18n({ useScope: 'global' })
 
   const router = useRouter()
-  const excludedRoutes = ['stories-id']
+  const excludedRoutes = ['stories-edit-id', 'stories-id', 'editor-id']
   const order = [
     'index',
     'prater',
     'stories-explorer',
-    'create',
+    'stories-create',
     'about',
-    'legal',
     'privacy',
+    'terms',
   ]
 
   const menuRoutes = computed(() =>
