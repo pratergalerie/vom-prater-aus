@@ -54,6 +54,6 @@ a {
       rgb(90 171 130 / 30%) 7.9%,
       rgb(90 171 130 / 0%) 15%
     );
-  border-radius: 5.5px;
+  border-radius: 3px;
   box-decoration-break: clone;
 }
