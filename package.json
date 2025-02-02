@@ -31,6 +31,7 @@
   "devDependencies": {
     "@awmottaz/prettier-plugin-void-html": "^1.7.0",
     "@double-great/stylelint-a11y": "^3.0.3",
+    "@hypernym/nuxt-anime": "^2.1.1",
     "@iconify-json/mdi": "^1.2.3",
     "@nuxt/eslint": "^0.7.5",
     "@nuxt/icon": "^1.10.3",

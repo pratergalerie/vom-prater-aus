@@ -37,6 +37,7 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     'nuxt-rellax',
     '@tresjs/nuxt',
+    '@hypernym/nuxt-anime',
   ],
   i18n: {
     restructureDir: './i18n',
@@ -56,5 +57,9 @@ export default defineNuxtConfig({
     langDir: 'locales',
     defaultLocale: 'en',
     strategy: 'no_prefix',
+  },
+
+  anime: {
+    composables: true,
   },
 })
