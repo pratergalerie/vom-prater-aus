@@ -15,53 +15,51 @@
     return props.variant === 'icon' ? iconButtonSvgPaths : baseButtonSvgPaths
   })
 
-  function generateRandomSVGPath(): string {
-    // Helper function to generate a random float within a defined range
-    const randomInRange = (min: number, max: number) =>
-      Math.random() * (max - min) + min
+  // function generateRandomSVGPath(): string {
+  //   // Helper function to generate a random float within a defined range
+  //   const randomInRange = (min: number, max: number) =>
+  //     Math.random() * (max - min) + min
 
-    // Pick one of the paths at random
-    const originalPath =
-      svgPaths.value[Math.floor(Math.random() * svgPaths.value.length)]
+  //   // Pick one of the paths at random
+  //   const originalPath =
+  //     svgPaths.value[Math.floor(Math.random() * svgPaths.value.length)]
 
-    // TODO - Implement path variation, below generates an error
-    // Error: <path> attribute d: Expected path command, "….0495 34.1652 Z 0".
+  //   // TODO - Implement path variation, below generates an error
+  //   // Error: <path> attribute d: Expected path command, "….0495 34.1652 Z 0".
 
-    // Parse the original path to extract commands and numbers
-    const pathParts = originalPath
-      ? originalPath.match(/[a-zA-Z][^a-zA-Z]*/g) || []
-      : []
+  //   // Parse the original path to extract commands and numbers
+  //   const pathParts = originalPath
+  //     ? originalPath.match(/[a-zA-Z][^a-zA-Z]*/g) || []
+  //     : []
 
-    const variedPathParts = pathParts.map((part) => {
-      const command = part[0] // Get the command (M, C, Z, etc.)
-      const numbers = part
-        .slice(1)
-        .trim()
-        .split(/[\s,]+/)
-        .map((num) => parseFloat(num)) // Extract numbers
+  //   const variedPathParts = pathParts.map((part) => {
+  //     const command = part[0] // Get the command (M, C, Z, etc.)
+  //     const numbers = part
+  //       .slice(1)
+  //       .trim()
+  //       .split(/[\s,]+/)
+  //       .map((num) => parseFloat(num)) // Extract numbers
 
-      // Apply random variations to the numbers
-      const variedNumbers = numbers.map((num) => {
-        const newNum = num + randomInRange(-1.0, 1.0)
-        return isNaN(newNum) ? 0 : newNum.toFixed(4) // Default to 0 if NaN
-      })
+  //     // Apply random variations to the numbers
+  //     const variedNumbers = numbers.map((num) => {
+  //       const newNum = num + randomInRange(-1.0, 1.0)
+  //       return isNaN(newNum) ? 0 : newNum.toFixed(4) // Default to 0 if NaN
+  //     })
 
-      const newPart = `${command} ${variedNumbers.join(' ')}`
+  //     const newPart = `${command} ${variedNumbers.join(' ')}`
 
-      // Construct the varied path part
-      return newPart
-    })
+  //     // Construct the varied path part
+  //     return newPart
+  //   })
 
-    // Join the varied parts back into a single path string
-    const variedPath = variedPathParts.join(' ')
+  //   // Join the varied parts back into a single path string
+  //   const variedPath = variedPathParts.join(' ')
 
-    return variedPath
+  //   return variedPath
+  // }
 
-    return originalPath || ''
-  }
-
-  // Generate a random SVG path for the button
-  const svgPath = generateRandomSVGPath()
+  // Deactivate path variation for now
+  const svgPath = svgPaths.value[0]
 
   const textureSrc = computed(() => {
     return props.type === 'primary'
@@ -73,9 +71,15 @@
     return `drop-shadow(-4px 4px 0 ${props.type === 'primary' ? 'black' : 'none'})`
   })
 
-  const iconName = computed(() => {
-    return `mdi:${props.icon}`
+  const iconSrc = computed(() => {
+    if (props.icon)
+      return props.icon.includes('custom:')
+        ? props.icon.replace('custom:', '/svgs/icons/').concat('.svg')
+        : `mdi:${props.icon}`
+    return ''
   })
+
+  const customIcon = computed(() => props.icon?.includes('custom:'))
 
   const randomId = Math.random().toString(36).substring(7)
 </script>
@@ -83,19 +87,19 @@
 <template>
   <button
     :class="{
-      primary: props.type === 'primary',
-      secondary: props.type === 'secondary',
-      icon: props.variant === 'icon',
+      primary: type === 'primary',
+      secondary: type === 'secondary',
+      icon: variant === 'icon',
     }"
   >
     <ClientOnly>
       <svg
         class="button-shape"
         :class="{
-          primary: props.type === 'primary',
-          secondary: props.type === 'secondary',
+          primary: type === 'primary',
+          secondary: type === 'secondary',
         }"
-        :viewBox="props.variant === 'icon' ? '0 0 40 40' : '0 0 349 55'"
+        :viewBox="variant === 'icon' ? '0 0 40 40' : '0 0 349 55'"
         fill="none"
         preserveAspectRatio="none"
       >
@@ -117,14 +121,14 @@
           </pattern>
         </defs>
         <path
-          v-if="props.type === 'secondary'"
+          v-if="type === 'secondary'"
           :d="svgPath"
           fill="var(--white)"
           stroke="var(--black)"
           stroke-width="2"
           class="secondary-button-shadow"
           :class="{
-            icon: props.variant === 'icon',
+            icon: variant === 'icon',
           }"
         />
         <path
@@ -142,7 +146,7 @@
         </filter>
         <clipPath
           :id="
-            props.variant === 'icon'
+            variant === 'icon'
               ? `icon-button-clip-path-${randomId}`
               : `base-button-clip-path-${randomId}`
           "
@@ -151,12 +155,12 @@
         </clipPath>
         <rect
           :d="svgPath"
-          :fill="props.type === 'primary' ? 'var(--white)' : 'var(--black)'"
+          :fill="type === 'primary' ? 'var(--white)' : 'var(--black)'"
           :filter="`url(#button-vignette-${randomId})`"
           width="100%"
           height="100%"
           :clip-path="
-            props.variant === 'icon'
+            variant === 'icon'
               ? `url(#icon-button-clip-path-${randomId})`
               : `url(#base-button-clip-path-${randomId})`
           "
@@ -165,55 +169,71 @@
       </svg>
     </ClientOnly>
     <span
-      v-if="props.variant === 'label'"
+      v-if="variant === 'label'"
       class="button-label"
-      :class="{ secondary: props.type === 'secondary' }"
+      :class="{ secondary: type === 'secondary' }"
     >
-      {{ props.label }}
+      {{ label }}
     </span>
     <span
-      v-if="props.variant === 'label-icon'"
+      v-if="variant === 'label-icon'"
       class="button-label-icon"
-      :class="{ secondary: props.type === 'secondary' }"
+      :class="{ secondary: type === 'secondary' }"
     >
       <NuxtLink
         v-if="href"
         :to="href"
       >
-        {{ props.label }}
+        {{ label }}
       </NuxtLink>
 
       <span v-else>
-        {{ props.label }}
+        {{ label }}
       </span>
-
-      <Icon
-        :name="iconName"
-        size="20px"
-        mode="css"
+      <span v-if="icon">
+        <NuxtImg
+          v-if="customIcon"
+          :src="iconSrc"
+          alt="Button icon"
+          class="icon"
+        />
+        <Icon
+          v-else
+          :name="iconSrc"
+          mode="css"
+          class="icon"
+        />
+      </span>
+    </span>
+    <div
+      v-if="variant === 'icon' && icon"
+      class="button-icon"
+      :style="{ color: type === 'primary' ? 'black' : 'white' }"
+    >
+      <NuxtImg
+        v-if="customIcon"
+        :src="iconSrc"
+        alt="Button icon"
         class="icon"
       />
-    </span>
-    <Icon
-      v-if="props.variant === 'icon'"
-      :name="iconName"
-      :style="{ color: type === 'primary' ? 'black' : 'white' }"
-      size="30px"
-      mode="css"
-      class="button-icon"
-    />
+      <Icon
+        v-else
+        :name="iconSrc"
+        mode="css"
+        class="button-icon"
+        size="1.2rem"
+      />
+    </div>
   </button>
 </template>
 
 <style scoped>
   button {
-    position: relative;
     display: grid;
     width: 100%;
     max-width: 380px;
-    height: 60px;
     max-height: 60px;
-    padding: 10px 20px;
+    padding: 0;
     color: var(--black);
     cursor: pointer;
     background: none;
@@ -222,11 +242,6 @@
     a {
       color: inherit;
       text-decoration: none;
-    }
-
-    &.icon {
-      max-width: 50px;
-      max-height: 50px;
     }
   }
 
@@ -249,12 +264,8 @@
 
   .button-icon {
     /* Position span content in the center */
-    position: absolute;
-    top: 50%;
-    left: 50%;
     z-index: 1;
-    line-height: 1.5;
-    transform: translate(-50%, -50%);
+    margin: auto;
   }
 
   .button-label,
@@ -269,11 +280,15 @@
   }
 
   .button-shape {
-    width: calc(100% + 40px);
-    height: calc(100% + 20px);
-    margin: -10px -20px;
+    width: 100%;
+    height: 100%;
     overflow: visible;
     filter: v-bind(dropShadow);
+  }
+
+  .icon {
+    width: 1.2rem;
+    height: 1.2rem;
   }
 
   .secondary-button-shadow {
