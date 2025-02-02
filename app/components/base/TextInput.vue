@@ -131,6 +131,7 @@
     height: 100%;
     padding: 10px;
     font-family: var(--link-font);
+    font-size: 1rem;
     outline: none;
     background: transparent;
     border: none;
