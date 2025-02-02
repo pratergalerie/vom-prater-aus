@@ -9,11 +9,12 @@
       "logo": {},
       "nav": {
         "about": "About the project",
-        "create": "Create a story",
         "index": "Main page",
         "legal": "Legal notice",
         "prater": "About Berliner Prater",
         "privacy": "Privacy policy",
+        "terms": "Terms of use",
+        "stories-create": "Create a story",
         "stories-explorer": "Discover stories"
       }
     }
@@ -51,7 +52,7 @@
               },
               "keywords": {
                 "label": "Keywords",
-                "placeholder": "Enter keywords separated by commas"
+                "placeholder": "Choose or add keywords"
               }
             }
           }

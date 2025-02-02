@@ -9,12 +9,13 @@
       "logo": {},
       "nav": {
         "about": "Über das Projekt",
-        "create": "Geschichte erstellen",
         "index": "Hauptseite",
         "legal": "Impressum",
         "prater": "Über Berliner Prater",
         "privacy": "Datenschutzerklärung",
-        "stories-explorer": "Geschichten entdecken"
+        "terms": "Nutzungsbedingungen",
+        "stories-explorer": "Geschichten entdecken",
+        "stories-create": "Geschichte erstellen"
       }
     }
   },
@@ -28,11 +29,11 @@
             "inputs": {
               "authorName": {
                 "label": "Name",
-                "placeholder": "Gib deinen Autorennamen ein"
+                "placeholder": "Klaus"
               },
               "email": {
                 "label": "Email",
-                "placeholder": "Gib deine E-Mail-Adresse ein"
+                "placeholder": "Deine E-Mail"
               }
             },
             "info": {
@@ -47,11 +48,11 @@
             "inputs": {
               "title": {
                 "label": "Titel",
-                "placeholder": "Gib einen Titel für deine Geschichte ein"
+                "placeholder": "Meine Prater-Geschichte"
               },
               "keywords": {
                 "label": "Schlagwörter",
-                "placeholder": "Gib Schlagwörter durch Kommas getrennt ein"
+                "placeholder": ""
               }
             }
           }
