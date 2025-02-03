@@ -51,6 +51,10 @@
   onMounted(() => {
     shapeClipPath.value = `polygon(${randomizeClipPath()})`
   })
+
+  onClickOutside(dialogRef, () => {
+    open.value = false
+  })
 </script>
 
 <template>
@@ -90,8 +94,8 @@
 <style scoped>
   dialog {
     z-index: 1000;
-    width: 200px;
-    height: 100px;
+    width: fit-content;
+    height: fit-content;
     padding: 0;
     background: transparent;
     border: none;
@@ -159,14 +163,14 @@
   .speech-bubble.bottom-center {
     left: 50%;
     filter: drop-shadow(-1px 3px 0 var(--black));
-    transform: translateX(-50%) skew(-0.02turn, 5deg);
+    transform: translateX(-26%) skew(-0.02turn, 5deg);
     scale: 2;
   }
 
   .speech-bubble.bottom-right {
-    right: 20px;
-    filter: drop-shadow(3px -2px 0 var(--black));
-    transform: translateY(-5px) rotate(90deg);
-    scale: 2;
+    right: 30px;
+    filter: drop-shadow(3px -1px 0 var(--black));
+    transform: translateY(-7px) rotate(90deg);
+    scale: 3;
   }
 </style>

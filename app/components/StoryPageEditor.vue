@@ -1,7 +1,6 @@
 <script setup lang="ts">
   import { BaseButton } from '#components'
-  import type { StoryPage } from '~/types'
-  import { LayoutTypes } from '~/types'
+  import { type StoryPage, LayoutTypes } from '~/types'
   const props = defineProps<{
     page: StoryPage
     title: string
@@ -9,11 +8,18 @@
     date: Date
   }>()
 
-  const pageLayout = computed(() => {
-    if (props.page.layout === LayoutTypes.IMAGE_OVER_TEXT) {
-      return 'image-over-text'
+  const pageLayout = ref<LayoutTypes>(LayoutTypes.IMAGE_OVER_TEXT)
+  const imageOverText = ref<boolean>(true)
+  const textOverImage = ref<boolean>(false)
+
+  watchEffect(() => {
+    if (imageOverText.value) {
+      pageLayout.value = LayoutTypes.IMAGE_OVER_TEXT
+      textOverImage.value = false
+    } else if (textOverImage.value) {
+      pageLayout.value = LayoutTypes.TEXT_OVER_IMAGE
+      imageOverText.value = false
     }
-    return 'image-over-text'
   })
 
   const placeholderImage = '/imgs/page-placeholder-image.jpg'
@@ -22,33 +28,46 @@
     return props.page.image ? props.page.image : placeholderImage
   })
 
+  const deleteDialogOpen = ref(false)
+  const addDialogOpen = ref(false)
+  const saveSubmitDialogOpen = ref(false)
+  const settingsDialogOpen = ref(false)
+
   const editorMenu = [
     {
+      id: 'close',
       icon: 'close',
       action: () => console.log('Close editor'),
     },
     {
+      id: 'delete',
       icon: 'delete',
       action: () => {
-        console.log('Delete')
         deleteDialogOpen.value = true
       },
     },
     {
+      id: 'add',
       icon: 'add',
-      action: () => console.log('Add'),
+      action: () => {
+        addDialogOpen.value = true
+      },
     },
     {
+      id: 'save-submit',
       icon: 'custom:save-submit',
-      action: () => console.log('Submit'),
+      action: () => {
+        saveSubmitDialogOpen.value = true
+      },
     },
     {
+      id: 'settings',
       icon: 'settings',
-      action: () => console.log('Settings'),
+      action: () => {
+        settingsDialogOpen.value = true
+      },
     },
   ]
-
-  const deleteDialogOpen = ref(false)
 </script>
 
 <template>
@@ -104,22 +123,125 @@
     </label>
 
     <div class="story-actions">
-      <BaseButton
-        v-for="action in editorMenu"
-        :key="action.icon"
-        variant="icon"
-        type="secondary"
-        :icon="action.icon"
-        class="action-button"
-        @click="action.action"
-      />
+      <div
+        v-for="(action, index) in editorMenu"
+        :key="index"
+        class="action-wrapper"
+      >
+        <BaseDialog
+          v-if="action.id === 'delete'"
+          v-model="deleteDialogOpen"
+          :modal="false"
+          speech-bubble-position="bottom-center"
+          class="dialog delete"
+        >
+          <div class="dialog-content">
+            <button>
+              <Icon name="mdi:close-box-outline" />
+              Seite löschen
+            </button>
+            <button>
+              <Icon name="mdi:delete-outline" />
+              Geschichte löschen
+            </button>
+          </div>
+        </BaseDialog>
+
+        <BaseDialog
+          v-if="action.id === 'add'"
+          v-model="addDialogOpen"
+          :modal="false"
+          speech-bubble-position="bottom-center"
+          class="dialog add"
+        >
+          <div class="dialog-content">
+            <button>
+              <Icon name="mdi:image-plus-outline" />
+              Bild hinzufügen/ändern
+            </button>
+            <button>
+              <Icon name="mdi:note-plus-outline" />
+              Seite hinzufügen
+            </button>
+            <button>
+              <Icon name="mdi:shape-polygon-plus" />
+              Sticker hinzufügen
+            </button>
+          </div>
+        </BaseDialog>
+
+        <BaseDialog
+          v-if="action.id === 'save-submit'"
+          v-model="saveSubmitDialogOpen"
+          :modal="false"
+          speech-bubble-position="bottom-center"
+          class="dialog save-submit"
+        >
+          <div class="dialog-content">
+            <button>
+              <Icon name="mdi:content-save-outline" />
+              Änderungen speichern
+            </button>
+            <button>
+              <Icon name="mdi:send-variant-outline" />
+              Geschichte einreichen
+            </button>
+          </div>
+        </BaseDialog>
+
+        <BaseDialog
+          v-if="action.id === 'settings'"
+          v-model="settingsDialogOpen"
+          :modal="false"
+          speech-bubble-position="bottom-right"
+          class="dialog settings"
+        >
+          <div class="dialog-content">
+            <h2>Seite konfigurieren</h2>
+            <p>Wähle ein Layout aus</p>
+            <div class="settings-container">
+              <button>
+                <Icon
+                  name="mdi:image-text"
+                  class="image-text-icon"
+                />
+                Bild und Text
+              </button>
+              <div class="image-text-options">
+                <BaseCheckbox
+                  id="image-over-text"
+                  v-model:checked="imageOverText"
+                  label="Bild über Text"
+                  value="image-over-text"
+                />
+                <BaseCheckbox
+                  id="text-over-image"
+                  v-model:checked="textOverImage"
+                  label="Text über Bild"
+                  value="text-over-image"
+                />
+              </div>
+              <button>
+                <Icon name="mdi:image-outline" />
+                Nur Bild
+              </button>
+              <button>
+                <Icon name="mdi:text" />
+                Nur Text
+              </button>
+            </div>
+          </div>
+        </BaseDialog>
+
+        <BaseButton
+          variant="icon"
+          type="secondary"
+          :icon="action.icon"
+          class="action-button"
+          @click="action.action"
+        />
+      </div>
     </div>
-    <BaseDialog
-      v-model="deleteDialogOpen"
-      :modal="false"
-    >
-      <p>Dialog content</p>
-    </BaseDialog>
   </div>
 </template>
 
@@ -174,7 +296,7 @@
       }
 
       .title-box-content {
-        z-index: 1;
+        z-index: 0;
         padding: var(--padding);
 
         .name {
@@ -239,9 +361,98 @@
     height: 40px;
     transform: translateY(20px);
 
+    .action-wrapper {
+      position: relative;
+    }
+
     .action-button {
       width: 40px;
       height: 40px;
+    }
+  }
+
+  .dialog-content {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+
+    button {
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: center;
+      justify-content: center;
+      width: 100px;
+      padding: 0.5rem;
+      font-family: var(--link-font);
+      font-size: 0.8rem;
+      color: var(--black);
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+
+    h2,
+    p {
+      font-size: 0.8rem;
+    }
+  }
+
+  .dialog {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    min-width: 50px;
+    height: 100px;
+    transform: translateX(-50%);
+
+    &.delete {
+      width: 250px;
+    }
+
+    &.add {
+      width: 350px;
+      height: 110px;
+    }
+
+    &.save-submit {
+      width: 250px;
+    }
+
+    &.settings {
+      left: 50%;
+      width: 280px;
+      height: 250px;
+      transform: translateX(-95%);
+
+      .dialog-content {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: center;
+      }
+
+      .settings-container {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 1rem;
+      }
+
+      .image-text-options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+
+      .image-text-icon {
+        font-size: 1.6rem;
+      }
     }
   }
 </style>
