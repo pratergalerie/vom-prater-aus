@@ -1,6 +1,7 @@
 <script lang="ts" setup>
   defineProps<{
     id: string
+    label: string
   }>()
 
   const checked = defineModel({
@@ -29,6 +30,7 @@
         class="foreground"
       />
     </div>
+    <span v-if="label">{{ label }}</span>
   </label>
 </template>
 
@@ -36,17 +38,15 @@
   label {
     position: relative;
     display: flex;
-    flex-direction: column;
     gap: 5px;
-    width: 100%;
-    height: 100%;
+    height: 1rem;
   }
 
   input {
     z-index: 1;
     box-sizing: border-box;
-    width: 100%;
-    height: 100%;
+    width: 1rem;
+    height: 1rem;
     padding: 10px;
     font-family: var(--link-font);
     cursor: pointer;
@@ -97,5 +97,10 @@
       z-index: -2;
       transform: translate(-5px, 5px);
     }
+  }
+
+  span {
+    font-family: var(--link-font);
+    font-size: 0.8rem;
   }
 </style>
