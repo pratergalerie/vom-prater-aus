@@ -19,6 +19,12 @@
     } else if (textOverImage.value) {
       pageLayout.value = LayoutTypes.TEXT_OVER_IMAGE
       imageOverText.value = false
+    } else if (
+      pageLayout.value === LayoutTypes.IMAGE ||
+      pageLayout.value === LayoutTypes.TEXT
+    ) {
+      imageOverText.value = false
+      textOverImage.value = false
     }
   })
 
@@ -200,7 +206,14 @@
             <h2>Seite konfigurieren</h2>
             <p>Wähle ein Layout aus</p>
             <div class="settings-container">
-              <button>
+              <button
+                :class="{
+                  selected:
+                    pageLayout === LayoutTypes.IMAGE_OVER_TEXT ||
+                    pageLayout === LayoutTypes.TEXT_OVER_IMAGE,
+                }"
+                @click="pageLayout = LayoutTypes.IMAGE_OVER_TEXT"
+              >
                 <Icon
                   name="mdi:image-text"
                   class="image-text-icon"
@@ -221,11 +234,19 @@
                   value="text-over-image"
                 />
               </div>
-              <button>
+              <button
+                :class="{ selected: pageLayout === LayoutTypes.IMAGE }"
+                @click="pageLayout = LayoutTypes.IMAGE"
+              >
                 <Icon name="mdi:image-outline" />
                 Nur Bild
               </button>
-              <button>
+              <button
+                :class="{
+                  selected: pageLayout === LayoutTypes.TEXT,
+                }"
+                @click="pageLayout = LayoutTypes.TEXT"
+              >
                 <Icon name="mdi:text" />
                 Nur Text
               </button>
@@ -279,7 +300,7 @@
     }
 
     .title-box {
-      bottom: -20px;
+      bottom: -10px;
       left: var(--padding);
       display: grid;
       width: 60%;
@@ -328,8 +349,9 @@
     }
 
     .divider {
-      bottom: -30px;
-      width: 100%;
+      bottom: -20px;
+      left: -4px;
+      width: 102%;
     }
   }
 
@@ -425,9 +447,9 @@
 
     &.settings {
       left: 50%;
-      width: 280px;
+      width: 300px;
       height: 250px;
-      transform: translateX(-95%);
+      transform: translateX(-90%);
 
       .dialog-content {
         flex-direction: column;
@@ -452,6 +474,11 @@
 
       .image-text-icon {
         font-size: 1.6rem;
+      }
+
+      button.selected {
+        border: 2px solid var(--mustard);
+        border-radius: 50%;
       }
     }
   }
