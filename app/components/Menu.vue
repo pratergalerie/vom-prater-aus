@@ -1,4 +1,7 @@
 <script setup lang="ts">
+  import { useAnime } from '#anime'
+  // import anime from 'animejs'
+
   const illustrationImage = ref<string>('')
   const figureTopShape = '/svgs/menu/shapes/background/mustard/1.svg'
 
@@ -44,6 +47,15 @@
     }
   }
 
+  const shapes = [
+    {
+      d: 'M8.22284 36.7747C8.22284 36.7747 12.1015 39.4883 14.9642 39.8964C17.8296 40.306 28.1589 39.7596 32.9686 33.4335C37.781 27.109 40.478 22.0657 39.9299 16.9237C39.3775 11.7827 39.241 8.33013 33.8527 4.75588C28.4634 1.17759 26.6263 0.851296 26.4372 0.764438C26.2454 0.676092 21.3524 -0.055112 21.1727 0.00331931C20.9929 0.0617506 10.8232 1.86843 6.39542 5.82686C1.96882 9.78934 1.01378 9.19248 0.242247 14.6961C-0.528137 20.2038 0.780681 24.841 0.83181 25.1494C0.882939 25.4579 6.34069 35.5348 8.22284 36.7747Z',
+    },
+    {
+      d: 'M0 40.514V159.291H394.643V0L328.965 4.247L263.611 11.694L202.745 22.969L141.705 20.391L83.622 26.872L54.391 33.587L0 40.514Z',
+    },
+  ]
+
   watch(isOpen, async (open) => {
     if (open) {
       await nextTick()
@@ -51,6 +63,38 @@
         revealIllustration.value = true
       }, 1000)
       chooseRandomMenuImage()
+
+      useAnime({
+        targets: '#menu-shape',
+        d: [shapes[0]?.d, shapes[1]?.d],
+        duration: 500,
+        easing: 'easeOutExpo',
+      })
+      useAnime({
+        targets: '.menu-shape',
+        translateY: [0, '-50%'],
+        duration: 500,
+        scale: [1, 5],
+        top: ['100%', '50%'],
+        translateX: [0, '-50%'],
+        easing: 'easeOutExpo',
+      })
+    } else {
+      revealIllustration.value = false
+      useAnime({
+        targets: '.menu-shape',
+        translateY: [0, 100],
+        duration: 500,
+        scale: [10, 1],
+        translateX: ['-30%', 0],
+        easing: 'easeOutExpo',
+      })
+      useAnime({
+        targets: '#menu-shape',
+        d: [shapes[1]?.d, shapes[0]?.d],
+        duration: 500,
+        easing: 'easeOutExpo',
+      })
     }
   })
 
@@ -147,7 +191,7 @@
 
     <div
       v-if="isOpen"
-      class="menu-wrapper"
+      class="open-menu"
     >
       <MaskedImage
         class="illustration"
@@ -160,37 +204,45 @@
         :style="{ clipPath: clipPath }"
         :class="{ transitioning: isTransitioning, reveal: revealIllustration }"
       />
-      <div class="menu-content-wrapper">
-        <NuxtImg
-          class="menu-shape"
-          src="/svgs/menu/shapes/transition.svg"
-          alt="Menu base shape"
-          :class="{ closed: closingMenu }"
+
+      <svg
+        class="menu-shape"
+        preserveAspectRatio="none"
+        viewBox="0 0 395 160"
+      >
+        <path
+          id="menu-shape"
+          fill="#3B707D"
+          d="M8.22284 36.7747C8.22284 36.7747 12.1015 39.4883 14.9642 39.8964C17.8296 40.306 28.1589 39.7596 32.9686 33.4335C37.781 27.109 40.478 22.0657 39.9299 16.9237C39.3775 11.7827 39.241 8.33013 33.8527 4.75588C28.4634 1.17759 26.6263 0.851296 26.4372 0.764438C26.2454 0.676092 21.3524 -0.055112 21.1727 0.00331931C20.9929 0.0617506 10.8232 1.86843 6.39542 5.82686C1.96882 9.78934 1.01378 9.19248 0.242247 14.6961C-0.528137 20.2038 0.780681 24.841 0.83181 25.1494C0.882939 25.4579 6.34069 35.5348 8.22284 36.7747Z"
         />
+      </svg>
 
-        <div class="menu-content">
-          <nav>
-            <ul>
-              <li
-                v-for="(route, index) in menuRoutes"
-                :key="index"
-                :style="{
-                  'animation-delay': closingMenu
-                    ? `0s`
-                    : `${menuTransitionTime / 3000 + index * 0.1}s`,
-                }"
-                :class="{ 'slide-out': closingMenu }"
+      <div
+        v-if="!isTransitioning"
+        class="menu-content"
+      >
+        <menu>
+          <ul>
+            <li
+              v-for="(route, index) in menuRoutes"
+              :key="index"
+              :style="{
+                'animation-delay': closingMenu
+                  ? `0s`
+                  : `${menuTransitionTime / 3000 + index * 0.1}s`,
+              }"
+              :class="{
+                'slide-out': closingMenu,
+              }"
+            >
+              <NuxtLink
+                :to="route.path"
+                @click="closeMenu"
               >
-                <NuxtLink
-                  :to="route.path"
-                  @click="closeMenu"
-                >
-                  {{ route.title }}
-                </NuxtLink>
-              </li>
-            </ul>
-          </nav>
-
+                {{ route.title }}
+              </NuxtLink>
+            </li>
+          </ul>
           <div class="lang-switcher">
             <a
               v-for="locale in locales"
@@ -202,7 +254,7 @@
               {{ locale.code }}
             </a>
           </div>
-        </div>
+        </menu>
       </div>
     </div>
   </div>
@@ -214,78 +266,31 @@
     top: var(--header-height);
     z-index: 100;
     width: 100%;
-    height: calc(100vh);
+    height: 100dvh;
     pointer-events: none;
   }
 
-  .menu-shape {
-    position: absolute;
-    right: 17px;
-    bottom: 17px;
+  .open-menu {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .menu-transition {
+    position: fixed;
+    right: 15px;
+    bottom: 15px;
     z-index: 1;
     width: 50px;
     height: 50px;
-    transform: rotate(90deg) scale(25);
-    animation-name: scale-up-and-rotate;
-    animation-duration: 1s;
-
-    &.closed {
-      animation-name: scale-down-and-rotate;
-      animation-duration: 0.5s;
-      animation-delay: 0.3s;
-
-      @media screen and (prefers-reduced-motion: reduce) {
-        animation: none;
-        animation-duration: 0.5s;
-        animation-delay: 0.3s;
-      }
-    }
-
-    @media screen and (prefers-reduced-motion: reduce) {
-      position: absolute;
-      right: 17px;
-      bottom: 17px;
-      z-index: 1;
-      width: 50px;
-      height: 50px;
-      transform: rotate(90deg) scale(25);
-      animation: none;
-      animation-duration: 1s;
-
-      &.closed {
-        animation-name: scale-down-and-rotate;
-        animation-duration: 0.5s;
-        animation-delay: 0.3s;
-      }
-    }
-  }
-
-  @keyframes scale-up-and-rotate {
-    from {
-      transform: rotate(0deg) scale(1);
-    }
-
-    to {
-      transform: rotate(90deg) scale(25);
-    }
-  }
-
-  @keyframes scale-down-and-rotate {
-    from {
-      transform: rotate(90deg) scale(25);
-    }
-
-    to {
-      transform: rotate(0deg) scale(1);
-    }
   }
 
   .illustration {
     position: absolute;
-    top: -50px;
+    bottom: 50%;
     grid-area: illustration;
-    width: 100%;
-    height: 300px;
+    width: 125%;
+    height: 400px;
     padding: 0%;
     margin: 0;
 
@@ -313,33 +318,23 @@
     }
   }
 
-  .menu-content-wrapper {
+  .menu-content {
     position: absolute;
     bottom: 0;
     display: flex;
     flex-direction: column;
-    gap: 0;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     height: 80%;
-    padding: 0;
-    margin: 0;
-    color: var(--light-beige);
-  }
-
-  .menu-content {
-    position: absolute;
-    z-index: 2;
-    width: 100%;
-    height: 100%;
     pointer-events: all;
   }
 
-  nav {
+  menu {
     display: flex;
+    flex: 1;
     flex-direction: column;
-    justify-content: center;
     width: 100%;
-    height: fit-content;
     padding: 0;
     margin: 0;
 
@@ -395,6 +390,14 @@
         }
       }
     }
+  }
+
+  .menu-shape {
+    position: fixed;
+    top: calc(100vh - 60px);
+    left: calc(100vw - 60px);
+    width: 395px;
+    height: 160px;
   }
 
   @keyframes slide {
@@ -528,7 +531,7 @@
             opacity: 0;
           }
 
-          - &:nth-child(3) {
+          &:nth-child(3) {
             transform: translateY(-6px) rotate(-45deg);
           }
         }
