@@ -1,6 +1,4 @@
 <script setup lang="ts">
-  import type { Keyword } from '~/types'
-
   useHead({
     title: 'Vom Prater Aus - Write your own story',
     meta: [
@@ -77,35 +75,25 @@
                 'pages.create.form.steps.storyInfo.inputs.title.placeholder'
               ),
             },
-            {
-              key: 'keywords',
-              type: InputType.Text,
-              label: t(
-                'pages.create.form.steps.storyInfo.inputs.keywords.label'
-              ),
-              placeholder: t(
-                'pages.create.form.steps.storyInfo.inputs.keywords.placeholder'
-              ),
-            },
           ],
         },
       ],
       buttons: [
         {
           label: t('pages.create.form.buttons.next'),
-          icon: 'arrow-right',
+          icon: 'mdi:arrow-right',
           callback: nextStep,
           checkStepToRender: () => step.value < form.value.steps.length - 1,
         },
         {
           label: t('pages.create.form.buttons.back'),
-          icon: 'arrow-left',
+          icon: 'mdi:arrow-left',
           callback: previousStep,
           checkStepToRender: () => step.value > 0,
         },
         {
           label: t('pages.create.form.buttons.create'),
-          icon: 'arrow-right',
+          icon: 'mdi:arrow-right',
           callback: openStoryEditor,
           checkStepToRender: () => step.value === form.value.steps.length - 1,
         },
@@ -132,14 +120,12 @@
     authorName: string
     email: string
     title: string
-    keywords: string
   }
 
   const inputValues = ref({
     authorName: '',
     email: '',
     title: '',
-    keywords: '',
   }) as Ref<InputValues>
 
   watch(inputValues.value, (newValue) => {
@@ -147,50 +133,9 @@
       story.value.author.name = newValue.authorName
       story.value.author.email = newValue.email
     } else if (step.value === 1) {
-      const newKeywords = newValue.keywords.split(',')
-      newKeywords.forEach((keyword) => {
-        const keywordObject: Keyword = {
-          id: '0',
-          word: keyword,
-        }
-        story.value.keywords.push(keywordObject)
-      })
-
       story.value.title = newValue.title
     }
   })
-
-  const existingKeywords = ref([
-    {
-      id: '0',
-      word: 'Berlin',
-    },
-    {
-      id: '1',
-      word: 'Prater',
-    },
-    {
-      id: '2',
-      word: 'Biergarten',
-    },
-    {
-      id: '3',
-      word: 'Theater',
-    },
-    {
-      id: '4',
-      word: 'Kultur',
-    },
-  ])
-
-  function addKeyword(keyword: Keyword) {
-    console.log('addKeyword', keyword)
-    // Select the keyword input
-    const keywordInput = document.getElementById('keywords') as HTMLInputElement
-    // Add the keyword to the input value
-    keywordInput.value += `${keyword.word},`
-    story.value.keywords.push(keyword)
-  }
 </script>
 
 <template>
@@ -238,32 +183,6 @@
             </i18n-t>
           </div>
         </template>
-        <BaseTextInput
-          v-for="input in currentStep.inputs"
-          :id="input.key"
-          :key="input.key"
-          v-model="inputValues[input.key as keyof InputValues]"
-          :type="input.type"
-          :label="input.label"
-          :placeholder="input.placeholder"
-        />
-        <ul
-          v-if="step === 1"
-          class="keywords-list"
-        >
-          <li
-            v-for="(keyword, index) in existingKeywords"
-            :key="index"
-          >
-            <button
-              class="keyword highlight"
-              type="button"
-              @click="addKeyword(keyword)"
-            >
-              {{ keyword.word }}
-            </button>
-          </li>
-        </ul>
       </template>
       <div class="step-buttons-wrapper">
         <div
@@ -381,24 +300,6 @@
 
     a {
       margin: 0 0.2rem;
-    }
-  }
-
-  .keywords-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-
-    .keyword {
-      padding: 0.25rem;
-      font-family: var(--button-font);
-      font-size: 0.8rem;
-      color: var(--black);
-      cursor: pointer;
-      border: none;
     }
   }
 </style>
