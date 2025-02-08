@@ -16,17 +16,16 @@ export type Story = {
 
 export type StoryPage = {
   id: string
-  layout: LayoutTypes
+  layout: PageLayout
   text?: string
   image?: string
 }
 
-export enum LayoutTypes {
-  TEXT = 'text',
-  IMAGE = 'image',
-  TEXT_OVER_IMAGE = 'text-over-image',
-  IMAGE_OVER_TEXT = 'image-over-text',
-}
+export type PageLayout =
+  | 'text'
+  | 'image'
+  | 'text-over-image'
+  | 'image-over-text'
 
 export type Keyword = {
   id: string
