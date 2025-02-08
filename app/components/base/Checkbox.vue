@@ -8,12 +8,21 @@
     type: Boolean,
     default: false,
   })
+
+  const checkboxRef = ref<HTMLInputElement | null>(null)
+  watchEffect(() => {
+    if (checkboxRef.value && checked.value === false) {
+      // Uncheck
+      checkboxRef.value!.checked = false
+    }
+  })
 </script>
 
 <template>
   <label :for="id">
     <input
       :id="id"
+      ref="checkboxRef"
       v-model="checked"
       type="checkbox"
     />
