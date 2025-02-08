@@ -60,7 +60,6 @@
 <template>
   <dialog ref="dialogRef">
     <div class="dialog-container">
-      <!-- Main dialog content -->
       <div
         class="dialog-content"
         :style="{ clipPath: shapeClipPath }"
@@ -75,13 +74,11 @@
         <slot></slot>
       </div>
 
-      <!-- Shadow -->
       <div
         class="shadow"
         :style="{ clipPath: shapeClipPath }"
       />
 
-      <!-- Optional speech bubble triangle -->
       <div
         v-if="props.speechBubblePosition"
         class="speech-bubble"
@@ -130,7 +127,7 @@
 
   .close-button {
     position: absolute;
-    top: var(--padding);
+    top: calc(var(--padding) * 1.2);
     right: var(--padding);
     width: 1.5rem;
     height: 1.5rem;
