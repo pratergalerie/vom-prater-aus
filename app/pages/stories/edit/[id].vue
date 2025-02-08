@@ -27,7 +27,7 @@
       <BaseButton
         type="secondary"
         variant="icon"
-        icon="arrow-left"
+        icon="mdi:arrow-left"
         class="page-navigation-button"
         :class="{ visible: currentPageIndex > 0 }"
         @click="currentPageIndex--"
@@ -36,7 +36,7 @@
       <BaseButton
         type="secondary"
         variant="icon"
-        icon="arrow-right"
+        icon="mdi:arrow-right"
         class="page-navigation-button"
         :class="{ visible: currentPageIndex < story.pages.length - 1 }"
         @click="currentPageIndex--"
