@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { BaseButton } from '#components'
-  import { type StoryPage, LayoutTypes } from '~/types'
+  import type { PageLayout, StoryPage } from '~/types'
   const props = defineProps<{
     page: StoryPage
     title: string
@@ -8,16 +8,48 @@
     date: Date
   }>()
 
-  const pageLayout = ref<LayoutTypes>(LayoutTypes.IMAGE_OVER_TEXT)
+  const pageLayout = ref<PageLayout>('image-over-text')
   const imageOverText = ref<boolean>(true)
   const textOverImage = ref<boolean>(false)
 
-  watchEffect(() => {
-    if (imageOverText.value) {
-      pageLayout.value = LayoutTypes.IMAGE_OVER_TEXT
+  watch(imageOverText, (newValue) => {
+    if (
+      !newValue &&
+      !textOverImage.value &&
+      (pageLayout.value === 'image-over-text' ||
+        pageLayout.value === 'text-over-image')
+    ) {
+      imageOverText.value = true
+      return
+    }
+    if (newValue) {
       textOverImage.value = false
-    } else if (textOverImage.value) {
-      pageLayout.value = LayoutTypes.TEXT_OVER_IMAGE
+      pageLayout.value = 'image-over-text'
+    }
+  })
+
+  watch(textOverImage, (newValue) => {
+    if (
+      !newValue &&
+      !imageOverText.value &&
+      (pageLayout.value === 'image-over-text' ||
+        pageLayout.value === 'text-over-image')
+    ) {
+      textOverImage.value = true
+      return
+    }
+    if (newValue) {
+      imageOverText.value = false
+      pageLayout.value = 'text-over-image'
+    }
+  })
+
+  watch(pageLayout, (newValue) => {
+    if (newValue === 'image-over-text') {
+      imageOverText.value = true
+      textOverImage.value = false
+    } else if (newValue === 'text-over-image') {
+      textOverImage.value = true
       imageOverText.value = false
     }
   })
@@ -36,19 +68,19 @@
   const editorMenu = [
     {
       id: 'close',
-      icon: 'close',
+      icon: 'mdi:close',
       action: () => console.log('Close editor'),
     },
     {
       id: 'delete',
-      icon: 'delete',
+      icon: 'mdi:delete',
       action: () => {
         deleteDialogOpen.value = true
       },
     },
     {
       id: 'add',
-      icon: 'add',
+      icon: 'mdi:add',
       action: () => {
         addDialogOpen.value = true
       },
@@ -62,7 +94,7 @@
     },
     {
       id: 'settings',
-      icon: 'settings',
+      icon: 'mdi:settings',
       action: () => {
         settingsDialogOpen.value = true
       },
@@ -86,7 +118,7 @@
         <div class="title-box-content">
           <h1>{{ title }}</h1>
           <div class="author-info">
-            <span>Eine Geschichte von </span>
+            <span>{{ $t('components.storyPageEditor.byAuthor') }}</span>
             <span class="name">{{ author }}</span>
           </div>
           <div class="date">
@@ -118,7 +150,7 @@
     >
       <textarea
         id="page-text-input"
-        placeholder="Gib den Text für die Story-Seite ein"
+        :placeholder="$t('components.storyPageEditor.pageTextPlaceholder')"
       />
     </label>
 
@@ -138,11 +170,11 @@
           <div class="dialog-content">
             <button>
               <Icon name="mdi:close-box-outline" />
-              Seite löschen
+              {{ $t('components.storyPageEditor.deletePage') }}
             </button>
             <button>
               <Icon name="mdi:delete-outline" />
-              Geschichte löschen
+              {{ $t('components.storyPageEditor.deleteStory') }}
             </button>
           </div>
         </BaseDialog>
@@ -157,15 +189,15 @@
           <div class="dialog-content">
             <button>
               <Icon name="mdi:image-plus-outline" />
-              Bild hinzufügen/ändern
+              {{ $t('components.storyPageEditor.addImage') }}
             </button>
             <button>
               <Icon name="mdi:note-plus-outline" />
-              Seite hinzufügen
+              {{ $t('components.storyPageEditor.addPage') }}
             </button>
             <button>
               <Icon name="mdi:shape-polygon-plus" />
-              Sticker hinzufügen
+              {{ $t('components.storyPageEditor.addSticker') }}
             </button>
           </div>
         </BaseDialog>
@@ -180,11 +212,11 @@
           <div class="dialog-content">
             <button>
               <Icon name="mdi:content-save-outline" />
-              Änderungen speichern
+              {{ $t('components.storyPageEditor.saveChanges') }}
             </button>
             <button>
               <Icon name="mdi:send-variant-outline" />
-              Geschichte einreichen
+              {{ $t('components.storyPageEditor.submitStory') }}
             </button>
           </div>
         </BaseDialog>
@@ -197,37 +229,65 @@
           class="dialog settings"
         >
           <div class="dialog-content">
-            <h2>Seite konfigurieren</h2>
-            <p>Wähle ein Layout aus</p>
+            <h2>{{ $t('components.storyPageEditor.configurePageTitle') }}</h2>
+            <p>{{ $t('components.storyPageEditor.selectLayout') }}</p>
             <div class="settings-container">
-              <button>
+              <button @click="pageLayout = 'image-over-text'">
                 <Icon
-                  name="mdi:image-text"
+                  name="custom:image-plus-text"
                   class="image-text-icon"
                 />
-                Bild und Text
+                <span
+                  :class="{
+                    highlight:
+                      pageLayout === 'image-over-text' ||
+                      pageLayout === 'text-over-image',
+                  }"
+                >
+                  {{ $t('components.storyPageEditor.imageAndText') }}
+                </span>
               </button>
               <div class="image-text-options">
                 <BaseCheckbox
                   id="image-over-text"
                   v-model:checked="imageOverText"
-                  label="Bild über Text"
+                  :label="$t('components.storyPageEditor.imageOverText')"
                   value="image-over-text"
+                  :disabled="
+                    pageLayout !== 'text-over-image' &&
+                    pageLayout !== 'image-over-text'
+                  "
                 />
                 <BaseCheckbox
                   id="text-over-image"
                   v-model:checked="textOverImage"
-                  label="Text über Bild"
+                  :label="$t('components.storyPageEditor.textOverImage')"
                   value="text-over-image"
+                  :disabled="
+                    pageLayout !== 'text-over-image' &&
+                    pageLayout !== 'image-over-text'
+                  "
                 />
               </div>
-              <button>
+              <button @click="pageLayout = 'image'">
                 <Icon name="mdi:image-outline" />
-                Nur Bild
+                <span
+                  :class="{
+                    highlight: pageLayout === 'image',
+                  }"
+                >
+                  {{ $t('components.storyPageEditor.onlyImage') }}
+                </span>
               </button>
-              <button>
+              <button @click="pageLayout = 'text'">
                 <Icon name="mdi:text" />
-                Nur Text
+                <span
+                  :class="{
+                    highlight: pageLayout === 'text',
+                  }"
+                >
+                  {{ $t('components.storyPageEditor.onlyText') }}
+                </span>
               </button>
             </div>
           </div>
@@ -298,6 +358,12 @@
       .title-box-content {
         z-index: 0;
         padding: var(--padding);
+
+        .author-info {
+          display: flex;
+          gap: 0.3em;
+          align-items: center;
+        }
 
         .name {
           font-style: italic;
@@ -426,7 +492,7 @@
     &.settings {
       left: 50%;
       width: 280px;
-      height: 250px;
+      height: 280px;
       transform: translateX(-95%);
 
       .dialog-content {
@@ -451,7 +517,7 @@
       }
 
       .image-text-icon {
-        font-size: 1.6rem;
+        width: 40px;
       }
     }
   }
