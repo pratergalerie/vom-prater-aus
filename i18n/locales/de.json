@@ -17,6 +17,24 @@
         "stories-explorer": "Geschichten entdecken",
         "stories-create": "Geschichte erstellen"
       }
+    },
+    "storyPageEditor": {
+      "configurePageTitle": "Seite konfigurieren",
+      "selectLayout": "Wähle ein Layout aus",
+      "imageAndText": "Bild und Text",
+      "imageOverText": "Bild über Text",
+      "textOverImage": "Text über Bild",
+      "onlyImage": "Nur Bild",
+      "onlyText": "Nur Text",
+      "pageTextPlaceholder": "Gib den Text für die Story-Seite ein",
+      "byAuthor": "Eine Geschichte von",
+      "deletePage": "Seite löschen",
+      "deleteStory": "Geschichte löschen",
+      "addImage": "Bild hinzufügen/ändern",
+      "addPage": "Seite hinzufügen",
+      "addSticker": "Sticker hinzufügen",
+      "saveChanges": "Änderungen speichern",
+      "submitStory": "Geschichte einreichen"
     }
   },
   "pages": {
@@ -49,10 +67,6 @@
               "title": {
                 "label": "Titel",
                 "placeholder": "Meine Prater-Geschichte"
-              },
-              "keywords": {
-                "label": "Schlagwörter",
-                "placeholder": ""
               }
             }
           }

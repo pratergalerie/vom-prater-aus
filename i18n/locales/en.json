@@ -17,6 +17,24 @@
         "stories-create": "Create a story",
         "stories-explorer": "Discover stories"
       }
+    },
+    "storyPageEditor": {
+      "configurePageTitle": "Configure Page",
+      "selectLayout": "Select a layout",
+      "imageAndText": "Image and Text",
+      "imageOverText": "Image over Text",
+      "textOverImage": "Text over Image",
+      "onlyImage": "Image only",
+      "onlyText": "Text only",
+      "pageTextPlaceholder": "Enter the text for your story page",
+      "byAuthor": "A story by",
+      "deletePage": "Delete page",
+      "deleteStory": "Delete story",
+      "addImage": "Add/change image",
+      "addPage": "Add page",
+      "addSticker": "Add sticker",
+      "saveChanges": "Save changes",
+      "submitStory": "Submit story"
     }
   },
   "pages": {
@@ -49,10 +67,6 @@
               "title": {
                 "label": "Title",
                 "placeholder": "Enter a title for your story"
-              },
-              "keywords": {
-                "label": "Keywords",
-                "placeholder": "Choose or add keywords"
               }
             }
           }
