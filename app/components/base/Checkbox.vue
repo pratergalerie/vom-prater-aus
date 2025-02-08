@@ -1,21 +1,26 @@
 <script lang="ts" setup>
   defineProps<{
     id: string
-    label: string
+    label?: string
+    disabled?: boolean
   }>()
 
-  const checked = defineModel({
+  const checked = defineModel('checked', {
     type: Boolean,
     default: false,
   })
 </script>
 
 <template>
-  <label :for="id">
+  <label
+    :for="id"
+    :class="{ disabled }"
+  >
     <input
       :id="id"
       v-model="checked"
       type="checkbox"
+      :disabled="disabled"
     />
     <div class="svg-layer checkbox">
       <img
@@ -40,6 +45,15 @@
     display: flex;
     gap: 5px;
     height: 1rem;
+
+    &.disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+
+      & .svg-layer img {
+        filter: grayscale(100%);
+      }
+    }
   }
 
   input {
@@ -69,6 +83,7 @@
       width: 20px;
       height: 20px;
 
+      /* stylelint-disable-next-line no-descending-specificity */
       img {
         width: 100%;
         height: 100%;
