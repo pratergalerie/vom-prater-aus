@@ -35,25 +35,29 @@ a {
 }
 
 .highlight {
-  display: inline;
-  width: fit-content;
-  margin: 0;
-  text-shadow: 0 0 0.5rem var(--light-beige);
   background: linear-gradient(
       104deg,
-      rgb(90 171 130 / 0%) 0.9%,
-      rgb(90 171 130 / 125%) 2.4%,
-      rgb(90 171 130 / 50%) 5.8%,
-      rgb(90 171 130 / 10%) 93%,
-      rgb(90 171 130 / 70%) 96%,
-      rgb(90 171 130 / 0%) 98%
+      rgba(249, 184, 93, 0) 0.9%,
+      rgba(249, 184, 93, 1.25) 2.4%,
+      rgba(249, 184, 93, 0.5) 5.8%,
+      rgba(249, 184, 93, 0.1) 93%,
+      rgba(249, 184, 93, 0.7) 96%,
+      rgba(249, 184, 93, 0) 98%
     ),
     linear-gradient(
       183deg,
-      rgb(90 171 130 / 0%) 0%,
-      rgb(90 171 130 / 30%) 7.9%,
-      rgb(90 171 130 / 0%) 15%
+      rgba(249, 184, 93, 0) 0%,
+      rgba(249, 184, 93, 0.3) 7.9%,
+      rgba(249, 184, 93, 0) 15%
     );
-  border-radius: 3px;
   box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  margin: 0;
+  padding: 0.2rem 0.4rem;
+  margin: -0.2rem -0.4rem;
+  border-radius: 5px 0 0 7.5px;
+  text-shadow:
+    -1px 1px 2.4px rgba(249, 184, 93, 0.7),
+    3px -3px 5px rgba(255, 255, 255, 1),
+    -4.5px -6.5px 7.5px rgba(255, 255, 255, 1);
 }
