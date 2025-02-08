@@ -2,14 +2,26 @@
   import { svgPaths as baseButtonSvgPaths } from '~/assets/svgs/paths/baseButton'
   import { svgPaths as iconButtonSvgPaths } from '~/assets/svgs/paths/iconButton'
 
-  const props = defineProps<{
-    type: 'primary' | 'secondary'
-    variant: 'label' | 'icon' | 'label-icon'
-    label?: string
-    icon?: string
-    href?: string
-    disabled?: boolean
-  }>()
+  const props = withDefaults(
+    defineProps<{
+      type: 'primary' | 'secondary'
+      variant: 'label' | 'icon' | 'label-icon'
+      label?: string
+      icon?: string
+      href?: string
+      disabled?: boolean
+      background?: boolean
+    }>(),
+    {
+      type: 'primary',
+      variant: 'label',
+      label: '',
+      icon: '',
+      href: '',
+      disabled: false,
+      background: true,
+    }
+  )
 
   const svgPaths = computed(() => {
     return props.variant === 'icon' ? iconButtonSvgPaths : baseButtonSvgPaths
