@@ -57,7 +57,8 @@
 
   .story-editor {
     width: 100%;
-    height: 70dvh;
+    height: 75dvh;
+    margin-top: 15dvh;
   }
 
   .page-navigation {

@@ -168,7 +168,7 @@
   }
 
   .speech-bubble.bottom-right {
-    right: 30px;
+    right: 40px;
     filter: drop-shadow(3px -1px 0 var(--black));
     transform: translateY(-7px) rotate(90deg);
     scale: 3;
