@@ -71,16 +71,6 @@
     return `drop-shadow(-4px 4px 0 ${props.type === 'primary' ? 'black' : 'none'})`
   })
 
-  const iconSrc = computed(() => {
-    if (props.icon)
-      return props.icon.includes('custom:')
-        ? props.icon.replace('custom:', '/svgs/icons/').concat('.svg')
-        : `mdi:${props.icon}`
-    return ''
-  })
-
-  const customIcon = computed(() => props.icon?.includes('custom:'))
-
   const randomId = Math.random().toString(36).substring(7)
 </script>
 
@@ -191,15 +181,8 @@
         {{ label }}
       </span>
       <span v-if="icon">
-        <NuxtImg
-          v-if="customIcon"
-          :src="iconSrc"
-          alt="Button icon"
-          class="icon"
-        />
         <Icon
-          v-else
-          :name="iconSrc"
+          :name="icon"
           mode="css"
           class="icon"
         />
@@ -210,15 +193,8 @@
       class="button-icon"
       :style="{ color: type === 'primary' ? 'black' : 'white' }"
     >
-      <NuxtImg
-        v-if="customIcon"
-        :src="iconSrc"
-        alt="Button icon"
-        class="icon"
-      />
       <Icon
-        v-else
-        :name="iconSrc"
+        :name="icon"
         mode="css"
         class="button-icon"
         size="1.2rem"

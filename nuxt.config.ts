@@ -62,4 +62,13 @@ export default defineNuxtConfig({
   anime: {
     composables: true,
   },
+
+  icon: {
+    customCollections: [
+      {
+        prefix: 'custom',
+        dir: './app/assets/icons',
+      },
+    ],
+  },
 })
