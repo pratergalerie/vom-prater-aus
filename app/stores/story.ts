@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import type { Story } from '~/types'
-import { LayoutTypes } from '~/types'
 
 export const useStoryStore = defineStore(
   'Story',
@@ -17,7 +16,7 @@ export const useStoryStore = defineStore(
       pages: [
         {
           id: '0',
-          layout: LayoutTypes.IMAGE_OVER_TEXT,
+          layout: 'image-over-text',
           text: 'Example text',
           image: undefined,
         },
