@@ -28,16 +28,6 @@
       : 'linear-gradient(180deg, transparent, black 30%)'
   })
 
-  const width = computed(() => {
-    if (window) {
-      return window.innerWidth
-    } else return 500
-  })
-
-  const widthPx = computed(() => {
-    return `${width.value}px`
-  })
-
   const heightPx = computed(() => {
     return `${props.height}px`
   })
@@ -50,9 +40,8 @@
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      :width="width"
       :height="height"
-      class="halftone"
+      class="halftone-svg"
       :class="{ inverted: direction === 'bottom' }"
     >
       <defs>
@@ -75,7 +64,7 @@
           <rect
             x="0"
             y="0"
-            :width="width"
+            width="100%"
             height="100"
             fill="url(#gradient)"
           />
@@ -118,7 +107,7 @@
       <rect
         x="0"
         y="0"
-        :width="width"
+        width="100%"
         :height="height"
         fill="url(#halftone)"
         mask="url(#gradientMask)"
@@ -131,7 +120,7 @@
 <style scoped>
   .gradient-halftone-container {
     position: absolute;
-    width: v-bind(widthPx);
+    width: 100%;
     height: v-bind(heightPx);
     background: v-bind(backgroundGradient);
   }
@@ -154,10 +143,11 @@
     mask: v-bind(blurMask);
   }
 
-  .halftone {
+  .halftone-svg {
     position: absolute;
     inset: 0;
     z-index: -1;
+    width: 100%;
     opacity: 1;
 
     &.inverted {
