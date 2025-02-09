@@ -64,6 +64,10 @@
         class="dialog-content"
         :style="{ clipPath: shapeClipPath }"
       >
+        <div
+          class="halftone background"
+          :style="{ clipPath: shapeClipPath }"
+        ></div>
         <button
           class="close-button"
           @click="close"
@@ -112,7 +116,20 @@
     width: 100%;
     height: 100%;
     padding: var(--padding);
-    background: var(--white);
+  }
+
+  .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    background-color: var(--white);
+
+    &.halftone {
+      --opacity: 0.8;
+    }
   }
 
   .shadow {
