@@ -104,55 +104,83 @@
 
 <template>
   <div
-    class="editor-container"
+    class="page-container"
     :style="{}"
   >
-    <div class="image-title-container">
-      <div class="image-container">
-        <NuxtImg
-          :src="pageImage"
-          alt="Story page image"
-        />
-      </div>
-      <div class="title-box">
-        <div class="title-box-content">
-          <h1>{{ title }}</h1>
-          <div class="author-info">
-            <span>{{ $t('components.storyPageEditor.byAuthor') }}</span>
-            <span class="name">{{ author }}</span>
-          </div>
-          <div class="date">
-            <Icon name="mdi:calendar-month" />
-            {{ date.getFullYear() }}
-          </div>
-          <button
-            class="story-details-edit-button"
-            @click="console.log('Edit title')"
-          >
-            <Icon name="mdi:edit" />
-          </button>
-        </div>
-        <NuxtImg
-          class="background"
-          src="/svgs/page-editor/title-box.svg"
-          alt="Story title box background"
-        />
-      </div>
-      <NuxtImg
-        class="divider"
-        src="/svgs/page-editor/divider.svg"
-        alt="divider"
-      />
-    </div>
-    <label
-      for="page-text-input"
-      class="text-container"
+    <div
+      class="page-content"
+      :class="{ 'text-over-image': textOverImage }"
     >
-      <textarea
-        id="page-text-input"
-        :placeholder="$t('components.storyPageEditor.pageTextPlaceholder')"
-      />
-    </label>
+      <div
+        class="image-title-container"
+        :class="{
+          'full-height': pageLayout === 'image',
+          'min-height': pageLayout === 'text',
+        }"
+      >
+        <div
+          v-if="pageLayout !== 'text'"
+          class="image-container"
+        >
+          <NuxtImg
+            :src="pageImage"
+            alt="Story page image"
+          />
+        </div>
+        <CutoutShape
+          shape-class="shape-textbox-1"
+          color="pink"
+          purpose="textbox"
+          :shadow="true"
+          class="title-box"
+          :class="{
+            'top-aligned': textOverImage,
+            'bottom-aligned': imageOverText,
+          }"
+        >
+          <div class="title-box-content">
+            <h1>{{ title }}</h1>
+            <div class="author-info">
+              <span>{{ $t('components.storyPageEditor.byAuthor') }}</span>
+              <span class="name">{{ author }}</span>
+            </div>
+            <div class="date">
+              <Icon name="mdi:calendar-month" />
+              {{ date.getFullYear() }}
+            </div>
+            <button
+              class="story-details-edit-button"
+              @click="console.log('Edit title')"
+            >
+              <Icon name="mdi:edit" />
+            </button>
+          </div>
+        </CutoutShape>
+      </div>
+
+      <label
+        v-if="pageLayout !== 'image'"
+        for="page-text-input"
+        class="text-container"
+        :class="{
+          'full-height': pageLayout === 'text',
+        }"
+      >
+        <textarea
+          id="page-text-input"
+          :placeholder="$t('components.storyPageEditor.pageTextPlaceholder')"
+        />
+      </label>
+    </div>
+
+    <StoryPageDivider
+      v-if="
+        pageLayout === 'image-over-text' || pageLayout === 'text-over-image'
+      "
+      :shape-variant-index="0"
+      color="mint"
+      class="divider"
+    />
 
     <div class="story-actions">
       <div
@@ -306,13 +334,35 @@
 </template>
 
 <style scoped>
-  .editor-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  .page-container {
+    position: relative;
     min-width: 350px;
     max-width: 500px;
     border: 1px solid var(--black);
+
+    &::before {
+      position: absolute;
+      top: 5px;
+      left: -5px;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+      content: '';
+      background: var(--black);
+    }
+  }
+
+  .page-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: var(--light-beige);
+
+    &.text-over-image {
+      flex-direction: column-reverse;
+    }
   }
 
   .image-title-container,
@@ -324,9 +374,16 @@
   .image-title-container {
     position: relative;
 
+    &.full-height {
+      height: 100%;
+    }
+
+    &.min-height {
+      height: 30%;
+    }
+
     .image-container,
-    .title-box,
-    .divider {
+    .title-box {
       position: absolute;
     }
 
@@ -336,27 +393,35 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
 
     .title-box {
-      bottom: -20px;
+      bottom: 20px;
       left: var(--padding);
-      display: grid;
       width: 60%;
       min-width: 300px;
       max-width: 400px;
+      height: fit-content;
+
+      &.top-aligned {
+        top: 20px;
+      }
+
+      &.bottom-aligned {
+        bottom: 20px;
+      }
 
       h1 {
         font-size: 1.2rem;
       }
 
-      .title-box-content,
-      .background {
-        grid-area: 1/1;
-      }
-
       .title-box-content {
-        z-index: 0;
         padding: var(--padding);
 
         .author-info {
@@ -392,18 +457,13 @@
         }
       }
     }
-
-    .divider {
-      bottom: -30px;
-      width: 100%;
-    }
   }
 
   .text-container {
     box-sizing: border-box;
     width: 100%;
     height: 50%;
-    padding: 1rem;
+    padding: 2rem var(--padding);
 
     textarea {
       width: 100%;
@@ -416,16 +476,31 @@
       background: none;
       border: none;
     }
+
+    &.full-height {
+      height: 100%;
+    }
+  }
+
+  .divider {
+    position: absolute;
+    top: calc(50% - 15px);
+    width: 100%;
+    height: 30px;
   }
 
   .story-actions {
+    position: relative;
+    z-index: 1000;
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 80%;
+    width: 100%;
     max-width: 500px;
     height: 40px;
-    transform: translateY(20px);
+    padding: 0 var(--padding);
+    transform: translateY(-20px);
 
     .action-wrapper {
       position: relative;
@@ -458,7 +533,16 @@
       font-size: 0.8rem;
       color: var(--black);
       cursor: pointer;
-      background: none;
+      background: radial-gradient(
+        circle,
+        white 0%,
+        white 40%,
+        rgb(255 255 255 / 70%) 70%,
+        transparent 100%
+      );
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 100% 100%;
       border: none;
     }
 
@@ -472,26 +556,52 @@
     position: absolute;
     bottom: 50px;
     left: 50%;
-    min-width: 50px;
     height: 100px;
     transform: translateX(-50%);
 
     &.delete {
-      width: 250px;
+      width: 25vw;
+      min-width: 250px;
     }
 
     &.add {
-      width: 350px;
+      width: 40vw;
+      min-width: 360px;
+      max-width: 400px;
       height: 110px;
+
+      @media screen and (max-width: 360px) {
+        width: 25vw;
+        min-width: 250px;
+        height: 200px;
+
+        .dialog-content {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 0.5rem;
+
+          button:nth-child(3) {
+            display: flex;
+            grid-column: 1 / 3;
+            align-items: center;
+            justify-content: center;
+            justify-self: center;
+            width: 50%;
+          }
+        }
+      }
     }
 
     &.save-submit {
-      width: 250px;
+      width: 25vw;
+      min-width: 250px;
     }
 
     &.settings {
       left: 50%;
-      width: 280px;
+      width: 50vw;
+      min-width: 300px;
+      max-width: 400px;
       height: 280px;
       transform: translateX(-95%);
 
@@ -503,8 +613,12 @@
 
       .settings-container {
         display: grid;
-        grid-template-columns: 1fr 2fr;
-        gap: 1rem;
+        grid-template-columns: 1.5fr 2fr;
+        width: 100%;
+
+        button {
+          justify-self: center;
+        }
       }
 
       .image-text-options {
