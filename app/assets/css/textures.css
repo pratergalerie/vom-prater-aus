@@ -1,0 +1,65 @@
+.halftone {
+  --mask: linear-gradient(rgb(0 0 0), rgb(0 0 0 / 20%));
+  --stop1: 0.01rem;
+  --stop2: 0.07rem;
+  --invert: 0;
+  --dot-color: black;
+  --bg-color: white;
+  --dotted-background: radial-gradient(
+    circle at center,
+    var(--dot-color) var(--stop1),
+    transparent var(--stop2)
+  );
+  --opacity: 1;
+  --rotation: 200deg;
+
+  aspect-ratio: 1;
+  background: var(--bg-color);
+  isolation: isolate;
+  filter: contrast(10) invert(var(--invert, 0));
+
+  &::after {
+    position: absolute;
+    inset: -50%;
+    z-index: 1;
+    width: 200%;
+    height: 200%;
+    content: '';
+    background-image: var(--dotted-background);
+    background-repeat: repeat round;
+    background-position: center;
+    background-size: 0.15rem 0.15rem;
+    mask-image: var(--mask);
+    transform-origin: center;
+    transform: rotate(var(--rotation)) scale(1.5);
+    opacity: var(--opacity);
+  }
+}
+
+.noise {
+  --opacity: 0.8;
+  position: relative;
+  isolation: isolate;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  /* Base background */
+  &::before {
+    background-color: inherit;
+    z-index: -2;
+  }
+
+  /* Noise texture */
+  &::after {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.05' numOctaves='4' seed='15' stitchTiles='stitch'/%3E%3CfeSpecularLighting surfaceScale='32' specularConstant='0.6' specularExponent='20' lighting-color='%23d0021b'%3E%3CfeDistantLight azimuth='3' elevation='71'/%3E%3C/feSpecularLighting%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    mix-blend-mode: difference;
+    opacity: var(--opacity);
+    z-index: -1;
+  }
+}

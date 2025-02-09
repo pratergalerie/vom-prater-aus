@@ -1,6 +1,7 @@
 @import url('./variables.css');
 @import url('./typography.css');
-
+@import url('./textures.css');
+@import url('./shapes.css');
 html,
 body {
   width: 100%;

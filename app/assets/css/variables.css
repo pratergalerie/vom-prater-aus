@@ -11,6 +11,7 @@
   --white: rgb(255 255 255 / 100%);
   --black: rgb(0 0 0 / 100%);
   --grey: rgb(100 100 100 / 100%);
+  --pink: rgb(252, 117, 139);
 
   /* --- Typography colors --- */
   --text-color: var(--black);
