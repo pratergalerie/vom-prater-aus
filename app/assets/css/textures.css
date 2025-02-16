@@ -17,10 +17,13 @@
   background: var(--bg-color);
   isolation: isolate;
   filter: contrast(10) invert(var(--invert, 0));
+  position: relative;
+  overflow: hidden;
 
   &::after {
     position: absolute;
-    inset: -50%;
+    top: 0;
+    left: 0;
     z-index: 1;
     width: 200%;
     height: 200%;
