@@ -19,22 +19,35 @@
       }
     },
     "storyPageEditor": {
-      "configurePageTitle": "Seite konfigurieren",
-      "selectLayout": "Wähle ein Layout aus",
-      "imageAndText": "Bild und Text",
-      "imageOverText": "Bild über Text",
-      "textOverImage": "Text über Bild",
-      "onlyImage": "Nur Bild",
-      "onlyText": "Nur Text",
       "pageTextPlaceholder": "Gib den Text für die Story-Seite ein",
       "byAuthor": "Eine Geschichte von",
-      "deletePage": "Seite löschen",
-      "deleteStory": "Geschichte löschen",
-      "addImage": "Bild hinzufügen/ändern",
-      "addPage": "Seite hinzufügen",
-      "addSticker": "Sticker hinzufügen",
-      "saveChanges": "Änderungen speichern",
-      "submitStory": "Geschichte einreichen"
+      "page": "Seite",
+      "dialogs": {
+        "actions": {
+          "add": {
+            "addImage": "Bild hinzufügen",
+            "addPage": "Seite hinzufügen",
+            "addSticker": "Sticker hinzufügen"
+          },
+          "delete": {
+            "deletePage": "Seite löschen",
+            "deleteStory": "Geschichte löschen"
+          },
+          "saveSubmit": {
+            "saveChanges": "Änderungen speichern",
+            "submitStory": "Geschichte einreichen"
+          },
+          "pageLayout": {
+            "title": "Seite konfigurieren",
+            "description": "Wähle ein Layout aus",
+            "imageAndText": "Bild und Text",
+            "imageOverText": "Bild über Text",
+            "textOverImage": "Text über Bild",
+            "onlyImage": "Nur Bild",
+            "onlyText": "Nur Text"
+          }
+        }
+      }
     }
   },
   "pages": {
@@ -94,6 +107,47 @@
           "button": "Alle Geschichte sehen",
           "text": "Entdecke Geschichten der Besucher:innen über ihre persönlichen Erlebnisse an einem der beliebtesten und kulturell reichsten Orte Berlins.",
           "title": "Persönliche Geschichten aus Berliner Prater"
+        }
+      }
+    },
+    "stories": {
+      "edit": {
+        "modals": {
+          "deletePage": {
+            "title": "Seite löschen",
+            "description": "Möchtest du diese Seite wirklich löschen?",
+            "confirm": "Löschen",
+            "cancel": "Abbrechen",
+            "processing": "Seite wird gelöscht..."
+          },
+          "deleteStory": {
+            "title": "Geschichte löschen",
+            "description": "Möchtest du diese Geschichte wirklich löschen?",
+            "confirm": "Löschen",
+            "cancel": "Abbrechen",
+            "processing": "Geschichte wird gelöscht..."
+          },
+          "submitStory": {
+            "title": "Geschichte einreichen",
+            "description": "Möchtest du deine Geschichte wirklich einreichen? Diese Aktion kann nicht rückgängig gemacht werden. Nach dem Einreichen wird deine Geschichte zur Moderation gesendet und nach Genehmigung veröffentlicht. Du erhältst eine E-Mail-Benachrichtigung, sobald die Moderation abgeschlossen ist. Nach dem Einreichen kannst du deine Geschichte nicht mehr bearbeiten.",
+            "confirm": "Einreichen",
+            "cancel": "Abbrechen",
+            "processing": "Geschichte wird eingereicht..."
+          },
+          "exitEditor": {
+            "title": "Editor verlassen",
+            "description": "Möchtest du wirklich den Geschichten-Editor verlassen? Alle nicht gespeicherten Änderungen gehen verloren.",
+            "confirm": "Verlassen",
+            "cancel": "Abbrechen"
+          },
+          "details": {
+            "title": "Geschichte-Details",
+            "storyTitle": "Titel der Geschichte",
+            "authorName": "Name des Autors",
+            "storyYear": "Jahr der Geschichte",
+            "confirm": "Speichern",
+            "cancel": "Abbrechen"
+          }
         }
       }
     }
