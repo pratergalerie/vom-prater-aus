@@ -44,6 +44,10 @@
 </template>
 
 <style scoped>
+  .layout-container {
+    padding-top: var(--header-height);
+  }
+
   .frame {
     position: fixed;
     top: 0;

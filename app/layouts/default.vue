@@ -50,6 +50,10 @@
 </template>
 
 <style scoped>
+  .layout-container {
+    padding-top: var(--header-height);
+  }
+
   .footer {
     grid-area: footer;
   }
