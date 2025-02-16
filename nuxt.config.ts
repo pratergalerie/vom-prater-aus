@@ -71,4 +71,13 @@ export default defineNuxtConfig({
       },
     ],
   },
+
+  // Set SSR to false for pages below /stories/edit/[id]
+  routeRules: {
+    // Homepage pre-rendered at build time
+    '/': { prerender: true },
+    // Admin dashboard renders only on client-side
+    '/admin/**': { ssr: false },
+    '/stories/edit/**': { ssr: false },
+  },
 })
