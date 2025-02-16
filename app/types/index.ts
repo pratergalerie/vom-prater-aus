@@ -10,6 +10,7 @@ export type Story = {
   author: Author
   pages: StoryPage[]
   keywords: Keyword[]
+  year: number
   createdAt: Date
   modifiedAt?: Date
 }
