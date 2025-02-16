@@ -9,6 +9,8 @@
 <style scoped>
   header {
     position: fixed;
+    top: 0;
+    left: 0;
     z-index: 99;
     box-sizing: border-box;
     width: 100%;
