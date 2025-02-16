@@ -1,14 +1,51 @@
 <script setup lang="ts">
-  import { BaseButton } from '#components'
-  import type { PageLayout, StoryPage } from '~/types'
+  import type { PageLayout } from '~/types'
+
   const props = defineProps<{
-    page: StoryPage
-    title: string
-    author: string
-    date: Date
+    pageIndex: number
   }>()
 
-  const pageLayout = ref<PageLayout>('image-over-text')
+  // Component accesses store directly
+  const { story } = storeToRefs(useStoryStore())
+  const page = computed(() => story.value.pages[props.pageIndex])
+
+  const layout = computed({
+    get: () => page.value?.layout,
+    set: (newLayout: PageLayout) => {
+      story.value.pages[props.pageIndex]!.layout = newLayout
+    },
+  })
+  const text = computed({
+    get: () => page.value?.text,
+    set: (newText: string) => {
+      story.value.pages[props.pageIndex]!.text = newText
+    },
+  })
+  const image = computed({
+    get: () => page.value?.image,
+    set: (newImage: string) => {
+      story.value.pages[props.pageIndex]!.image = newImage
+    },
+  })
+  const title = computed({
+    get: () => story.value.title,
+    set: (newTitle: string) => {
+      story.value.title = newTitle
+    },
+  })
+  const author = computed({
+    get: () => story.value.author,
+    set: (newAuthorName: string) => {
+      story.value.author.name = newAuthorName
+    },
+  })
+  const date = computed({
+    get: () => story.value.year,
+    set: (newDate: number) => {
+      story.value.year = newDate
+    },
+  })
+
   const imageOverText = ref<boolean>(true)
   const textOverImage = ref<boolean>(false)
 
@@ -16,15 +53,14 @@
     if (
       !newValue &&
       !textOverImage.value &&
-      (pageLayout.value === 'image-over-text' ||
-        pageLayout.value === 'text-over-image')
+      (layout.value === 'image-over-text' || layout.value === 'text-over-image')
     ) {
       imageOverText.value = true
       return
     }
     if (newValue) {
       textOverImage.value = false
-      pageLayout.value = 'image-over-text'
+      layout.value = 'image-over-text'
     }
   })
 
@@ -32,19 +68,18 @@
     if (
       !newValue &&
       !imageOverText.value &&
-      (pageLayout.value === 'image-over-text' ||
-        pageLayout.value === 'text-over-image')
+      (layout.value === 'image-over-text' || layout.value === 'text-over-image')
     ) {
       textOverImage.value = true
       return
     }
     if (newValue) {
       imageOverText.value = false
-      pageLayout.value = 'text-over-image'
+      layout.value = 'text-over-image'
     }
   })
 
-  watch(pageLayout, (newValue) => {
+  watch(layout, (newValue) => {
     if (newValue === 'image-over-text') {
       imageOverText.value = true
       textOverImage.value = false
@@ -57,54 +92,108 @@
   const placeholderImage = '/imgs/page-placeholder-image.jpg'
 
   const pageImage = computed(() => {
-    return props.page.image ? props.page.image : placeholderImage
+    return image.value ? image.value : placeholderImage
   })
 
-  const deleteDialogOpen = ref(false)
-  const addDialogOpen = ref(false)
-  const saveSubmitDialogOpen = ref(false)
-  const settingsDialogOpen = ref(false)
+  const deleteActionDialogOpen = ref(false)
+  const addActionDialogOpen = ref(false)
+  const saveSubmitActionDialogOpen = ref(false)
+  const pageLayoutActionDialogOpen = ref(false)
 
   const editorMenu = [
     {
       id: 'close',
       icon: 'mdi:close',
-      action: () => console.log('Close editor'),
+      action: () => emit('exitEditor'),
     },
     {
       id: 'delete',
       icon: 'mdi:delete',
       action: () => {
-        deleteDialogOpen.value = true
+        deleteActionDialogOpen.value = true
       },
     },
     {
       id: 'add',
       icon: 'mdi:add',
       action: () => {
-        addDialogOpen.value = true
+        addActionDialogOpen.value = true
       },
     },
     {
       id: 'save-submit',
       icon: 'custom:save-submit',
       action: () => {
-        saveSubmitDialogOpen.value = true
+        saveSubmitActionDialogOpen.value = true
       },
     },
     {
       id: 'settings',
       icon: 'mdi:settings',
       action: () => {
-        settingsDialogOpen.value = true
+        pageLayoutActionDialogOpen.value = true
       },
     },
   ]
+
+  const emit = defineEmits([
+    'addPage',
+    'deletePage',
+    'deleteStory',
+    'saveChanges',
+    'submit',
+    'exitEditor',
+    'editStoryDetails',
+  ])
+
+  function handleAddPage() {
+    emit('addPage')
+  }
+
+  function handleDeletePage() {
+    emit('deletePage')
+  }
+
+  function handleDeleteStory() {
+    emit('deleteStory')
+  }
+
+  function handleSaveChanges() {
+    emit('saveChanges')
+  }
+
+  function handleSubmit() {
+    emit('submit')
+  }
+
+  function handleAddImage() {
+    // Open file input
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.accept = 'image/*'
+    input.onchange = (event) => {
+      const file = (event.target as HTMLInputElement).files?.[0]
+      if (file) {
+        const reader = new FileReader()
+        reader.onload = (event) => {
+          image.value = event.target?.result as string
+        }
+        reader.readAsDataURL(file)
+      }
+    }
+    input.click()
+
+    console.log('image', image.value)
+  }
+
+  function handleAddSticker() {
+    console.log('add sticker')
+  }
 </script>
 
 <template>
   <div
-    class="page-container"
+    class="page-editor-container"
     :style="{}"
   >
     <div
@@ -114,12 +203,12 @@
       <div
         class="image-title-container"
         :class="{
-          'full-height': pageLayout === 'image',
-          'min-height': pageLayout === 'text',
+          'full-height': layout === 'image',
+          'min-height': layout === 'text',
         }"
       >
         <div
-          v-if="pageLayout !== 'text'"
+          v-if="layout !== 'text'"
           class="image-container"
         >
           <NuxtImg
@@ -128,6 +217,7 @@
           />
         </div>
         <CutoutShape
+          v-if="pageIndex === 0"
           shape-class="shape-textbox-1"
           color="pink"
           purpose="textbox"
@@ -138,19 +228,22 @@
             'bottom-aligned': imageOverText,
           }"
         >
-          <div class="title-box-content">
+          <div
+            v-if="pageIndex === 0"
+            class="title-box-content"
+          >
             <h1>{{ title }}</h1>
             <div class="author-info">
               <span>{{ $t('components.storyPageEditor.byAuthor') }}</span>
-              <span class="name">{{ author }}</span>
+              <span class="name">{{ author.name }}</span>
             </div>
             <div class="date">
               <Icon name="mdi:calendar-month" />
-              {{ date.getFullYear() }}
+              {{ date }}
             </div>
             <button
               class="story-details-edit-button"
-              @click="console.log('Edit title')"
+              @click="emit('editStoryDetails')"
             >
               <Icon name="mdi:edit" />
             </button>
@@ -159,24 +252,23 @@
       </div>
 
       <label
-        v-if="pageLayout !== 'image'"
+        v-if="layout !== 'image'"
         for="page-text-input"
         class="text-container"
         :class="{
-          'full-height': pageLayout === 'text',
+          'full-height': layout === 'text',
         }"
       >
         <textarea
           id="page-text-input"
+          v-model="text"
           :placeholder="$t('components.storyPageEditor.pageTextPlaceholder')"
         />
       </label>
     </div>
 
     <StoryPageDivider
-      v-if="
-        pageLayout === 'image-over-text' || pageLayout === 'text-over-image'
-      "
+      v-if="layout === 'image-over-text' || layout === 'text-over-image'"
       :shape-variant-index="0"
       color="mint"
       class="divider"
@@ -190,77 +282,129 @@
       >
         <BaseDialog
           v-if="action.id === 'delete'"
-          v-model="deleteDialogOpen"
+          v-model="deleteActionDialogOpen"
           :modal="false"
           speech-bubble-position="bottom-center"
           class="dialog delete"
         >
           <div class="dialog-content">
-            <button>
+            <button
+              :disabled="pageIndex === 0"
+              @click="handleDeletePage"
+            >
               <Icon name="mdi:close-box-outline" />
-              {{ $t('components.storyPageEditor.deletePage') }}
+              {{
+                $t(
+                  'components.storyPageEditor.dialogs.actions.delete.deletePage'
+                )
+              }}
             </button>
-            <button>
+            <button @click="handleDeleteStory">
               <Icon name="mdi:delete-outline" />
-              {{ $t('components.storyPageEditor.deleteStory') }}
+              {{
+                $t(
+                  'components.storyPageEditor.dialogs.actions.delete.deleteStory'
+                )
+              }}
             </button>
           </div>
         </BaseDialog>
 
         <BaseDialog
           v-if="action.id === 'add'"
-          v-model="addDialogOpen"
+          v-model="addActionDialogOpen"
           :modal="false"
           speech-bubble-position="bottom-center"
           class="dialog add"
         >
           <div class="dialog-content">
-            <button>
+            <button @click="handleAddImage">
               <Icon name="mdi:image-plus-outline" />
-              {{ $t('components.storyPageEditor.addImage') }}
+              {{
+                $t('components.storyPageEditor.dialogs.actions.add.addImage')
+              }}
+
+              <label
+                for="image-upload"
+                class="visually-hidden"
+              >
+                <input
+                  id="image-upload"
+                  type="file"
+                  aria-label="Upload image"
+                  accept="image/*"
+                  class="visually-hidden"
+                  @change="handleAddImage"
+                />
+              </label>
             </button>
-            <button>
+            <button
+              aria-label="Add new page"
+              @click="handleAddPage"
+            >
               <Icon name="mdi:note-plus-outline" />
-              {{ $t('components.storyPageEditor.addPage') }}
+              {{ $t('components.storyPageEditor.dialogs.actions.add.addPage') }}
             </button>
-            <button>
+            <button @click="handleAddSticker">
               <Icon name="mdi:shape-polygon-plus" />
-              {{ $t('components.storyPageEditor.addSticker') }}
+              {{
+                $t('components.storyPageEditor.dialogs.actions.add.addSticker')
+              }}
             </button>
           </div>
         </BaseDialog>
 
         <BaseDialog
           v-if="action.id === 'save-submit'"
-          v-model="saveSubmitDialogOpen"
+          v-model="saveSubmitActionDialogOpen"
           :modal="false"
           speech-bubble-position="bottom-center"
           class="dialog save-submit"
         >
           <div class="dialog-content">
-            <button>
+            <button @click="handleSaveChanges">
               <Icon name="mdi:content-save-outline" />
-              {{ $t('components.storyPageEditor.saveChanges') }}
+              {{
+                $t(
+                  'components.storyPageEditor.dialogs.actions.saveSubmit.saveChanges'
+                )
+              }}
             </button>
-            <button>
+            <button @click="handleSubmit">
               <Icon name="mdi:send-variant-outline" />
-              {{ $t('components.storyPageEditor.submitStory') }}
+              {{
+                $t(
+                  'components.storyPageEditor.dialogs.actions.saveSubmit.submitStory'
+                )
+              }}
             </button>
           </div>
         </BaseDialog>
 
         <BaseDialog
           v-if="action.id === 'settings'"
-          v-model="settingsDialogOpen"
+          v-model="pageLayoutActionDialogOpen"
           :modal="false"
           speech-bubble-position="bottom-right"
           class="dialog settings"
         >
           <div class="dialog-content">
-            <h2>{{ $t('components.storyPageEditor.configurePageTitle') }}</h2>
-            <p>{{ $t('components.storyPageEditor.selectLayout') }}</p>
+            <h2>
+              {{
+                $t(
+                  'components.storyPageEditor.dialogs.actions.pageLayout.title'
+                )
+              }}
+            </h2>
+            <p>
+              {{
+                $t(
+                  'components.storyPageEditor.dialogs.actions.pageLayout.description'
+                )
+              }}
+            </p>
             <div class="settings-container">
-              <button @click="pageLayout = 'image-over-text'">
+              <button @click="layout = 'image-over-text'">
                 <Icon
                   name="custom:image-plus-text"
                   class="image-text-icon"
@@ -268,53 +412,71 @@
                 <span
                   :class="{
                     highlight:
-                      pageLayout === 'image-over-text' ||
-                      pageLayout === 'text-over-image',
+                      layout === 'image-over-text' ||
+                      layout === 'text-over-image',
                   }"
                 >
-                  {{ $t('components.storyPageEditor.imageAndText') }}
+                  {{
+                    $t(
+                      'components.storyPageEditor.dialogs.actions.pageLayout.imageAndText'
+                    )
+                  }}
                 </span>
               </button>
               <div class="image-text-options">
                 <BaseCheckbox
                   id="image-over-text"
                   v-model:checked="imageOverText"
-                  :label="$t('components.storyPageEditor.imageOverText')"
+                  :label="
+                    $t(
+                      'components.storyPageEditor.dialogs.actions.pageLayout.imageOverText'
+                    )
+                  "
                   value="image-over-text"
                   :disabled="
-                    pageLayout !== 'text-over-image' &&
-                    pageLayout !== 'image-over-text'
+                    layout !== 'text-over-image' && layout !== 'image-over-text'
                   "
                 />
                 <BaseCheckbox
                   id="text-over-image"
                   v-model:checked="textOverImage"
-                  :label="$t('components.storyPageEditor.textOverImage')"
+                  :label="
+                    $t(
+                      'components.storyPageEditor.dialogs.actions.pageLayout.textOverImage'
+                    )
+                  "
                   value="text-over-image"
                   :disabled="
-                    pageLayout !== 'text-over-image' &&
-                    pageLayout !== 'image-over-text'
+                    layout !== 'text-over-image' && layout !== 'image-over-text'
                   "
                 />
               </div>
-              <button @click="pageLayout = 'image'">
+              <button @click="layout = 'image'">
                 <Icon name="mdi:image-outline" />
                 <span
                   :class="{
-                    highlight: pageLayout === 'image',
+                    highlight: layout === 'image',
                   }"
                 >
-                  {{ $t('components.storyPageEditor.onlyImage') }}
+                  {{
+                    $t(
+                      'components.storyPageEditor.dialogs.actions.pageLayout.onlyImage'
+                    )
+                  }}
                 </span>
               </button>
-              <button @click="pageLayout = 'text'">
+              <button @click="layout = 'text'">
                 <Icon name="mdi:text" />
                 <span
                   :class="{
-                    highlight: pageLayout === 'text',
+                    highlight: layout === 'text',
                   }"
                 >
-                  {{ $t('components.storyPageEditor.onlyText') }}
+                  {{
+                    $t(
+                      'components.storyPageEditor.dialogs.actions.pageLayout.onlyText'
+                    )
+                  }}
                 </span>
               </button>
             </div>
@@ -334,7 +496,7 @@
 </template>
 
 <style scoped>
-  .page-container {
+  .page-editor-container {
     position: relative;
     min-width: 350px;
     max-width: 500px;
@@ -544,6 +706,11 @@
       background-position: center;
       background-size: 100% 100%;
       border: none;
+
+      &:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+      }
     }
 
     h2,
@@ -633,6 +800,14 @@
       .image-text-icon {
         width: 40px;
       }
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
     }
   }
 </style>
