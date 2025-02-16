@@ -18,6 +18,7 @@
       shadow: boolean
     }>(),
     {
+      shapeClass: 'shape-textbox-1',
       purpose: 'decorative',
       shadow: true,
     }
