@@ -2,7 +2,6 @@
   import { ref, onMounted } from 'vue'
 
   const props = defineProps<{
-    modal: boolean
     speechBubblePosition?: 'bottom-left' | 'bottom-center' | 'bottom-right'
   }>()
 
@@ -17,11 +16,7 @@
 
   watch(open, (isOpen) => {
     if (isOpen) {
-      if (props.modal) {
-        dialogRef.value?.showModal()
-      } else {
-        dialogRef.value?.show()
-      }
+      dialogRef.value?.show()
     } else {
       dialogRef.value?.close()
     }
@@ -75,13 +70,8 @@
           <Icon name="mdi:close" />
         </button>
 
-        <slot></slot>
+        <slot />
       </div>
-
-      <div
-        class="shadow"
-        :style="{ clipPath: shapeClipPath }"
-      />
 
       <div
         v-if="props.speechBubblePosition"
@@ -106,6 +96,7 @@
     position: relative;
     width: 100%;
     height: 100%;
+    filter: drop-shadow(-5px 5px 0 rgb(0 0 0 / 100%));
   }
 
   .dialog-content {
@@ -130,16 +121,6 @@
     &.halftone {
       --opacity: 0.8;
     }
-  }
-
-  .shadow {
-    position: absolute;
-    top: 5px;
-    left: -5px;
-    z-index: -2;
-    width: 100%;
-    height: 100%;
-    background: var(--black);
   }
 
   .close-button {
