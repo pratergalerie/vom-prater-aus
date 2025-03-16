@@ -1,25 +1,17 @@
-# Nuxt dev/build outputs
-.output
-.data
-.nuxt
-.nitro
-.cache
-dist
-
-# Node dependencies
-node_modules
-
-# Logs
-logs
-*.log
-
-# Misc
 .DS_Store
-.fleet
-.idea
-.stylelintcache
 
-# Local env files
+node_modules
 .env
-.env.*
-!.env.example
+.env.prod
+volumes
+
+# Ignore all files in volumes/ EXCEPT for pooler.exs and vector.yml
+!volumes/pooler/pooler.exs
+!volumes/logs/vector.yml
+
+# Nginx generated config
+nginx/conf/app.conf
+
+# SSL related
+nginx/ssl/*
+!nginx/ssl/.gitkeep

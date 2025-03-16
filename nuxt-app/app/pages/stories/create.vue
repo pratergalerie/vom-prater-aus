@@ -53,6 +53,7 @@
               placeholder: t(
                 'pages.create.form.steps.authorInfo.inputs.authorName.placeholder'
               ),
+              vModel: inputValues.value.authorName,
             },
             {
               key: 'email',
@@ -61,6 +62,7 @@
               placeholder: t(
                 'pages.create.form.steps.authorInfo.inputs.email.placeholder'
               ),
+              vModel: inputValues.value.email,
             },
           ],
         },
@@ -74,6 +76,7 @@
               placeholder: t(
                 'pages.create.form.steps.storyInfo.inputs.title.placeholder'
               ),
+              vModel: inputValues.value.title,
             },
           ],
         },
@@ -105,8 +108,8 @@
 
   function openStoryEditor() {
     router.push({
-      name: 'story-editor',
-      params: { id: 'new' },
+      name: 'stories/edit',
+      params: { id: '0' },
     })
   }
 
@@ -182,8 +185,45 @@
               </template>
             </i18n-t>
           </div>
+          <div class="moderation-check">
+            <BaseCheckbox
+              id="checkbox"
+              v-model="termsAccepted"
+            />
+            <i18n-t
+              scope="global"
+              keypath="pages.create.form.steps.authorInfo.info.moderationCheckbox"
+              tag="span"
+            >
+              <template #moderation>
+                <NuxtLink to="/terms">{{
+                  $t(
+                    'pages.create.form.steps.authorInfo.info.moderationConditions'
+                  )
+                }}</NuxtLink>
+              </template>
+              <template #moderationConditions>
+                <NuxtLink to="/privacy">{{
+                  $t(
+                    'pages.create.form.steps.authorInfo.info.moderationConditions'
+                  )
+                }}</NuxtLink>
+              </template>
+            </i18n-t>
+          </div>
         </template>
       </template>
+      <div class="input-wrapper">
+        <BaseTextInput
+          v-for="(input, index) in currentStep?.inputs"
+          :id="input.key"
+          :key="index"
+          :type="input.type"
+          :label="input.label"
+          :placeholder="input.placeholder"
+          :v-model="input.vModel"
+        />
+      </div>
       <div class="step-buttons-wrapper">
         <div
           v-for="(button, index) in form.buttons"
@@ -214,9 +254,10 @@
   .content-wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     width: 100%;
-    height: 100dvh;
+    height: calc(100dvh - 100px);
+    padding-top: 50px;
   }
 
   h1 {
@@ -287,7 +328,8 @@
     }
   }
 
-  .terms-privacy-check {
+  .terms-privacy-check,
+  .moderation-check {
     display: flex;
     gap: 0.5rem;
     align-items: center;
@@ -301,5 +343,11 @@
     a {
       margin: 0 0.2rem;
     }
+  }
+
+  .input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
 </style>

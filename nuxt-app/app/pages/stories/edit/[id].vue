@@ -258,7 +258,7 @@
     gap: 40px;
     align-items: center;
     justify-content: flex-start;
-    height: calc(100dvh - var(--header-height) - var(--padding) * 2);
+    height: calc(100dvh - var(--header-height));
   }
 
   .story-editor {

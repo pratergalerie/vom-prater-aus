@@ -71,7 +71,9 @@
               "link": "Why do we need this information?",
               "checkbox": "I agree to the {termsOfUse} and {privacyPolicy}.",
               "termsOfUse": "Terms of Use",
-              "privacyPolicy": "Privacy Policy"
+              "privacyPolicy": "Privacy Policy",
+              "moderationCheckbox": "I agree to the {moderationConditions}.",
+              "moderationConditions": "moderation conditions"
             }
           },
           "storyInfo": {
@@ -87,7 +89,7 @@
         "buttons": {
           "next": "Next",
           "back": "Back",
-          "create": "Continue"
+          "create": "Create story"
         }
       }
     },

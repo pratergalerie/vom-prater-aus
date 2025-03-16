@@ -7,8 +7,11 @@ export default defineNuxtConfig({
   },
 
   devtools: {
-    enabled: false,
+    enabled: true,
   },
+
+  runtimeConfig: {},
+
   css: ['@/assets/css/main.css'],
   modules: [
     '@pinia/nuxt',
@@ -38,6 +41,7 @@ export default defineNuxtConfig({
     'nuxt-rellax',
     '@tresjs/nuxt',
     '@hypernym/nuxt-anime',
+    '@nuxtjs/supabase',
   ],
   i18n: {
     restructureDir: './i18n',
@@ -74,10 +78,12 @@ export default defineNuxtConfig({
 
   // Set SSR to false for pages below /stories/edit/[id]
   routeRules: {
-    // Homepage pre-rendered at build time
-    '/': { prerender: true },
     // Admin dashboard renders only on client-side
     '/admin/**': { ssr: false },
     '/stories/edit/**': { ssr: false },
+  },
+
+  supabase: {
+    redirect: false,
   },
 })

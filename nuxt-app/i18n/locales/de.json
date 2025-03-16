@@ -71,7 +71,9 @@
               "link": "Warum brauchen wir diese Informationen?",
               "checkbox": "Ich stimme den {termsOfUse} und der {privacyPolicy} zu.",
               "termsOfUse": "Nutzungsbedingungen",
-              "privacyPolicy": "Datenschutzerklärung"
+              "privacyPolicy": "Datenschutzerklärung",
+              "moderationCheckbox": "Ich stimme den {moderationConditions} zu.",
+              "moderationConditions": "Moderationbedingungen"
             }
           },
           "storyInfo": {
@@ -87,7 +89,7 @@
         "buttons": {
           "next": "Weiter",
           "back": "Zurück",
-          "create": "Weiter"
+          "create": "Geschichte erstellen"
         }
       }
     },

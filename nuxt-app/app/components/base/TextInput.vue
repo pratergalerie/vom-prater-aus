@@ -1,9 +1,5 @@
 <script lang="ts" setup>
-  enum InputType {
-    Text = 'text',
-    Email = 'email',
-    Password = 'password',
-  }
+  type InputType = 'text' | 'email' | 'password'
 
   defineProps<{
     id: string
