@@ -1,23 +1,36 @@
 {
   "cSpell.words": [
+    "autodetection",
+    "bucketid",
+    "bucketname",
     "docker-compose",
+    "fkey",
     "hypernym",
     "imgproxy",
     "kong",
     "nuxtjs",
+    "pgbouncer",
     "postgres",
     "rellax",
     "Sometype",
+    "sortcolumn",
+    "sortorder",
     "supabase",
     "SUPABASE",
+    "svgs",
     "tresjs",
+    "usename",
     "vueuse",
     "wght"
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
   "gitConfigUser.selectedProfile": "Personal",
   "cSpell.language": "en,de-DE",
-  "i18n-ally.localesPaths": ["i18n", "i18n/locales"],
+  "i18n-ally.localesPaths": ["nuxt-app/i18n/locales"],
   "i18n-ally.keystyle": "nested",
-  "i18n-ally.sourceLanguage": "de"
+  "i18n-ally.sourceLanguage": "de",
+  "stylelint.configBasedir": "nuxt-app",
+  "stylelint.configFile": "nuxt-app/.stylelintrc.json",
+  "stylelint.validate": ["css", "vue", "scss"],
+  "cSpell.ignoreWords": ["rhythmed"]
 }
