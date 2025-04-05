@@ -4,7 +4,7 @@ The shapes are defined as clip-paths and are made to look like they were cut out
 with slightly irregular edges to give them a handmade feel.
 */
 
-.shape-1 {
+.shape-a {
   clip-path: polygon(
     23% 2%,
     45% 0%,
@@ -26,7 +26,7 @@ with slightly irregular edges to give them a handmade feel.
   );
 }
 
-.shape-2 {
+.shape-b {
   clip-path: polygon(
     8% 31%,
     3% 45%,
@@ -46,7 +46,7 @@ with slightly irregular edges to give them a handmade feel.
   );
 }
 
-.shape-childlike-3 {
+.shape-c {
   clip-path: polygon(
     15% 12%,
     31% 5%,
