@@ -32,5 +32,5 @@
   "stylelint.configBasedir": "nuxt-app",
   "stylelint.configFile": "nuxt-app/.stylelintrc.js",
   "stylelint.validate": ["css", "vue", "scss"],
-  "cSpell.ignoreWords": ["rhythmed"]
+  "cSpell.ignoreWords": ["plpgsql", "pooler", "rhythmed"]
 }
