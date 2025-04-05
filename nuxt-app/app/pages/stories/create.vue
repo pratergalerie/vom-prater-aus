@@ -12,12 +12,11 @@
   definePageMeta({
     layout: 'no-footer',
   })
-
-  enum InputType {
-    Text = 'text',
-    Email = 'email',
-    Password = 'password',
-  }
+  const inputTypes = {
+    TEXT: 'text',
+    EMAIL: 'email',
+    PASSWORD: 'password',
+  } as const
 
   const step = ref(0)
   function nextStep() {
@@ -27,11 +26,37 @@
     step.value--
   }
 
-  const router = useRouter()
-
   const { t } = useI18n({ useScope: 'global' })
 
   const { story } = storeToRefs(useStoryStore())
+
+  type InputValues = {
+    authorName: string
+    email: string
+    title: string
+  }
+
+  const inputValues = ref({
+    authorName: '',
+    email: '',
+    title: '',
+  }) as Ref<InputValues>
+
+  const termsAccepted = ref(false)
+
+  watch(
+    () => inputValues.value,
+    (newValue) => {
+      console.log('inputValues', newValue)
+      if (step.value === 0) {
+        story.value.author.name = newValue.authorName
+        story.value.author.email = newValue.email
+      } else if (step.value === 1) {
+        story.value.title = newValue.title
+      }
+    },
+    { deep: true }
+  )
 
   const form = computed(() => {
     return {
@@ -46,7 +71,7 @@
           inputs: [
             {
               key: 'authorName',
-              type: InputType.Text,
+              type: inputTypes.TEXT,
               label: t(
                 'pages.create.form.steps.authorInfo.inputs.authorName.label'
               ),
@@ -57,7 +82,7 @@
             },
             {
               key: 'email',
-              type: InputType.Email,
+              type: inputTypes.EMAIL,
               label: t('pages.create.form.steps.authorInfo.inputs.email.label'),
               placeholder: t(
                 'pages.create.form.steps.authorInfo.inputs.email.placeholder'
@@ -71,7 +96,7 @@
           inputs: [
             {
               key: 'title',
-              type: InputType.Text,
+              type: inputTypes.TEXT,
               label: t('pages.create.form.steps.storyInfo.inputs.title.label'),
               placeholder: t(
                 'pages.create.form.steps.storyInfo.inputs.title.placeholder'
@@ -97,7 +122,7 @@
         {
           label: t('pages.create.form.buttons.create'),
           icon: 'mdi:arrow-right',
-          callback: openStoryEditor,
+          callback: createStory,
           checkStepToRender: () => step.value === form.value.steps.length - 1,
         },
       ],
@@ -106,39 +131,49 @@
 
   const currentStep = computed(() => form.value.steps[step.value])
 
-  function openStoryEditor() {
-    router.push({
-      name: 'stories/edit',
-      params: { id: '0' },
-    })
+  async function createStory() {
+    const author = story.value.author
+
+    const { data: authorData, error: authorError } =
+      await useAPI().createAuthor({
+        name: author.name,
+        email: author.email,
+      })
+
+    console.log('authorData', authorData.value)
+
+    if (authorError) {
+      console.error('Error creating author:', authorError)
+    } else if (authorData.value) {
+      const authorId = authorData.value.id
+
+      const { data, error } = await useAPI().createStory({
+        author_id: authorId,
+        created_at: new Date().toISOString(),
+        id: '',
+        modified_at: null,
+        title: inputValues.value.title,
+        year: 2025,
+      })
+
+      if (error.value) {
+        console.error('Error creating story:', error)
+      }
+
+      if (data.value && data.value.id) {
+        console.log('data', data.value)
+        const router = useRouter()
+        router.push({
+          name: 'stories/edit',
+          params: { id: data.value.id },
+        })
+      }
+    }
   }
 
   function openInfoModal() {
     console.log('openInfoModal')
   }
-
-  const termsAccepted = ref(false)
-
-  type InputValues = {
-    authorName: string
-    email: string
-    title: string
-  }
-
-  const inputValues = ref({
-    authorName: '',
-    email: '',
-    title: '',
-  }) as Ref<InputValues>
-
-  watch(inputValues.value, (newValue) => {
-    if (step.value === 0) {
-      story.value.author.name = newValue.authorName
-      story.value.author.email = newValue.email
-    } else if (step.value === 1) {
-      story.value.title = newValue.title
-    }
-  })
 </script>
 
 <template>
@@ -242,7 +277,7 @@
             :icon="button.icon"
             :label="button.label"
             class="step-button"
-            @click="button.callback"
+            @click.prevent="button.callback"
           />
         </div>
       </div>
@@ -315,8 +350,8 @@
     align-items: center;
     width: fit-content;
     padding: 0;
-    font-family: var(--button-font);
-    color: var(--black);
+    font-family: var(--font-button);
+    color: var(--color-black);
     text-align: left;
     text-decoration: underline;
     cursor: pointer;

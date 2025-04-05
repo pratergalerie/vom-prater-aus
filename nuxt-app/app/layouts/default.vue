@@ -44,18 +44,19 @@
       <Footer
         v-if="!isOpen"
         ref="footerRef"
+        class="footer"
       />
     </Transition>
   </div>
 </template>
 
 <style scoped>
-  .layout-container {
-    padding-top: var(--header-height);
+  main {
+    margin-top: var(--header-height);
   }
 
   .footer {
-    grid-area: footer;
+    margin-top: 100px;
   }
 
   .frame {

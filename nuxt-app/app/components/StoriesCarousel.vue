@@ -26,9 +26,31 @@
   const activeSlide = ref(1) // Start at the first real slide
   const isTransitioning = ref(false)
 
+  // Update slide width based on viewport width
+  const slideWidth = computed(() => {
+    if (window.innerWidth >= 1024) {
+      return 80 // 80vw on large screens
+    } else if (window.innerWidth >= 768) {
+      return 80 // 80vw on medium screens
+    } else {
+      return 100 // 100vw on mobile
+    }
+  })
+
+  const slideSpacing = computed(() => {
+    if (window && window.innerWidth >= 1024) {
+      return 20 // 20vw spacing on large screens
+    } else if (window && window.innerWidth >= 768) {
+      return 20 // 20vw spacing on medium screens
+    } else {
+      return 0 // No spacing on mobile
+    }
+  })
+
   const totalSlidesWidth = computed(() => {
     return (
-      slidesWithClones.value.length * 100 + slidesWithClones.value.length * 40
+      slidesWithClones.value.length * slideWidth.value +
+      (slidesWithClones.value.length - 1) * slideSpacing.value
     )
   })
 
@@ -60,14 +82,11 @@
 </script>
 
 <template>
-  <div
-    class="stories-carousel rellax"
-    data-rellax-speed="0.5"
-  >
+  <div class="stories-carousel">
     <div
       class="slides"
       :style="{
-        transform: `translateX(-${activeSlide * 100}vw)`,
+        transform: `translateX(-${activeSlide * (slideWidth + slideSpacing)}vw)`,
         transition: isTransitioning ? 'transform 1s ease-in-out' : 'none',
         width: `${totalSlidesWidth}vw`,
       }"
@@ -111,15 +130,30 @@
     position: relative;
     width: 100vw;
     height: 40dvh;
-    margin: 0 calc(var(--padding) * -1);
+    min-height: 350px;
+    margin: 0 calc(var(--padding-mobile) * -1);
 
-    /* Add negative padding margin */
+    @container (min-width: 768px) {
+      margin: 0 calc(var(--padding-desktop) * -1);
+    }
+
+    @media (min-height: 1024px) {
+      height: auto;
+    }
+
     overflow: hidden;
+    container-type: inline-size;
+    container-name: carousel-container;
   }
 
   .slides {
     display: flex;
     will-change: transform; /* Optimize for performance */
+
+    @container (min-width: 768px) {
+      gap: 20vw;
+      margin-left: 20vw;
+    }
   }
 
   .slide {
@@ -133,6 +167,16 @@
     gap: 10px;
     width: 100vw;
     height: 100%;
+    container-name: slide-container;
+
+    @container (min-width: 768px) {
+      width: 80vw;
+      height: 500px;
+    }
+
+    @media (min-width: 1024px) {
+      width: 80vw;
+    }
   }
 
   .picture-wrapper {
@@ -156,7 +200,12 @@
 
   .quote {
     grid-area: quote;
-    padding: 0 var(--padding);
+    padding: 0 var(--padding-mobile);
+
+    @container (min-width: 768px) {
+      padding: 0 var(--padding-desktop);
+    }
+
     font-style: italic;
     line-height: 1.6rem;
   }
@@ -166,7 +215,12 @@
 
     /* Align to right */
     justify-self: end;
-    margin: 0 var(--padding);
+    margin: 0 var(--padding-mobile);
+
+    @container (min-width: 768px) {
+      margin: 0 var(--padding-desktop);
+    }
+
     text-align: right;
   }
 </style>

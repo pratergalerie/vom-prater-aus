@@ -8,11 +8,11 @@
     },
     fadeToColor: {
       type: String,
-      default: 'var(--light-beige)',
+      default: 'var(--color-beige)',
     },
     height: {
       type: Number,
-      default: 100,
+      default: 120,
     },
   })
 
@@ -78,11 +78,11 @@
         >
           <stop
             offset="0%"
-            stop-color="white"
+            stop-color="var(--color-white)"
           />
           <stop
             offset="100%"
-            stop-color="black"
+            stop-color="var(--color-black)"
           />
         </linearGradient>
         <linearGradient

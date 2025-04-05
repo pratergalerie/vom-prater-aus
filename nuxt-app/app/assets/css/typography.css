@@ -2,10 +2,10 @@
 
 html,
 body {
-  font-family: var(--text-font);
-  font-size: var(--base-font-size);
+  font-family: var(--font-text);
+  font-size: var(--font-size);
   line-height: 1.5;
-  color: var(--text-color);
+  color: var(--color-text);
 }
 
 h1,
@@ -15,27 +15,28 @@ h4,
 h5,
 h6 {
   margin: 0;
-  font-family: var(--heading-font);
-  color: var(--heading-color);
+  font-family: var(--font-heading);
+  color: var(--color-heading);
 }
 
 p {
   margin: 0;
-  font-family: var(--text-font);
+  font-family: var(--font-text);
   font-size: var(--font-size);
-  color: var(--text-color);
+  color: var(--color-text);
   line-height: calc(1rem * 1.3);
 }
 
 a {
-  font-family: var(--link-font);
+  font-family: var(--font-link);
   font-weight: 400;
-  color: var(--links-color);
+  color: var(--color-link);
   text-decoration: underline;
 }
 
 .highlight {
-  background: linear-gradient(
+  background:
+    linear-gradient(
       104deg,
       rgba(249, 184, 93, 0) 0.9%,
       rgba(249, 184, 93, 1.25) 2.4%,

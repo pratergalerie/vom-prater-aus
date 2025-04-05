@@ -33,7 +33,7 @@
     grid-area: 1 / 1;
     width: 100%;
     height: 100%;
-    background: var(--light-beige);
+    background: var(--color-beige);
     mix-blend-mode: multiply;
   }
 
@@ -43,10 +43,10 @@
     width: 100%;
     height: 100%;
     box-shadow:
-      inset 10px 20px 300px 0 var(--brown),
-      inset -10px -20px 300px 0 var(--brown),
-      inset 20px -10px 300px 0 var(--brown),
-      inset -20px 10px 300px 0 var(--brown);
+      inset 10px 20px 300px 0 var(--color-brown),
+      inset -10px -20px 300px 0 var(--color-brown),
+      inset 20px -10px 300px 0 var(--color-brown),
+      inset -20px 10px 300px 0 var(--color-brown);
     mix-blend-mode: multiply;
     opacity: 0.1;
   }

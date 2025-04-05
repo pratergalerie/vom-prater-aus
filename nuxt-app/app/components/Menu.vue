@@ -323,7 +323,7 @@
     height: 80%;
     padding: 0;
     margin: 0;
-    color: var(--light-beige);
+    color: var(--color-beige);
   }
 
   .menu-content {
@@ -352,11 +352,11 @@
       list-style: none;
 
       li {
-        font-family: var(--link-font);
+        font-family: var(--font-link);
         font-size: 1.25rem;
         font-weight: 700;
         line-height: 1.5rem;
-        color: var(--light-beige);
+        color: var(--color-beige);
         text-align: right;
         cursor: pointer;
         opacity: 0;
@@ -373,11 +373,11 @@
         }
 
         @media screen and (prefers-reduced-motion: reduce) {
-          font-family: var(--link-font);
+          font-family: var(--font-link);
           font-size: 1.25rem;
           font-weight: 700;
           line-height: 1.5rem;
-          color: var(--light-beige);
+          color: var(--color-beige);
           text-align: right;
           cursor: pointer;
           opacity: 0;
@@ -427,14 +427,14 @@
     justify-content: right;
     padding: 1rem;
     margin: 0;
-    color: var(--light-beige);
+    color: var(--color-beige);
 
     a {
       padding: 0 0.5rem;
-      font-family: var(--link-font);
+      font-family: var(--font-link);
       font-size: 1.25rem;
       line-height: 1.5rem;
-      color: var(--light-beige);
+      color: var(--color-beige);
       text-align: right;
       text-transform: uppercase;
       text-decoration: none;
@@ -442,15 +442,15 @@
 
       &.active {
         font-weight: 700;
-        color: var(--black);
+        color: var(--color-black);
       }
     }
   }
 
   .toggle-button {
     position: fixed;
-    right: var(--padding);
-    bottom: var(--padding);
+    right: var(--padding-mobile);
+    bottom: var(--padding-mobile);
     z-index: 101;
     width: 50px;
     height: 50px;
@@ -505,7 +505,7 @@
       span {
         width: 100%;
         height: 2px;
-        background: var(--light-beige);
+        background: var(--color-beige);
         transition:
           transform 0.3s ease,
           opacity 0.3s ease;
@@ -513,7 +513,7 @@
         @media screen and (prefers-reduced-motion: reduce) {
           width: 100%;
           height: 2px;
-          background: var(--light-beige);
+          background: var(--color-beige);
           transition: none;
         }
       }
@@ -550,7 +550,7 @@
         span {
           width: 100%;
           height: 2px;
-          background: var(--light-beige);
+          background: var(--color-beige);
           transition:
             transform 0.3s ease,
             opacity 0.3s ease;

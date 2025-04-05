@@ -144,7 +144,7 @@
     // 1) Make sure both refs are set
     if (!cameraRef.value || !controlsRef.value) return
 
-    const controls = controlsRef.value?.instance as typeof MapControls
+    const controls = controlsRef.value?.instance as MapControls
 
     const startPos = cameraRef.value.position
     const startTarget = controls.target

@@ -9,11 +9,25 @@
     ],
   })
 
-  const containerRef = ref<HTMLElement | undefined>(undefined)
+  const { getStories } = useAPI()
+
+  const { data: stories, error, status } = await getStories()
+
+  const pending = computed(() => {
+    return status.value === 'pending'
+  })
+
+  if (error.value) {
+    console.error('Error fetching stories:', error)
+  }
+
+  console.log('data', stories.value)
+
+  const containerRef = ref<HTMLElement | null>(null)
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const rellaxInstance = useRellax('.rellax', {
-    wrapper: containerRef.value,
+    wrapper: containerRef.value as HTMLElement,
     center: true,
     vertical: true,
     horizontal: false,
@@ -28,7 +42,7 @@
       },
       quote: 'Kann diese Nachmittage im Prater nur empfehlen!',
       link: {
-        text: 'Meine Lieblingsplätze in Berlin (2003)',
+        text: `${stories.value[0].title} (${stories.value[0].year})`,
         href: '/',
       },
     },
@@ -40,7 +54,7 @@
       },
       quote: 'Ein wunderbarer Ort zum Entspannen!',
       link: {
-        text: 'Erholung pur (1999)',
+        text: `${stories.value[1].title} (${stories.value[1].year})`,
         href: '/',
       },
     },
@@ -52,7 +66,7 @@
       },
       quote: 'Ein Muss für jeden Berlin-Besucher',
       link: {
-        text: 'Meine Berlin-Tipps (2005)',
+        text: `${stories.value[2].title} (${stories.value[2].year})`,
         href: '/',
       },
     },
@@ -64,11 +78,17 @@
     ref="containerRef"
     class="content-wrapper"
   >
-    <section class="stories">
-      <StoriesCarousel
-        :slides="storiesSlides"
-        class="stories-carousel rellax"
-      />
+    <section
+      v-if="!pending"
+      class="stories"
+    >
+      <ClientOnly>
+        <StoriesCarousel
+          :slides="storiesSlides"
+          class="stories-carousel rellax"
+          data-rellax-speed="-0.5"
+        />
+      </ClientOnly>
       <div class="text-block">
         <h1>{{ $t('pages.home.sections.stories.title') }}</h1>
         <p>
@@ -77,10 +97,10 @@
       </div>
       <BaseButton
         :label="$t('pages.home.sections.stories.button')"
-        icon="arrow-right"
+        icon="mdi:arrow-right"
         type="primary"
         variant="label-icon"
-        class="rellax"
+        class="button rellax"
         data-rellax-speed="-0.2"
         href="/stories/explorer"
       />
@@ -94,15 +114,17 @@
         data-rellax-speed="0.5"
       />
       <div class="text-block">
-        <h1>{{ $t('pages.home.sections.prater.title') }}</h1>
+        <h1>
+          {{ $t('pages.home.sections.prater.title') }}
+        </h1>
         <p>
           {{ $t('pages.home.sections.prater.text') }}
         </p>
       </div>
       <BaseButton
-        class="rellax"
+        class="button rellax"
         :label="$t('pages.home.sections.prater.button')"
-        icon="arrow-right"
+        icon="mdi:arrow-right"
         type="primary"
         variant="label-icon"
         data-rellax-speed="0"
@@ -129,9 +151,9 @@
         {{ $t('pages.home.sections.create.text') }}
       </p>
       <BaseButton
-        class="rellax"
+        class="button rellax"
         :label="$t('pages.home.sections.create.button')"
-        icon="arrow-right"
+        icon="mdi:arrow-right"
         type="primary"
         variant="label-icon"
         data-rellax-speed="0.1"
@@ -169,12 +191,22 @@
 
 <style scoped>
   .content-wrapper {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 100%;
-    height: 100%;
-    margin-top: var(--header-height);
+    min-height: 100vh;
+    container-type: inline-size;
+    container-name: main-container;
+
+    @container (min-width: 768px) {
+      gap: 100px;
+    }
+
+    @media (min-height: 1024px) {
+      gap: 100px;
+    }
   }
 
   section {
@@ -184,8 +216,19 @@
     gap: 1rem;
     justify-content: center;
     width: 100%;
-    height: calc(100vh);
+    min-height: 600px;
     margin: 0;
+    container-type: inline-size;
+    container-name: section-container;
+
+    @container (min-width: 768px) {
+      gap: 2rem;
+      height: auto;
+    }
+
+    @media (min-height: 1024px) {
+      height: auto;
+    }
 
     img {
       width: 100%;
@@ -202,18 +245,17 @@
     }
 
     h1 {
-      font-size: 1.4rem;
-      line-height: 1.8rem;
+      font-size: clamp(1.4rem, 2.5cqi, 2.5rem);
+      line-height: 1.3rem;
     }
 
     p {
-      font-size: 1rem;
+      font-size: clamp(1rem, 1.5cqi, 1.2rem);
       line-height: 1.3rem;
     }
 
     &.stories {
       justify-content: flex-start;
-      height: auto;
 
       .stories-carousel {
         mix-blend-mode: multiply;
@@ -221,48 +263,99 @@
 
       .text-block {
         max-width: 80%;
+
+        @container (min-width: 768px) {
+          max-width: 60%;
+        }
       }
     }
 
     &.prater {
+      @container (min-width: 768px) {
+        flex-direction: column;
+        gap: 2rem;
+        align-items: center;
+      }
+
       img {
-        margin-left: calc(-1 * var(--padding));
+        width: 100%;
+        margin-left: calc(-1 * var(--padding-mobile));
+
+        @media (min-width: 768px) {
+          width: calc(100% + var(--padding-desktop));
+          margin-left: calc(-1 * var(--padding-desktop));
+        }
       }
 
       .text-block {
         align-self: flex-end;
         max-width: 80%;
 
-        h1 {
-          margin-left: -2.5rem;
+        @container (min-width: 768px) {
+          max-width: 60%;
+
+          p {
+            margin-left: 2rem;
+          }
+        }
+      }
+
+      h1 {
+        margin-left: -2.5rem;
+      }
+
+      .button {
+        align-self: flex-end;
+
+        @container (min-width: 768px) {
+          align-self: flex-end;
         }
       }
     }
 
     &.create {
-      /* stylelint-disable-next-line no-descending-specificity */
+      @container (min-width: 768px) {
+        gap: 2rem;
+        align-items: flex-end;
+      }
+
       h1,
       p {
         max-width: 80%;
-        margin-left: auto;
-        text-align: right;
+
+        @container (min-width: 768px) {
+          align-self: flex-start;
+          max-width: 60%;
+          margin-left: 0;
+          text-align: left;
+        }
       }
 
       img {
-        width: 100vw;
-        margin: 0 calc(-1 * var(--padding));
+        align-self: flex-end;
+        width: 90vw;
+        margin-right: calc(-1 * var(--padding-mobile));
+
+        @container (min-width: 768px) {
+          width: 80%;
+          margin: 0 calc(-1 * var(--padding-desktop));
+        }
+      }
+
+      .button {
+        @container (min-width: 768px) {
+          align-self: flex-start;
+        }
       }
     }
   }
 
   .floating-shapes {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
     z-index: -1;
-    width: 100vw;
-    height: 300vh;
-    overflow-x: hidden;
+    width: 100%;
+    pointer-events: none;
   }
 
   .floating-shape {
@@ -273,25 +366,41 @@
       top: 150px;
       left: -20px;
       width: 80%;
+
+      @container (min-width: 768px) {
+        width: 40%;
+      }
     }
 
     &.shape-2 {
-      top: calc(50vh + 40px);
+      top: 600px;
       right: 50px;
       width: 90%;
+
+      @container (min-width: 768px) {
+        width: 50%;
+      }
     }
 
     &.shape-3 {
-      top: calc(100vh + 250px);
+      top: 1200px;
       right: -80px;
       width: 50%;
+
+      @container (min-width: 768px) {
+        width: 30%;
+      }
     }
 
     &.shape-4 {
-      top: calc(200vh + 50px);
+      top: 1800px;
       left: -50px;
       width: 50%;
       transform: rotate(10deg);
+
+      @container (min-width: 768px) {
+        width: 25%;
+      }
     }
   }
 </style>

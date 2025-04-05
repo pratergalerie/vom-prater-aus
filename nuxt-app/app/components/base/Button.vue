@@ -82,124 +82,129 @@
       icon: variant === 'icon',
     }"
   >
-    <ClientOnly>
-      <svg
-        class="button-shape"
-        :class="{
-          primary: type === 'primary',
-          secondary: type === 'secondary',
-        }"
-        :viewBox="variant === 'icon' ? '0 0 40 40' : '0 0 349 55'"
-        fill="none"
-        preserveAspectRatio="none"
+    <div class="button-content">
+      <span
+        v-if="variant === 'label'"
+        class="button-label"
+        :class="{ secondary: type === 'secondary' }"
       >
-        <defs>
-          <pattern
-            :id="`button-texture-${randomId}`"
-            patternUnits="userSpaceOnUse"
-            width="540px"
-            height="360px"
-            patternTransform="scale(0.5 0.5)"
-          >
-            <image
-              :href="textureSrc"
-              x="0"
-              y="0"
-              width="540px"
-              height="360px"
-            />
-          </pattern>
-        </defs>
-        <path
-          v-if="type === 'secondary'"
-          :d="svgPath"
-          fill="var(--white)"
-          stroke="var(--black)"
-          stroke-width="2"
-          class="secondary-button-shadow"
-          :class="{
-            icon: variant === 'icon',
-          }"
-        />
-        <path
-          :d="svgPath"
-          :fill="`url(#button-texture-${randomId})`"
-          stroke="var(--black)"
-          stroke-width="2"
-        />
-        <!-- Add a "vignette" effect using radial blur, clipped to the path -->
-        <filter :id="`button-vignette-${randomId}`">
-          <feGaussianBlur
-            in="SourceGraphic"
-            stdDeviation="10"
-          />
-        </filter>
-        <clipPath
-          :id="
-            variant === 'icon'
-              ? `icon-button-clip-path-${randomId}`
-              : `base-button-clip-path-${randomId}`
-          "
-        >
-          <path :d="svgPath" />
-        </clipPath>
-        <rect
-          :d="svgPath"
-          :fill="type === 'primary' ? 'var(--white)' : 'var(--black)'"
-          :filter="`url(#button-vignette-${randomId})`"
-          width="100%"
-          height="100%"
-          :clip-path="
-            variant === 'icon'
-              ? `url(#icon-button-clip-path-${randomId})`
-              : `url(#base-button-clip-path-${randomId})`
-          "
-          opacity="0.8"
-        />
-      </svg>
-    </ClientOnly>
-    <span
-      v-if="variant === 'label'"
-      class="button-label"
-      :class="{ secondary: type === 'secondary' }"
-    >
-      {{ label }}
-    </span>
-    <span
-      v-if="variant === 'label-icon'"
-      class="button-label-icon"
-      :class="{ secondary: type === 'secondary' }"
-    >
-      <NuxtLink
-        v-if="href"
-        :to="href"
-      >
-        {{ label }}
-      </NuxtLink>
-
-      <span v-else>
         {{ label }}
       </span>
-      <span v-if="icon">
+      <span
+        v-if="variant === 'label-icon'"
+        class="button-label-icon"
+        :class="{ secondary: type === 'secondary' }"
+      >
+        <NuxtLink
+          v-if="href"
+          :to="href"
+        >
+          {{ label }}
+        </NuxtLink>
+
+        <span v-else>
+          {{ label }}
+        </span>
+        <span v-if="icon">
+          <Icon
+            :name="icon"
+            mode="css"
+            class="icon"
+          />
+        </span>
+      </span>
+      <div
+        v-if="variant === 'icon' && icon"
+        class="button-icon"
+        :style="{ color: type === 'primary' ? 'black' : 'white' }"
+      >
         <Icon
           :name="icon"
           mode="css"
-          class="icon"
+          class="button-icon"
         />
-      </span>
-    </span>
-    <div
-      v-if="variant === 'icon' && icon"
-      class="button-icon"
-      :style="{ color: type === 'primary' ? 'black' : 'white' }"
-    >
-      <Icon
-        :name="icon"
-        mode="css"
-        class="button-icon"
-        size="1.2rem"
-      />
+      </div>
     </div>
+    <ClientOnly>
+      <div class="button-background">
+        <svg
+          class="button-shape"
+          :class="{
+            primary: type === 'primary',
+            secondary: type === 'secondary',
+          }"
+          :viewBox="variant === 'icon' ? '0 0 40 40' : '0 0 349 60'"
+          fill="none"
+          preserveAspectRatio="none"
+        >
+          <defs>
+            <pattern
+              :id="`button-texture-${randomId}`"
+              patternUnits="userSpaceOnUse"
+              width="540px"
+              height="360px"
+              patternTransform="scale(0.5 0.5)"
+            >
+              <image
+                :href="textureSrc"
+                x="0"
+                y="0"
+                width="540px"
+                height="360px"
+              />
+            </pattern>
+          </defs>
+          <path
+            v-if="type === 'secondary'"
+            :d="svgPath"
+            fill="var(--color-white)"
+            stroke="var(--color-black)"
+            stroke-width="2"
+            class="secondary-button-shadow"
+            :class="{
+              icon: variant === 'icon',
+            }"
+          />
+          <path
+            :d="svgPath"
+            :fill="`url(#button-texture-${randomId})`"
+            stroke="var(--color-black)"
+            stroke-width="2"
+          />
+          <!-- Add a "vignette" effect using radial blur, clipped to the path -->
+          <filter :id="`button-vignette-${randomId}`">
+            <feGaussianBlur
+              in="SourceGraphic"
+              stdDeviation="10"
+            />
+          </filter>
+          <clipPath
+            :id="
+              variant === 'icon'
+                ? `icon-button-clip-path-${randomId}`
+                : `base-button-clip-path-${randomId}`
+            "
+          >
+            <path :d="svgPath" />
+          </clipPath>
+          <rect
+            :d="svgPath"
+            :fill="
+              type === 'primary' ? 'var(--color-white)' : 'var(--color-black)'
+            "
+            :filter="`url(#button-vignette-${randomId})`"
+            width="100%"
+            height="100%"
+            :clip-path="
+              variant === 'icon'
+                ? `url(#icon-button-clip-path-${randomId})`
+                : `url(#base-button-clip-path-${randomId})`
+            "
+            opacity="0.8"
+          />
+        </svg>
+      </div>
+    </ClientOnly>
   </button>
 </template>
 
@@ -207,30 +212,125 @@
   button {
     display: grid;
     width: 100%;
-    max-width: 380px;
-    max-height: 60px;
+    min-width: 300px;
+    max-width: 500px;
+    height: 60px;
     padding: 0;
-    color: var(--black);
+    color: var(--color-black);
     cursor: pointer;
     background: none;
     border: none;
+    container-type: inline-size;
+    container-name: button-container;
+    transition: transform 0.2s ease-out;
+
+    &:hover,
+    &:focus {
+      transform: scale(1.02);
+    }
 
     a {
       color: inherit;
       text-decoration: none;
     }
+
+    @container (min-width: 500px) {
+      max-width: 360px;
+    }
+
+    @media screen and (prefers-reduced-motion: reduce) {
+      display: grid;
+      width: 100%;
+      min-width: 300px;
+      max-width: 500px;
+      height: 60px;
+      padding: 0;
+      color: var(--color-black);
+      cursor: pointer;
+      background: none;
+      border: none;
+      container-type: inline-size;
+      container-name: button-container;
+      transition: none;
+
+      &:hover,
+      &:focus {
+        transform: scale(1.02);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      @container (min-width: 500px) {
+        max-width: 360px;
+      }
+    }
   }
 
-  .button-shape,
+  .button-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    grid-area: 1 / 1;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .button-background {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    grid-area: 1 / 1;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .button-shape {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: v-bind(dropShadow);
+    transition: filter 0.2s ease-out;
+
+    &:hover,
+    &:focus {
+      filter: drop-shadow(-8px 8px 0 var(--color-black));
+    }
+
+    @media screen and (prefers-reduced-motion: reduce) {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      filter: v-bind(dropShadow);
+      transition: none;
+
+      &:hover,
+      &:focus {
+        filter: drop-shadow(-8px 8px 0 var(--color-black));
+      }
+    }
+  }
+
   .button-label,
   .button-icon,
   .button-label-icon {
+    position: relative;
+    z-index: 1;
     display: flex;
-    grid-area: 1 / 1;
     gap: 0.5rem;
     align-items: center;
     justify-content: center;
-    height: 100%;
   }
 
   .button-label {
@@ -239,39 +339,76 @@
   }
 
   .button-icon {
-    /* Position span content in the center */
-    z-index: 1;
     margin: auto;
   }
 
   .button-label,
   .button-label-icon {
-    z-index: 1;
-    font-family: var(--button-font);
+    font-family: var(--font-button);
     font-size: 1rem;
+    transition: transform 0.2s ease-out;
 
     &.secondary {
-      color: var(--white);
+      color: var(--color-white);
+    }
+
+    @media screen and (prefers-reduced-motion: reduce) {
+      font-family: var(--font-button);
+      font-size: 1rem;
+      transition: none;
+
+      &.secondary {
+        color: var(--color-white);
+      }
     }
   }
 
-  .button-shape {
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-    filter: v-bind(dropShadow);
-  }
-
   .icon {
-    width: 1.2rem;
-    height: 1.2rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    transition: transform 0.2s ease-out;
+
+    button:hover &,
+    button:focus & {
+      transform: translateX(4px);
+    }
   }
 
   .secondary-button-shadow {
     transform: translate(-5px, 5px);
+    transition: transform 0.2s ease-out;
+
+    &:hover,
+    &:focus {
+      transform: translate(-7px, 7px);
+    }
 
     &.icon {
       transform: translate(-3px, 4px);
+
+      &:hover,
+      &:focus {
+        transform: translate(-5px, 6px);
+      }
+    }
+
+    @media screen and (prefers-reduced-motion: reduce) {
+      transform: translate(-5px, 5px);
+      transition: none;
+
+      &:hover,
+      &:focus {
+        transform: translate(-7px, 7px);
+      }
+
+      &.icon {
+        transform: translate(-3px, 4px);
+
+        &:hover,
+        &:focus {
+          transform: translate(-5px, 6px);
+        }
+      }
     }
   }
 </style>

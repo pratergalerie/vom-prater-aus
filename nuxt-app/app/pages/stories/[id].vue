@@ -117,7 +117,9 @@
   .story-container {
     position: relative;
     max-width: 800px;
-    height: calc(100vh - var(--header-height) - var(--padding) * 2 - 75px);
+    height: calc(
+      100vh - var(--header-height) - var(--padding-mobile) * 2 - 75px
+    );
     padding: var(--header-height) 0 0 0;
   }
 
@@ -129,7 +131,7 @@
   .story-title-image-container {
     position: relative;
     height: 40vh;
-    margin: 0 calc(var(--padding) * -1);
+    margin: 0 calc(var(--padding-mobile) * -1);
     overflow: hidden;
 
     img {
@@ -143,27 +145,27 @@
       bottom: 0;
       left: 0;
       width: 60%;
-      padding: var(--padding);
+      padding: var(--padding-mobile);
       padding-bottom: 50px;
       background: url('/imgs/stories/title-box.png') no-repeat center;
     }
 
     .author-name {
       margin-left: 0.3rem;
-      font-family: var(--link-font);
+      font-family: var(--font-link);
     }
   }
 
   .top-decoration {
-    width: calc(100% + var(--padding) * 4);
+    width: calc(100% + var(--padding-mobile) * 4);
     height: auto;
     max-height: 200px;
-    margin-left: calc(var(--padding) * -1 * 2);
+    margin-left: calc(var(--padding-mobile) * -1 * 2);
     object-fit: cover;
   }
 
   .story-page {
-    padding: 0 var(--padding);
+    padding: 0 var(--padding-mobile);
     margin: 1rem 0;
 
     p {
@@ -171,10 +173,10 @@
     }
 
     img {
-      width: calc(100% + var(--padding) * 4);
+      width: calc(100% + var(--padding-mobile) * 4);
       height: auto;
       max-height: 180px;
-      margin-left: calc(var(--padding) * -1 * 2);
+      margin-left: calc(var(--padding-mobile) * -1 * 2);
       object-fit: cover;
     }
 

@@ -17,33 +17,37 @@
       />
     </div>
     <div class="footer-content">
-      <h2>{{ $t('components.footer.title') }}</h2>
-      <nav>
-        <ul>
-          <li
-            v-for="(route, index) in menuRoutes"
-            :key="index"
-          >
-            <NuxtLink :to="route.path">{{ route.title }}</NuxtLink>
-          </li>
-        </ul>
-      </nav>
-      <p>
-        {{ $t('components.footer.text') }}
-      </p>
-      <div class="logos">
-        <img
-          src="/logos/prater-galerie.svg"
-          alt="Logo"
-        />
-        <img
-          src="/logos/kommunale.png"
-          alt="Logo"
-        />
-        <img
-          src="/logos/berlin-stadt-regierung.png"
-          alt="Logo"
-        />
+      <div class="title-and-nav">
+        <h2>{{ $t('components.footer.title') }}</h2>
+        <nav>
+          <ul>
+            <li
+              v-for="(route, index) in menuRoutes"
+              :key="index"
+            >
+              <NuxtLink :to="route.path">{{ route.title }}</NuxtLink>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="logos-and-text">
+        <p>
+          {{ $t('components.footer.text') }}
+        </p>
+        <div class="logos">
+          <img
+            src="/logos/prater-galerie.svg"
+            alt="Logo"
+          />
+          <img
+            src="/logos/kommunale.png"
+            alt="Logo"
+          />
+          <img
+            src="/logos/berlin-stadt-regierung.png"
+            alt="Logo"
+          />
+        </div>
       </div>
     </div>
     <div class="background">
@@ -60,6 +64,16 @@
     grid-template-areas: 'top-shape' 'content';
     grid-template-rows: 22px 1fr;
     height: calc(100vh - var(--header-height));
+    container-type: inline-size;
+    container-name: footer;
+
+    @container (min-width: 768px) {
+      height: auto;
+    }
+
+    @media (min-height: 1024px) {
+      height: auto;
+    }
   }
 
   .top-shape {
@@ -86,19 +100,39 @@
     flex-direction: column;
     grid-area: content;
     gap: 2rem;
-    padding: var(--padding);
+    width: 100%;
+    max-width: 1000px;
+    padding: 80px var(--padding-mobile);
+    margin: 0 auto;
     overflow: hidden;
-    color: var(--light-beige);
+    color: var(--color-beige);
+    container-type: inline-size;
+    container-name: footer-content;
 
-    @media (max-height: 700px) {
-      gap: 1rem;
+    @container (min-width: 768px) {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: var(--padding-desktop);
     }
+  }
+
+  .title-and-nav,
+  .logos-and-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .logos-and-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
   }
 
   h2 {
     margin: 0;
     font-size: 1.1rem;
-    color: var(--light-beige);
+    color: var(--color-beige);
   }
 
   nav {
@@ -116,25 +150,32 @@
     }
 
     a {
-      color: var(--light-beige);
+      color: var(--color-beige);
     }
   }
 
   p {
     margin: 0;
     font-size: 0.9rem;
-    color: var(--light-beige);
+    color: var(--color-beige);
   }
 
   .logos {
     display: flex;
     gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
     max-width: 100%;
     height: 70px;
 
-    /* stylelint-disable-next-line no-descending-specificity */
+    @media (min-width: 500px) {
+      justify-content: flex-start;
+    }
+
     img {
+      width: auto;
       max-width: 30%;
+      height: 100%;
       object-fit: contain;
     }
   }
@@ -161,7 +202,7 @@
     grid-area: 1 / 1;
     width: 100%;
     height: 100%;
-    background: var(--viridian);
+    background: var(--color-viridian);
     mix-blend-mode: multiply;
   }
 
@@ -171,10 +212,10 @@
     width: 100%;
     height: 100%;
     box-shadow:
-      inset 10px 20px 300px 0 var(--black),
-      inset -10px -20px 300px 0 var(--black),
-      inset 20px -10px 300px 0 var(--black),
-      inset -20px 10px 300px 0 var(--black);
+      inset 10px 20px 300px 0 var(--color-black),
+      inset -10px -20px 300px 0 var(--color-black),
+      inset 20px -10px 300px 0 var(--color-black),
+      inset -20px 10px 300px 0 var(--color-black);
     mix-blend-mode: multiply;
     opacity: 0.1;
   }

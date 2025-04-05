@@ -1,35 +1,35 @@
 :root {
   /* *------------------------------ Colors --------------------------------* */
 
-  --light-beige: rgb(244 238 217 / 100%);
-  --red: rgb(255 0 0 / 100%);
-  --brown: rgb(179 120 68);
-  --mustard: rgb(249 184 93 / 100%);
-  --viridian: rgb(59 112 125 / 100%);
-  --mint: rgb(90 171 130 / 100%);
-  --cerulean-blue: rgb(46 124 246 / 100%);
-  --white: rgb(255 255 255 / 100%);
-  --black: rgb(0 0 0 / 100%);
-  --grey: rgb(100 100 100 / 100%);
-  --pink: rgb(252, 117, 139);
+  --color-beige: rgb(244 238 217 / 100%);
+  --color-red: rgb(255 0 0 / 100%);
+  --color-brown: rgb(179 120 68);
+  --color-mustard: rgb(249 184 93 / 100%);
+  --color-viridian: rgb(59 112 125 / 100%);
+  --color-mint: rgb(90 171 130 / 100%);
+  --color-cerulean: rgb(46 124 246 / 100%);
+  --color-white: rgb(255 255 255 / 100%);
+  --color-black: rgb(0 0 0 / 100%);
+  --color-grey: rgb(100 100 100 / 100%);
+  --color-pink: rgb(252, 117, 139);
 
   /* --- Typography colors --- */
-  --text-color: var(--black);
-
-  --highlight-color: var(--mustard);
+  --color-text: var(--color-black);
+  --color-text-highlight: var(--color-mustard);
+  --color-heading: var(--color-black);
 
   /* *------------------------------ Fonts --------------------------------* */
 
-  --text-font: 'Crimson Pro', sans-serif;
-  --heading-font: 'Helvetica', sans-serif;
-  --button-font: 'Sometype Mono', monospace;
-  --link-font: 'Sometype Mono', monospace;
-  --base-font-size: 16px;
-  --heading-color: var(--black);
+  --font-text: 'Crimson Pro', sans-serif;
+  --font-heading: 'Helvetica', sans-serif;
+  --font-button: 'Sometype Mono', monospace;
+  --font-link: 'Sometype Mono', monospace;
+  --font-size: 16px;
 
   /* *----------------------------- Spacing --------------------------------* */
 
-  --padding: 1rem;
+  --padding-mobile: 1rem;
+  --padding-desktop: 3rem;
 
   /* *------------------------------ Layout --------------------------------* */
   --header-height: 90px;

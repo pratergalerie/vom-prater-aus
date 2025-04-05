@@ -106,7 +106,7 @@
     box-sizing: border-box;
     width: 100%;
     height: 100%;
-    padding: var(--padding);
+    padding: var(--padding-mobile);
   }
 
   .background {
@@ -116,7 +116,7 @@
     z-index: -2;
     width: 100%;
     height: 100%;
-    background-color: var(--white);
+    background-color: var(--color-white);
 
     &.halftone {
       --opacity: 0.8;
@@ -125,11 +125,11 @@
 
   .close-button {
     position: absolute;
-    top: calc(var(--padding) * 1.2);
-    right: var(--padding);
+    top: calc(var(--padding-mobile) * 1.2);
+    right: var(--padding-mobile);
     width: 1.5rem;
     height: 1.5rem;
-    color: var(--black);
+    color: var(--color-black);
     cursor: pointer;
     background: none;
     border: none;
@@ -142,7 +142,7 @@
     z-index: -1;
     width: 0;
     height: 0;
-    border-color: var(--white) transparent transparent transparent;
+    border-color: var(--color-white) transparent transparent transparent;
     border-style: solid;
     border-width: 12px 10px 0;
   }
@@ -150,21 +150,21 @@
   /* Position variants */
   .speech-bubble.bottom-left {
     left: 20px;
-    filter: drop-shadow(-3px -2px 0 var(--black));
+    filter: drop-shadow(-3px -2px 0 var(--color-black));
     transform: translateY(-5px) rotate(-90deg);
     scale: 2;
   }
 
   .speech-bubble.bottom-center {
     left: 50%;
-    filter: drop-shadow(-1px 3px 0 var(--black));
+    filter: drop-shadow(-1px 3px 0 var(--color-black));
     transform: translateX(-26%) skew(-0.02turn, 5deg);
     scale: 2;
   }
 
   .speech-bubble.bottom-right {
     right: 30px;
-    filter: drop-shadow(3px -1px 0 var(--black));
+    filter: drop-shadow(3px -1px 0 var(--color-black));
     transform: translateY(-7px) rotate(90deg);
     scale: 3;
   }

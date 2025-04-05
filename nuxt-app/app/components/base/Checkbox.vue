@@ -62,7 +62,7 @@
     width: 1rem;
     height: 1rem;
     padding: 10px;
-    font-family: var(--link-font);
+    font-family: var(--font-link);
     cursor: pointer;
     outline: none;
     background: transparent;
@@ -115,7 +115,7 @@
   }
 
   span {
-    font-family: var(--link-font);
+    font-family: var(--font-link);
     font-size: 0.8rem;
   }
 </style>

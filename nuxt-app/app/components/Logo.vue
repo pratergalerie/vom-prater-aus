@@ -25,6 +25,7 @@
     cursor: pointer;
     background: none;
     border: 0;
+    filter: drop-shadow(0 0 10px var(--color-beige));
   }
 
   .logo-image {

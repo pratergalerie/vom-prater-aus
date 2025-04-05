@@ -500,7 +500,7 @@
     position: relative;
     min-width: 350px;
     max-width: 500px;
-    border: 1px solid var(--black);
+    border: 1px solid var(--color-black);
 
     &::before {
       position: absolute;
@@ -510,7 +510,7 @@
       width: 100%;
       height: 100%;
       content: '';
-      background: var(--black);
+      background: var(--color-black);
     }
   }
 
@@ -520,7 +520,7 @@
     justify-content: center;
     width: 100%;
     height: 100%;
-    background: var(--light-beige);
+    background: var(--color-beige);
 
     &.text-over-image {
       flex-direction: column-reverse;
@@ -565,7 +565,7 @@
 
     .title-box {
       bottom: 20px;
-      left: var(--padding);
+      left: var(--padding-mobile);
       width: 60%;
       min-width: 300px;
       max-width: 400px;
@@ -584,7 +584,7 @@
       }
 
       .title-box-content {
-        padding: var(--padding);
+        padding: var(--padding-mobile);
 
         .author-info {
           display: flex;
@@ -604,8 +604,8 @@
 
         .story-details-edit-button {
           position: absolute;
-          top: var(--padding);
-          right: var(--padding);
+          top: var(--padding-mobile);
+          right: var(--padding-mobile);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -625,14 +625,14 @@
     box-sizing: border-box;
     width: 100%;
     height: 50%;
-    padding: 2rem var(--padding);
+    padding: 2rem var(--padding-mobile);
 
     textarea {
       width: 100%;
       height: 100%;
-      font-family: var(--link-font);
+      font-family: var(--font-link);
       font-size: 1rem;
-      color: var(--black);
+      color: var(--color-black);
       resize: none;
       outline: none;
       background: none;
@@ -661,7 +661,7 @@
     width: 100%;
     max-width: 500px;
     height: 40px;
-    padding: 0 var(--padding);
+    padding: 0 var(--padding-mobile);
     transform: translateY(-20px);
 
     .action-wrapper {
@@ -691,9 +691,9 @@
       justify-content: center;
       width: 100px;
       padding: 0.5rem;
-      font-family: var(--link-font);
+      font-family: var(--font-link);
       font-size: 0.8rem;
-      color: var(--black);
+      color: var(--color-black);
       cursor: pointer;
       background: radial-gradient(
         circle,
