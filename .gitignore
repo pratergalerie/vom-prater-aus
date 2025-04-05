@@ -15,3 +15,6 @@ nginx/conf/app.conf
 # SSL related
 nginx/ssl/*
 !nginx/ssl/.gitkeep
+
+# Ignore dummy data
+dummy-data/*
