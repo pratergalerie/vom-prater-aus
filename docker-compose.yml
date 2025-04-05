@@ -5,8 +5,8 @@ services:
       context: ./nuxt-app
       dockerfile: ${NUXT_DOCKERFILE:-Dockerfile}
     volumes:
-      - ./nuxt-app:/app:rw
-      - /app/node_modules
+      - ./nuxt-app:/app
+      - nuxt-node-modules:/app/node_modules
     profiles:
       - dev
     ports:
@@ -23,6 +23,10 @@ services:
       - auth
       - rest
       - db
+    # Create a directory for Nitro storage to avoid
+    # "listen EADDRINUSE: address already in use /tmp/nitro/worker-X.sock"
+    # errors
+    command: sh -c "mkdir -p /tmp/nitro-storage && chmod 777 /tmp/nitro-storage && npm run dev"
 
   nuxt-app-prod:
     container_name: nuxt-app
@@ -43,6 +47,10 @@ services:
       - auth
       - rest
       - db
+    # Create a directory for Nitro storage to avoid
+    # "listen EADDRINUSE: address already in use /tmp/nitro/worker-X.sock"
+    # errors
+    command: sh -c "mkdir -p /tmp/nitro-storage && chmod 777 /tmp/nitro-storage && npm run build && npm run start"
 
   # Import all Supabase services
   studio:
@@ -515,7 +523,7 @@ services:
 
   nginx:
     image: nginx:alpine
-    container_name: nginx-proxy
+    container_name: nginx
     restart: unless-stopped
     profiles:
       - prod
@@ -556,3 +564,4 @@ volumes:
   db-config:
   certbot-etc:
   certbot-var:
+  nuxt-node-modules:
