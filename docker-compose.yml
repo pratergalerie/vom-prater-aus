@@ -15,6 +15,7 @@ services:
     environment:
       - SUPABASE_URL=${SUPABASE_URL}
       - SUPABASE_KEY=${SUPABASE_KEY}
+      - STYLELINT_CSS_VARIABLES_PATH=/app/app/assets/css/variables.css
     networks:
       - frontend-network
     depends_on:
