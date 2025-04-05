@@ -10,7 +10,33 @@ export default defineNuxtConfig({
     enabled: true,
   },
 
-  runtimeConfig: {},
+  // Configure Nitro to use a different directory for temporary files
+  nitro: {
+    storage: {
+      fs: {
+        driver: 'fs',
+        base: '/tmp/nitro-storage',
+      },
+    },
+  },
+
+  // Configure app to listen on all interfaces
+  app: {
+    baseURL: '/',
+    head: {
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      ],
+    },
+  },
+
+  runtimeConfig: {
+    app: {
+      host: '0.0.0.0',
+      port: 3000,
+    },
+  },
 
   css: ['@/assets/css/main.css'],
   modules: [
