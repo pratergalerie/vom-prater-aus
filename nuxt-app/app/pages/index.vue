@@ -279,12 +279,6 @@
 
       img {
         width: 100%;
-        margin-left: calc(-1 * var(--padding-mobile));
-
-        @media (min-width: 768px) {
-          width: calc(100% + var(--padding-desktop));
-          margin-left: calc(-1 * var(--padding-desktop));
-        }
       }
 
       .text-block {
@@ -334,11 +328,9 @@
       img {
         align-self: flex-end;
         width: 90vw;
-        margin-right: calc(-1 * var(--padding-mobile));
 
         @container (min-width: 768px) {
           width: 80%;
-          margin: 0 calc(-1 * var(--padding-desktop));
         }
       }
 
