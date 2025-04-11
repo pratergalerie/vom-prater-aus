@@ -23,70 +23,129 @@
     ]
   })
 
-  const activeSlide = ref(1) // Start at the first real slide
+  const carouselRef = ref<HTMLDivElement | null>(null)
+  const currentSlideIndex = ref(1) // Start at first real slide
   const isTransitioning = ref(false)
+  const slideWidth = ref(0)
+  const resizeTimeout = ref<number | null>(null)
 
-  // Update slide width based on viewport width
-  const slideWidth = computed(() => {
-    if (window.innerWidth >= 1024) {
-      return 80 // 80vw on large screens
-    } else if (window.innerWidth >= 768) {
-      return 80 // 80vw on medium screens
-    } else {
-      return 100 // 100vw on mobile
-    }
+  const slideWidthPx = computed(() => {
+    if (!slideWidth.value) return '100%' // Fallback to 100% if width is 0
+    return `${slideWidth.value}px`
+  })
+
+  const slideWidthVw = computed(() => {
+    if (!window || !slideWidth.value) return 100 // Fallback to 100vw if width is 0
+    return (slideWidth.value / window.innerWidth) * 100
   })
 
   const slideSpacing = computed(() => {
-    if (window && window.innerWidth >= 1024) {
-      return 20 // 20vw spacing on large screens
-    } else if (window && window.innerWidth >= 768) {
-      return 20 // 20vw spacing on medium screens
+    if (window.innerWidth >= 1024) {
+      return 5 // 5vw spacing on large screens
+    } else if (window.innerWidth >= 768) {
+      return 4 // 4vw spacing on medium screens
     } else {
-      return 0 // No spacing on mobile
+      return 2 // 2vw spacing on mobile
     }
   })
 
   const totalSlidesWidth = computed(() => {
-    return (
-      slidesWithClones.value.length * slideWidth.value +
-      (slidesWithClones.value.length - 1) * slideSpacing.value
-    )
+    const slideWidthWithSpacing = slideWidthVw.value + slideSpacing.value
+    return slidesWithClones.value.length * slideWidthWithSpacing
   })
+
+  const slideTranslateX = computed(() => {
+    const slideWidthWithSpacing = slideWidthVw.value + slideSpacing.value
+    return currentSlideIndex.value * -slideWidthWithSpacing
+  })
+
+  function handleResize() {
+    if (resizeTimeout.value) {
+      window.clearTimeout(resizeTimeout.value)
+    }
+
+    resizeTimeout.value = window.setTimeout(() => {
+      if (carouselRef.value) {
+        const newWidth = carouselRef.value.offsetWidth
+        if (newWidth > 0 && newWidth !== slideWidth.value) {
+          slideWidth.value = newWidth
+          // Force a recalculation of the current position
+          const currentPosition = currentSlideIndex.value
+          currentSlideIndex.value = -1
+          nextTick(() => {
+            currentSlideIndex.value = currentPosition
+            isTransitioning.value = true
+            setTimeout(() => {
+              isTransitioning.value = false
+            }, 100)
+          })
+        }
+      }
+    }, 150)
+  }
 
   function nextSlide() {
     if (isTransitioning.value) return
-    isTransitioning.value = true
-    activeSlide.value++
 
-    if (activeSlide.value === slidesWithClones.value.length - 1) {
-      // When reaching the cloned last slide, reset to first real slide
+    isTransitioning.value = true
+    currentSlideIndex.value++
+
+    // Handle the transition to cloned slides
+    if (currentSlideIndex.value === slidesWithClones.value.length - 1) {
       setTimeout(() => {
-        activeSlide.value = 1 // First real slide
         isTransitioning.value = false
-      }, 1000) // Match the transition duration
+        currentSlideIndex.value = 1 // Jump back to the first real slide
+      }, 1000)
+    } else if (currentSlideIndex.value === 0) {
+      setTimeout(() => {
+        isTransitioning.value = false
+        currentSlideIndex.value = slidesWithClones.value.length - 2 // Jump to the last real slide
+      }, 1000)
     } else {
       setTimeout(() => {
         isTransitioning.value = false
-      }, 1000) // Match the transition duration
+      }, 1000)
     }
   }
 
   const slideAutoChangeInterval = 5000
 
   onMounted(() => {
-    setInterval(() => {
+    // Initial calculation
+    nextTick(() => {
+      if (carouselRef.value) {
+        slideWidth.value = carouselRef.value.offsetWidth
+      }
+    })
+
+    // Start the auto-slide interval
+    const intervalId = setInterval(() => {
       nextSlide()
     }, slideAutoChangeInterval)
+
+    // Add resize listener
+    window.addEventListener('resize', handleResize)
+
+    // Cleanup function
+    onUnmounted(() => {
+      clearInterval(intervalId)
+      window.removeEventListener('resize', handleResize)
+      if (resizeTimeout.value) {
+        window.clearTimeout(resizeTimeout.value)
+      }
+    })
   })
 </script>
 
 <template>
-  <div class="stories-carousel">
+  <div
+    ref="carouselRef"
+    class="stories-carousel"
+  >
     <div
       class="slides"
       :style="{
-        transform: `translateX(-${activeSlide * (slideWidth + slideSpacing)}vw)`,
+        transform: `translateX(${slideTranslateX}vw)`,
         transition: isTransitioning ? 'transform 1s ease-in-out' : 'none',
         width: `${totalSlidesWidth}vw`,
       }"
@@ -95,6 +154,7 @@
         v-for="(slide, index) in slidesWithClones"
         :key="index"
         class="slide"
+        :style="{ width: slideWidthPx }"
       >
         <div
           v-if="slide"
@@ -128,36 +188,26 @@
 <style scoped>
   .stories-carousel {
     position: relative;
-    width: 100vw;
-    height: 40dvh;
+    box-sizing: border-box;
+    width: 100%;
+    height: 40%;
     min-height: 350px;
-    margin: 0 calc(var(--padding-mobile) * -1);
-
-    @container (min-width: 768px) {
-      margin: 0 calc(var(--padding-desktop) * -1);
-    }
-
-    @media (min-height: 1024px) {
-      height: auto;
-    }
-
     overflow: hidden;
     container-type: inline-size;
     container-name: carousel-container;
+
+    @container (min-width: 768px) {
+      height: 100%;
+    }
   }
 
   .slides {
     display: flex;
-    will-change: transform; /* Optimize for performance */
-
-    @container (min-width: 768px) {
-      gap: 20vw;
-      margin-left: 20vw;
-    }
+    gap: v-bind(slideSpacing + 'vw');
+    will-change: transform;
   }
 
   .slide {
-    box-sizing: border-box;
     display: grid;
     grid-template-areas:
       '. image'
@@ -165,17 +215,11 @@
       '. link';
     grid-template-columns: 1fr 80%;
     gap: 10px;
-    width: 100vw;
     height: 100%;
     container-name: slide-container;
 
     @container (min-width: 768px) {
-      width: 80vw;
-      height: 500px;
-    }
-
-    @media (min-width: 1024px) {
-      width: 80vw;
+      gap: 30px;
     }
   }
 
@@ -188,7 +232,6 @@
       display: block;
       width: 100%;
       height: 100%;
-      max-height: 30dvh;
       object-fit: cover;
       filter: grayscale(100%);
     }
@@ -200,27 +243,22 @@
 
   .quote {
     grid-area: quote;
-    padding: 0 var(--padding-mobile);
-
-    @container (min-width: 768px) {
-      padding: 0 var(--padding-desktop);
-    }
-
+    margin-top: 1.2rem;
+    margin-bottom: 1.2rem;
+    margin-left: 10%;
+    font-size: 1.5rem;
     font-style: italic;
     line-height: 1.6rem;
+
+    @container (min-width: 768px) {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
   }
 
   a {
     grid-area: link;
-
-    /* Align to right */
     justify-self: end;
-    margin: 0 var(--padding-mobile);
-
-    @container (min-width: 768px) {
-      margin: 0 var(--padding-desktop);
-    }
-
     text-align: right;
   }
 </style>
