@@ -213,7 +213,7 @@
     display: grid;
     width: 100%;
     min-width: 300px;
-    max-width: 500px;
+    max-width: 400px;
     height: 60px;
     padding: 0;
     color: var(--color-black);
