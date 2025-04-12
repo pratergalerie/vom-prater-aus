@@ -10,18 +10,37 @@
   })
 
   const { getStories } = useAPI()
+  const { locale } = useI18n()
 
-  const { data: stories, error, status } = await getStories()
+  const {
+    data: stories,
+    error: storiesError,
+    status: storiesStatus,
+  } = await getStories()
+
+  const { getHomepageSections } = useAPI()
+
+  const {
+    data: homepageContentData,
+    error: homepageContentError,
+    status: homepageContentStatus,
+  } = await getHomepageSections(locale.value)
 
   const pending = computed(() => {
-    return status.value === 'pending'
+    return (
+      storiesStatus.value === 'pending' ||
+      homepageContentStatus.value === 'pending'
+    )
   })
 
-  if (error.value) {
-    console.error('Error fetching stories:', error)
+  if (storiesError.value || homepageContentError.value) {
+    console.error(
+      'Error fetching data:',
+      storiesError.value || homepageContentError.value
+    )
   }
 
-  console.log('data', stories.value)
+  console.log('data', stories.value, homepageContentData.value)
 
   const containerRef = ref<HTMLElement | null>(null)
 
@@ -33,6 +52,28 @@
     horizontal: false,
   })
 
+  // Get the homepage content for the current locale
+  const homepageContent = computed(() => homepageContentData.value)
+
+  // Find the stories section content
+  const storiesSection = computed(() =>
+    homepageContent.value?.find((section) => section.section_name === 'stories')
+  )
+
+  // Find the prater section content
+  const praterSection = computed(() =>
+    homepageContent.value?.find(
+      (section) => section.section_name === 'berliner_prater'
+    )
+  )
+
+  // Find the create section content
+  const createSection = computed(() =>
+    homepageContent.value?.find(
+      (section) => section.section_name === 'create_story'
+    )
+  )
+
   const storiesSlides = ref([
     {
       img: {
@@ -42,9 +83,10 @@
       },
       quote: 'Kann diese Nachmittage im Prater nur empfehlen!',
       link: {
-        text: `${stories.value[0].title} (${stories.value[0].year})`,
-        href: '/',
+        text: stories.value?.[0]?.title || 'Story 1',
+        href: '/stories/explorer',
       },
+      year: stories.value?.[0]?.year?.toString() || '2023',
     },
     {
       img: {
@@ -54,9 +96,10 @@
       },
       quote: 'Ein wunderbarer Ort zum Entspannen!',
       link: {
-        text: `${stories.value[1].title} (${stories.value[1].year})`,
-        href: '/',
+        text: stories.value?.[1]?.title || 'Story 2',
+        href: '/stories/explorer',
       },
+      year: stories.value?.[1]?.year?.toString() || '2023',
     },
     {
       img: {
@@ -66,9 +109,10 @@
       },
       quote: 'Ein Muss für jeden Berlin-Besucher',
       link: {
-        text: `${stories.value[2].title} (${stories.value[2].year})`,
-        href: '/',
+        text: stories.value?.[2]?.title || 'Story 3',
+        href: '/stories/explorer',
       },
+      year: stories.value?.[2]?.year?.toString() || '2023',
     },
   ])
 </script>
@@ -79,7 +123,7 @@
     class="content-wrapper"
   >
     <section
-      v-if="!pending"
+      v-if="!pending && stories"
       class="stories"
     >
       <ClientOnly>
@@ -90,44 +134,57 @@
         />
       </ClientOnly>
       <div class="text-block">
-        <h1>{{ $t('pages.home.sections.stories.title') }}</h1>
+        <h1>
+          {{ storiesSection?.title || $t('pages.home.sections.stories.title') }}
+        </h1>
         <p>
-          {{ $t('pages.home.sections.stories.text') }}
+          {{
+            storiesSection?.paragraph || $t('pages.home.sections.stories.text')
+          }}
         </p>
       </div>
       <BaseButton
-        :label="$t('pages.home.sections.stories.button')"
+        :label="
+          storiesSection?.button?.label ||
+          $t('pages.home.sections.stories.button')
+        "
         icon="mdi:arrow-right"
         type="primary"
         variant="label-icon"
         class="button rellax"
         data-rellax-speed="-0.2"
-        href="/stories/explorer"
+        :href="storiesSection?.button?.link || '/stories/explorer'"
       />
     </section>
 
     <section class="prater">
       <NuxtImg
-        src="/imgs/prater/prater11.jpeg"
+        :src="praterSection?.image || '/imgs/prater/prater11.jpeg'"
         alt="Berliner Prater"
         class="rellax"
         data-rellax-speed="0.5"
       />
       <div class="text-block">
         <h1>
-          {{ $t('pages.home.sections.prater.title') }}
+          {{ praterSection?.title || $t('pages.home.sections.prater.title') }}
         </h1>
         <p>
-          {{ $t('pages.home.sections.prater.text') }}
+          {{
+            praterSection?.paragraph || $t('pages.home.sections.prater.text')
+          }}
         </p>
       </div>
       <BaseButton
         class="button rellax"
-        :label="$t('pages.home.sections.prater.button')"
+        :label="
+          praterSection?.button?.label ||
+          $t('pages.home.sections.prater.button')
+        "
         icon="mdi:arrow-right"
         type="primary"
         variant="label-icon"
         data-rellax-speed="0"
+        :href="praterSection?.button?.link || '/about'"
       />
     </section>
 
@@ -136,10 +193,10 @@
         class="rellax"
         data-rellax-speed="-0.3"
       >
-        {{ $t('pages.home.sections.create.title') }}
+        {{ createSection?.title || $t('pages.home.sections.create.title') }}
       </h1>
       <NuxtImg
-        src="/imgs/prater/prater8.jpeg"
+        :src="createSection?.image || '/imgs/prater/prater8.jpeg'"
         alt="Berliner Prater"
         class="rellax"
         data-rellax-speed="-0.2"
@@ -148,15 +205,19 @@
         class="rellax"
         data-rellax-speed="0.2"
       >
-        {{ $t('pages.home.sections.create.text') }}
+        {{ createSection?.paragraph || $t('pages.home.sections.create.text') }}
       </p>
       <BaseButton
         class="button rellax"
-        :label="$t('pages.home.sections.create.button')"
+        :label="
+          createSection?.button?.label ||
+          $t('pages.home.sections.create.button')
+        "
         icon="mdi:arrow-right"
         type="primary"
         variant="label-icon"
         data-rellax-speed="0.1"
+        :href="createSection?.button?.link || '/stories/create'"
       />
     </section>
 
@@ -308,28 +369,20 @@
     }
 
     &.create {
-      @container (min-width: 768px) {
-        gap: 2rem;
-        align-items: flex-end;
-      }
-
-      h1,
       p {
-        max-width: 80%;
-
-        @container (min-width: 768px) {
+        @container (min-width: 500px) {
           align-self: flex-start;
           max-width: 60%;
-          margin-left: 0;
+          margin-left: 5%;
           text-align: left;
         }
       }
 
       img {
-        align-self: flex-end;
-        width: 90vw;
+        align-self: flex-start;
+        width: 100%;
 
-        @container (min-width: 768px) {
+        @container (min-width: 500px) {
           width: 80%;
         }
       }
