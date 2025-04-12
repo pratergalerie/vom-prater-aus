@@ -3,11 +3,6 @@
 node_modules
 .env
 .env.prod
-volumes
-
-# Ignore all files in volumes/ EXCEPT for pooler.exs and vector.yml
-!volumes/pooler/pooler.exs
-!volumes/logs/vector.yml
 
 # Nginx generated config
 nginx/conf/app.conf
@@ -18,3 +13,22 @@ nginx/ssl/*
 
 # Ignore dummy data
 dummy-data/*
+
+# Supabase volumes
+/volumes/db/data/
+/volumes/storage/*
+!/volumes/storage/.gitkeep
+
+# Logs
+/volumes/logs/*
+!/volumes/logs/.gitkeep
+
+# Keep sql files
+!/volumes/db/*.sql
+!/volumes/db/init/*.sql
+
+# Keep function code
+!/volumes/functions/*
+
+# Database backups
+/backups/
