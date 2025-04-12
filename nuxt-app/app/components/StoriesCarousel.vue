@@ -11,10 +11,14 @@
         text: string
         href: string
       }
+      year: string
     }[]
   }>()
 
   const slidesWithClones = computed(() => {
+    // If no slides, return empty array
+    if (props.slides.length === 0) return []
+
     // Add clones for infinite loop
     return [
       props.slides[props.slides.length - 1], // Clone last slide at the start
@@ -153,33 +157,47 @@
       <div
         v-for="(slide, index) in slidesWithClones"
         :key="index"
-        class="slide"
-        :style="{ width: slideWidthPx }"
       >
         <div
           v-if="slide"
-          class="picture-wrapper"
+          class="slide"
+          :style="{ width: slideWidthPx }"
         >
           <NuxtImg
             :src="slide.img.src"
             :alt="slide.img.alt"
-            class="photo"
+            class="image"
           />
-          <span class="copyright">{{ slide.img.caption }}</span>
-        </div>
 
-        <span
-          v-if="slide"
-          class="quote"
-        >
-          {{ slide.quote }}
-        </span>
-        <NuxtLink
-          v-if="slide"
-          :to="slide.link.href"
-        >
-          <span class="highlight">{{ slide.link.text }}</span>
-        </NuxtLink>
+          <span class="copyright">{{ slide.img.caption }}</span>
+
+          <div class="quote-wrapper">
+            <NuxtImg
+              src="/svgs/quote.svg"
+              alt="quote-open"
+              class="quote-symbol open"
+            />
+            <span class="quote">
+              {{ slide.quote }}
+            </span>
+            <NuxtImg
+              class="quote-symbol close"
+              src="/svgs/quote.svg"
+              alt="quote-close"
+            />
+          </div>
+
+          <div class="link-year">
+            <NuxtLink
+              v-if="slide"
+              :to="slide.link.href"
+            >
+              <span class="highlight">{{ slide.link.text }}</span>
+            </NuxtLink>
+
+            <span class="year">{{ slide.year }}</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -190,11 +208,10 @@
     position: relative;
     box-sizing: border-box;
     width: 100%;
-    height: 40%;
-    min-height: 350px;
-    overflow: hidden;
+    height: 100%;
     container-type: inline-size;
     container-name: carousel-container;
+    overflow: hidden auto;
 
     @container (min-width: 768px) {
       height: 100%;
@@ -208,57 +225,110 @@
   }
 
   .slide {
+    position: relative;
     display: grid;
     grid-template-areas:
-      '. image'
-      'quote quote'
-      '. link';
+      'image image'
+      'copyright copyright'
+      'link-year link-year'
+      'quote quote';
     grid-template-columns: 1fr 80%;
     gap: 10px;
     height: 100%;
     container-name: slide-container;
 
-    @container (min-width: 768px) {
-      gap: 30px;
+    @container (min-width: 500px) {
+      grid-template-areas:
+        '. image'
+        '. copyright'
+        '. link-year'
+        'quote quote';
     }
   }
 
-  .picture-wrapper {
-    flex-direction: column;
+  .image {
+    display: block;
     grid-area: image;
     width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%);
+  }
 
-    img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: grayscale(100%);
-    }
+  .copyright {
+    grid-area: copyright;
+    font-size: 0.8rem;
+    text-align: left;
 
-    .copyright {
-      font-size: 0.7rem;
+    @container (min-width: 500px) {
+      font-size: 1rem;
+      text-align: left;
     }
+  }
+
+  .quote-wrapper {
+    grid-area: quote;
   }
 
   .quote {
-    grid-area: quote;
-    margin-top: 1.2rem;
-    margin-bottom: 1.2rem;
-    margin-left: 10%;
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-style: italic;
     line-height: 1.6rem;
 
-    @container (min-width: 768px) {
+    @container (min-width: 500px) {
       margin-top: 0;
       margin-bottom: 0;
+      font-size: 1.6rem;
+      color: var(--color-grey);
     }
   }
 
+  .quote-symbol {
+    width: 20px;
+    height: 15px;
+
+    &.open {
+      transform: translateY(-0.5rem);
+    }
+
+    &.close {
+      transform: translateY(0.5rem) rotate(180deg);
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
+    @container (min-width: 768px) {
+      width: 60px;
+      height: 40px;
+    }
+  }
+
+  .link-year {
+    display: flex;
+    flex-direction: column;
+    grid-area: link-year;
+    align-items: flex-end;
+  }
+
   a {
-    grid-area: link;
     justify-self: end;
+    font-size: 1rem;
     text-align: right;
+
+    @container (min-width: 768px) {
+      font-size: 1.5rem;
+    }
+  }
+
+  .year {
+    font-size: 1rem;
+    text-align: right;
+
+    @container (min-width: 768px) {
+      font-size: 1.2rem;
+    }
   }
 </style>
