@@ -290,7 +290,7 @@
     .page-navigation-text {
       grid-column: 2;
       margin: auto;
-      font-family: var(--link-font);
+      font-family: var(--font-link);
     }
   }
 
@@ -317,9 +317,9 @@
       justify-content: center;
       width: 100px;
       padding: 0.5rem;
-      font-family: var(--link-font);
+      font-family: var(--font-link);
       font-size: 0.8rem;
-      color: var(--black);
+      color: var(--color-black);
       cursor: pointer;
       background: radial-gradient(
         circle,
@@ -365,7 +365,7 @@
           width: 100%;
           max-width: 200px;
           padding: 0.5rem;
-          border: 1px solid var(--black);
+          border: 1px solid var(--color-black);
         }
 
         #story-year {
