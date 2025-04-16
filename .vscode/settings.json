@@ -20,7 +20,9 @@
     "imgproxy",
     "kong",
     "nuxtjs",
+    "ossp",
     "pgbouncer",
+    "PGRST",
     "postgres",
     "raycaster",
     "rellax",
@@ -36,8 +38,7 @@
     "wght"
   ],
   "cSpell.ignorePaths": [
-    "/scripts",
-    "/volumes",
+    "/supabase",
     ".env.*",
     "docker-compose.yml",
     "/nginx",
