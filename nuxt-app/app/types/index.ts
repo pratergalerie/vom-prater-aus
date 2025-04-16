@@ -1,3 +1,5 @@
+import type { Json } from './supabase'
+
 export type Author = {
   id: string
   name: string
@@ -31,4 +33,30 @@ export type PageLayout =
 export type Keyword = {
   id: string
   word: string
+}
+
+export type Page = {
+  id: string
+  slug: string
+  sections: PageSection[]
+}
+
+export type PageSection = {
+  id: string
+  name: string
+  type: string
+  order: number
+  content: SectionContent
+}
+
+export type SectionContent = {
+  id: string
+  title: string | null
+  subtitle: string | null
+  text: string[] | null
+  imageSrc: string | null
+  imageAlt: string | null
+  buttonLabel: string | null
+  buttonLink: string | null
+  additionalContent: Record<string, Json> | null
 }
