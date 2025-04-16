@@ -12,26 +12,14 @@
   const { getStories } = useAPI()
   const { locale } = useI18n()
 
-  const {
-    data: stories,
-    error: storiesError,
-    status: storiesStatus,
-  } = await getStories()
+  const { data: stories, error: storiesError } = await getStories()
 
-  const { getHomepageSections } = useAPI()
+  const { getPage } = useAPI()
 
-  const {
-    data: homepageContentData,
-    error: homepageContentError,
-    status: homepageContentStatus,
-  } = await getHomepageSections(locale.value)
-
-  const pending = computed(() => {
-    return (
-      storiesStatus.value === 'pending' ||
-      homepageContentStatus.value === 'pending'
-    )
-  })
+  const { data: homepageContent, error: homepageContentError } = await getPage(
+    'home',
+    locale.value
+  )
 
   if (storiesError.value || homepageContentError.value) {
     console.error(
@@ -39,8 +27,6 @@
       storiesError.value || homepageContentError.value
     )
   }
-
-  console.log('data', stories.value, homepageContentData.value)
 
   const containerRef = ref<HTMLElement | null>(null)
 
@@ -51,28 +37,6 @@
     vertical: true,
     horizontal: false,
   })
-
-  // Get the homepage content for the current locale
-  const homepageContent = computed(() => homepageContentData.value)
-
-  // Find the stories section content
-  const storiesSection = computed(() =>
-    homepageContent.value?.find((section) => section.section_name === 'stories')
-  )
-
-  // Find the prater section content
-  const praterSection = computed(() =>
-    homepageContent.value?.find(
-      (section) => section.section_name === 'berliner_prater'
-    )
-  )
-
-  // Find the create section content
-  const createSection = computed(() =>
-    homepageContent.value?.find(
-      (section) => section.section_name === 'create_story'
-    )
-  )
 
   const storiesSlides = ref([
     {
@@ -123,101 +87,40 @@
     class="content-wrapper"
   >
     <section
-      v-if="!pending && stories"
-      class="stories"
+      v-for="section in homepageContent?.sections"
+      :key="section.id"
+      :class="section.name"
     >
-      <ClientOnly>
+      <!-- Stories Section -->
+      <ClientOnly v-if="section.type === 'hero'">
         <StoriesCarousel
           :slides="storiesSlides"
           class="stories-carousel rellax"
           data-rellax-speed="-0.5"
         />
       </ClientOnly>
+      <h1>{{ section.content.title }}</h1>
+      <NuxtImg
+        v-if="section.content.imageSrc"
+        :src="section.content.imageSrc"
+        :alt="section.content.imageAlt || ''"
+      />
       <div class="text-block">
-        <h1>
-          {{ storiesSection?.title || $t('pages.home.sections.stories.title') }}
-        </h1>
-        <p>
-          {{
-            storiesSection?.paragraph || $t('pages.home.sections.stories.text')
-          }}
+        <p
+          v-for="(paragraph, index) in section.content.text"
+          :key="index"
+        >
+          {{ paragraph }}
         </p>
       </div>
       <BaseButton
-        :label="
-          storiesSection?.button?.label ||
-          $t('pages.home.sections.stories.button')
-        "
-        icon="mdi:arrow-right"
+        v-if="section.content.buttonLabel"
+        class="button"
         type="primary"
         variant="label-icon"
-        class="button rellax"
-        data-rellax-speed="-0.2"
-        :href="storiesSection?.button?.link || '/stories/explorer'"
-      />
-    </section>
-
-    <section class="prater">
-      <NuxtImg
-        :src="praterSection?.image || '/imgs/prater/prater11.jpeg'"
-        alt="Berliner Prater"
-        class="rellax"
-        data-rellax-speed="0.5"
-      />
-      <div class="text-block">
-        <h1>
-          {{ praterSection?.title || $t('pages.home.sections.prater.title') }}
-        </h1>
-        <p>
-          {{
-            praterSection?.paragraph || $t('pages.home.sections.prater.text')
-          }}
-        </p>
-      </div>
-      <BaseButton
-        class="button rellax"
-        :label="
-          praterSection?.button?.label ||
-          $t('pages.home.sections.prater.button')
-        "
         icon="mdi:arrow-right"
-        type="primary"
-        variant="label-icon"
-        data-rellax-speed="0"
-        :href="praterSection?.button?.link || '/about'"
-      />
-    </section>
-
-    <section class="create">
-      <h1
-        class="rellax"
-        data-rellax-speed="-0.3"
-      >
-        {{ createSection?.title || $t('pages.home.sections.create.title') }}
-      </h1>
-      <NuxtImg
-        :src="createSection?.image || '/imgs/prater/prater8.jpeg'"
-        alt="Berliner Prater"
-        class="rellax"
-        data-rellax-speed="-0.2"
-      />
-      <p
-        class="rellax"
-        data-rellax-speed="0.2"
-      >
-        {{ createSection?.paragraph || $t('pages.home.sections.create.text') }}
-      </p>
-      <BaseButton
-        class="button rellax"
-        :label="
-          createSection?.button?.label ||
-          $t('pages.home.sections.create.button')
-        "
-        icon="mdi:arrow-right"
-        type="primary"
-        variant="label-icon"
-        data-rellax-speed="0.1"
-        :href="createSection?.button?.link || '/stories/create'"
+        :label="section.content.buttonLabel"
+        :link="section.content.buttonLink"
       />
     </section>
 
@@ -315,6 +218,8 @@
       line-height: 1.3rem;
     }
 
+    /* Class added programmatically */
+    /* stylelint-disable-next-line plugins/no-unused-selectors */
     &.stories {
       justify-content: flex-start;
 
@@ -331,7 +236,7 @@
       }
     }
 
-    &.prater {
+    &.berliner-prater {
       @container (min-width: 768px) {
         flex-direction: column;
         gap: 2rem;
@@ -368,7 +273,9 @@
       }
     }
 
-    &.create {
+    /* Class added programmatically */
+    /* stylelint-disable-next-line plugins/no-unused-selectors */
+    &.create-story {
       p {
         @container (min-width: 500px) {
           align-self: flex-start;
