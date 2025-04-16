@@ -8,7 +8,6 @@ export default defineEventHandler(async (event) => {
 
     // Handle GET request - List all authors
     if (event.method === 'GET') {
-      console.log('Processing GET request')
       const { data, error } = await client
         .from('authors')
         .select('*')
@@ -22,15 +21,12 @@ export default defineEventHandler(async (event) => {
         })
       }
 
-      console.log('Authors data:', data)
       return data
     }
 
     // Handle POST request - Create new author
     if (event.method === 'POST') {
-      console.log('Processing POST request')
       const body = await readBody(event)
-      console.log('Request body:', body)
 
       // Validate required fields
       if (!body.name || !body.email) {

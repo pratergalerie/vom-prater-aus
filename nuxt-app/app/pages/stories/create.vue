@@ -47,7 +47,6 @@
   watch(
     () => inputValues.value,
     (newValue) => {
-      console.log('inputValues', newValue)
       if (step.value === 0) {
         story.value.author.name = newValue.authorName
         story.value.author.email = newValue.email
@@ -140,8 +139,6 @@
         email: author.email,
       })
 
-    console.log('authorData', authorData.value)
-
     if (authorError) {
       console.error('Error creating author:', authorError)
     } else if (authorData.value) {
@@ -161,7 +158,6 @@
       }
 
       if (data.value && data.value.id) {
-        console.log('data', data.value)
         const router = useRouter()
         router.push({
           name: 'stories/edit',
@@ -172,7 +168,7 @@
   }
 
   function openInfoModal() {
-    console.log('openInfoModal')
+    // TODO: implement modal logic
   }
 </script>
 

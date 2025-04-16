@@ -33,14 +33,12 @@ export default defineEventHandler(async (event) => {
         })
       }
 
-      console.log('Stories data:', data)
       return data
     }
 
     // Handle POST request - Create new story
     if (event.method === 'POST') {
       const body = await readBody(event)
-      console.log('Request body:', body)
 
       const { data, error } = await client
         .from('stories')

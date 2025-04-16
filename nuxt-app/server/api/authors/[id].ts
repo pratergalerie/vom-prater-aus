@@ -3,13 +3,8 @@ import type { Database } from '~/types/supabase'
 import { serverSupabaseClient } from '#supabase/server'
 
 export default defineEventHandler(async (event) => {
-  console.log('=== Author API Endpoint Called ===')
-  console.log('Method:', event.method)
-  console.log('URL:', getRequestURL(event))
-
   try {
     const client = await serverSupabaseClient<Database>(event)
-    console.log('Supabase client initialized')
 
     // Get the author ID from the URL
     const id = getRouterParam(event, 'id')
@@ -22,7 +17,6 @@ export default defineEventHandler(async (event) => {
 
     // Handle GET request - Get single author
     if (event.method === 'GET') {
-      console.log('Processing GET request for author:', id)
       const { data, error } = await client
         .from('authors')
         .select('*')
@@ -49,9 +43,7 @@ export default defineEventHandler(async (event) => {
 
     // Handle PUT request - Update author
     if (event.method === 'PUT') {
-      console.log('Processing PUT request for author:', id)
       const body = await readBody(event)
-      console.log('Request body:', body)
 
       const { data, error } = await client
         .from('authors')
@@ -84,7 +76,6 @@ export default defineEventHandler(async (event) => {
 
     // Handle DELETE request - Delete author
     if (event.method === 'DELETE') {
-      console.log('Processing DELETE request for author:', id)
       const { error } = await client.from('authors').delete().eq('id', id)
 
       if (error) {

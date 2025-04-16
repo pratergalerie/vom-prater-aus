@@ -112,8 +112,6 @@
     if (intersects.length > 0) {
       const intersectedObjectId = intersects[0]?.object.uuid
 
-      console.log('clicked element', intersectedObjectId)
-
       if (intersectedObjectId) {
         focusElement(intersectedObjectId)
       }

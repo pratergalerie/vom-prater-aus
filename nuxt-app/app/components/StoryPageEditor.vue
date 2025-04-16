@@ -182,12 +182,10 @@
       }
     }
     input.click()
-
-    console.log('image', image.value)
   }
 
   function handleAddSticker() {
-    console.log('add sticker')
+    // TODO: implement sticker logic
   }
 </script>
 
