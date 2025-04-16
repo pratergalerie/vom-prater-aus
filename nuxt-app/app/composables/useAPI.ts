@@ -95,49 +95,68 @@ export function useAPI() {
     )
   }
 
-  // Homepage methods
-  function getHomepageSections(locale?: string) {
-    return useFetch<
-      {
+  // Pages methods
+  function getPages() {
+    return useFetch<Database['public']['Tables']['pages']['Row'][]>(
+      '/api/pages'
+    )
+  }
+
+  function getPage(slug: string, locale: string) {
+    return useFetch<{
+      id: string
+      slug: string
+      sections: {
         id: string
-        section_name: string
-        image: string | null
-        title: string | null
-        paragraph: string | null
-        button: {
-          label: string | null
-          link: string | null
+        name: string
+        type: string
+        order: number
+        content: {
+          id: string
+          title: string | null
+          subtitle: string | null
+          text: string[] | null
+          imageSrc: string | null
+          imageAlt: string | null
+          buttonLabel: string | null
+          buttonLink: string | null
+          additionalContent: Record<string, unknown> | null
         }
       }[]
-    >('/api/homepage', {
-      params: locale ? { locale } : undefined,
+    }>(`/api/pages/${slug}`, {
+      params: { locale },
     })
   }
 
-  function updateHomepageSection(section: {
-    section_name: string
-    locale: string
-    title?: string | null
-    paragraph?: string | null
-    image?: string | null
-    button?: {
-      label?: string | null
-      link?: string | null
-    }
-  }) {
-    return $fetch<{
+  function createPage(page: Database['public']['Tables']['pages']['Insert']) {
+    return $fetch<Database['public']['Tables']['pages']['Row']>('/api/pages', {
+      method: 'POST',
+      body: page,
+    })
+  }
+
+  function updatePage(
+    slug: string,
+    locale: string,
+    sections: {
       id: string
-      section_id: string
-      locale_id: string
-      title: string | null
-      paragraph: string | null
-      button_label: string | null
-      button_link: string | null
-      created_at: string | null
-      updated_at: string | null
-    }>('/api/homepage', {
+      content: {
+        id: string
+        title: string | null
+        subtitle: string | null
+        text: string[] | null
+        imageSrc: string | null
+        imageAlt: string | null
+        buttonLabel: string | null
+        buttonLink: string | null
+        additionalContent: Record<string, unknown> | null
+      }
+    }[]
+  ) {
+    return $fetch<{ success: boolean }>(`/api/pages/${slug}`, {
       method: 'PUT',
-      body: section,
+      body: { sections },
+      params: { locale },
     })
   }
 
@@ -154,8 +173,10 @@ export function useAPI() {
     createAuthor,
     updateAuthor,
     deleteAuthor,
-    // Homepage
-    getHomepageSections,
-    updateHomepageSection,
+    // Pages
+    getPages,
+    getPage,
+    createPage,
+    updatePage,
   }
 }
