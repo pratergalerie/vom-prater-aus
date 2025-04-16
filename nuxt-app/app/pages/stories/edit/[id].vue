@@ -33,7 +33,7 @@
   }
 
   function handleSaveChanges() {
-    console.log('save changes')
+    // TODO: implement save logic
   }
 
   function handleSubmit() {
