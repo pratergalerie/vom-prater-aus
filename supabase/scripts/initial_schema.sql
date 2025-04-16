@@ -61,28 +61,41 @@ CREATE TABLE IF NOT EXISTS locales (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW())
 );
 
--- Homepage table (maps to HomepageSection type)
-CREATE TABLE IF NOT EXISTS homepage (
+-- Pages table to define all available pages
+CREATE TABLE IF NOT EXISTS pages (
   id UUID PRIMARY KEY DEFAULT extensions.uuid_generate_v4(),
-  section_name TEXT NOT NULL UNIQUE,
-  image TEXT,
+  slug TEXT UNIQUE NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()),
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()),
-  CONSTRAINT section_name_check CHECK (section_name IN ('stories', 'berliner_prater', 'create_story'))
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW())
 );
 
--- Homepage section table (maps to HomepageSectionContent type)
-CREATE TABLE IF NOT EXISTS homepage_section (
+-- Sections table to define different types of content sections
+CREATE TABLE IF NOT EXISTS sections (
   id UUID PRIMARY KEY DEFAULT extensions.uuid_generate_v4(),
-  section_id UUID NOT NULL REFERENCES homepage(id) ON DELETE CASCADE,
-  locale_id UUID NOT NULL REFERENCES locales(id) ON DELETE CASCADE,
-  title TEXT,
-  paragraph TEXT,
-  button_label TEXT,
-  button_link TEXT,
+  page_id UUID NOT NULL REFERENCES pages(id) ON DELETE CASCADE,
+  type TEXT NOT NULL,
+  name TEXT NOT NULL,
+  "order" INTEGER NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()),
-  CONSTRAINT title_length_check CHECK (LENGTH(title) <= 50),
-  CONSTRAINT paragraph_length_check CHECK (LENGTH(paragraph) <= 300),
+  UNIQUE(page_id, name)
+);
+
+-- Section content table for localized content
+CREATE TABLE IF NOT EXISTS section_content (
+  id UUID PRIMARY KEY DEFAULT extensions.uuid_generate_v4(),
+  section_id UUID NOT NULL REFERENCES sections(id) ON DELETE CASCADE,
+  locale_id UUID NOT NULL REFERENCES locales(id) ON DELETE CASCADE,
+  title TEXT,
+  subtitle TEXT,
+  text TEXT[], -- Array of paragraphs
+  button_label TEXT,
+  button_link TEXT,
+  image_src TEXT,
+  image_alt TEXT,
+  additional_content JSONB,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()),
   UNIQUE(section_id, locale_id)
-); 
+);
+
