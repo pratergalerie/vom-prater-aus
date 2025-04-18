@@ -12,23 +12,22 @@ nginx/ssl/*
 !nginx/ssl/.gitkeep
 
 # Ignore dummy data
-dummy-data/*
+initial-data/*
 
 # Supabase volumes
-/volumes/db/data/
-/volumes/storage/*
-!/volumes/storage/.gitkeep
+/supabase/volumes/db/data/
+/supabase/volumes/storage/*
+!/supabase/volumes/storage/.gitkeep
 
 # Logs
-/volumes/logs/*
-!/volumes/logs/.gitkeep
+/supabase/volumes/logs/*
+!/supabase/volumes/logs/.gitkeep
 
-# Keep sql files
-!/volumes/db/*.sql
-!/volumes/db/init/*.sql
+/supabase/scripts/initial_data.sql
 
 # Keep function code
-!/volumes/functions/*
+!/supabase/volumes/functions/*
+/supabase/volumes/functions/.DS_Store
 
 # Database backups
 /backups/

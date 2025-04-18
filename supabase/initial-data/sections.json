@@ -1,0 +1,20 @@
+[
+  {
+    "page_slug": "home",
+    "type": "hero",
+    "name": "stories",
+    "order": 1
+  },
+  {
+    "page_slug": "home",
+    "type": "text_block",
+    "name": "berliner-prater",
+    "order": 2
+  },
+  {
+    "page_slug": "home",
+    "type": "cta",
+    "name": "create-story",
+    "order": 3
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "name": "supabase-scripts",
+  "version": "1.0.0",
+  "description": "Scripts for Supabase setup and data initialization",
+  "main": "index.js",
+  "scripts": {
+    "create-bucket": "node create_storage_bucket.js",
+    "upload-images": "node upload_initial_images.js",
+    "generate-data": "node generate_initial_data.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0"
+  }
+}

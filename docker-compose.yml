@@ -201,6 +201,7 @@ services:
     command: ["postgrest"]
     networks:
       - supabase-network
+
   realtime:
     # This container name looks inconsistent but is correct because realtime constructs tenant id by parsing the subdomain
     container_name: realtime-dev.supabase-realtime
@@ -248,6 +249,7 @@ services:
     networks:
       - supabase-network
       - frontend-network
+
   storage:
     container_name: supabase-storage
     image: supabase/storage-api:v1.14.5
@@ -275,6 +277,8 @@ services:
         condition: service_started
       imgproxy:
         condition: service_started
+      minio:
+        condition: service_healthy
     environment:
       ANON_KEY: ${ANON_KEY}
       SERVICE_KEY: ${SERVICE_ROLE_KEY}
@@ -282,16 +286,79 @@ services:
       PGRST_JWT_SECRET: ${JWT_SECRET}
       DATABASE_URL: postgres://supabase_storage_admin:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
       FILE_SIZE_LIMIT: 52428800
-      STORAGE_BACKEND: file
+      STORAGE_BACKEND: s3
+      GLOBAL_S3_BUCKET: stub
+      GLOBAL_S3_ENDPOINT: http://minio:9000
+      GLOBAL_S3_PROTOCOL: http
+      GLOBAL_S3_FORCE_PATH_STYLE: true
+      AWS_ACCESS_KEY_ID: supa-storage
+      AWS_SECRET_ACCESS_KEY: secret1234
+      AWS_DEFAULT_REGION: stub
       FILE_STORAGE_BACKEND_PATH: /var/lib/storage
       TENANT_ID: stub
+      # TODO: https://github.com/supabase/storage-api/issues/55
       REGION: stub
-      GLOBAL_S3_BUCKET: stub
       ENABLE_IMAGE_TRANSFORMATION: "true"
       IMGPROXY_URL: http://imgproxy:5001
     networks:
       - supabase-network
       - frontend-network
+
+  minio:
+    image: minio/minio
+    container_name: supabase-minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: supa-storage
+      MINIO_ROOT_PASSWORD: secret1234
+    command: server --console-address ":9001" /data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://minio:9000/minio/health/live"]
+      interval: 2s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - ./supabase/volumes/storage:/data:z
+    networks:
+      - supabase-network
+
+  minio-createbucket:
+    image: minio/mc
+    container_name: supabase-minio-createbucket
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc alias set supa-minio http://minio:9000 supa-storage secret1234;
+      /usr/bin/mc mb supa-minio/stub;
+      exit 0;
+      "
+    networks:
+      - supabase-network
+
+  # New service to create the Supabase Storage bucket
+  storage-bucket-setup:
+    image: node:18-alpine
+    container_name: supabase-storage-bucket-setup
+    volumes:
+      - ./supabase/scripts:/app
+    environment:
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_SERVICE_ROLE_KEY=${SERVICE_ROLE_KEY}
+    networks:
+      - supabase-network
+    depends_on:
+      storage:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+    command: sh -c "cd /app && ./create_storage_bucket.sh"
+    profiles:
+      - dev
+      - prod
 
   imgproxy:
     container_name: supabase-imgproxy
@@ -391,6 +458,21 @@ services:
     networks:
       - supabase-network
 
+  # New service to generate initial data SQL from JSON files
+  db-init:
+    image: node:18-alpine
+    container_name: supabase-db-init
+    volumes:
+      - ./supabase/scripts:/app/scripts
+      - ./supabase/initial-data:/app/initial-data
+    working_dir: /app
+    environment:
+      - NODE_ENV=container
+    command: sh -c "cd scripts && npm install && node generate_initial_data.js"
+    profiles:
+      - dev
+      - prod
+
   db:
     container_name: supabase-db
     image: supabase/postgres:15.8.1.020
@@ -441,7 +523,9 @@ services:
       ]
     networks:
       - supabase-network
-
+    depends_on:
+      db-init:
+        condition: service_completed_successfully
   supavisor:
     container_name: supabase-pooler
     image: supabase/supavisor:1.1.56
@@ -530,9 +614,9 @@ services:
       - nginx
 
 networks:
-  supabase-network:
-    driver: bridge
   frontend-network:
+    driver: bridge
+  supabase-network:
     driver: bridge
 
 volumes:
