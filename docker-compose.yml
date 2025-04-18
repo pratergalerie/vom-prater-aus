@@ -459,9 +459,9 @@ services:
       - supabase-network
 
   # New service to generate initial data SQL from JSON files
-  db-init:
+  db-initial-data-generation:
     image: node:18-alpine
-    container_name: supabase-db-init
+    container_name: supabase-db-initial-data-generation
     volumes:
       - ./supabase/scripts:/app/scripts
       - ./supabase/initial-data:/app/initial-data
@@ -469,6 +469,32 @@ services:
     environment:
       - NODE_ENV=container
     command: sh -c "cd scripts && npm install && node generate_initial_data.js"
+    profiles:
+      - dev
+      - prod
+
+  storage-initial-images-upload:
+    image: node:18-alpine
+    container_name: supabase-storage-initial-images-upload
+    environment:
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_SERVICE_ROLE_KEY=${SERVICE_ROLE_KEY}
+    volumes:
+      - ./supabase/scripts:/app/scripts
+      - ./supabase/initial-data:/app/initial-data
+    working_dir: /app
+    command: sh -c "cd /app/scripts && npm install && node upload_initial_images.js"
+    depends_on:
+      storage-bucket-setup:
+        condition: service_completed_successfully
+      storage:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+      kong:
+        condition: service_started
+    networks:
+      - supabase-network
     profiles:
       - dev
       - prod
@@ -524,7 +550,7 @@ services:
     networks:
       - supabase-network
     depends_on:
-      db-init:
+      db-initial-data-generation:
         condition: service_completed_successfully
   supavisor:
     container_name: supabase-pooler
