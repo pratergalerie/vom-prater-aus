@@ -17,6 +17,7 @@
     "docker-compose",
     "fkey",
     "hypernym",
+    "iconify",
     "imgproxy",
     "kong",
     "nuxtjs",
@@ -54,6 +55,8 @@
     "/nuxt-app/Dockerfile.dev",
     "/nuxt-app/nuxt.config.ts",
     "/nuxt-app/.nuxt",
-    "/nuxt-app/.output"
+    "/nuxt-app/.output",
+    "package-lock.json",
+    "package.json"
   ]
 }
