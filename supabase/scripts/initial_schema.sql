@@ -4,6 +4,16 @@ CREATE SCHEMA IF NOT EXISTS extensions;
 -- Enable UUID extension in the extensions schema
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA extensions;
 
+-- Locales table to store supported locales
+CREATE TABLE IF NOT EXISTS locales (
+  id UUID PRIMARY KEY DEFAULT extensions.uuid_generate_v4(),
+  code TEXT UNIQUE NOT NULL,
+  name TEXT NOT NULL,
+  is_active BOOLEAN DEFAULT TRUE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW())
+);
+
 -- Authors table (maps to Author type)
 CREATE TABLE IF NOT EXISTS authors (
   id UUID PRIMARY KEY DEFAULT extensions.uuid_generate_v4(),
@@ -16,19 +26,25 @@ CREATE TABLE IF NOT EXISTS authors (
 -- Keywords table (maps to Keyword type)
 CREATE TABLE IF NOT EXISTS keywords (
   id UUID PRIMARY KEY DEFAULT extensions.uuid_generate_v4(),
-  word TEXT UNIQUE NOT NULL,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW())
+  word TEXT NOT NULL,
+  locale_id UUID NOT NULL REFERENCES locales(id) ON DELETE CASCADE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()),
+  UNIQUE(word, locale_id)
 );
 
 -- Stories table (maps to Story type)
 CREATE TABLE IF NOT EXISTS stories (
   id UUID PRIMARY KEY DEFAULT extensions.uuid_generate_v4(),
   title TEXT NOT NULL,
+  slug TEXT UNIQUE NOT NULL,
   author_id UUID NOT NULL REFERENCES authors(id) ON DELETE CASCADE,
+  locale_id UUID NOT NULL REFERENCES locales(id) ON DELETE CASCADE,
   year INTEGER NOT NULL,
+  status TEXT NOT NULL DEFAULT 'wip',
   created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()),
   modified_at TIMESTAMP WITH TIME ZONE,
-  CONSTRAINT year_check CHECK (year >= 1000 AND year <= 9999)
+  CONSTRAINT year_check CHECK (year >= 1000 AND year <= 9999),
+  CONSTRAINT status_check CHECK (status IN ('wip', 'submitted', 'approved', 'rejected'))
 );
 
 -- Story pages table (maps to StoryPage type)
@@ -49,16 +65,6 @@ CREATE TABLE IF NOT EXISTS stories_keywords (
   keyword_id UUID REFERENCES keywords(id) ON DELETE CASCADE,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()),
   PRIMARY KEY (story_id, keyword_id)
-);
-
--- Locales table to store supported locales
-CREATE TABLE IF NOT EXISTS locales (
-  id UUID PRIMARY KEY DEFAULT extensions.uuid_generate_v4(),
-  code TEXT UNIQUE NOT NULL,
-  name TEXT NOT NULL,
-  is_active BOOLEAN DEFAULT TRUE,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()),
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW())
 );
 
 -- Pages table to define all available pages

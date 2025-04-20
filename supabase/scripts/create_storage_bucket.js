@@ -14,10 +14,11 @@ if (!supabaseUrl || !supabaseKey) {
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-// Define the bucket name
-const BUCKET_NAME = "content-storage";
+// Define the bucket names
+const CONTENT_BUCKET_NAME = "content-storage";
+const STORIES_BUCKET_NAME = "stories-storage";
 
-async function createBucketIfNotExists() {
+async function createBucketIfNotExists(bucketName) {
   try {
     // List existing buckets
     const { data: buckets, error } = await supabase.storage.listBuckets();
@@ -28,23 +29,23 @@ async function createBucketIfNotExists() {
     }
 
     // Check if the bucket already exists
-    const bucketExists = buckets.some((bucket) => bucket.name === BUCKET_NAME);
+    const bucketExists = buckets.some((bucket) => bucket.name === bucketName);
 
     if (!bucketExists) {
       // Create the bucket
-      const { error } = await supabase.storage.createBucket(BUCKET_NAME, {
+      const { error } = await supabase.storage.createBucket(bucketName, {
         public: true, // Make the bucket public
         fileSizeLimit: 52428800, // 50MB
       });
 
       if (error) {
-        console.error(`Error creating bucket ${BUCKET_NAME}:`, error);
+        console.error(`Error creating bucket ${bucketName}:`, error);
         return false;
       }
 
-      console.log(`Bucket ${BUCKET_NAME} created successfully`);
+      console.log(`Bucket ${bucketName} created successfully`);
     } else {
-      console.log(`Bucket ${BUCKET_NAME} already exists`);
+      console.log(`Bucket ${bucketName} already exists`);
     }
 
     return true;
@@ -54,14 +55,25 @@ async function createBucketIfNotExists() {
   }
 }
 
-// Run the function
-createBucketIfNotExists()
+// Run the function for both buckets
+async function setupBuckets() {
+  const contentBucketSuccess = await createBucketIfNotExists(
+    CONTENT_BUCKET_NAME
+  );
+  const storiesBucketSuccess = await createBucketIfNotExists(
+    STORIES_BUCKET_NAME
+  );
+
+  return contentBucketSuccess && storiesBucketSuccess;
+}
+
+setupBuckets()
   .then((success) => {
     if (success) {
-      console.log("Storage bucket setup completed successfully");
+      console.log("Storage buckets setup completed successfully");
       process.exit(0);
     } else {
-      console.error("Storage bucket setup failed");
+      console.error("Storage buckets setup failed");
       process.exit(1);
     }
   })

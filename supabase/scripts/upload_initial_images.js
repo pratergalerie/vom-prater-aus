@@ -18,22 +18,55 @@ if (!supabaseKey) {
 console.log(`Connecting to Supabase at: ${supabaseUrl}`);
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-// Define the bucket name
-const BUCKET_NAME = "content-storage";
+// Define the bucket names
+const CONTENT_BUCKET_NAME = "content-storage";
+const STORIES_BUCKET_NAME = "stories-storage";
 
 // Define the images to upload
-const images = [
+const contentImages = [
   {
     name: "berliner-prater.jpeg",
     sourcePath: "/app/initial-data/images/berliner-prater.jpeg",
     contentType: "image/jpeg",
+    bucket: CONTENT_BUCKET_NAME,
   },
   {
     name: "create-story.jpeg",
     sourcePath: "/app/initial-data/images/create-story.jpeg",
     contentType: "image/jpeg",
+    bucket: CONTENT_BUCKET_NAME,
   },
 ];
+
+const storyImages = [
+  {
+    name: "story-1.jpeg",
+    sourcePath: "/app/initial-data/images/story-1.jpeg",
+    contentType: "image/jpeg",
+    bucket: STORIES_BUCKET_NAME,
+  },
+  {
+    name: "story-2a.jpeg",
+    sourcePath: "/app/initial-data/images/story-2a.jpeg",
+    contentType: "image/jpeg",
+    bucket: STORIES_BUCKET_NAME,
+  },
+  {
+    name: "story-2b.jpeg",
+    sourcePath: "/app/initial-data/images/story-2b.jpeg",
+    contentType: "image/jpeg",
+    bucket: STORIES_BUCKET_NAME,
+  },
+  {
+    name: "story-3.jpeg",
+    sourcePath: "/app/initial-data/images/story-3.jpeg",
+    contentType: "image/jpeg",
+    bucket: STORIES_BUCKET_NAME,
+  },
+];
+
+// Combine all images
+const allImages = [...contentImages, ...storyImages];
 
 async function uploadImage(image) {
   try {
@@ -48,21 +81,21 @@ async function uploadImage(image) {
 
     // Upload using the Supabase client directly
     const { data, error } = await supabase.storage
-      .from(BUCKET_NAME)
+      .from(image.bucket)
       .upload(image.name, fileBuffer, {
         contentType: image.contentType,
         upsert: true,
       });
 
     if (error) {
-      console.error(`Error uploading ${image.name}:`, error);
+      console.error(`Error uploading ${image.name} to ${image.bucket}:`, error);
       return null;
     }
 
     // Get the public URL
     const {
       data: { publicUrl },
-    } = supabase.storage.from(BUCKET_NAME).getPublicUrl(image.name);
+    } = supabase.storage.from(image.bucket).getPublicUrl(image.name);
 
     console.log(`Successfully uploaded ${image.name} to ${publicUrl}`);
     return publicUrl;
@@ -73,7 +106,7 @@ async function uploadImage(image) {
 }
 
 async function main() {
-  for (const image of images) {
+  for (const image of allImages) {
     await uploadImage(image);
   }
 }

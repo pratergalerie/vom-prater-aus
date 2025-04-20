@@ -22,14 +22,20 @@ function readJsonFile(filename) {
 
 // Function to escape SQL strings
 function escapeSqlString(str) {
-  if (str === null) return "NULL";
-  return `'${str.replace(/'/g, "''")}'`;
+  if (str === null || str === undefined) return "NULL";
+  return `'${String(str).replace(/'/g, "''")}'`;
 }
 
 // Function to format array for SQL
 function formatArrayForSql(arr) {
-  if (!arr) return "NULL";
+  if (!arr || !Array.isArray(arr)) return "NULL";
   return `ARRAY[${arr.map((item) => escapeSqlString(item)).join(", ")}]`;
+}
+
+// Function to convert JSON to SQL string
+function jsonToSqlString(json) {
+  if (!json) return "NULL";
+  return escapeSqlString(JSON.stringify(json));
 }
 
 // Generate SQL for locales
@@ -244,6 +250,209 @@ END $$;\n`;
   return sql;
 }
 
+// Generate SQL for authors
+function generateAuthorsSql(authors) {
+  let sql = `-- Check if authors table is empty before inserting data
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM authors LIMIT 1) THEN
+    -- Insert authors
+    INSERT INTO authors (name, email)
+    VALUES\n`;
+
+  const values = authors
+    .map(
+      (author) =>
+        `      (${escapeSqlString(author.name)}, ${escapeSqlString(
+          author.email
+        )})`
+    )
+    .join(",\n");
+
+  sql += values;
+  sql += `;
+  END IF;
+END $$;\n\n`;
+
+  return sql;
+}
+
+// Generate SQL for keywords
+function generateKeywordsSql(keywords) {
+  if (!keywords || !Array.isArray(keywords)) {
+    console.warn("Keywords data is missing or invalid");
+    return "";
+  }
+
+  let sql = `-- Check if keywords table is empty before inserting data
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM keywords LIMIT 1) THEN
+    -- Insert English keywords
+    INSERT INTO keywords (word, locale_id)
+    SELECT 
+      word,
+      l.id
+    FROM 
+      (VALUES\n`;
+
+  // Generate values for English keywords
+  const enValues = keywords
+    .filter((keyword) => keyword && keyword.en)
+    .map((keyword) => `        (${escapeSqlString(keyword.en)}, 'en')`)
+    .join(",\n");
+
+  sql += enValues;
+  sql += `\n      ) AS k(word, code)
+    JOIN locales l ON l.code = k.code;
+      
+    -- Insert German keywords
+    INSERT INTO keywords (word, locale_id)
+    SELECT 
+      word,
+      l.id
+    FROM 
+      (VALUES\n`;
+
+  // Generate values for German keywords
+  const deValues = keywords
+    .filter((keyword) => keyword && keyword.de)
+    .map((keyword) => `        (${escapeSqlString(keyword.de)}, 'de')`)
+    .join(",\n");
+
+  sql += deValues;
+  sql += `\n      ) AS k(word, code)
+    JOIN locales l ON l.code = k.code;
+  END IF;
+END $$;\n\n`;
+
+  return sql;
+}
+
+// Generate SQL for stories
+function generateStoriesSql(stories) {
+  if (!stories || !Array.isArray(stories)) {
+    console.warn("Stories data is missing or invalid");
+    return "";
+  }
+
+  let sql = `-- Insert stories if the table is empty
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM stories LIMIT 1) THEN
+    -- Insert stories
+    INSERT INTO stories (title, slug, author_id, locale_id, year, status)
+    SELECT 
+      s.title,
+      s.slug,
+      a.id,
+      l.id,
+      s.year,
+      s.status
+    FROM 
+      (VALUES\n`;
+
+  // Generate values for stories
+  const storyValues = stories
+    .filter(
+      (story) =>
+        story &&
+        story.title &&
+        story.slug &&
+        story.author_email &&
+        story.locale_code
+    )
+    .map(
+      (story) =>
+        `        (${escapeSqlString(story.title)}, ${escapeSqlString(
+          story.slug
+        )}, ${escapeSqlString(story.author_email)}, ${escapeSqlString(
+          story.locale_code
+        )}, ${story.year || 0}, ${escapeSqlString(story.status || "draft")})`
+    )
+    .join(",\n");
+
+  sql += storyValues;
+  sql += `\n      ) AS s(title, slug, author_email, locale_code, year, status)
+    JOIN authors a ON a.email = s.author_email
+    JOIN locales l ON l.code = s.locale_code;
+
+    -- Insert story pages
+    INSERT INTO story_pages (story_id, layout, text, image, page_order)
+    SELECT 
+      s.id,
+      p.layout,
+      p.text,
+      CASE 
+        WHEN p.image IS NOT NULL 
+        THEN 'http://localhost:8000/storage/v1/object/public/stories-storage/' || p.image
+        ELSE NULL
+      END,
+      p.page_order
+    FROM 
+      stories s
+    CROSS JOIN (
+      VALUES\n`;
+
+  // Generate values for story pages
+  const pageValues = [];
+  stories.forEach((story) => {
+    if (story && story.pages && Array.isArray(story.pages)) {
+      story.pages.forEach((page) => {
+        if (page && page.layout && page.text) {
+          pageValues.push(
+            `        (${escapeSqlString(story.title)}, ${escapeSqlString(
+              page.layout
+            )}, ${escapeSqlString(page.text)}, ${escapeSqlString(
+              page.image || "NULL"
+            )}, ${page.page_order || 0})`
+          );
+        }
+      });
+    }
+  });
+
+  sql += pageValues.join(",\n");
+  sql += `\n      ) AS p(title, layout, text, image, page_order)
+    WHERE s.title = p.title;
+
+    -- Insert story-keyword relationships
+    INSERT INTO stories_keywords (story_id, keyword_id)
+    SELECT 
+      s.id,
+      k.id
+    FROM 
+      stories s
+    CROSS JOIN (
+      VALUES\n`;
+
+  // Generate values for story-keyword relationships
+  const keywordValues = [];
+  stories.forEach((story) => {
+    if (story && story.keywords && Array.isArray(story.keywords)) {
+      story.keywords.forEach((keyword) => {
+        if (keyword) {
+          keywordValues.push(
+            `        (${escapeSqlString(story.title)}, ${escapeSqlString(
+              keyword
+            )}, ${escapeSqlString(story.locale_code)})`
+          );
+        }
+      });
+    }
+  });
+
+  sql += keywordValues.join(",\n");
+  sql += `\n      ) AS sk(title, keyword, locale_code)
+    JOIN keywords k ON k.word = sk.keyword
+    JOIN locales l ON l.id = k.locale_id AND l.code = sk.locale_code
+    WHERE s.title = sk.title;
+  END IF;
+END $$;\n\n`;
+
+  return sql;
+}
+
 // Main function to generate the SQL file
 function generateSqlFile() {
   try {
@@ -267,6 +476,9 @@ function generateSqlFile() {
     const pages = readJsonFile("pages.json");
     const sections = readJsonFile("sections.json");
     const sectionContent = readJsonFile("section_content.json");
+    const authors = readJsonFile("authors.json");
+    const keywords = readJsonFile("keywords.json");
+    const stories = readJsonFile("stories.json");
 
     // Generate SQL
     console.log("Generating SQL...");
@@ -275,6 +487,9 @@ function generateSqlFile() {
     sql += generatePagesSql(pages);
     sql += generateSectionsSql(sections);
     sql += generateSectionContentSql(sectionContent);
+    sql += generateAuthorsSql(authors);
+    sql += generateKeywordsSql(keywords);
+    sql += generateStoriesSql(stories);
 
     // Write to file
     console.log(`Writing SQL to ${OUTPUT_FILE}...`);
