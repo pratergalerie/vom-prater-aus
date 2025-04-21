@@ -2,6 +2,10 @@ import { createError } from 'h3'
 import type { Database } from '~/types/supabase'
 import { serverSupabaseClient } from '#supabase/server'
 
+// UUID validation regex
+const UUID_REGEX =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+
 export default defineEventHandler(async (event) => {
   try {
     const client = await serverSupabaseClient<Database>(event)
@@ -11,6 +15,14 @@ export default defineEventHandler(async (event) => {
       throw createError({
         statusCode: 400,
         statusMessage: 'Story ID is required',
+      })
+    }
+
+    // Validate that the ID is a UUID
+    if (!UUID_REGEX.test(id)) {
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'Invalid story ID format',
       })
     }
 

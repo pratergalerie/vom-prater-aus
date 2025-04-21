@@ -25,7 +25,7 @@ export function useAPI() {
   }
 
   function getStoryBySlug(slug: string) {
-    return useFetch<StoryWithAuthor>(`/api/stories/slug/${slug}`)
+    return useFetch<StoryWithAuthor>(`/api/stories/by-slug/${slug}`)
   }
 
   function getStoryPages(storyId: string) {
