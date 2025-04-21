@@ -4,14 +4,14 @@
       img: {
         src: string
         alt: string
-        caption: string
-      }
+      } | null
       quote: string
       link: {
         text: string
         href: string
       }
       year: string
+      author: string
     }[]
   }>()
 
@@ -164,12 +164,18 @@
           :style="{ width: slideWidthPx }"
         >
           <NuxtImg
+            v-if="slide.img"
             :src="slide.img.src"
             :alt="slide.img.alt"
             class="image"
           />
 
-          <span class="copyright">{{ slide.img.caption }}</span>
+          <span
+            v-if="slide.author"
+            class="copyright"
+          >
+            ©{{ slide.author }}
+          </span>
 
           <div class="quote-wrapper">
             <NuxtImg
@@ -251,6 +257,7 @@
     grid-area: image;
     width: 100%;
     height: 100%;
+    max-height: 500px;
     object-fit: cover;
     filter: grayscale(100%);
   }
@@ -268,6 +275,7 @@
 
   .quote-wrapper {
     grid-area: quote;
+    width: 80%;
   }
 
   .quote {

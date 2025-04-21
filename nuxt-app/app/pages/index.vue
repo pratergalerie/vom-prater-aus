@@ -9,10 +9,11 @@
     ],
   })
 
-  const { getStories } = useAPI()
+  const { getFeaturedStories } = useAPI()
   const { locale } = useI18n()
 
-  const { data: stories, error: storiesError } = await getStories()
+  const { data: featuredStories, error: featuredStoriesError } =
+    await getFeaturedStories()
 
   const { getPage } = useAPI()
 
@@ -21,10 +22,10 @@
     locale.value
   )
 
-  if (storiesError.value || homepageContentError.value) {
+  if (featuredStoriesError.value || homepageContentError.value) {
     console.error(
       'Error fetching data:',
-      storiesError.value || homepageContentError.value
+      featuredStoriesError.value || homepageContentError.value
     )
   }
 
@@ -38,47 +39,25 @@
     horizontal: false,
   })
 
-  const storiesSlides = ref([
-    {
-      img: {
-        src: '/imgs/prater/prater11.jpeg',
-        alt: 'Berliner Prater',
-        caption: '©Autor 1',
-      },
-      quote: 'Kann diese Nachmittage im Prater nur empfehlen!',
+  const storiesSlides = computed(() => {
+    if (!featuredStories.value) return []
+    return featuredStories?.value.map((story) => ({
+      img: story.featured_image
+        ? {
+            src: story.featured_image,
+            alt: story.title,
+          }
+        : null,
+      title: story.title,
       link: {
-        text: stories.value?.[0]?.title || 'Story 1',
-        href: '/stories/explorer',
+        text: story.title,
+        href: `/stories/${story.slug}`,
       },
-      year: stories.value?.[0]?.year?.toString() || '2023',
-    },
-    {
-      img: {
-        src: '/imgs/prater/prater12.jpeg',
-        alt: 'Berliner Prater',
-        caption: '©Autor 2',
-      },
-      quote: 'Ein wunderbarer Ort zum Entspannen!',
-      link: {
-        text: stories.value?.[1]?.title || 'Story 2',
-        href: '/stories/explorer',
-      },
-      year: stories.value?.[1]?.year?.toString() || '2023',
-    },
-    {
-      img: {
-        src: '/imgs/prater/prater13.jpeg',
-        alt: 'Berliner Prater',
-        caption: '©Autor 3',
-      },
-      quote: 'Ein Muss für jeden Berlin-Besucher',
-      link: {
-        text: stories.value?.[2]?.title || 'Story 3',
-        href: '/stories/explorer',
-      },
-      year: stories.value?.[2]?.year?.toString() || '2023',
-    },
-  ])
+      year: story.year.toString(),
+      quote: story.quote || '',
+      author: story.author.name || '',
+    }))
+  })
 </script>
 
 <template>
