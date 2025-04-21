@@ -1,16 +1,36 @@
 import type { Database } from '~/types/supabase'
 
+// Define a type for stories with author data
+type StoryWithAuthor = Database['public']['Tables']['stories']['Row'] & {
+  author: Database['public']['Tables']['authors']['Row']
+}
+
 export function useAPI() {
   // Stories methods
   function getStories() {
-    return useFetch<Database['public']['Tables']['stories']['Row'][]>(
-      '/api/stories'
-    )
+    return useFetch<StoryWithAuthor[]>('/api/stories')
   }
 
-  function getStory(id: string) {
-    return useFetch<Database['public']['Tables']['stories']['Row']>(
-      `/api/stories/${id}`
+  function getFeaturedStories(limit?: number) {
+    return useFetch<StoryWithAuthor[]>('/api/stories', {
+      params: {
+        featured: 'true',
+        limit: limit || undefined,
+      },
+    })
+  }
+
+  function getStoryById(id: string) {
+    return useFetch<StoryWithAuthor>(`/api/stories/${id}`)
+  }
+
+  function getStoryBySlug(slug: string) {
+    return useFetch<StoryWithAuthor>(`/api/stories/slug/${slug}`)
+  }
+
+  function getStoryPages(storyId: string) {
+    return useFetch<Database['public']['Tables']['story_pages']['Row'][]>(
+      `/api/stories/${storyId}/pages`
     )
   }
 
@@ -163,7 +183,10 @@ export function useAPI() {
   return {
     // Stories
     getStories,
-    getStory,
+    getFeaturedStories,
+    getStoryById,
+    getStoryBySlug,
+    getStoryPages,
     createStory,
     updateStory,
     deleteStory,

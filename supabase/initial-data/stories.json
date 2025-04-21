@@ -6,6 +6,7 @@
     "locale_code": "en",
     "year": 2020,
     "status": "approved",
+    "featured": true,
     "keywords": [
       "Berliner Prater",
       "Ferris Wheel",
@@ -34,6 +35,7 @@
     "locale_code": "en",
     "year": 2019,
     "status": "approved",
+    "featured": true,
     "keywords": [
       "Berliner Prater",
       "Ferris Wheel",
@@ -68,6 +70,7 @@
     "locale_code": "en",
     "year": 2021,
     "status": "wip",
+    "featured": false,
     "keywords": ["Berliner Prater", "History", "Berlin", "Amusement Park"],
     "pages": [
       {
@@ -89,6 +92,7 @@
     "locale_code": "de",
     "year": 2020,
     "status": "approved",
+    "featured": true,
     "keywords": [
       "Berliner Prater",
       "Riesenrad",

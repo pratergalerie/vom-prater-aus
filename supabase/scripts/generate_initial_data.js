@@ -329,6 +329,34 @@ END $$;\n\n`;
   return sql;
 }
 
+// Function to extract a quote from story text
+function extractQuoteFromStory(story) {
+  if (!story.pages || !Array.isArray(story.pages)) {
+    return null;
+  }
+
+  // Find the first page with text content
+  const textPage = story.pages.find((page) => page && page.text);
+  if (!textPage || !textPage.text) {
+    return null;
+  }
+
+  // Extract a short quote (first 100 characters or up to the first sentence)
+  const text = textPage.text;
+  const firstSentence = text.match(/[^.!?]+[.!?]+/);
+
+  if (firstSentence) {
+    // Use the first sentence if it's not too long
+    const sentence = firstSentence[0].trim();
+    if (sentence.length <= 100) {
+      return sentence;
+    }
+  }
+
+  // Otherwise, use the first 100 characters
+  return text.substring(0, 100).trim() + "...";
+}
+
 // Generate SQL for stories
 function generateStoriesSql(stories) {
   if (!stories || !Array.isArray(stories)) {
@@ -341,14 +369,21 @@ DO $$
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM stories LIMIT 1) THEN
     -- Insert stories
-    INSERT INTO stories (title, slug, author_id, locale_id, year, status)
+    INSERT INTO stories (title, slug, author_id, locale_id, year, status, featured_image, featured, quote)
     SELECT 
       s.title,
       s.slug,
       a.id,
       l.id,
       s.year,
-      s.status
+      s.status,
+      CASE 
+        WHEN s.featured_image IS NOT NULL 
+        THEN 'http://localhost:8000/storage/v1/object/public/stories-storage/' || s.featured_image
+        ELSE NULL
+      END,
+      s.featured,
+      s.quote
     FROM 
       (VALUES\n`;
 
@@ -362,18 +397,33 @@ BEGIN
         story.author_email &&
         story.locale_code
     )
-    .map(
-      (story) =>
-        `        (${escapeSqlString(story.title)}, ${escapeSqlString(
-          story.slug
-        )}, ${escapeSqlString(story.author_email)}, ${escapeSqlString(
-          story.locale_code
-        )}, ${story.year || 0}, ${escapeSqlString(story.status || "draft")})`
-    )
+    .map((story) => {
+      // Find the first image from story pages to use as featured_image
+      let featuredImage = null;
+      if (story.pages && Array.isArray(story.pages)) {
+        const firstImagePage = story.pages.find((page) => page && page.image);
+        if (firstImagePage) {
+          featuredImage = firstImagePage.image;
+        }
+      }
+
+      // Extract a quote from the story text
+      const quote = extractQuoteFromStory(story);
+
+      return `        (${escapeSqlString(story.title)}, ${escapeSqlString(
+        story.slug
+      )}, ${escapeSqlString(story.author_email)}, ${escapeSqlString(
+        story.locale_code
+      )}, ${story.year || 0}, ${escapeSqlString(
+        story.status || "draft"
+      )}, ${escapeSqlString(featuredImage)}, ${
+        story.featured ? "TRUE" : "FALSE"
+      }, ${escapeSqlString(quote)})`;
+    })
     .join(",\n");
 
   sql += storyValues;
-  sql += `\n      ) AS s(title, slug, author_email, locale_code, year, status)
+  sql += `\n      ) AS s(title, slug, author_email, locale_code, year, status, featured_image, featured, quote)
     JOIN authors a ON a.email = s.author_email
     JOIN locales l ON l.code = s.locale_code;
 

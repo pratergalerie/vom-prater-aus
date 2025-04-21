@@ -8,22 +8,47 @@ export default defineEventHandler(async (event) => {
 
     // Handle GET request - List all stories
     if (event.method === 'GET') {
-      const { data, error } = await client
-        .from('stories')
-        .select(
-          `
+      // Get query parameters
+      const query = getQuery(event)
+      const featured = query.featured === 'true'
+      const limit = query.limit ? parseInt(query.limit as string) : undefined
+
+      // Start building the query
+      let supabaseQuery = client.from('stories').select(
+        `
           id,
           title,
+          slug,
           year,
+          status,
+          featured_image,
+          quote,
+          featured,
           created_at,
           modified_at,
           author:author_id (
             id,
-            name
+            name,
+            email
           )
         `
-        )
-        .order('created_at', { ascending: false })
+      )
+
+      // Apply featured filter if specified
+      if (featured) {
+        supabaseQuery = supabaseQuery.eq('featured', true)
+      }
+
+      // Apply limit if specified
+      if (limit) {
+        supabaseQuery = supabaseQuery.limit(limit)
+      }
+
+      // Apply ordering
+      supabaseQuery = supabaseQuery.order('created_at', { ascending: false })
+
+      // Execute the query
+      const { data, error } = await supabaseQuery
 
       if (error) {
         console.error('Supabase error:', error)
@@ -43,7 +68,25 @@ export default defineEventHandler(async (event) => {
       const { data, error } = await client
         .from('stories')
         .insert(body)
-        .select()
+        .select(
+          `
+          id,
+          title,
+          slug,
+          year,
+          status,
+          featured_image,
+          quote,
+          featured,
+          created_at,
+          modified_at,
+          author:author_id (
+            id,
+            name,
+            email
+          )
+        `
+        )
         .single()
 
       if (error) {

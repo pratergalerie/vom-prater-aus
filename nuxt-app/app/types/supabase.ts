@@ -87,19 +87,29 @@ export type Database = {
         Row: {
           created_at: string | null
           id: string
+          locale_id: string
           word: string
         }
         Insert: {
           created_at?: string | null
           id?: string
+          locale_id: string
           word: string
         }
         Update: {
           created_at?: string | null
           id?: string
+          locale_id?: string
           word?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "keywords_locale_id_fkey"
+            columns: ["locale_id"]
+            referencedRelation: "locales"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       locales: {
         Row: {
@@ -251,24 +261,42 @@ export type Database = {
         Row: {
           author_id: string
           created_at: string | null
+          featured: boolean | null
+          featured_image: string | null
           id: string
+          locale_id: string
           modified_at: string | null
+          quote: string | null
+          slug: string
+          status: string
           title: string
           year: number
         }
         Insert: {
           author_id: string
           created_at?: string | null
+          featured?: boolean | null
+          featured_image?: string | null
           id?: string
+          locale_id: string
           modified_at?: string | null
+          quote?: string | null
+          slug: string
+          status?: string
           title: string
           year: number
         }
         Update: {
           author_id?: string
           created_at?: string | null
+          featured?: boolean | null
+          featured_image?: string | null
           id?: string
+          locale_id?: string
           modified_at?: string | null
+          quote?: string | null
+          slug?: string
+          status?: string
           title?: string
           year?: number
         }
@@ -277,6 +305,12 @@ export type Database = {
             foreignKeyName: "stories_author_id_fkey"
             columns: ["author_id"]
             referencedRelation: "authors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "stories_locale_id_fkey"
+            columns: ["locale_id"]
+            referencedRelation: "locales"
             referencedColumns: ["id"]
           },
         ]

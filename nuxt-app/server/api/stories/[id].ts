@@ -3,70 +3,143 @@ import type { Database } from '~/types/supabase'
 import { serverSupabaseClient } from '#supabase/server'
 
 export default defineEventHandler(async (event) => {
-  const client = await serverSupabaseClient<Database>(event)
-  const id = getRouterParam(event, 'id')
+  try {
+    const client = await serverSupabaseClient<Database>(event)
+    const id = event.context.params?.id
 
-  // Handle GET request - Get single story
-  if (event.method === 'GET') {
-    const { data, error } = await client
-      .from('stories')
-      .select(
+    if (!id) {
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'Story ID is required',
+      })
+    }
+
+    // Handle GET request - Get story by ID
+    if (event.method === 'GET') {
+      const { data, error } = await client
+        .from('stories')
+        .select(
+          `
+          id,
+          title,
+          slug,
+          year,
+          status,
+          featured_image,
+          quote,
+          featured,
+          created_at,
+          modified_at,
+          author:author_id (
+            id,
+            name,
+            email
+          )
         `
-        *,
-        author:author_id (*),
-        pages:story_pages (*),
-        keywords:stories_keywords (
-          keyword:keyword_id (*)
         )
-      `
-      )
-      .eq('id', id as string)
-      .single()
+        .eq('id', id)
+        .single()
 
-    if (error) {
-      throw createError({
-        statusCode: Number(error.code),
-        statusMessage: error.message,
-      })
+      if (error) {
+        console.error('Supabase error:', error)
+        throw createError({
+          statusCode: Number(error.code),
+          statusMessage: error.message,
+        })
+      }
+
+      if (!data) {
+        throw createError({
+          statusCode: 404,
+          statusMessage: 'Story not found',
+        })
+      }
+
+      return data
     }
 
-    return data
-  }
+    // Handle PUT request - Update story
+    if (event.method === 'PUT') {
+      const body = await readBody(event)
 
-  // Handle PUT request - Update story
-  if (event.method === 'PUT') {
-    const body = await readBody(event)
-    const { data, error } = await client
-      .from('stories')
-      .update(body)
-      .eq('id', id as string)
-      .select()
-      .single()
+      const { data, error } = await client
+        .from('stories')
+        .update(body)
+        .eq('id', id)
+        .select(
+          `
+          id,
+          title,
+          slug,
+          year,
+          status,
+          featured_image,
+          quote,
+          featured,
+          created_at,
+          modified_at,
+          author:author_id (
+            id,
+            name,
+            email
+          )
+        `
+        )
+        .single()
 
-    if (error) {
-      throw createError({
-        statusCode: Number(error.code),
-        statusMessage: error.message,
-      })
+      if (error) {
+        console.error('Supabase error:', error)
+        throw createError({
+          statusCode: Number(error.code),
+          statusMessage: error.message,
+        })
+      }
+
+      return data
     }
 
-    return data
-  }
+    // Handle DELETE request - Delete story
+    if (event.method === 'DELETE') {
+      const { data, error } = await client
+        .from('stories')
+        .delete()
+        .eq('id', id)
+        .select(
+          `
+          id,
+          title,
+          slug,
+          year,
+          status,
+          featured_image,
+          quote,
+          featured,
+          created_at,
+          modified_at,
+          author:author_id (
+            id,
+            name,
+            email
+          )
+        `
+        )
+        .single()
 
-  // Handle DELETE request - Delete story
-  if (event.method === 'DELETE') {
-    const { error } = await client
-      .from('stories')
-      .delete()
-      .eq('id', id as string)
+      if (error) {
+        console.error('Supabase error:', error)
+        throw createError({
+          statusCode: Number(error.code),
+          statusMessage: error.message,
+        })
+      }
 
-    if (error) {
-      throw createError({
-        statusCode: Number(error.code),
-        statusMessage: error.message,
-      })
+      return data
     }
-
-    return { success: true }
+  } catch (error) {
+    console.error('Server error:', error)
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'Internal server error',
+    })
   }
 })
