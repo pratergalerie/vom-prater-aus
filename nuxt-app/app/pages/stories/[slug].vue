@@ -1,5 +1,10 @@
 <script lang="ts" setup>
-  import data from '~/data/stories.json'
+  import type { Database } from '~/types/supabase'
+
+  type StoryPage = Database['public']['Tables']['story_pages']['Row']
+  type Story = Database['public']['Tables']['stories']['Row'] & {
+    author: Database['public']['Tables']['authors']['Row']
+  }
 
   type Paragraph = {
     type: 'paragraph'
@@ -12,13 +17,12 @@
     alt: string
   }
 
-  type Story = {
-    id: number
+  type StoryContent = {
+    id: string
     title: string
     image: string
     author: string
     date: string
-    excerpt: string
     pages: {
       contents: (Paragraph | Image)[]
     }[]
@@ -29,16 +33,63 @@
   })
 
   const route = useRoute()
+  const api = useAPI()
 
+  const storySlug = route.params.slug as string
   const story = ref<Story | null>(null)
-
-  // @ts-expect-error - Story is not null
-  story.value = data.stories.find(
-    // @ts-expect-error - id is a number
-    (story: Story) => story.id.toString() === route.params.id
-  )
-
+  const storyPages = ref<StoryPage[]>([])
+  const storyContent = ref<StoryContent | null>(null)
   const currentPage = ref(0)
+
+  // Fetch story data by slug
+  const { data: storyData } = await api.getStoryBySlug(storySlug)
+  if (storyData.value) {
+    story.value = storyData.value
+
+    // Fetch story pages
+    const { data: pagesData } = await api.getStoryPages(story.value.id)
+    if (pagesData.value) {
+      storyPages.value = pagesData.value.sort(
+        (a, b) => a.page_order - b.page_order
+      )
+
+      // Transform the data to match the expected format
+      storyContent.value = {
+        id: story.value.id,
+        title: story.value.title,
+        image: storyPages.value[0]?.image || '/imgs/prater/default.jpeg',
+        author: story.value.author.name || 'Unknown',
+        date: story.value.year.toString(),
+        pages: storyPages.value.map((page) => {
+          // Parse the text content to extract paragraphs and images
+          const contents: (Paragraph | Image)[] = []
+
+          if (page.text) {
+            // Split text by newlines to get paragraphs
+            const paragraphs = page.text.split('\n\n')
+            paragraphs.forEach((paragraph) => {
+              if (paragraph.trim()) {
+                contents.push({
+                  type: 'paragraph',
+                  content: paragraph.trim(),
+                })
+              }
+            })
+          }
+
+          if (page.image) {
+            contents.push({
+              type: 'image',
+              src: page.image,
+              alt: story.value?.title || '',
+            })
+          }
+
+          return { contents }
+        }),
+      }
+    }
+  }
 
   const clipPath =
     'polygon(0 0, 100% 0, 100% 85%, 80% 88%, 70% 92%, 60% 90%, 50% 95%, 40% 90%, 30% 92%, 20% 88%, 0 95%)'
@@ -46,7 +97,7 @@
 
 <template>
   <div
-    v-if="story"
+    v-if="storyContent"
     class="story-container"
   >
     <div
@@ -55,15 +106,15 @@
       :style="{ clipPath }"
     >
       <img
-        :src="story.image"
+        :src="storyContent.image"
         alt="Story image"
       />
       <div class="story-title-container">
-        <h1>{{ story.title }}</h1>
-        <p>{{ story.date }}</p>
+        <h1>{{ storyContent.title }}</h1>
+        <p>{{ storyContent.date }}</p>
         <p>
           Eine Geschichte von
-          <span class="author-name">{{ story.author }}</span>
+          <span class="author-name">{{ storyContent.author }}</span>
         </p>
       </div>
     </div>
@@ -77,7 +128,7 @@
     <!-- Render current page with a pagination control -->
     <div>
       <section
-        v-for="(content, index) in story.pages[currentPage]?.contents"
+        v-for="(content, index) in storyContent.pages[currentPage]?.contents"
         :key="index"
         class="story-page"
       >
@@ -87,7 +138,7 @@
             :src="content.src"
             :alt="content.alt"
           />
-          <span class="copyright">© {{ story.author }}</span>
+          <span class="copyright">© {{ storyContent.author }}</span>
         </div>
       </section>
     </div>
@@ -102,7 +153,7 @@
       />
       <div class="pagination">
         <button
-          v-for="(_, index) in story.pages"
+          v-for="(_, index) in storyContent.pages"
           :key="index"
           @click="currentPage = index"
         >
