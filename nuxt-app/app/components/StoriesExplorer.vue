@@ -5,7 +5,7 @@
   import { Text3D, MapControls } from '@tresjs/cientos'
 
   type StoryElement = {
-    id: number
+    id: string
     image: Texture | null
     text: string | null
     textSize: number | null
@@ -42,14 +42,14 @@
     `,
   }
 
-  function isElementSelected(id: number) {
+  function isElementSelected(id: string) {
     return selectedElementId.value === id
   }
 
   const { scene, camera } = useTresContext()
   const raycaster = new Raycaster()
   const mouse = new Vector2()
-  const selectedElementId = ref<number | null>(null)
+  const selectedElementId = ref<string | null>(null)
 
   // Drag threshold logic to distinguish between dragging and clicking
   let isDragging = false
@@ -127,7 +127,7 @@
 
   const cameraRef = ref<PerspectiveCamera | null>(null)
 
-  const controlsRef = ref<MapControls | null>(null)
+  const controlsRef = ref<typeof MapControls | null>(null)
 
   function focusElement(elementId: string) {
     const element = scene.value.children
@@ -142,7 +142,7 @@
     // 1) Make sure both refs are set
     if (!cameraRef.value || !controlsRef.value) return
 
-    const controls = controlsRef.value?.instance as MapControls
+    const controls = controlsRef.value?.instance as typeof MapControls
 
     const startPos = cameraRef.value.position
     const startTarget = controls.target
@@ -204,7 +204,7 @@
 
   /**
    * Calculate how far the camera needs to be so that an object of size (width, height)
-   * fully fits in the vertical or horizontal FOV of the camera, given the camera’s aspect ratio.
+   * fully fits in the vertical or horizontal FOV of the camera, given the camera's aspect ratio.
    *
    * @param objectWidth   The object's bounding width
    * @param objectHeight  The object's bounding height

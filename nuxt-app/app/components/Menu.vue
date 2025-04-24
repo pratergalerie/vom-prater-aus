@@ -1,6 +1,5 @@
 <script setup lang="ts">
   const illustrationImage = ref<string>('')
-  const figureTopShape = '/svgs/menu/shapes/background/mustard/1.svg'
 
   const {
     locale: currentLocale,
@@ -9,40 +8,37 @@
   } = useI18n({ useScope: 'global' })
 
   const { isOpen, toggleMenu, menuRoutes } = useMenu()
-  const buttonImgSrc = computed(() => {
-    return isOpen.value
-      ? '/svgs/menu/button/to-close.svg'
-      : '/svgs/menu/button/to-open.svg'
-  })
 
   function chooseRandomMenuImage() {
     const randomImage = Math.floor(Math.random() * 10) + 1
     illustrationImage.value = `/imgs/prater/prater${randomImage}.jpeg`
   }
 
-  const menuTransitionTime = 500
+  const windowSize = useWindowSize()
+
+  const menuTopSvgSrc = computed(() => {
+    if (windowSize.width.value <= 500) {
+      return 'url(/svgs/menu/menu-masks/mobile.svg) top no-repeat, linear-gradient(black 0 0)'
+    } else if (windowSize.width.value > 500 && windowSize.width.value <= 1000) {
+      return 'url(/svgs/menu/menu-masks/tablet.svg) top no-repeat, linear-gradient(black 0 0)'
+    } else {
+      return 'url(/svgs/menu/menu-masks/desktop.svg) top no-repeat, linear-gradient(black 0 0)'
+    }
+  })
+
+  const illustrationMask = computed(() => {
+    if (windowSize.width.value <= 500) {
+      return 'url(/svgs/menu/illustration-masks/mobile.svg) top no-repeat, linear-gradient(black 0 0)'
+    } else if (windowSize.width.value > 500 && windowSize.width.value <= 1000) {
+      return 'url(/svgs/menu/illustration-masks/tablet.svg) top no-repeat, linear-gradient(black 0 0)'
+    } else {
+      return 'url(/svgs/menu/illustration-masks/desktop.svg) top no-repeat, linear-gradient(black 0 0)'
+    }
+  })
+
   const closingMenu = ref(false)
   const revealIllustration = ref(false)
   const isTransitioning = ref(false)
-
-  function handleToggleMenu() {
-    if (!isOpen.value) {
-      isOpen.value = true
-      isTransitioning.value = true
-      setTimeout(() => {
-        isTransitioning.value = false
-      }, 1000)
-    } else {
-      closingMenu.value = true
-      revealIllustration.value = false
-      isTransitioning.value = true
-      setTimeout(() => {
-        isTransitioning.value = false
-        closingMenu.value = false
-        toggleMenu()
-      }, 700)
-    }
-  }
 
   watch(isOpen, async (open) => {
     if (open) {
@@ -122,216 +118,116 @@
 </script>
 
 <template>
-  <div class="menu">
-    <button
-      class="toggle-button"
-      :class="{ blocked: isTransitioning }"
-      @click="handleToggleMenu"
-    >
-      <NuxtImg
-        :src="buttonImgSrc"
-        alt="Menu button image"
-        class="base-shape"
-        :class="{ rotated: isOpen }"
-      />
-
-      <div
-        class="hamburger"
-        :class="{ open: isOpen }"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </button>
-
+  <Teleport to="#teleports">
     <div
       v-if="isOpen"
-      class="menu-wrapper"
+      class="menu-container"
     >
-      <MaskedImage
-        class="illustration"
-        :image-src="illustrationImage"
-        :mask-src="figureTopShape"
-        :use-mask-as-top-shape="true"
-        image-alt="Berliner Prater"
-        :width="1920"
-        :height="1080"
-        :style="{ clipPath: clipPath }"
-        :class="{ transitioning: isTransitioning, reveal: revealIllustration }"
-      />
-      <div class="menu-content-wrapper">
+      <div class="illustration">
         <NuxtImg
-          class="menu-shape"
-          src="/svgs/menu/shapes/transition.svg"
-          alt="Menu base shape"
-          :class="{ closed: closingMenu }"
+          :src="illustrationImage"
+          alt="Berliner Prater"
         />
-
-        <div class="menu-content">
-          <nav>
-            <ul>
-              <li
-                v-for="(route, index) in menuRoutes"
-                :key="index"
-                :style="{
-                  'animation-delay': closingMenu
-                    ? `0s`
-                    : `${menuTransitionTime / 3000 + index * 0.1}s`,
-                }"
-                :class="{ 'slide-out': closingMenu }"
-              >
-                <NuxtLink
-                  :to="route.path"
-                  @click="closeMenu"
-                >
-                  {{ route.title }}
-                </NuxtLink>
-              </li>
-            </ul>
-          </nav>
-
-          <div class="lang-switcher">
-            <a
-              v-for="locale in locales"
-              :key="locale.code"
-              href="#"
-              :class="{ active: locale.code === currentLocale }"
-              @click.prevent.stop="setLocale(locale.code)"
-            >
-              {{ locale.code }}
-            </a>
-          </div>
-        </div>
       </div>
+      <menu aria-label="Menu">
+        <nav>
+          <ul>
+            <li
+              v-for="(route, index) in menuRoutes"
+              :key="index"
+              :class="{ 'slide-out': closingMenu }"
+            >
+              <NuxtLink
+                :to="route.path"
+                @click="closeMenu"
+              >
+                {{ route.title }}
+              </NuxtLink>
+            </li>
+          </ul>
+        </nav>
+
+        <div
+          class="lang-switcher"
+          aria-label="Language switcher"
+        >
+          <a
+            v-for="locale in locales"
+            :key="locale.code"
+            href="#"
+            :class="{ active: locale.code === currentLocale }"
+            @click.prevent.stop="setLocale(locale.code)"
+          >
+            {{ locale.code }}
+          </a>
+        </div>
+      </menu>
     </div>
-  </div>
+  </Teleport>
 </template>
 
 <style scoped>
-  .menu {
+  .menu-container {
     position: fixed;
     top: var(--header-height);
     z-index: 100;
     width: 100%;
     height: calc(100vh);
     pointer-events: none;
-  }
-
-  .menu-shape {
-    position: absolute;
-    right: 17px;
-    bottom: 17px;
-    z-index: 1;
-    width: 50px;
-    height: 50px;
-    transform: rotate(90deg) scale(25);
-    animation-name: scale-up-and-rotate;
-    animation-duration: 1s;
-
-    &.closed {
-      animation-name: scale-down-and-rotate;
-      animation-duration: 0.5s;
-      animation-delay: 0.3s;
-
-      @media screen and (prefers-reduced-motion: reduce) {
-        animation: none;
-        animation-duration: 0.5s;
-        animation-delay: 0.3s;
-      }
-    }
-
-    @media screen and (prefers-reduced-motion: reduce) {
-      position: absolute;
-      right: 17px;
-      bottom: 17px;
-      z-index: 1;
-      width: 50px;
-      height: 50px;
-      transform: rotate(90deg) scale(25);
-      animation: none;
-      animation-duration: 1s;
-
-      &.closed {
-        animation-name: scale-down-and-rotate;
-        animation-duration: 0.5s;
-        animation-delay: 0.3s;
-      }
-    }
-  }
-
-  @keyframes scale-up-and-rotate {
-    from {
-      transform: rotate(0deg) scale(1);
-    }
-
-    to {
-      transform: rotate(90deg) scale(25);
-    }
-  }
-
-  @keyframes scale-down-and-rotate {
-    from {
-      transform: rotate(90deg) scale(25);
-    }
-
-    to {
-      transform: rotate(0deg) scale(1);
-    }
+    container-name: menu;
+    container-type: inline-size;
   }
 
   .illustration {
     position: absolute;
-    top: -50px;
-    grid-area: illustration;
+    top: 0;
     width: 100%;
-    height: 300px;
-    padding: 0%;
-    margin: 0;
+    height: 100%;
+    background-color: var(--color-mustard);
+    mask: v-bind(illustrationMask);
+    mask-size: 100% auto;
+    mask-composite: exclude;
 
-    /* Initial state: Fully hidden */
-    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-    transition: clip-path 0.1s ease-in-out;
-
-    @media screen and (prefers-reduced-motion: reduce) {
+    img {
       position: absolute;
-      top: -50px;
-      grid-area: illustration;
-      width: 100%;
-      height: 300px;
+      top: calc(var(--header-height));
+      left: 50%;
+      height: 70%;
       padding: 0%;
       margin: 0;
-
-      /* Initial state: Fully hidden */
-      clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-      transition: none;
-    }
-
-    &.reveal {
-      /* Fully visible state */
-      clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+      object-fit: cover;
+      mix-blend-mode: multiply;
+      filter: grayscale(1);
+      transform: translate(-50%, -50%);
     }
   }
 
-  .menu-content-wrapper {
+  .menu-top {
+    display: block;
+    width: 100%;
+    height: 80px;
+    object-fit: cover;
+  }
+
+  menu {
     position: absolute;
     bottom: 0;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     gap: 0;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     height: 80%;
     padding: 0;
     margin: 0;
     color: var(--color-beige);
-  }
-
-  .menu-content {
-    position: absolute;
-    z-index: 2;
-    width: 100%;
-    height: 100%;
     pointer-events: all;
+    background-color: var(--color-viridian);
+    mask: v-bind(menuTopSvgSrc);
+    mask-size: 100% auto;
+    mask-composite: exclude;
   }
 
   nav {
@@ -393,7 +289,16 @@
         & a {
           text-decoration: none;
         }
+
+        @container (min-width: 500px) {
+          font-size: 2rem;
+          line-height: 3rem;
+        }
       }
+    }
+
+    @container (min-width: 1000px) {
+      max-width: 1000px;
     }
   }
 
@@ -444,138 +349,6 @@
         font-weight: 700;
         color: var(--color-black);
       }
-    }
-  }
-
-  .toggle-button {
-    position: fixed;
-    right: var(--padding-mobile);
-    bottom: var(--padding-mobile);
-    z-index: 101;
-    width: 50px;
-    height: 50px;
-    padding: 0;
-    margin: 0;
-    pointer-events: all;
-    cursor: pointer;
-    background: none;
-    border: 0;
-
-    .base-shape {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      filter: drop-shadow(0 5px 5px rgb(0 0 0 / 20%));
-      transform: rotate(0deg);
-      transform-origin: center;
-      transition: transform 0.5s ease-in-out;
-
-      &.rotated {
-        transform: rotate(90deg);
-      }
-
-      @media screen and (prefers-reduced-motion: reduce) {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        filter: drop-shadow(0 5px 5px rgb(0 0 0 / 20%));
-        transform: rotate(0deg);
-        transform-origin: center;
-        transition: none;
-
-        &.rotated {
-          transform: rotate(90deg);
-        }
-      }
-    }
-
-    .hamburger {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-      justify-content: space-between;
-      width: 15px;
-      height: 15px;
-      transform: translate(-50%, -50%);
-      transition: transform 0.3s ease;
-
-      span {
-        width: 100%;
-        height: 2px;
-        background: var(--color-beige);
-        transition:
-          transform 0.3s ease,
-          opacity 0.3s ease;
-
-        @media screen and (prefers-reduced-motion: reduce) {
-          width: 100%;
-          height: 2px;
-          background: var(--color-beige);
-          transition: none;
-        }
-      }
-
-      &.open {
-        span {
-          &:nth-child(1) {
-            transform: translateY(7px) rotate(45deg);
-          }
-
-          &:nth-child(2) {
-            opacity: 0;
-          }
-
-          - &:nth-child(3) {
-            transform: translateY(-6px) rotate(-45deg);
-          }
-        }
-      }
-
-      @media screen and (prefers-reduced-motion: reduce) {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        display: flex;
-        flex-direction: column;
-        gap: 1px;
-        justify-content: space-between;
-        width: 15px;
-        height: 15px;
-        transform: translate(-50%, -50%);
-        transition: none;
-
-        span {
-          width: 100%;
-          height: 2px;
-          background: var(--color-beige);
-          transition:
-            transform 0.3s ease,
-            opacity 0.3s ease;
-        }
-
-        &.open {
-          span {
-            &:nth-child(1) {
-              transform: translateY(7px) rotate(45deg);
-            }
-
-            &:nth-child(2) {
-              opacity: 0;
-            }
-
-            &:nth-child(3) {
-              transform: translateY(-6px) rotate(-45deg);
-            }
-          }
-        }
-      }
-    }
-
-    &.blocked {
-      pointer-events: none;
     }
   }
 </style>

@@ -103,27 +103,27 @@
       />
     </section>
 
-    <div class="floating-shapes">
+    <div class="cutouts">
       <NuxtImg
-        src="/svgs/floating-shapes/1.svg"
+        src="/svgs/cutouts/1.svg"
         alt="Floating shape 1"
         class="floating-shape shape-1 rellax"
         data-rellax-speed="3"
       />
       <NuxtImg
-        src="/svgs/floating-shapes/2.svg"
+        src="/svgs/cutouts/2.svg"
         alt="Floating shape 2"
         class="floating-shape shape-2 rellax"
         data-rellax-speed="2"
       />
       <NuxtImg
-        src="/svgs/floating-shapes/3.svg"
+        src="/svgs/cutouts/3.svg"
         alt="Floating shape 3"
         class="floating-shape shape-3 rellax"
         data-rellax-speed="-3"
       />
       <NuxtImg
-        src="/svgs/floating-shapes/4.svg"
+        src="/svgs/cutouts/4.svg"
         alt="Floating shape 4"
         class="floating-shape shape-4 rellax"
         data-rellax-speed="-1"
@@ -281,7 +281,7 @@
     }
   }
 
-  .floating-shapes {
+  .cutouts {
     position: absolute;
     inset: 0;
     z-index: -1;

@@ -21,7 +21,10 @@
 <template>
   <div class="layout-container">
     <Header />
-    <div class="frame">
+    <div
+      v-if="!isOpen"
+      class="frame"
+    >
       <GradientHalftone />
       <GradientHalftone
         direction="bottom"
@@ -31,6 +34,7 @@
     </div>
 
     <Menu />
+    <MenuToggle />
 
     <Transition name="fade">
       <main

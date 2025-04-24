@@ -3,8 +3,6 @@
   import type { Texture } from 'three'
   import { TextureLoader } from 'three'
 
-  import data from '~/data/stories.json'
-
   useHead({
     title: 'Vom Prater Aus - Stories',
     meta: [
@@ -19,17 +17,8 @@
     layout: 'no-footer',
   })
 
-  type Story = {
-    id: number
-    title: string
-    image: string
-    author: string
-    date: string
-    excerpt: string
-  }
-
   type StoryElement = {
-    id: number
+    id: string
     image: Texture | null
     text: string | null
     textSize: number | null
@@ -40,11 +29,15 @@
     height: number
   }
 
-  const storiesData = ref<Story[]>(data.stories)
+  const { getStories } = useAPI()
   const storyElements = ref<StoryElement[]>([])
 
+  const { data: stories } = await getStories()
+
   onMounted(async () => {
-    loadStoryElementsContent()
+    if (stories.value) {
+      loadStoryElementsContent()
+    }
   })
 
   // Function to check for overlap
@@ -94,19 +87,21 @@
   }
 
   async function loadStoryElementsContent() {
+    if (!stories.value) return
+
     const distance = 4000 // Range for X and Y
     const maxAttempts = 100 // Avoid infinite loops
 
-    for (const story of storiesData.value) {
+    for (const story of stories.value) {
       let texture: Texture
       let width: number
       let height: number
 
-      if (Math.random() > 0.5) {
+      if (Math.random() > 0.5 && story.featured_image) {
         // 50% chance to render an image
         // @ts-expect-error - TextureLoader type is not correct
-        texture = await useLoader(TextureLoader, story.image)
-        ;[width, height] = await getImageResolution(story.image)
+        texture = await useLoader(TextureLoader, story.featured_image)
+        ;[width, height] = await getImageResolution(story.featured_image)
 
         // Scale the image randomly between 1 and 2
         const scale = Math.random() + 1
@@ -144,15 +139,15 @@
           text: null,
           textSize: null,
           title: story.title,
-          author: story.author,
+          author: story.author.name,
           position: position || [0, 0, 0],
           width,
           height,
         } as StoryElement)
-      } else {
+      } else if (story.quote) {
         // Render text
         const maxLineLength = 40
-        const text = breakTextIntoLines(story.excerpt, maxLineLength)
+        const text = breakTextIntoLines(story.quote, maxLineLength)
 
         const size = Math.floor(Math.random() * 50) + 50 // Random text size
         const width = size * maxLineLength * 0.5 // Approximate text width
@@ -186,7 +181,7 @@
           text,
           textSize: size,
           title: story.title,
-          author: story.author,
+          author: story.author.name,
           position,
           width,
           height,

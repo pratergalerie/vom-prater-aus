@@ -257,9 +257,13 @@
     grid-area: image;
     width: 100%;
     height: 100%;
-    max-height: 500px;
+    height: 300px;
     object-fit: cover;
     filter: grayscale(100%);
+
+    @container (min-width: 500px) {
+      height: 500px;
+    }
   }
 
   .copyright {
