@@ -6,7 +6,7 @@
     to="/"
   >
     <NuxtImg
-      :src="'logos/vom-prater-aus.svg'"
+      src="logos/vom-prater-aus.svg"
       alt="Vom Prater Aus logo"
       class="logo-image"
     />
