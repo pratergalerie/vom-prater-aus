@@ -9,6 +9,14 @@
 
   const { isOpen, toggleMenu, menuRoutes } = useMenu()
 
+  const languageSwitcherDelay = computed(() => {
+    return `${(menuRoutes.value.length + 1) * 0.1}s`
+  })
+
+  const dividerDelay = computed(() => {
+    return `${menuRoutes.value.length * 0.1}s`
+  })
+
   function chooseRandomMenuImage() {
     const randomImage = Math.floor(Math.random() * 10) + 1
     illustrationImage.value = `/imgs/prater/prater${randomImage}.jpeg`
@@ -109,11 +117,9 @@
     closingMenu.value = true
     revealIllustration.value = false
     isTransitioning.value = true
-    setTimeout(() => {
-      isTransitioning.value = false
-      closingMenu.value = false
-      toggleMenu()
-    }, 700)
+    isTransitioning.value = false
+    closingMenu.value = false
+    toggleMenu()
   }
 </script>
 
@@ -122,6 +128,7 @@
     <div
       v-if="isOpen"
       class="menu-container"
+      :class="{ 'menu-visible': isOpen && !closingMenu }"
     >
       <div class="illustration">
         <NuxtImg
@@ -136,6 +143,9 @@
               v-for="(route, index) in menuRoutes"
               :key="index"
               :class="{ 'slide-out': closingMenu }"
+              :style="{
+                '--animation-delay': `${index * 0.1}s`,
+              }"
             >
               <NuxtLink
                 :to="route.path"
@@ -147,6 +157,18 @@
           </ul>
         </nav>
 
+        <div class="divider-container">
+          <Divider
+            type="horizontal"
+            color="var(--color-beige)"
+            width="40%"
+            class="divider"
+            :style="{
+              '--animation-delay': dividerDelay,
+            }"
+          />
+        </div>
+
         <div
           class="lang-switcher"
           aria-label="Language switcher"
@@ -155,7 +177,13 @@
             v-for="locale in locales"
             :key="locale.code"
             href="#"
-            :class="{ active: locale.code === currentLocale }"
+            :class="{
+              active: locale.code === currentLocale,
+              highlight: locale.code === currentLocale,
+            }"
+            :style="{
+              '--animation-delay': languageSwitcherDelay,
+            }"
             @click.prevent.stop="setLocale(locale.code)"
           >
             {{ locale.code }}
@@ -167,15 +195,20 @@
 </template>
 
 <style scoped>
+  * {
+    --animation-delay: 0s;
+  }
+
   .menu-container {
     position: fixed;
     top: var(--header-height);
     z-index: 100;
     width: 100%;
-    height: calc(100vh);
+    height: calc(100vh - var(--header-height));
     pointer-events: none;
-    container-name: menu;
-    container-type: inline-size;
+    container-name: menu-container;
+    container-type: size;
+    contain: size layout style;
   }
 
   .illustration {
@@ -220,14 +253,28 @@
     justify-content: center;
     width: 100%;
     height: 80%;
-    padding: 0;
+    padding: 0 var(--padding-mobile);
     margin: 0;
     color: var(--color-beige);
     pointer-events: all;
+    outline: none;
     background-color: var(--color-viridian);
     mask: v-bind(menuTopSvgSrc);
     mask-size: 100% auto;
     mask-composite: exclude;
+
+    @container menu-container (min-width: 500px) {
+      padding: 0 var(--padding-tablet);
+    }
+
+    @container menu-container (min-width: 1000px) {
+      padding: 0 var(--padding-desktop);
+    }
+
+    @container menu-container (max-height: 750px) {
+      justify-content: flex-start;
+      padding-top: 50px;
+    }
   }
 
   nav {
@@ -239,73 +286,71 @@
     padding: 0;
     margin: 0;
 
-    ul {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      padding: 1rem;
-      margin: 0;
-      list-style: none;
-
-      li {
-        font-family: var(--font-link);
-        font-size: 1.25rem;
-        font-weight: 700;
-        line-height: 1.5rem;
-        color: var(--color-beige);
-        text-align: right;
-        cursor: pointer;
-        opacity: 0;
-        transform: translateX(10%);
-        animation: slide 1s ease forwards;
-        animation-direction: normal;
-
-        &.slide-out {
-          animation: slide-out 0.1s ease forwards;
-
-          @media screen and (prefers-reduced-motion: reduce) {
-            animation: none;
-          }
-        }
-
-        @media screen and (prefers-reduced-motion: reduce) {
-          font-family: var(--font-link);
-          font-size: 1.25rem;
-          font-weight: 700;
-          line-height: 1.5rem;
-          color: var(--color-beige);
-          text-align: right;
-          cursor: pointer;
-          opacity: 0;
-          transform: translateX(10%);
-          animation: none;
-          animation-direction: normal;
-
-          &.slide-out {
-            animation: slide-out 0.1s ease forwards;
-          }
-        }
-
-        & a {
-          text-decoration: none;
-        }
-
-        @container (min-width: 500px) {
-          font-size: 2rem;
-          line-height: 3rem;
-        }
-      }
-    }
-
     @container (min-width: 1000px) {
       max-width: 1000px;
     }
   }
 
-  @keyframes slide {
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+    li {
+      font-family: var(--font-link);
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.5rem;
+      color: var(--color-beige);
+      text-align: right;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateX(-20px);
+      animation: none;
+
+      &.slide-out {
+        animation: none;
+      }
+
+      & a {
+        text-decoration: none;
+      }
+
+      @container menu-container (min-width: 500px) {
+        font-size: 1.5rem;
+        line-height: 2rem;
+      }
+
+      @container menu-container (min-width: 1000px) {
+        font-size: 2rem;
+        line-height: 3rem;
+      }
+    }
+  }
+
+  .menu-container:not(.menu-visible) menu li {
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: none;
+  }
+
+  .menu-container.menu-visible menu li {
+    animation: slide-in 0.3s ease-out forwards;
+    animation-delay: var(--animation-delay);
+
+    @media screen and (prefers-reduced-motion: reduce) {
+      animation: none;
+      animation-delay: var(--animation-delay);
+    }
+  }
+
+  @keyframes slide-in {
     from {
       opacity: 0;
-      transform: translateX(100%);
+      transform: translateX(20px);
     }
 
     to {
@@ -322,22 +367,40 @@
 
     to {
       opacity: 0;
-      transform: translateX(10%);
+      transform: translateX(20px);
     }
+  }
+
+  .divider-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    max-width: 1000px;
   }
 
   .lang-switcher {
     display: flex;
     gap: 1rem;
-    justify-content: right;
-    padding: 1rem;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    max-width: 1000px;
     margin: 0;
     color: var(--color-beige);
+    opacity: 0;
+    transform: translateX(20px);
+    animation: slide-in 0.3s ease-out forwards;
+    animation-delay: v-bind(languageSwitcherDelay);
+
+    @media screen and (prefers-reduced-motion: reduce) {
+      animation: none;
+      animation-delay: v-bind(languageSwitcherDelay);
+    }
 
     a {
       padding: 0 0.5rem;
       font-family: var(--font-link);
-      font-size: 1.25rem;
+      font-size: 1rem;
       line-height: 1.5rem;
       color: var(--color-beige);
       text-align: right;
@@ -349,6 +412,52 @@
         font-weight: 700;
         color: var(--color-black);
       }
+
+      @container menu-container (min-width: 500px) {
+        font-size: 1.5rem;
+        line-height: 2rem;
+      }
+
+      @container menu-container (min-width: 1000px) {
+        font-size: 2rem;
+        line-height: 3rem;
+      }
+    }
+  }
+
+  .divider {
+    opacity: 1;
+
+    & :deep(.divider-path) {
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+      animation: draw-path 0.5s ease-out forwards;
+      animation-delay: v-bind(dividerDelay);
+
+      @media screen and (prefers-reduced-motion: reduce) {
+        stroke-dasharray: 1000;
+        stroke-dashoffset: 1000;
+        animation: none;
+        animation-delay: v-bind(dividerDelay);
+      }
+    }
+  }
+
+  @keyframes draw-path {
+    from {
+      stroke-dashoffset: 1000;
+    }
+
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @media screen and (prefers-reduced-motion: reduce) {
+    .divider :deep(.divider-path) {
+      stroke-dasharray: none;
+      stroke-dashoffset: 0;
+      animation: none;
     }
   }
 </style>

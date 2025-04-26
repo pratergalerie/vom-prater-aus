@@ -1,20 +1,11 @@
 <script setup lang="ts">
   const { isOpen, toggleMenu } = useMenu()
-  const isTransitioning = ref(false)
 
   function handleToggleMenu() {
     if (!isOpen.value) {
       isOpen.value = true
-      isTransitioning.value = true
-      setTimeout(() => {
-        isTransitioning.value = false
-      }, 1000)
     } else {
-      isTransitioning.value = true
-      setTimeout(() => {
-        isTransitioning.value = false
-        toggleMenu()
-      }, 700)
+      toggleMenu()
     }
   }
 </script>
@@ -22,7 +13,6 @@
 <template>
   <button
     class="toggle-button"
-    :class="{ blocked: isTransitioning }"
     aria-label="Toggle menu"
     tabindex="0"
     @click="handleToggleMenu"
@@ -102,10 +92,6 @@
       @media screen and (prefers-reduced-motion: reduce) {
         transition: none;
       }
-    }
-
-    &.blocked {
-      pointer-events: none;
     }
   }
 </style>
