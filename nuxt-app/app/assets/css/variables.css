@@ -34,4 +34,8 @@
 
   /* *------------------------------ Layout --------------------------------* */
   --header-height: 90px;
+
+  @media (min-width: 768px) {
+    --header-height: 120px;
+  }
 }
