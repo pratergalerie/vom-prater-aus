@@ -18,6 +18,10 @@
     @click="handleToggleMenu"
   >
     <div
+      class="button-background"
+      :class="{ open: isOpen }"
+    ></div>
+    <div
       class="hamburger"
       :class="{ open: isOpen }"
     >
@@ -31,7 +35,10 @@
 <style scoped>
   .toggle-button {
     position: fixed;
-    right: var(--padding-mobile);
+    right: max(
+      calc(50% - 500px + var(--padding-mobile)),
+      var(--padding-mobile)
+    );
     bottom: var(--padding-mobile);
     z-index: 101;
     width: 50px;
@@ -41,11 +48,28 @@
     pointer-events: all;
     cursor: pointer;
     background: none;
-    background-image: url('/svgs/menu/button/to-open.svg');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
     border: 0;
+
+    .button-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('/svgs/menu/toggle-button/button-shape.svg');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      transition: transform 0.3s ease;
+
+      &.open {
+        transform: rotate(180deg);
+      }
+
+      @media screen and (prefers-reduced-motion: reduce) {
+        transition: none;
+      }
+    }
 
     .hamburger {
       position: absolute;
@@ -59,6 +83,11 @@
       height: 15px;
       transform: translate(-50%, -50%);
       transition: transform 0.3s ease;
+
+      @media screen and (min-width: 500px) {
+        width: 20px;
+        height: 15px;
+      }
 
       span {
         width: 100%;
@@ -92,6 +121,21 @@
       @media screen and (prefers-reduced-motion: reduce) {
         transition: none;
       }
+    }
+
+    @media screen and (min-width: 500px) {
+      top: calc(var(--header-height) / 2 - 25px);
+      right: max(
+        calc(50% - 500px + var(--padding-tablet)),
+        var(--padding-tablet)
+      );
+    }
+
+    @media screen and (min-width: 1000px) {
+      right: max(
+        calc(50% - 500px + var(--padding-desktop)),
+        var(--padding-desktop)
+      );
     }
   }
 </style>
