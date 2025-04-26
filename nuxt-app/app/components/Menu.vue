@@ -44,161 +44,227 @@
     }
   })
 
-  const closingMenu = ref(false)
   const revealIllustration = ref(false)
-  const isTransitioning = ref(false)
+  const menuClipPath = ref('polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%)')
+  const illustrationClipPath = ref('polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%)')
+  const isMenuTransitioning = ref(false)
+  const isIllustrationTransitioning = ref(false)
+
+  function generateIrregularClipPath(
+    progress: number,
+    element: 'menu' | 'illustration'
+  ): string {
+    const irregularities = Array.from(
+      { length: 7 },
+      () => Math.random() * 20 - 10
+    ) // More points and larger range for irregularities
+
+    // For menu: fixed right edge, animated left edge
+    // For illustration: fixed left edge, animated right edge
+    const left = element === 'menu' ? 100 - progress * 100 : 0
+    const right = element === 'menu' ? 100 : progress * 100
+
+    // Generate points for the animated edge
+    const animatedEdge = element === 'menu' ? 'left' : 'right'
+
+    return `polygon(
+    ${animatedEdge === 'left' ? `${left + (irregularities[0] || 0)}%` : `${left}%`} 0%,
+    ${animatedEdge === 'right' ? `${right + (irregularities[0] || 0)}%` : `${right}%`} 0%,
+    ${animatedEdge === 'right' ? `${right + (irregularities[1] || 0)}%` : `${right}%`} 15%,
+    ${animatedEdge === 'right' ? `${right + (irregularities[2] || 0)}%` : `${right}%`} 30%,
+    ${animatedEdge === 'right' ? `${right + (irregularities[3] || 0)}%` : `${right}%`} 45%,
+    ${animatedEdge === 'right' ? `${right + (irregularities[4] || 0)}%` : `${right}%`} 60%,
+    ${animatedEdge === 'right' ? `${right + (irregularities[5] || 0)}%` : `${right}%`} 75%,
+    ${animatedEdge === 'right' ? `${right + (irregularities[6] || 0)}%` : `${right}%`} 100%,
+    ${animatedEdge === 'left' ? `${left + (irregularities[6] || 0)}%` : `${left}%`} 100%,
+    ${animatedEdge === 'left' ? `${left + (irregularities[5] || 0)}%` : `${left}%`} 85%,
+    ${animatedEdge === 'left' ? `${left + (irregularities[4] || 0)}%` : `${left}%`} 70%,
+    ${animatedEdge === 'left' ? `${left + (irregularities[3] || 0)}%` : `${left}%`} 55%,
+    ${animatedEdge === 'left' ? `${left + (irregularities[2] || 0)}%` : `${left}%`} 40%,
+    ${animatedEdge === 'left' ? `${left + (irregularities[1] || 0)}%` : `${left}%`} 25%,
+    ${animatedEdge === 'left' ? `${left + (irregularities[0] || 0)}%` : `${left}%`} 10%
+  )`
+  }
+
+  function animateMenuClipPath(reveal: boolean) {
+    isMenuTransitioning.value = true
+    let progress = reveal ? 0 : 1
+
+    const interval = setInterval(() => {
+      if (reveal) {
+        progress += 0.25
+        if (progress >= 1) {
+          progress = 1
+          menuClipPath.value = 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'
+          clearInterval(interval)
+          isMenuTransitioning.value = false
+          // Start illustration animation after menu is done
+          setTimeout(() => {
+            animateIllustrationClipPath(true)
+          }, 200)
+        } else {
+          menuClipPath.value = generateIrregularClipPath(progress, 'menu')
+        }
+      } else {
+        progress -= 0.2
+        if (progress <= 0) {
+          progress = 0
+          menuClipPath.value = 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)'
+          clearInterval(interval)
+          isMenuTransitioning.value = false
+          // Start illustration animation after menu is done
+          setTimeout(() => {
+            animateIllustrationClipPath(false)
+          }, 200)
+        } else {
+          menuClipPath.value = generateIrregularClipPath(progress, 'menu')
+        }
+      }
+    }, 75)
+  }
+
+  function animateIllustrationClipPath(reveal: boolean) {
+    isIllustrationTransitioning.value = true
+    let progress = reveal ? 0 : 1
+
+    const interval = setInterval(() => {
+      if (reveal) {
+        progress += 0.25
+        if (progress >= 1) {
+          progress = 1
+          illustrationClipPath.value =
+            'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'
+          clearInterval(interval)
+          isIllustrationTransitioning.value = false
+        } else {
+          illustrationClipPath.value = generateIrregularClipPath(
+            progress,
+            'illustration'
+          )
+        }
+      } else {
+        progress -= 0.2
+        if (progress <= 0) {
+          progress = 0
+          illustrationClipPath.value = 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)'
+          clearInterval(interval)
+          isIllustrationTransitioning.value = false
+        } else {
+          illustrationClipPath.value = generateIrregularClipPath(
+            progress,
+            'illustration'
+          )
+        }
+      }
+    }, 75)
+  }
 
   watch(isOpen, async (open) => {
     if (open) {
       await nextTick()
       setTimeout(() => {
         revealIllustration.value = true
+        animateMenuClipPath(true)
       }, 1000)
       chooseRandomMenuImage()
-    }
-  })
-
-  function generateIrregularClipPath(progress: number): string {
-    const irregularities = Array.from(
-      { length: 5 },
-      () => Math.random() * 10 - 5
-    ) // Random offsets
-    const left = 0 // Start from the left edge
-    const right = progress * 100 // Progressively reveal the right edge
-    return `polygon(
-    ${left}% 0%,
-    ${right + (irregularities[0] || 0)}% 0%,
-    ${right + (irregularities[1] || 0)}% 25%,
-    ${right + (irregularities[2] || 0)}% 50%,
-    ${right + (irregularities[3] || 0)}% 75%,
-    ${right}% 100%,
-    ${left}% 100%
-  )`
-  }
-
-  const clipPath = ref('polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%)')
-
-  watch(revealIllustration, (reveal) => {
-    if (reveal) {
-      isTransitioning.value = true
-      let progress = 0
-
-      const interval = setInterval(() => {
-        progress += 0.15 // Adjust speed
-        if (progress >= 1) {
-          progress = 1
-          // Fully revealed state
-          clipPath.value = 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'
-          clearInterval(interval)
-          isTransitioning.value = false
-        } else {
-          clipPath.value = generateIrregularClipPath(progress)
-        }
-      }, 75) // Adjust interval for smoothness
     } else {
-      isTransitioning.value = true
-      let progress = 1
-
-      const interval = setInterval(() => {
-        progress -= 0.2 // Reverse the progress
-        if (progress <= 0) {
-          progress = 0
-          clipPath.value = 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)' // Fully hidden state
-          clearInterval(interval)
-          isTransitioning.value = false
-        } else {
-          clipPath.value = generateIrregularClipPath(progress)
-        }
-      }, 50)
+      revealIllustration.value = false
+      animateMenuClipPath(false)
     }
   })
 
   function closeMenu() {
-    closingMenu.value = true
-    revealIllustration.value = false
-    isTransitioning.value = true
-    isTransitioning.value = false
-    closingMenu.value = false
     toggleMenu()
   }
 </script>
 
 <template>
   <Teleport to="#teleports">
-    <div
-      v-if="isOpen"
-      class="menu-container"
-      :class="{ 'menu-visible': isOpen && !closingMenu }"
-    >
-      <div class="illustration">
-        <NuxtImg
-          :src="illustrationImage"
-          alt="Berliner Prater"
-        />
-      </div>
-      <menu aria-label="Menu">
-        <nav>
-          <ul>
-            <li
-              v-for="(route, index) in menuRoutes"
-              :key="index"
-              :class="{ 'slide-out': closingMenu }"
-              :style="{
-                '--animation-delay': `${index * 0.1}s`,
-              }"
-            >
-              <NuxtLink
-                :to="route.path"
-                @click="closeMenu"
-              >
-                {{ route.title }}
-              </NuxtLink>
-            </li>
-          </ul>
-        </nav>
-
-        <div class="divider-container">
-          <Divider
-            type="horizontal"
-            color="var(--color-beige)"
-            width="40%"
-            class="divider"
-            :style="{
-              '--animation-delay': dividerDelay,
-            }"
+    <Transition name="menu">
+      <div
+        v-show="isOpen"
+        class="menu-container"
+        :class="{ 'menu-visible': isOpen }"
+      >
+        <div
+          class="illustration"
+          :style="{
+            clipPath: illustrationClipPath,
+            transition: isIllustrationTransitioning
+              ? 'none'
+              : 'clip-path 0.3s ease',
+          }"
+        >
+          <NuxtImg
+            :src="illustrationImage"
+            alt="Berliner Prater"
           />
         </div>
-
-        <div
-          class="lang-switcher"
-          aria-label="Language switcher"
+        <menu
+          aria-label="Menu"
+          :style="{
+            clipPath: menuClipPath,
+            transition: isMenuTransitioning ? 'none' : 'clip-path 0.3s ease',
+          }"
         >
-          <a
-            v-for="locale in locales"
-            :key="locale.code"
-            href="#"
-            :class="{
-              active: locale.code === currentLocale,
-              highlight: locale.code === currentLocale,
-            }"
-            :style="{
-              '--animation-delay': languageSwitcherDelay,
-            }"
-            @click.prevent.stop="setLocale(locale.code)"
+          <nav>
+            <ul>
+              <li
+                v-for="(route, index) in menuRoutes"
+                :key="index"
+                :style="{
+                  '--animation-delay': `${index * 0.1}s`,
+                }"
+              >
+                <NuxtLink
+                  :to="route.path"
+                  @click="closeMenu"
+                >
+                  {{ route.title }}
+                </NuxtLink>
+              </li>
+            </ul>
+          </nav>
+
+          <div class="divider-container">
+            <Divider
+              type="horizontal"
+              color="var(--color-beige)"
+              width="40%"
+              class="divider"
+              :style="{
+                '--animation-delay': dividerDelay,
+              }"
+            />
+          </div>
+
+          <div
+            class="lang-switcher"
+            aria-label="Language switcher"
           >
-            {{ locale.code }}
-          </a>
-        </div>
-      </menu>
-    </div>
+            <a
+              v-for="locale in locales"
+              :key="locale.code"
+              href="#"
+              :class="{
+                active: locale.code === currentLocale,
+                highlight: locale.code === currentLocale,
+              }"
+              :style="{
+                '--animation-delay': languageSwitcherDelay,
+              }"
+              @click.prevent.stop="setLocale(locale.code)"
+            >
+              {{ locale.code }}
+            </a>
+          </div>
+        </menu>
+      </div>
+    </Transition>
   </Teleport>
 </template>
 
 <style scoped>
-  * {
-    --animation-delay: 0s;
-  }
-
   .menu-container {
     position: fixed;
     top: var(--header-height);
@@ -300,6 +366,8 @@
     list-style: none;
 
     li {
+      --animation-delay: 0s;
+
       font-family: var(--font-link);
       font-size: 1rem;
       font-weight: 700;
@@ -334,7 +402,13 @@
   .menu-container:not(.menu-visible) menu li {
     opacity: 0;
     transform: translateX(-20px);
-    animation: none;
+    animation: slide-out 0.3s ease-out forwards;
+    animation-delay: var(--animation-delay);
+
+    @media screen and (prefers-reduced-motion: reduce) {
+      animation: none;
+      animation-delay: var(--animation-delay);
+    }
   }
 
   .menu-container.menu-visible menu li {
@@ -458,6 +532,32 @@
       stroke-dasharray: none;
       stroke-dashoffset: 0;
       animation: none;
+    }
+  }
+
+  .menu-enter-active,
+  .menu-leave-active {
+    transition: opacity 0.5s ease;
+
+    @media screen and (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  .menu-enter-from,
+  .menu-leave-to {
+    opacity: 0;
+  }
+
+  .menu-enter-to,
+  .menu-leave-from {
+    opacity: 1;
+  }
+
+  @media screen and (prefers-reduced-motion: reduce) {
+    .menu-enter-active,
+    .menu-leave-active {
+      transition: none;
     }
   }
 </style>
