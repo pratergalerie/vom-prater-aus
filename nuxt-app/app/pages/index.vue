@@ -137,6 +137,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    gap: 50px;
     justify-content: center;
     width: 100%;
     min-height: 100vh;
@@ -159,7 +160,6 @@
     gap: 1rem;
     justify-content: center;
     width: 100%;
-    min-height: 600px;
     margin: 0;
     container-type: inline-size;
     container-name: section-container;
@@ -259,7 +259,6 @@
         @container (min-width: 500px) {
           align-self: flex-start;
           max-width: 60%;
-          margin-left: 5%;
           text-align: left;
         }
       }
