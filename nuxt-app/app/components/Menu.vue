@@ -50,6 +50,9 @@
   const isMenuTransitioning = ref(false)
   const isIllustrationTransitioning = ref(false)
 
+  const isTransitioning = ref(false)
+  const isVisible = ref(false)
+
   function generateIrregularClipPath(
     progress: number,
     element: 'menu' | 'illustration'
@@ -161,15 +164,24 @@
 
   watch(isOpen, async (open) => {
     if (open) {
+      isVisible.value = true
       await nextTick()
-      setTimeout(() => {
-        revealIllustration.value = true
-        animateMenuClipPath(true)
-      }, 1000)
+      revealIllustration.value = true
+      animateMenuClipPath(true)
       chooseRandomMenuImage()
     } else {
-      revealIllustration.value = false
-      animateMenuClipPath(false)
+      isTransitioning.value = true
+      // First animate the illustration out
+      animateIllustrationClipPath(false)
+      // Then after illustration animation completes, animate the menu out
+      setTimeout(() => {
+        animateMenuClipPath(false)
+        // Finally hide everything after menu animation completes
+        setTimeout(() => {
+          isVisible.value = false
+          isTransitioning.value = false
+        }, 500)
+      }, 300) // Time for illustration animation to complete
     }
   })
 
@@ -180,11 +192,11 @@
 
 <template>
   <Teleport to="#teleports">
-    <Transition name="menu">
+    <Transition name="fade">
       <div
-        v-show="isOpen"
+        v-show="isVisible"
         class="menu-container"
-        :class="{ 'menu-visible': isOpen }"
+        :class="{ 'menu-visible': isOpen, 'menu-closing': isTransitioning }"
       >
         <div
           class="illustration"
@@ -286,6 +298,9 @@
     mask: v-bind(illustrationMask);
     mask-size: 100% auto;
     mask-composite: exclude;
+    transition:
+      opacity 0.3s ease,
+      clip-path 0.3s ease;
 
     img {
       position: absolute;
@@ -399,59 +414,6 @@
     }
   }
 
-  .menu-container:not(.menu-visible) menu li {
-    opacity: 0;
-    transform: translateX(-20px);
-    animation: slide-out 0.3s ease-out forwards;
-    animation-delay: var(--animation-delay);
-
-    @media screen and (prefers-reduced-motion: reduce) {
-      animation: none;
-      animation-delay: var(--animation-delay);
-    }
-  }
-
-  .menu-container.menu-visible menu li {
-    animation: slide-in 0.3s ease-out forwards;
-    animation-delay: var(--animation-delay);
-
-    @media screen and (prefers-reduced-motion: reduce) {
-      animation: none;
-      animation-delay: var(--animation-delay);
-    }
-  }
-
-  @keyframes slide-in {
-    from {
-      opacity: 0;
-      transform: translateX(20px);
-    }
-
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  @keyframes slide-out {
-    from {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    to {
-      opacity: 0;
-      transform: translateX(20px);
-    }
-  }
-
-  .divider-container {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-    max-width: 1000px;
-  }
-
   .lang-switcher {
     display: flex;
     gap: 1rem;
@@ -468,7 +430,6 @@
 
     @media screen and (prefers-reduced-motion: reduce) {
       animation: none;
-      animation-delay: v-bind(languageSwitcherDelay);
     }
 
     a {
@@ -509,11 +470,106 @@
       animation-delay: v-bind(dividerDelay);
 
       @media screen and (prefers-reduced-motion: reduce) {
-        stroke-dasharray: 1000;
-        stroke-dashoffset: 1000;
+        stroke-dasharray: none;
+        stroke-dashoffset: 0;
         animation: none;
-        animation-delay: v-bind(dividerDelay);
       }
+    }
+  }
+
+  .menu-container:not(.menu-visible) menu li {
+    opacity: 1;
+    transform: translateX(0);
+    transform-origin: right center;
+    animation: slide-out 0.3s ease-out forwards;
+    animation-delay: var(--animation-delay);
+
+    @media screen and (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+
+  .menu-container.menu-visible menu li {
+    opacity: 0;
+    transform: translateX(20px);
+    transform-origin: right center;
+    animation: slide-in 0.3s ease-out forwards;
+    animation-delay: var(--animation-delay);
+
+    @media screen and (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+
+  .menu-container:not(.menu-visible) .divider {
+    opacity: 1;
+    transform: translateX(0);
+    transform-origin: right center;
+    animation: slide-out 0.3s ease-out forwards;
+    animation-delay: v-bind(dividerDelay);
+
+    @media screen and (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+
+  .menu-container.menu-visible .divider {
+    opacity: 0;
+    transform: translateX(20px);
+    transform-origin: right center;
+    animation: slide-in 0.3s ease-out forwards;
+    animation-delay: v-bind(dividerDelay);
+
+    @media screen and (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+
+  .menu-container:not(.menu-visible) .lang-switcher {
+    opacity: 1;
+    transform: translateX(0);
+    transform-origin: right center;
+    animation: slide-out 0.3s ease-out forwards;
+    animation-delay: v-bind(languageSwitcherDelay);
+
+    @media screen and (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+
+  .menu-container.menu-visible .lang-switcher {
+    opacity: 0;
+    transform: translateX(20px);
+    transform-origin: right center;
+    animation: slide-in 0.3s ease-out forwards;
+    animation-delay: v-bind(languageSwitcherDelay);
+
+    @media screen and (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+
+  @keyframes slide-in {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slide-out {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    to {
+      opacity: 0;
+      transform: translateX(20px);
     }
   }
 
@@ -527,37 +583,28 @@
     }
   }
 
-  @media screen and (prefers-reduced-motion: reduce) {
-    .divider :deep(.divider-path) {
-      stroke-dasharray: none;
-      stroke-dashoffset: 0;
-      animation: none;
-    }
+  .divider-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    max-width: 1000px;
   }
 
-  .menu-enter-active,
-  .menu-leave-active {
-    transition: opacity 0.5s ease;
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.3s ease;
 
     @media screen and (prefers-reduced-motion: reduce) {
       transition: none;
     }
   }
 
-  .menu-enter-from,
-  .menu-leave-to {
+  .fade-enter-from,
+  .fade-leave-to {
     opacity: 0;
   }
 
-  .menu-enter-to,
-  .menu-leave-from {
-    opacity: 1;
-  }
-
-  @media screen and (prefers-reduced-motion: reduce) {
-    .menu-enter-active,
-    .menu-leave-active {
-      transition: none;
-    }
+  .menu-closing {
+    pointer-events: none;
   }
 </style>
