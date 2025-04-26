@@ -58,5 +58,6 @@
     "/nuxt-app/.output",
     "package-lock.json",
     "package.json"
-  ]
+  ],
+  "cSpell.ignoreWords": ["dlblur"]
 }
