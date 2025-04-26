@@ -1,11 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="background">
-    <div class="vignette" />
-    <div class="overlay" />
-    <div class="texture" />
-  </div>
+  <div class="background"></div>
 </template>
 
 <style scoped>
@@ -17,37 +13,17 @@
     display: grid;
     width: 100vw;
     height: 100vh;
-  }
+    background-color: var(--color-beige);
 
-  .texture {
-    z-index: -3;
-    grid-area: 1 / 1;
-    width: 100%;
-    height: 100%;
-    background: url('@/assets/svgs/noise.svg');
-    opacity: 1;
-  }
-
-  .overlay {
-    z-index: -2;
-    grid-area: 1 / 1;
-    width: 100%;
-    height: 100%;
-    background: var(--color-beige);
-    mix-blend-mode: multiply;
-  }
-
-  .vignette {
-    z-index: -1;
-    grid-area: 1 / 1;
-    width: 100%;
-    height: 100%;
-    box-shadow:
-      inset 10px 20px 300px 0 var(--color-brown),
-      inset -10px -20px 300px 0 var(--color-brown),
-      inset 20px -10px 300px 0 var(--color-brown),
-      inset -20px 10px 300px 0 var(--color-brown);
-    mix-blend-mode: multiply;
-    opacity: 0.1;
+    &::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      content: '';
+      background: url('@/assets/svgs/noise.svg');
+      mix-blend-mode: multiply;
+    }
   }
 </style>
