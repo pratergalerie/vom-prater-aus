@@ -344,6 +344,19 @@
     mask-size: 100% auto;
     mask-composite: exclude;
 
+    &::before {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      content: '';
+      background-image: url('/imgs/textures/paper/1.webp');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      mix-blend-mode: multiply;
+      opacity: 1;
+    }
+
     @container menu-container (min-width: 500px) {
       padding: 0 var(--padding-tablet);
     }
@@ -403,13 +416,13 @@
       }
 
       @container menu-container (min-width: 500px) {
-        font-size: 1.5rem;
-        line-height: 2rem;
+        font-size: 1.2rem;
+        line-height: 1.5rem;
       }
 
       @container menu-container (min-width: 1000px) {
-        font-size: 2rem;
-        line-height: 3rem;
+        font-size: 1.5rem;
+        line-height: 2rem;
       }
     }
   }
@@ -449,13 +462,13 @@
       }
 
       @container menu-container (min-width: 500px) {
-        font-size: 1.5rem;
-        line-height: 2rem;
+        font-size: 1.2rem;
+        line-height: 1.5rem;
       }
 
       @container menu-container (min-width: 1000px) {
-        font-size: 2rem;
-        line-height: 3rem;
+        font-size: 1.5rem;
+        line-height: 2rem;
       }
     }
   }
