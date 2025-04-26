@@ -59,6 +59,7 @@ a {
   border-radius: 5px 0 0 7.5px;
   text-shadow:
     -1px 1px 2.4px rgba(249, 184, 93, 0.7),
-    3px -3px 5px rgba(255, 255, 255, 1),
-    -4.5px -6.5px 7.5px rgba(255, 255, 255, 1);
+    3px -3px 5px rgba(249, 184, 93, 1),
+    -4.5px -6.5px 7.5px rgba(249, 184, 93, 0.4),
+    -2px 4px 2px rgba(249, 184, 93, 0.2);
 }
