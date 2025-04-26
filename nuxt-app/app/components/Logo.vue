@@ -26,6 +26,13 @@
     background: none;
     border: 0;
     filter: drop-shadow(0 0 10px var(--color-beige));
+
+    @media (min-width: 1024px) {
+      margin-left: max(
+        calc(50% - 500px + var(--padding-desktop)),
+        var(--padding-desktop)
+      );
+    }
   }
 
   .logo-image {
