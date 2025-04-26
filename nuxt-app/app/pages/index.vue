@@ -226,6 +226,10 @@
         width: 100%;
       }
 
+      h1 {
+        align-self: flex-start;
+      }
+
       .text-block {
         align-self: flex-end;
         max-width: 80%;
@@ -237,10 +241,6 @@
             margin-left: 2rem;
           }
         }
-      }
-
-      h1 {
-        margin-left: -2.5rem;
       }
 
       .button {
