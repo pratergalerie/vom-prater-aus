@@ -18,7 +18,7 @@
     padding: var(--padding-mobile);
     margin: 0 auto;
     background-color: var(--color-beige);
-    mask: url('/svgs/header/mask.svg');
+    mask: url('/svgs/header/masks/mobile.svg');
     mask-repeat: no-repeat;
     mask-composite: exclude;
 
@@ -33,10 +33,15 @@
       mix-blend-mode: multiply;
     }
 
-    @media (min-width: 768px) {
+    @media (min-width: 500px) {
       left: 50%;
-      padding: var(--padding-mobile) var(--padding-desktop);
+      padding: var(--padding-mobile) var(--padding-tablet);
+      mask: url('/svgs/header/masks/tablet.svg');
       transform: translateX(-50%);
+    }
+
+    @media (min-width: 768px) {
+      mask: url('/svgs/header/masks/desktop.svg');
     }
   }
 </style>
