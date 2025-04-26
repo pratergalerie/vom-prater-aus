@@ -11,27 +11,11 @@
   })
 
   const footerRef = ref<HTMLElement | null>(null)
-  const isFooterVisible = useElementVisibility(footerRef)
-
-  const bottomGradientOpacity = computed(() => {
-    return isFooterVisible.value ? 0 : 1
-  })
 </script>
 
 <template>
   <div class="layout-container">
     <Header />
-    <div
-      v-if="!isOpen"
-      class="frame"
-    >
-      <GradientHalftone />
-      <GradientHalftone
-        direction="bottom"
-        class="bottom-gradient"
-        :style="{ opacity: bottomGradientOpacity }"
-      />
-    </div>
 
     <Menu />
     <MenuToggle />
@@ -63,17 +47,6 @@
     margin-top: 100px;
   }
 
-  .frame {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 98;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-  }
-
-  /* slide right to left */
   .slide-enter-active,
   .slide-leave-active {
     transition: transform 0.5s;
