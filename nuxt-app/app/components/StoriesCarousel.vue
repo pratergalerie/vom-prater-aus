@@ -180,17 +180,17 @@
           <div class="quote-wrapper">
             <NuxtImg
               src="/svgs/quote.svg"
-              alt="quote-open"
+              alt="quote open"
               class="quote-symbol open"
             />
             <span class="quote">
               {{ slide.quote }}
+              <NuxtImg
+                class="quote-symbol close"
+                src="/svgs/quote.svg"
+                alt="quote close"
+              />
             </span>
-            <NuxtImg
-              class="quote-symbol close"
-              src="/svgs/quote.svg"
-              alt="quote-close"
-            />
           </div>
 
           <div class="link-year">
@@ -217,7 +217,7 @@
     height: 100%;
     container-type: inline-size;
     container-name: carousel-container;
-    overflow: hidden auto;
+    overflow: hidden;
 
     @container (min-width: 768px) {
       height: 100%;
@@ -278,43 +278,58 @@
   }
 
   .quote-wrapper {
+    position: relative;
     grid-area: quote;
+    align-items: center;
     width: 80%;
+    margin-bottom: 1rem;
   }
 
   .quote {
+    position: absolute;
+    top: 50%;
+    left: 55%;
+    z-index: 1;
+    display: inline-block;
+    width: 100%;
     font-size: 1rem;
     font-style: italic;
-    line-height: 1.6rem;
+    line-height: 1rem;
+    transform: translate(-50%, -50%);
 
     @container (min-width: 500px) {
       margin-top: 0;
       margin-bottom: 0;
       font-size: 1.6rem;
+      line-height: 1.4rem;
       color: var(--color-grey);
     }
   }
 
   .quote-symbol {
-    width: 20px;
-    height: 15px;
+    z-index: 0;
+    display: inline-block;
+    width: 30px;
+    height: 20px;
+    vertical-align: middle;
+    opacity: 0.3;
 
     &.open {
-      transform: translateY(-0.5rem);
+      margin-right: 0.5rem;
+      transform: translate(0, -1rem);
+
+      @container (min-width: 500px) {
+        transform: translate(1rem, -1rem);
+      }
     }
 
     &.close {
-      transform: translateY(0.5rem) rotate(180deg);
+      transform: translate(-1rem, 0.1rem) rotate(180deg);
     }
 
     img {
       width: 100%;
       height: 100%;
-    }
-
-    @container (min-width: 768px) {
-      width: 60px;
-      height: 40px;
     }
   }
 
