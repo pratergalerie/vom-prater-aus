@@ -34,6 +34,7 @@
 
   /* *------------------------------ Layout --------------------------------* */
   --header-height: 90px;
+  --main-max-width: 1000px;
 
   @media (min-width: 768px) {
     --header-height: 120px;

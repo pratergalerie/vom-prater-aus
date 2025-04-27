@@ -361,7 +361,7 @@
       padding: 0 var(--padding-tablet);
     }
 
-    @container menu-container (min-width: 1000px) {
+    @container menu-container (min-width: var(--main-max-width)) {
       padding: 0 var(--padding-desktop);
     }
 
@@ -381,7 +381,7 @@
     margin: 0;
 
     @container (min-width: 1000px) {
-      max-width: 1000px;
+      max-width: var(--main-max-width);
     }
   }
 
@@ -420,7 +420,7 @@
         line-height: 1.5rem;
       }
 
-      @container menu-container (min-width: 1000px) {
+      @container menu-container (min-width: var(--main-max-width)) {
         font-size: 1.5rem;
         line-height: 2rem;
       }
@@ -433,7 +433,7 @@
     align-items: center;
     justify-content: flex-end;
     width: 100%;
-    max-width: 1000px;
+    max-width: var(--main-max-width);
     margin: 0;
     color: var(--color-beige);
     opacity: 0;
@@ -466,7 +466,7 @@
         line-height: 1.5rem;
       }
 
-      @container menu-container (min-width: 1000px) {
+      @container menu-container (min-width: var(--main-max-width)) {
         font-size: 1.5rem;
         line-height: 2rem;
       }
@@ -600,7 +600,7 @@
     display: flex;
     justify-content: flex-end;
     width: 100%;
-    max-width: 1000px;
+    max-width: var(--main-max-width);
   }
 
   .fade-enter-active,
