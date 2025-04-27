@@ -16,6 +16,7 @@
     <Header />
 
     <Menu />
+    <MenuToggle />
 
     <Transition name="fade">
       <main
@@ -30,10 +31,13 @@
 
 <style scoped>
   .layout-container {
-    padding-top: var(--header-height);
+    overflow: hidden;
   }
 
-  /* slide right to left */
+  main {
+    margin-top: var(--header-height);
+  }
+
   .slide-enter-active,
   .slide-leave-active {
     transition: transform 0.5s;

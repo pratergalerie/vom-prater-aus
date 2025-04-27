@@ -6,26 +6,12 @@
     author: Database['public']['Tables']['authors']['Row']
   }
 
-  type Paragraph = {
-    type: 'paragraph'
-    content: string
-  }
-
-  type Image = {
-    type: 'image'
-    src: string
-    alt: string
-  }
-
   type StoryContent = {
     id: string
     title: string
     image: string
     author: string
     date: string
-    pages: {
-      contents: (Paragraph | Image)[]
-    }[]
   }
 
   definePageMeta({
@@ -39,7 +25,10 @@
   const story = ref<Story | null>(null)
   const storyPages = ref<StoryPage[]>([])
   const storyContent = ref<StoryContent | null>(null)
-  const currentPage = ref(0)
+  const currentPageIndex = ref(0)
+  const isLightboxOpen = ref(false)
+  const currentLightboxImage = ref('')
+  const currentLightboxAlt = ref('')
 
   // Fetch story data by slug
   const { data: storyData } = await api.getStoryBySlug(storySlug)
@@ -60,151 +49,235 @@
         image: storyPages.value[0]?.image || '/imgs/prater/default.jpeg',
         author: story.value.author.name || 'Unknown',
         date: story.value.year.toString(),
-        pages: storyPages.value.map((page) => {
-          // Parse the text content to extract paragraphs and images
-          const contents: (Paragraph | Image)[] = []
-
-          if (page.text) {
-            // Split text by newlines to get paragraphs
-            const paragraphs = page.text.split('\n\n')
-            paragraphs.forEach((paragraph) => {
-              if (paragraph.trim()) {
-                contents.push({
-                  type: 'paragraph',
-                  content: paragraph.trim(),
-                })
-              }
-            })
-          }
-
-          if (page.image) {
-            contents.push({
-              type: 'image',
-              src: page.image,
-              alt: story.value?.title || '',
-            })
-          }
-
-          return { contents }
-        }),
       }
     }
   }
 
-  const clipPath =
-    'polygon(0 0, 100% 0, 100% 85%, 80% 88%, 70% 92%, 60% 90%, 50% 95%, 40% 90%, 30% 92%, 20% 88%, 0 95%)'
+  const currentPage = computed(() => {
+    return storyPages.value[currentPageIndex.value]
+  })
+
+  const topImageMasksIndexes = storyPages.value.map(() => {
+    return Math.floor(Math.random() * 3) + 1
+  })
+
+  const bottomImageMasksIndexes = storyPages.value.map(() => {
+    return Math.floor(Math.random() * 3) + 1
+  })
+
+  const topImageMask = computed(() => {
+    return `url(/svgs/story-page/image-masks/top/${topImageMasksIndexes[currentPageIndex.value]}.svg) top no-repeat`
+  })
+
+  const bottomImageMask = computed(() => {
+    return `url(/svgs/story-page/image-masks/bottom/${bottomImageMasksIndexes[currentPageIndex.value]}.svg) bottom no-repeat`
+  })
+
+  const imageMask = computed(() => {
+    return `${topImageMask.value}, ${bottomImageMask.value}, linear-gradient(black 0 0)`
+  })
+
+  function handleImageClick(imageSrc: string, alt: string) {
+    currentLightboxImage.value = imageSrc
+    currentLightboxAlt.value = alt
+    isLightboxOpen.value = true
+  }
+
+  function handleLightboxClose() {
+    isLightboxOpen.value = false
+  }
 </script>
 
 <template>
-  <div
-    v-if="storyContent"
-    class="story-container"
-  >
+  <div>
     <div
-      v-if="currentPage === 0"
-      class="story-title-image-container"
-      :style="{ clipPath }"
+      v-if="storyContent"
+      class="story-container"
     >
-      <img
-        :src="storyContent.image"
-        alt="Story image"
-      />
-      <div class="story-title-container">
-        <h1>{{ storyContent.title }}</h1>
-        <p>{{ storyContent.date }}</p>
-        <p>
-          Eine Geschichte von
-          <span class="author-name">{{ storyContent.author }}</span>
-        </p>
-      </div>
-    </div>
-
-    <NuxtImg
-      v-if="currentPage > 0"
-      src="/imgs/stories/top-decoration.png"
-      class="top-decoration"
-    />
-
-    <!-- Render current page with a pagination control -->
-    <div>
-      <section
-        v-for="(content, index) in storyContent.pages[currentPage]?.contents"
-        :key="index"
+      <article
         class="story-page"
+        :class="{ inverted: currentPage?.layout === 'text-over-image' }"
       >
-        <p v-if="content.type === 'paragraph'">{{ content.content }}</p>
-        <div v-else-if="content.type === 'image'">
-          <NuxtImg
-            :src="content.src"
-            :alt="content.alt"
-          />
-          <span class="copyright">© {{ storyContent.author }}</span>
-        </div>
-      </section>
-    </div>
-
-    <div class="bottom-controls">
-      <BaseButton
-        type="secondary"
-        variant="icon"
-        icon="close"
-        class="close-button"
-        @click="$router.back()"
-      />
-      <div class="pagination">
-        <button
-          v-for="(_, index) in storyContent.pages"
-          :key="index"
-          @click="currentPage = index"
+        <div
+          v-if="currentPageIndex === 0"
+          class="story-title-image-container"
         >
-          <span :class="{ active: currentPage === index }" />
-        </button>
+          <NuxtImg
+            :src="storyContent.image"
+            alt="Story image"
+            @click="handleImageClick(storyContent.image, storyContent.title)"
+          />
+          <div
+            class="story-title-container"
+            :class="{
+              'top-aligned': currentPage?.layout === 'text-over-image',
+            }"
+          >
+            <h1>{{ storyContent.title }}</h1>
+            <p>{{ storyContent.date }}</p>
+            <p>
+              Eine Geschichte von
+              <span class="author-name">{{ storyContent.author }}</span>
+            </p>
+          </div>
+        </div>
+
+        <div
+          v-if="
+            currentPage?.image &&
+            currentPageIndex > 0 &&
+            currentPage?.layout.includes('image')
+          "
+          class="image-container"
+        >
+          <NuxtImg
+            :src="currentPage?.image || ''"
+            :alt="storyContent?.title || ''"
+            @click="
+              handleImageClick(
+                currentPage?.image || '',
+                storyContent?.title || ''
+              )
+            "
+          />
+        </div>
+
+        <div
+          v-if="currentPage?.text && currentPage?.layout.includes('text')"
+          class="text-container"
+        >
+          <p>{{ currentPage.text }}</p>
+        </div>
+      </article>
+
+      <div class="bottom-controls">
+        <BaseButton
+          type="secondary"
+          variant="icon"
+          icon="mdi-arrow-left"
+          class="close-button"
+          @click="$router.back()"
+        />
+        <div class="pagination">
+          <button
+            v-for="(page, index) in storyPages"
+            :key="page.id"
+            @click="currentPageIndex = index"
+          >
+            <span :class="{ active: currentPageIndex === index }" />
+          </button>
+        </div>
       </div>
     </div>
+
+    <Lightbox
+      :is-open="isLightboxOpen"
+      :image-src="currentLightboxImage"
+      :image-alt="currentLightboxAlt"
+      @close="handleLightboxClose"
+    />
   </div>
 </template>
 
 <style scoped>
   .story-container {
     position: relative;
-    max-width: 800px;
-    height: calc(
-      100vh - var(--header-height) - var(--padding-mobile) * 2 - 75px
-    );
-    padding: var(--header-height) 0 0 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: calc(100dvh - var(--header-height) - var(--padding-mobile));
+
+    @media screen and (min-width: 768px) {
+      height: calc(100dvh - var(--header-height) - var(--padding-tablet));
+    }
+
+    @media screen and (min-width: 1024px) {
+      height: calc(100dvh - var(--header-height) - var(--padding-desktop));
+    }
   }
 
-  h1 {
-    margin: 0;
-    font-size: 1.1rem;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .story-page {
+    position: relative;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    width: 100%;
+    min-height: 0; /* Important for flex child to respect parent's height */
+
+    &.inverted {
+      flex-direction: column-reverse;
+    }
   }
 
   .story-title-image-container {
     position: relative;
-    height: 40vh;
-    margin: 0 calc(var(--padding-mobile) * -1);
+    flex: 1;
+    width: 100%;
+    min-height: 50%;
     overflow: hidden;
 
     img {
+      mask: v-bind(imageMask);
+      mask-size: 100%;
+      mask-composite: exclude;
+    }
+  }
+
+  .text-container,
+  .image-container {
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .image-container {
+    flex: 1;
+    min-height: 50%;
+    overflow: hidden;
+  }
+
+  .text-container {
+    display: block;
+    width: 100%;
+    max-height: 50%;
+    padding: var(--padding-mobile);
+    overflow: auto;
+
+    & p {
       width: 100%;
-      height: auto;
+      text-align: left;
     }
+  }
 
-    .story-title-container {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      width: 60%;
-      padding: var(--padding-mobile);
-      padding-bottom: 50px;
-      background: url('/imgs/stories/title-box.png') no-repeat center;
-    }
+  .story-title-container {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0.5rem;
+    width: 60%;
+    padding: 40px;
+    padding-bottom: 50px;
+    background: url('/svgs/story-page/title-box/1.png') no-repeat center;
+    background-size: 100% 100%;
 
-    .author-name {
-      margin-left: 0.3rem;
-      font-family: var(--font-link);
+    &.top-aligned {
+      top: 0;
+      bottom: auto;
     }
+  }
+
+  .author-name {
+    margin-left: 0.3rem;
+    font-family: var(--font-link);
+  }
+
+  h1 {
+    font-size: 1.1rem;
   }
 
   .top-decoration {
@@ -215,40 +288,20 @@
     object-fit: cover;
   }
 
-  .story-page {
-    padding: 0 var(--padding-mobile);
-    margin: 1rem 0;
-
-    p {
-      margin: 0;
-    }
-
-    img {
-      width: calc(100% + var(--padding-mobile) * 4);
-      height: auto;
-      max-height: 180px;
-      margin-left: calc(var(--padding-mobile) * -1 * 2);
-      object-fit: cover;
-    }
-
-    .copyright {
-      display: block;
-      font-size: 0.8rem;
-    }
+  .copyright {
+    display: block;
+    font-size: 0.8rem;
   }
 
   .bottom-controls {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    z-index: 99;
     display: grid;
+    flex-shrink: 0; /* Prevent bottom controls from shrinking */
     grid-template-columns: 1fr 1fr 1fr;
     gap: 1rem;
     align-items: center;
     justify-content: center;
     width: 100%;
-    transform: translateX(-50%);
+    height: 50px;
 
     .close-button {
       width: 40px;
@@ -258,6 +311,7 @@
       display: flex;
       gap: 1rem;
       width: fit-content;
+      margin: 0 auto;
 
       button {
         display: flex;
@@ -265,6 +319,7 @@
         justify-content: center;
         width: 50px;
         height: 50px;
+        cursor: pointer;
         background: none;
         border: none;
 
@@ -272,13 +327,14 @@
           display: block;
           width: 10px;
           height: 10px;
-          background: url('/svgs/pagination/page.svg') no-repeat center;
+          background: url('/svgs/story-page/pagination/page.svg') no-repeat
+            center;
 
           &.active {
             width: 1rem;
             height: 1rem;
-            background: url('/svgs/pagination/current-page.svg') no-repeat
-              center;
+            background: url('/svgs/story-page/pagination/current-page.svg')
+              no-repeat center;
           }
         }
       }
