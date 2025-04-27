@@ -28,3 +28,5 @@ Use descriptive variable and function/const names. Also, event functions should 
 Implement accessibility features on elements. For example, a tag should have a tabindex=“0”, aria-label, on:click, and on:keydown, and similar attributes.
 Use functions instead of consts, for example, “function toggle()”. Also, define a type if possible.
 Use fetch instead of axios. When the file is part of a Nuxt project, use the $fetch helper, or useFetch/useAsyncData composables.
+Class names should be in kebab-case, for example, .header-container.
+Do not import ref, computed, onMounted, etc. in a Nuxt component file. These are automatically imported by Nuxt.
