@@ -68,7 +68,14 @@
   })
 
   const dropShadow = computed(() => {
-    return `drop-shadow(-4px 4px 0 ${props.type === 'primary' ? 'black' : 'none'})`
+    if (props.variant === 'icon') {
+      return props.type === 'primary'
+        ? `drop-shadow(-2px 2px 0 var(--color-black))`
+        : `drop-shadow(-2px 2px 0 var(--color-white)) drop-shadow(-1px 1px 0 var(--color-black))`
+    } else
+      return props.type === 'primary'
+        ? `drop-shadow(-4px 4px 0 var(--color-black))`
+        : `drop-shadow(-4px 4px 0 var(--color-white)) drop-shadow(-2px 2px 0 var(--color-black)`
   })
 
   const randomId = Math.random().toString(36).substring(7)
@@ -154,17 +161,7 @@
               />
             </pattern>
           </defs>
-          <path
-            v-if="type === 'secondary'"
-            :d="svgPath"
-            fill="var(--color-white)"
-            stroke="var(--color-black)"
-            stroke-width="2"
-            class="secondary-button-shadow"
-            :class="{
-              icon: variant === 'icon',
-            }"
-          />
+
           <path
             :d="svgPath"
             :fill="`url(#button-texture-${randomId})`"
@@ -209,6 +206,56 @@
 </template>
 
 <style scoped>
+  .button-shape {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: v-bind(dropShadow);
+    transition: filter 0.2s ease-out;
+
+    &.primary {
+      &:hover,
+      &:focus {
+        filter: drop-shadow(-8px 8px 0 var(--color-black));
+      }
+    }
+
+    &.secondary {
+      &:hover,
+      &:focus {
+        filter: drop-shadow(-6px 6px 0 var(--color-white))
+          drop-shadow(-2px 2px 0 var(--color-black));
+      }
+    }
+
+    @media screen and (prefers-reduced-motion: reduce) {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      filter: v-bind(dropShadow);
+      transition: none;
+
+      &.primary {
+        &:hover,
+        &:focus {
+          filter: drop-shadow(-8px 8px 0 var(--color-black));
+        }
+      }
+
+      &.secondary {
+        &:hover,
+        &:focus {
+          filter: drop-shadow(-6px 6px 0 var(--color-white))
+            drop-shadow(-2px 2px 0 var(--color-black));
+        }
+      }
+    }
+  }
+
   button {
     display: grid;
     width: 100%;
@@ -229,20 +276,25 @@
       transform: scale(1.02);
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    &.icon {
+      width: 40px;
+      min-width: 40px;
+      height: 40px;
 
-    @container (min-width: 500px) {
-      max-width: 360px;
+      &:hover,
+      &:focus {
+        .button-shape {
+          filter: drop-shadow(-3px 3px 0 var(--color-white))
+            drop-shadow(-1px 1px 0 var(--color-black));
+        }
+      }
     }
 
     @media screen and (prefers-reduced-motion: reduce) {
       display: grid;
       width: 100%;
       min-width: 300px;
-      max-width: 500px;
+      max-width: 400px;
       height: 60px;
       padding: 0;
       color: var(--color-black);
@@ -258,14 +310,58 @@
         transform: scale(1.02);
       }
 
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
+      &.icon {
+        width: 40px;
+        min-width: 40px;
+        height: 40px;
 
-      @container (min-width: 500px) {
-        max-width: 360px;
+        &:hover,
+        &:focus {
+          .button-shape {
+            filter: drop-shadow(-2px 2px 0 var(--color-white))
+              drop-shadow(-1px 1px 0 var(--color-black));
+          }
+        }
       }
+    }
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  @container (min-width: 500px) {
+    max-width: 360px;
+  }
+
+  @media screen and (prefers-reduced-motion: reduce) {
+    display: grid;
+    width: 100%;
+    min-width: 300px;
+    max-width: 500px;
+    height: 60px;
+    padding: 0;
+    color: var(--color-black);
+    cursor: pointer;
+    background: none;
+    border: none;
+    container-type: inline-size;
+    container-name: button-container;
+    transition: none;
+
+    &:hover,
+    &:focus {
+      transform: scale(1.02);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    @container (min-width: 500px) {
+      max-width: 360px;
     }
   }
 
@@ -290,36 +386,6 @@
     justify-content: center;
     width: 100%;
     height: 100%;
-  }
-
-  .button-shape {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    filter: v-bind(dropShadow);
-    transition: filter 0.2s ease-out;
-
-    &:hover,
-    &:focus {
-      filter: drop-shadow(-8px 8px 0 var(--color-black));
-    }
-
-    @media screen and (prefers-reduced-motion: reduce) {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      filter: v-bind(dropShadow);
-      transition: none;
-
-      &:hover,
-      &:focus {
-        filter: drop-shadow(-8px 8px 0 var(--color-black));
-      }
-    }
   }
 
   .button-label,
@@ -366,49 +432,5 @@
   .icon {
     width: 1.5rem;
     height: 1.5rem;
-    transition: transform 0.2s ease-out;
-
-    button:hover &,
-    button:focus & {
-      transform: translateX(4px);
-    }
-  }
-
-  .secondary-button-shadow {
-    transform: translate(-5px, 5px);
-    transition: transform 0.2s ease-out;
-
-    &:hover,
-    &:focus {
-      transform: translate(-7px, 7px);
-    }
-
-    &.icon {
-      transform: translate(-3px, 4px);
-
-      &:hover,
-      &:focus {
-        transform: translate(-5px, 6px);
-      }
-    }
-
-    @media screen and (prefers-reduced-motion: reduce) {
-      transform: translate(-5px, 5px);
-      transition: none;
-
-      &:hover,
-      &:focus {
-        transform: translate(-7px, 7px);
-      }
-
-      &.icon {
-        transform: translate(-3px, 4px);
-
-        &:hover,
-        &:focus {
-          transform: translate(-5px, 6px);
-        }
-      }
-    }
   }
 </style>
