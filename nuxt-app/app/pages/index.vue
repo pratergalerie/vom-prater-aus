@@ -165,7 +165,7 @@
     container-name: section-container;
 
     @container (min-width: 768px) {
-      gap: 2rem;
+      gap: 1.5rem;
       height: auto;
     }
 
@@ -188,8 +188,20 @@
     }
 
     h1 {
-      font-size: clamp(1.4rem, 2.5cqi, 2.5rem);
-      line-height: 1.3rem;
+      font-size: 1rem;
+      line-height: 1.5;
+
+      @container main-container (min-width: 500px) {
+        font-size: clamp(1.5rem, 1.6cqi, 1.8rem);
+      }
+
+      @container main-container (min-width: 768px) {
+        font-size: clamp(1.8rem, 1.8cqi, 2rem);
+      }
+
+      @container main-container (min-width: 1000px) {
+        font-size: clamp(2rem, 2.5cqi, 3rem);
+      }
     }
 
     p {
@@ -218,7 +230,6 @@
     &.berliner-prater {
       @container (min-width: 768px) {
         flex-direction: column;
-        gap: 2rem;
         align-items: center;
       }
 
@@ -227,7 +238,7 @@
       }
 
       h1 {
-        align-self: flex-start;
+        align-self: flex-end;
       }
 
       .text-block {
