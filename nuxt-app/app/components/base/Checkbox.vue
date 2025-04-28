@@ -5,8 +5,7 @@
     disabled?: boolean
   }>()
 
-  const checked = defineModel('checked', {
-    type: Boolean,
+  const modelValue = defineModel<boolean>({
     default: false,
   })
 </script>
@@ -18,7 +17,7 @@
   >
     <input
       :id="id"
-      v-model="checked"
+      v-model="modelValue"
       type="checkbox"
       :disabled="disabled"
     />
@@ -29,7 +28,7 @@
         class="background"
       />
       <img
-        v-if="checked"
+        v-if="modelValue"
         src="/svgs/inputs/check.png"
         alt="checked"
         class="foreground"
