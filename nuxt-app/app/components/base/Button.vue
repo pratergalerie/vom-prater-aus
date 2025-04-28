@@ -7,7 +7,7 @@
     variant: 'label' | 'icon' | 'label-icon'
     label?: string
     icon?: string
-    href?: string
+    href?: string | null
     disabled?: boolean
   }>()
 
@@ -90,6 +90,11 @@
     }"
   >
     <div class="button-content">
+      <NuxtLink
+        v-if="href"
+        :to="href"
+        class="button-link"
+      />
       <span
         v-if="variant === 'label'"
         class="button-label"
@@ -102,16 +107,7 @@
         class="button-label-icon"
         :class="{ secondary: type === 'secondary' }"
       >
-        <NuxtLink
-          v-if="href"
-          :to="href"
-        >
-          {{ label }}
-        </NuxtLink>
-
-        <span v-else>
-          {{ label }}
-        </span>
+        <span>{{ label }}</span>
         <span v-if="icon">
           <Icon
             :name="icon"
@@ -375,6 +371,16 @@
     width: 100%;
     height: 100%;
     pointer-events: none;
+  }
+
+  .button-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+    pointer-events: auto;
   }
 
   .button-background {

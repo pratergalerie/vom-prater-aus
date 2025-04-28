@@ -99,7 +99,7 @@
         variant="label-icon"
         icon="mdi:arrow-right"
         :label="section.content.buttonLabel"
-        :link="section.content.buttonLink"
+        :href="section.content.buttonLink"
       />
     </section>
 
