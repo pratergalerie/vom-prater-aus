@@ -253,32 +253,32 @@
   }
 
   .close-button {
-    right: var(--padding-mobile);
     bottom: var(--padding-mobile);
-
-    @container lightbox (min-width: 500px) {
-      right: var(--padding-tablet);
-      bottom: var(--padding-tablet);
-    }
-
-    @container lightbox (min-width: 768px) {
-      right: var(--padding-desktop);
-      bottom: var(--padding-desktop);
-    }
-  }
-
-  .reset-button {
-    bottom: calc(var(--padding-mobile));
     left: var(--padding-mobile);
 
     @container lightbox (min-width: 500px) {
-      bottom: calc(var(--padding-tablet));
+      bottom: var(--padding-tablet);
       left: var(--padding-tablet);
     }
 
     @container lightbox (min-width: 768px) {
+      bottom: var(--padding-desktop);
+      nav-left: var(--padding-desktop);
+    }
+  }
+
+  .reset-button {
+    right: var(--padding-mobile);
+    bottom: calc(var(--padding-mobile));
+
+    @container lightbox (min-width: 500px) {
+      right: var(--padding-tablet);
+      bottom: calc(var(--padding-tablet));
+    }
+
+    @container lightbox (min-width: 768px) {
+      right: var(--padding-desktop);
       bottom: calc(var(--padding-desktop));
-      left: var(--padding-desktop);
     }
   }
 
