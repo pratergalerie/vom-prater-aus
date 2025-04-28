@@ -60,11 +60,11 @@
             "inputs": {
               "authorName": {
                 "label": "Name",
-                "placeholder": "Klaus"
+                "placeholder": "Dein Autorenname"
               },
               "email": {
                 "label": "Email",
-                "placeholder": "Deine E-Mail"
+                "placeholder": "Deine E-Mail-Adresse"
               }
             },
             "info": {
