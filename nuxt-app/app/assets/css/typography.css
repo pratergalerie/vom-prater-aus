@@ -35,21 +35,22 @@ a {
 }
 
 .highlight {
+  --highlight-color: var(--color-mustard);
   background:
     linear-gradient(
       104deg,
-      rgba(249, 184, 93, 0) 0.9%,
-      rgba(249, 184, 93, 1.25) 2.4%,
-      rgba(249, 184, 93, 0.5) 5.8%,
-      rgba(249, 184, 93, 0.1) 93%,
-      rgba(249, 184, 93, 0.7) 96%,
-      rgba(249, 184, 93, 0) 98%
+      color-mix(in srgb, var(--highlight-color) 0%, transparent) 0.9%,
+      color-mix(in srgb, var(--highlight-color) 1.25%, transparent) 2.4%,
+      color-mix(in srgb, var(--highlight-color) 50%, transparent) 5.8%,
+      color-mix(in srgb, var(--highlight-color) 10%, transparent) 93%,
+      color-mix(in srgb, var(--highlight-color) 70%, transparent) 96%,
+      color-mix(in srgb, var(--highlight-color) 0%, transparent) 98%
     ),
     linear-gradient(
       183deg,
-      rgba(249, 184, 93, 0) 0%,
-      rgba(249, 184, 93, 0.3) 7.9%,
-      rgba(249, 184, 93, 0) 15%
+      color-mix(in srgb, var(--highlight-color) 0%, transparent) 0%,
+      color-mix(in srgb, var(--highlight-color) 30%, transparent) 7.9%,
+      color-mix(in srgb, var(--highlight-color) 0%, transparent) 15%
     );
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
@@ -58,8 +59,9 @@ a {
   margin: -0.2rem -0.4rem;
   border-radius: 5px 0 0 7.5px;
   text-shadow:
-    -1px 1px 2.4px rgba(249, 184, 93, 0.7),
-    3px -3px 5px rgba(249, 184, 93, 1),
-    -4.5px -6.5px 7.5px rgba(249, 184, 93, 0.4),
-    -2px 4px 2px rgba(249, 184, 93, 0.2);
+    -1px 1px 2.4px color-mix(in srgb, var(--highlight-color) 70%, transparent),
+    3px -3px 5px var(--highlight-color),
+    -4.5px -6.5px 7.5px
+      color-mix(in srgb, var(--highlight-color) 40%, transparent),
+    -2px 4px 2px color-mix(in srgb, var(--highlight-color) 20%, transparent);
 }
