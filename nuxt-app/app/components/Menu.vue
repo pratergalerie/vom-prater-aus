@@ -210,6 +210,7 @@
           <NuxtImg
             :src="illustrationImage"
             alt="Berliner Prater"
+            loading="lazy"
           />
         </div>
         <menu
