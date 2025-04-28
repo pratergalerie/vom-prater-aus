@@ -43,6 +43,13 @@
   }) as Ref<InputValues>
 
   const termsAccepted = ref(false)
+  const moderationAccepted = ref(false)
+
+  const formErrors = ref({
+    authorName: '',
+    email: '',
+    title: '',
+  })
 
   watch(
     () => inputValues.value,
@@ -77,7 +84,7 @@
               placeholder: t(
                 'pages.create.form.steps.authorInfo.inputs.authorName.placeholder'
               ),
-              vModel: inputValues.value.authorName,
+              validationKey: 'authorName',
             },
             {
               key: 'email',
@@ -86,7 +93,7 @@
               placeholder: t(
                 'pages.create.form.steps.authorInfo.inputs.email.placeholder'
               ),
-              vModel: inputValues.value.email,
+              validationKey: 'email',
             },
           ],
         },
@@ -100,7 +107,7 @@
               placeholder: t(
                 'pages.create.form.steps.storyInfo.inputs.title.placeholder'
               ),
-              vModel: inputValues.value.title,
+              validationKey: 'title',
             },
           ],
         },
@@ -111,57 +118,78 @@
           icon: 'mdi:arrow-right',
           callback: nextStep,
           checkStepToRender: () => step.value < form.value.steps.length - 1,
+          disabled: isFormDisabled.value,
         },
         {
           label: t('pages.create.form.buttons.back'),
           icon: 'mdi:arrow-left',
           callback: previousStep,
           checkStepToRender: () => step.value > 0,
+          disabled: false,
         },
         {
           label: t('pages.create.form.buttons.create'),
           icon: 'mdi:arrow-right',
           callback: createStory,
           checkStepToRender: () => step.value === form.value.steps.length - 1,
+          disabled: isFormDisabled.value,
         },
       ],
     }
   })
+
+  const isFormDisabled = computed(() => {
+    if (!form.value || !form.value?.steps) {
+      return true
+    } else if (step.value === 0) {
+      const isDisabled =
+        !inputValues.value.authorName ||
+        !inputValues.value.email ||
+        !termsAccepted.value ||
+        !moderationAccepted.value ||
+        formErrors.value.authorName ||
+        formErrors.value.email
+
+      return isDisabled
+    } else if (step.value === 1) {
+      return !inputValues.value.title || formErrors.value.title
+    }
+    return false
+  }) as Ref<boolean>
 
   const currentStep = computed(() => form.value.steps[step.value])
 
   async function createStory() {
     const author = story.value.author
 
-    const { data: authorData, error: authorError } =
-      await useAPI().createAuthor({
-        name: author.name,
-        email: author.email,
-      })
+    const authorData = await useAPI().createAuthor({
+      name: author.name,
+      email: author.email,
+    })
 
-    if (authorError) {
-      console.error('Error creating author:', authorError)
-    } else if (authorData.value) {
-      const authorId = authorData.value.id
+    if (!authorData) {
+      console.error('Error creating author:', authorData)
+    } else {
+      const authorId = authorData.id
 
-      const { data, error } = await useAPI().createStory({
+      const storyData = await useAPI().createStory({
         author_id: authorId,
         created_at: new Date().toISOString(),
         id: '',
         modified_at: null,
         title: inputValues.value.title,
         year: 2025,
+        locale_id: 'en',
+        slug: inputValues.value.title.toLowerCase().replace(/\s+/g, '-'),
       })
 
-      if (error.value) {
-        console.error('Error creating story:', error)
-      }
-
-      if (data.value && data.value.id) {
+      if (!storyData) {
+        console.error('Error creating story:', storyData)
+      } else {
         const router = useRouter()
         router.push({
           name: 'stories/edit',
-          params: { id: data.value.id },
+          params: { id: storyData.id },
         })
       }
     }
@@ -192,7 +220,7 @@
               mode="css"
               class="info-icon"
             />
-            {{ currentStep.info.link }}
+            <span>{{ currentStep.info.link }}</span>
           </button>
           <div class="terms-privacy-check">
             <BaseCheckbox
@@ -219,7 +247,7 @@
           <div class="moderation-check">
             <BaseCheckbox
               id="checkbox"
-              v-model="termsAccepted"
+              v-model="moderationAccepted"
             />
             <i18n-t
               scope="global"
@@ -249,10 +277,10 @@
           v-for="(input, index) in currentStep?.inputs"
           :id="input.key"
           :key="index"
+          v-model="inputValues[input.key as keyof InputValues]"
           :type="input.type"
           :label="input.label"
           :placeholder="input.placeholder"
-          :v-model="input.vModel"
         />
       </div>
       <div class="step-buttons-wrapper">
@@ -273,6 +301,7 @@
             :icon="button.icon"
             :label="button.label"
             class="step-button"
+            :disabled="button.disabled"
             @click.prevent="button.callback"
           />
         </div>
@@ -283,11 +312,12 @@
 
 <style scoped>
   .content-wrapper {
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     width: 100%;
-    height: calc(100dvh - 100px);
+    height: calc(100dvh - var(--header-height) - 50px);
     padding-top: 50px;
   }
 
