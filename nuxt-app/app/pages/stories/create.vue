@@ -51,6 +51,13 @@
     title: '',
   })
 
+  function handleValidationError(
+    field: keyof typeof formErrors.value,
+    error: string | null
+  ) {
+    formErrors.value[field] = error || ''
+  }
+
   watch(
     () => inputValues.value,
     (newValue) => {
@@ -129,7 +136,7 @@
         },
         {
           label: t('pages.create.form.buttons.create'),
-          icon: 'mdi:arrow-right',
+          icon: 'mdi:creation',
           callback: createStory,
           checkStepToRender: () => step.value === form.value.steps.length - 1,
           disabled: isFormDisabled.value,
@@ -139,23 +146,55 @@
   })
 
   const isFormDisabled = computed(() => {
+    const authorName = inputValues.value.authorName?.trim() || ''
+    const email = inputValues.value.email?.trim() || ''
+    const title = inputValues.value.title?.trim() || ''
+    const termsChecked = termsAccepted.value
+    const moderationChecked = moderationAccepted.value
+    const authorNameError = formErrors.value.authorName
+    const emailError = formErrors.value.email
+    const titleError = formErrors.value.title
+
     if (!form.value || !form.value?.steps) {
       return true
-    } else if (step.value === 0) {
-      const isDisabled =
-        !inputValues.value.authorName ||
-        !inputValues.value.email ||
-        !termsAccepted.value ||
-        !moderationAccepted.value ||
-        formErrors.value.authorName ||
-        formErrors.value.email
-
-      return isDisabled
-    } else if (step.value === 1) {
-      return !inputValues.value.title || formErrors.value.title
     }
-    return false
-  }) as Ref<boolean>
+
+    if (step.value === 0) {
+      const conditions = {
+        authorNameEmpty: !authorName,
+        emailEmpty: !email,
+        termsNotChecked: !termsChecked,
+        moderationNotChecked: !moderationChecked,
+        hasAuthorNameError: !!authorNameError,
+        hasEmailError: !!emailError,
+      }
+
+      console.log('Step 0 validation conditions:', conditions)
+
+      const isDisabled = Object.values(conditions).some(
+        (condition) => condition
+      )
+      console.log('Final isDisabled value:', Boolean(isDisabled))
+      return isDisabled
+    }
+
+    if (step.value === 1) {
+      const conditions = {
+        titleEmpty: !title,
+        hasTitleError: !!titleError,
+      }
+
+      console.log('Step 1 validation conditions:', conditions)
+
+      const isDisabled = Object.values(conditions).some(
+        (condition) => condition
+      )
+      console.log('Final isDisabled value:', Boolean(isDisabled))
+      return isDisabled
+    }
+
+    return true
+  })
 
   const currentStep = computed(() => form.value.steps[step.value])
 
@@ -203,7 +242,7 @@
 <template>
   <div
     ref="containerRef"
-    class="content-wrapper"
+    class="form-container"
   >
     <h1>{{ $t('pages.create.form.title') }}</h1>
     <form>
@@ -281,6 +320,14 @@
           :type="input.type"
           :label="input.label"
           :placeholder="input.placeholder"
+          :validation-key="input.validationKey as keyof typeof validationRules"
+          @update:error="
+            (error) =>
+              handleValidationError(
+                input.key as 'authorName' | 'email' | 'title',
+                error
+              )
+          "
         />
       </div>
       <div class="step-buttons-wrapper">
@@ -311,7 +358,7 @@
 </template>
 
 <style scoped>
-  .content-wrapper {
+  .form-container {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -319,6 +366,8 @@
     width: 100%;
     height: calc(100dvh - var(--header-height) - 50px);
     padding-top: 50px;
+    container-name: form-container;
+    container-type: inline-size;
   }
 
   h1 {
@@ -343,6 +392,12 @@
     width: 100%;
     height: 40px;
     margin-top: 1rem;
+
+    @container (max-width: 500px) {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
   }
 
   .button-wrapper {

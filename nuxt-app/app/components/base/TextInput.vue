@@ -1,16 +1,60 @@
 <script lang="ts" setup>
   type InputType = 'text' | 'email' | 'password'
 
-  defineProps<{
+  const props = defineProps<{
     id: string
     type: InputType
     label?: string
     placeholder?: string
+    validationKey?: keyof typeof validationRules
   }>()
 
   const value = defineModel({
     type: String,
     default: '',
+  })
+
+  const error = ref<string | null>(null)
+
+  const emit = defineEmits<{
+    (e: 'update:error', value: string | null): void
+  }>()
+
+  function handleInput(event: Event) {
+    const input = event.target as HTMLInputElement
+    if (!props.validationKey) return
+
+    const rules = validationRules[props.validationKey]
+    let sanitizedValue = sanitizeInput(input.value, rules.allowedChars)
+
+    // Explicitly remove spaces for email fields
+    if (props.type === 'email') {
+      sanitizedValue = sanitizedValue.replace(/\s+/g, '')
+    }
+
+    if (sanitizedValue !== input.value) {
+      input.value = sanitizedValue
+      value.value = sanitizedValue
+    }
+
+    error.value = validateField(sanitizedValue, rules)
+    emit('update:error', error.value)
+  }
+
+  function handleKeyDown(event: KeyboardEvent) {
+    if (props.type === 'email' && event.key === ' ') {
+      event.preventDefault()
+    }
+  }
+
+  watch(value, (newValue) => {
+    if (props.validationKey) {
+      error.value = validateField(
+        newValue,
+        validationRules[props.validationKey]
+      )
+      emit('update:error', error.value)
+    }
   })
 
   const baseTextInputSvg =
@@ -99,7 +143,20 @@
       v-model="value"
       :type="type"
       :placeholder="placeholder"
+      :class="{ error: error }"
+      :aria-invalid="!!error"
+      :aria-describedby="error ? `${id}-error` : undefined"
+      @input="handleInput"
+      @keydown="handleKeyDown"
     />
+    <div
+      v-if="error"
+      :id="`${id}-error`"
+      class="error-message"
+      role="alert"
+    >
+      {{ error }}
+    </div>
     <div
       class="svg-layer text-input foreground"
       :style="{ backgroundImage: svgForeground }"
@@ -154,5 +211,15 @@
       z-index: -2;
       transform: translate(-5px, 5px);
     }
+  }
+
+  .error-message {
+    margin-top: 0.25rem;
+    font-size: 0.8rem;
+    color: var(--color-red);
+  }
+
+  input.error {
+    color: var(--color-red);
   }
 </style>
