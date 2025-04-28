@@ -169,12 +169,10 @@
         hasEmailError: !!emailError,
       }
 
-      console.log('Step 0 validation conditions:', conditions)
 
       const isDisabled = Object.values(conditions).some(
         (condition) => condition
       )
-      console.log('Final isDisabled value:', Boolean(isDisabled))
       return isDisabled
     }
 
@@ -184,12 +182,10 @@
         hasTitleError: !!titleError,
       }
 
-      console.log('Step 1 validation conditions:', conditions)
 
       const isDisabled = Object.values(conditions).some(
         (condition) => condition
       )
-      console.log('Final isDisabled value:', Boolean(isDisabled))
       return isDisabled
     }
 

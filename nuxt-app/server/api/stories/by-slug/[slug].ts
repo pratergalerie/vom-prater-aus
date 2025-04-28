@@ -16,8 +16,6 @@ export default defineEventHandler(async (event) => {
 
     // Handle GET request - Get story by slug
     if (event.method === 'GET') {
-      console.log('Fetching story by slug:', slug)
-
       const { data, error } = await client
         .from('stories')
         .select(
