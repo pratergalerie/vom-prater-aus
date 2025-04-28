@@ -87,6 +87,7 @@
       primary: type === 'primary',
       secondary: type === 'secondary',
       icon: variant === 'icon',
+      disabled: disabled,
     }"
   >
     <div class="button-content">
@@ -211,21 +212,6 @@
     filter: v-bind(dropShadow);
     transition: filter 0.2s ease-out;
 
-    &.primary {
-      &:hover,
-      &:focus {
-        filter: drop-shadow(-8px 8px 0 var(--color-black));
-      }
-    }
-
-    &.secondary {
-      &:hover,
-      &:focus {
-        filter: drop-shadow(-6px 6px 0 var(--color-white))
-          drop-shadow(-2px 2px 0 var(--color-black));
-      }
-    }
-
     @media screen and (prefers-reduced-motion: reduce) {
       position: absolute;
       top: 0;
@@ -234,21 +220,6 @@
       height: 100%;
       filter: v-bind(dropShadow);
       transition: none;
-
-      &.primary {
-        &:hover,
-        &:focus {
-          filter: drop-shadow(-8px 8px 0 var(--color-black));
-        }
-      }
-
-      &.secondary {
-        &:hover,
-        &:focus {
-          filter: drop-shadow(-6px 6px 0 var(--color-white))
-            drop-shadow(-2px 2px 0 var(--color-black));
-        }
-      }
     }
   }
 
@@ -269,21 +240,35 @@
 
     &:hover,
     &:focus {
-      transform: scale(1.02);
+      transform: scale(1.01);
+
+      &.primary .button-shape {
+        filter: drop-shadow(-8px 8px 0 var(--color-black));
+      }
+
+      &.secondary .button-shape {
+        filter: drop-shadow(-6px 6px 0 var(--color-white))
+          drop-shadow(-2px 2px 0 var(--color-black));
+      }
+
+      &.icon .button-shape {
+        filter: drop-shadow(-3px 3px 0 var(--color-white))
+          drop-shadow(-1px 1px 0 var(--color-black));
+      }
     }
 
     &.icon {
       width: 40px;
       min-width: 40px;
       height: 40px;
+    }
 
-      &:hover,
-      &:focus {
-        .button-shape {
-          filter: drop-shadow(-3px 3px 0 var(--color-white))
-            drop-shadow(-1px 1px 0 var(--color-black));
-        }
-      }
+    &.disabled {
+      pointer-events: none;
+      cursor: default;
+      opacity: 0.5;
+      filter: none;
+      transition: none;
     }
 
     @media screen and (prefers-reduced-motion: reduce) {
@@ -303,20 +288,20 @@
 
       &:hover,
       &:focus {
-        transform: scale(1.02);
-      }
+        transform: scale(1.01);
 
-      &.icon {
-        width: 40px;
-        min-width: 40px;
-        height: 40px;
+        &.primary .button-shape {
+          filter: drop-shadow(-8px 8px 0 var(--color-black));
+        }
 
-        &:hover,
-        &:focus {
-          .button-shape {
-            filter: drop-shadow(-2px 2px 0 var(--color-white))
-              drop-shadow(-1px 1px 0 var(--color-black));
-          }
+        &.secondary .button-shape {
+          filter: drop-shadow(-6px 6px 0 var(--color-white))
+            drop-shadow(-2px 2px 0 var(--color-black));
+        }
+
+        &.icon .button-shape {
+          filter: drop-shadow(-3px 3px 0 var(--color-white))
+            drop-shadow(-1px 1px 0 var(--color-black));
         }
       }
     }
