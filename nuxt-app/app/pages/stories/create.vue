@@ -16,7 +16,10 @@
     TEXT: 'text',
     EMAIL: 'email',
     PASSWORD: 'password',
+    SELECT: 'select',
   } as const
+
+  type InputType = 'text' | 'email' | 'password' | 'select'
 
   const step = ref(0)
   function nextStep() {
@@ -34,13 +37,25 @@
     authorName: string
     email: string
     title: string
+    year: number
+    locale: 'en' | 'de'
   }
 
-  const inputValues = ref({
+  type FormInput = {
+    key: keyof InputValues
+    type: InputType
+    label: string
+    placeholder: string
+    validationKey: keyof typeof validationRules
+  }
+
+  const inputValues = ref<InputValues>({
     authorName: '',
     email: '',
     title: '',
-  }) as Ref<InputValues>
+    year: new Date().getFullYear(),
+    locale: 'de',
+  })
 
   const termsAccepted = ref(false)
   const moderationAccepted = ref(false)
@@ -49,6 +64,8 @@
     authorName: '',
     email: '',
     title: '',
+    year: '',
+    locale: '',
   })
 
   function handleValidationError(
@@ -92,7 +109,7 @@
                 'pages.create.form.steps.authorInfo.inputs.authorName.placeholder'
               ),
               validationKey: 'authorName',
-            },
+            } as FormInput,
             {
               key: 'email',
               type: inputTypes.EMAIL,
@@ -101,7 +118,7 @@
                 'pages.create.form.steps.authorInfo.inputs.email.placeholder'
               ),
               validationKey: 'email',
-            },
+            } as FormInput,
           ],
         },
         {
@@ -115,7 +132,26 @@
                 'pages.create.form.steps.storyInfo.inputs.title.placeholder'
               ),
               validationKey: 'title',
-            },
+            } as FormInput,
+            {
+              key: 'year',
+              type: inputTypes.SELECT,
+              label: t('pages.create.form.steps.storyInfo.inputs.year.label'),
+              placeholder: t(
+                'pages.create.form.steps.storyInfo.inputs.year.placeholder'
+              ),
+              validationKey: 'year',
+            } as FormInput,
+            {
+              key: 'locale',
+              type: inputTypes.SELECT,
+              label: t(
+                'pages.create.form.steps.storyInfo.inputs.language.label'
+              ),
+              placeholder: t(
+                'pages.create.form.steps.storyInfo.inputs.language.placeholder'
+              ),
+            } as FormInput,
           ],
         },
       ],
@@ -169,7 +205,6 @@
         hasEmailError: !!emailError,
       }
 
-
       const isDisabled = Object.values(conditions).some(
         (condition) => condition
       )
@@ -181,7 +216,6 @@
         titleEmpty: !title,
         hasTitleError: !!titleError,
       }
-
 
       const isDisabled = Object.values(conditions).some(
         (condition) => condition
@@ -233,6 +267,37 @@
   function openInfoModal() {
     // TODO: implement modal logic
   }
+
+  const getInputType = (type: InputType): 'text' | 'email' | 'password' => {
+    return type as 'text' | 'email' | 'password'
+  }
+
+  const getTextInputValue = (key: 'authorName' | 'email' | 'title'): string => {
+    return inputValues.value[key]
+  }
+
+  const setInputValue = (key: keyof InputValues, value: string | number) => {
+    if (key === 'year') {
+      inputValues.value[key] = Number(value)
+    } else if (key === 'locale') {
+      inputValues.value[key] = value as 'en' | 'de'
+    } else {
+      inputValues.value[key] = String(value)
+    }
+  }
+
+  const localeOptions = [
+    { label: 'English', value: 'en' },
+    { label: 'Deutsch', value: 'de' },
+  ]
+
+  const yearOptions = computed(() => {
+    const currentYear = new Date().getFullYear()
+    return Array.from({ length: 200 }, (_, i) => ({
+      label: (currentYear - i).toString(),
+      value: currentYear - i,
+    }))
+  })
 </script>
 
 <template>
@@ -308,23 +373,44 @@
         </template>
       </template>
       <div class="input-wrapper">
-        <BaseTextInput
+        <template
           v-for="(input, index) in currentStep?.inputs"
-          :id="input.key"
           :key="index"
-          v-model="inputValues[input.key as keyof InputValues]"
-          :type="input.type"
-          :label="input.label"
-          :placeholder="input.placeholder"
-          :validation-key="input.validationKey as keyof typeof validationRules"
-          @update:error="
-            (error) =>
-              handleValidationError(
-                input.key as 'authorName' | 'email' | 'title',
-                error
-              )
-          "
-        />
+        >
+          <BaseTextInput
+            v-if="
+              input.type === inputTypes.TEXT || input.type === inputTypes.EMAIL
+            "
+            :id="input.key"
+            :model-value="
+              getTextInputValue(input.key as 'authorName' | 'email' | 'title')
+            "
+            :type="getInputType(input.type)"
+            :label="input.label"
+            :placeholder="input.placeholder"
+            :validation-key="input.validationKey"
+            @update:model-value="setInputValue(input.key, $event)"
+            @update:error="(error) => handleValidationError(input.key, error)"
+          />
+        </template>
+        <div class="select-wrapper">
+          <template
+            v-for="(input, index) in currentStep?.inputs"
+            :key="index"
+          >
+            <BaseSelect
+              v-if="input.type === inputTypes.SELECT"
+              :id="input.key"
+              v-model="inputValues[input.key]"
+              :label="input.label"
+              :placeholder="input.placeholder"
+              :validation-key="input.validationKey"
+              :options="input.key === 'year' ? yearOptions : localeOptions"
+              class="select-input"
+              @update:error="(error) => handleValidationError(input.key, error)"
+            />
+          </template>
+        </div>
       </div>
       <div class="step-buttons-wrapper">
         <div
@@ -461,5 +547,25 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
+  }
+
+  .select-wrapper {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    margin-bottom: 1rem;
+
+    @container (max-width: 500px) {
+      gap: var(--padding-tablet);
+    }
+
+    @container (max-width: 768px) {
+      gap: var(--padding-desktop);
+    }
+  }
+
+  .select-input {
+    width: 100%;
+    max-width: 200px;
   }
 </style>

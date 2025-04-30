@@ -82,6 +82,14 @@
               "title": {
                 "label": "Titel",
                 "placeholder": "Meine Prater-Geschichte"
+              },
+              "year": {
+                "label": "Jahr",
+                "placeholder": "Wann fand diese Geschichte statt?"
+              },
+              "language": {
+                "label": "Sprache",
+                "placeholder": "In welcher Sprache möchtest du deine Geschichte schreiben?"
               }
             }
           }
