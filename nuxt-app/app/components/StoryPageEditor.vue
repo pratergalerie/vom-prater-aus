@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import type { PageLayout } from '~/types'
+  import type { PageLayout } from '~/types/frontend'
 
   const props = defineProps<{
     pageIndex: number
