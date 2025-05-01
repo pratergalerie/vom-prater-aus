@@ -31,13 +31,6 @@ export default defineNuxtConfig({
     },
   },
 
-  runtimeConfig: {
-    app: {
-      host: '0.0.0.0',
-      port: 3000,
-    },
-  },
-
   css: ['@/assets/css/main.css'],
   modules: [
     '@pinia/nuxt',
@@ -56,7 +49,6 @@ export default defineNuxtConfig({
       },
     ],
     '@nuxt/eslint',
-    'pinia-plugin-persistedstate',
     '@vueuse/nuxt',
     '@nuxtjs/stylelint-module',
     '@nuxt/test-utils',
@@ -111,5 +103,7 @@ export default defineNuxtConfig({
 
   supabase: {
     redirect: false,
+    url: process.env.SUPABASE_URL,
+    key: process.env.SUPABASE_KEY,
   },
 })
