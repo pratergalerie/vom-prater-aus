@@ -3,7 +3,7 @@ services:
     container_name: nuxt-app
     build:
       context: ./nuxt-app
-      dockerfile: ${NUXT_DOCKERFILE:-Dockerfile}
+      dockerfile: Dockerfile.dev
     volumes:
       - ./nuxt-app:/app
       - nuxt-node-modules:/app/node_modules
@@ -32,7 +32,7 @@ services:
     container_name: nuxt-app
     build:
       context: ./nuxt-app
-      dockerfile: ${NUXT_DOCKERFILE:-Dockerfile}
+      dockerfile: Dockerfile
     profiles:
       - prod
     ports:
