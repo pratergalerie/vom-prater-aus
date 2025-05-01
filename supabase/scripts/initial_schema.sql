@@ -40,14 +40,14 @@ CREATE TABLE IF NOT EXISTS stories (
   author_id UUID NOT NULL REFERENCES authors(id) ON DELETE CASCADE,
   locale_id UUID NOT NULL REFERENCES locales(id) ON DELETE CASCADE,
   year INTEGER NOT NULL,
-  status TEXT NOT NULL DEFAULT 'wip',
+  status TEXT NOT NULL DEFAULT 'draft',
   featured_image TEXT,
   featured BOOLEAN DEFAULT FALSE,
   quote TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()),
   modified_at TIMESTAMP WITH TIME ZONE,
   CONSTRAINT year_check CHECK (year >= 1000 AND year <= 9999),
-  CONSTRAINT status_check CHECK (status IN ('wip', 'submitted', 'approved', 'rejected'))
+  CONSTRAINT status_check CHECK (status IN ('draft', 'submitted', 'approved', 'rejected'))
 );
 
 -- Story pages table (maps to StoryPage type)
