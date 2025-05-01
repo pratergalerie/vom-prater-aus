@@ -6,11 +6,19 @@ type StoryWithAuthor = Database['public']['Tables']['stories']['Row'] & {
 }
 
 export function useAPI() {
-  // Stories methods
+  /**
+   * Fetches all stories with their author information
+   * @returns {Promise<{ data: Ref<StoryWithAuthor[]>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the stories data and loading states
+   */
   function getStories() {
     return useFetch<StoryWithAuthor[]>('/api/stories')
   }
 
+  /**
+   * Fetches featured stories with their author information
+   * @param {number} [limit] - Optional limit for the number of stories to fetch
+   * @returns {Promise<{ data: Ref<StoryWithAuthor[]>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the featured stories data and loading states
+   */
   function getFeaturedStories(limit?: number) {
     return useFetch<StoryWithAuthor[]>('/api/stories', {
       params: {
@@ -20,20 +28,40 @@ export function useAPI() {
     })
   }
 
+  /**
+   * Fetches a single story by its ID with author information
+   * @param {string} id - The ID of the story to fetch
+   * @returns {Promise<{ data: Ref<StoryWithAuthor>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the story data and loading states
+   */
   function getStoryById(id: string) {
     return useFetch<StoryWithAuthor>(`/api/stories/${id}`)
   }
 
+  /**
+   * Fetches a single story by its slug with author information
+   * @param {string} slug - The slug of the story to fetch
+   * @returns {Promise<{ data: Ref<StoryWithAuthor>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the story data and loading states
+   */
   function getStoryBySlug(slug: string) {
     return useFetch<StoryWithAuthor>(`/api/stories/by-slug/${slug}`)
   }
 
+  /**
+   * Fetches all pages for a specific story
+   * @param {string} storyId - The ID of the story to fetch pages for
+   * @returns {Promise<{ data: Ref<Database['public']['Tables']['story_pages']['Row'][]>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the story pages data and loading states
+   */
   function getStoryPages(storyId: string) {
     return useFetch<Database['public']['Tables']['story_pages']['Row'][]>(
       `/api/stories/${storyId}/pages`
     )
   }
 
+  /**
+   * Creates a new story
+   * @param {Database['public']['Tables']['stories']['Insert']} story - The story data to create
+   * @returns {Promise<Database['public']['Tables']['stories']['Row']>} A promise containing the created story
+   */
   function createStory(
     story: Database['public']['Tables']['stories']['Insert']
   ) {
@@ -46,6 +74,52 @@ export function useAPI() {
     )
   }
 
+  /**
+   * Creates a new story with a specific locale
+   * @param {Omit<Database['public']['Tables']['stories']['Insert'], 'locale_id'>} story - The story data to create (without locale_id)
+   * @param {string} localeCode - The code of the locale to associate with the story
+   * @returns {Promise<Database['public']['Tables']['stories']['Row']>} A promise containing the created story
+   */
+  async function createStoryWithLocale(
+    story: Omit<Database['public']['Tables']['stories']['Insert'], 'locale_id'>,
+    localeCode: string
+  ) {
+    try {
+      // First get the locale
+      const locale = await $fetch<
+        Database['public']['Tables']['locales']['Row']
+      >(`/api/locales/${localeCode}`)
+
+      if (!locale) {
+        throw new Error(`Locale with code ${localeCode} not found`)
+      }
+
+      // Create the story with the locale_id
+      const storyWithLocale = {
+        ...story,
+        locale_id: locale.id,
+      }
+
+      // Create the story using $fetch
+      return await $fetch<Database['public']['Tables']['stories']['Row']>(
+        '/api/stories',
+        {
+          method: 'POST',
+          body: storyWithLocale,
+        }
+      )
+    } catch (error) {
+      console.error('Error creating story with locale:', error)
+      throw error
+    }
+  }
+
+  /**
+   * Updates an existing story
+   * @param {string} id - The ID of the story to update
+   * @param {Database['public']['Tables']['stories']['Update']} story - The updated story data
+   * @returns {Promise<{ data: Ref<Database['public']['Tables']['stories']['Row']>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the updated story and loading states
+   */
   function updateStory(
     id: string,
     story: Database['public']['Tables']['stories']['Update']
@@ -59,6 +133,11 @@ export function useAPI() {
     )
   }
 
+  /**
+   * Deletes a story
+   * @param {string} id - The ID of the story to delete
+   * @returns {Promise<{ data: Ref<Database['public']['Tables']['stories']['Row']>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the deleted story and loading states
+   */
   function deleteStory(id: string) {
     return useFetch<Database['public']['Tables']['stories']['Row']>(
       `/api/stories/${id}`,
@@ -68,19 +147,32 @@ export function useAPI() {
     )
   }
 
-  // Authors methods
+  /**
+   * Fetches all authors
+   * @returns {Promise<{ data: Ref<Database['public']['Tables']['authors']['Row'][]>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the authors data and loading states
+   */
   function getAuthors() {
     return useFetch<Database['public']['Tables']['authors']['Row'][]>(
       '/api/authors'
     )
   }
 
+  /**
+   * Fetches a single author by ID
+   * @param {string} id - The ID of the author to fetch
+   * @returns {Promise<{ data: Ref<Database['public']['Tables']['authors']['Row']>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the author data and loading states
+   */
   function getAuthor(id: string) {
     return useFetch<Database['public']['Tables']['authors']['Row']>(
       `/api/authors/${id}`
     )
   }
 
+  /**
+   * Creates a new author
+   * @param {Database['public']['Tables']['authors']['Insert']} author - The author data to create
+   * @returns {Promise<Database['public']['Tables']['authors']['Row']>} A promise containing the created author
+   */
   function createAuthor(
     author: Database['public']['Tables']['authors']['Insert']
   ) {
@@ -93,6 +185,12 @@ export function useAPI() {
     )
   }
 
+  /**
+   * Updates an existing author
+   * @param {string} id - The ID of the author to update
+   * @param {Database['public']['Tables']['authors']['Update']} author - The updated author data
+   * @returns {Promise<{ data: Ref<Database['public']['Tables']['authors']['Row']>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the updated author and loading states
+   */
   function updateAuthor(
     id: string,
     author: Database['public']['Tables']['authors']['Update']
@@ -106,6 +204,11 @@ export function useAPI() {
     )
   }
 
+  /**
+   * Deletes an author
+   * @param {string} id - The ID of the author to delete
+   * @returns {Promise<{ data: Ref<Database['public']['Tables']['authors']['Row']>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the deleted author and loading states
+   */
   function deleteAuthor(id: string) {
     return useFetch<Database['public']['Tables']['authors']['Row']>(
       `/api/authors/${id}`,
@@ -115,13 +218,22 @@ export function useAPI() {
     )
   }
 
-  // Pages methods
+  /**
+   * Fetches all pages
+   * @returns {Promise<{ data: Ref<Database['public']['Tables']['pages']['Row'][]>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the pages data and loading states
+   */
   function getPages() {
     return useFetch<Database['public']['Tables']['pages']['Row'][]>(
       '/api/pages'
     )
   }
 
+  /**
+   * Fetches a single page by slug and locale
+   * @param {string} slug - The slug of the page to fetch
+   * @param {string} locale - The locale code for the page content
+   * @returns {Promise<{ data: Ref<{ id: string, slug: string, sections: Array<{ id: string, name: string, type: string, order: number, content: { id: string, title: string | null, subtitle: string | null, text: string[] | null, imageSrc: string | null, imageAlt: string | null, buttonLabel: string | null, buttonLink: string | null, additionalContent: Record<string, unknown> | null } }> }>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the page data and loading states
+   */
   function getPage(slug: string, locale: string) {
     return useFetch<{
       id: string
@@ -148,13 +260,30 @@ export function useAPI() {
     })
   }
 
-  function createPage(page: Database['public']['Tables']['pages']['Insert']) {
-    return $fetch<Database['public']['Tables']['pages']['Row']>('/api/pages', {
-      method: 'POST',
-      body: page,
-    })
+  /**
+   * Creates a new page
+   * @param {Database['public']['Tables']['story_pages']['Insert']} page - The page data to create
+   * @returns {Promise<Database['public']['Tables']['story_pages']['Row']>} A promise containing the created page
+   */
+  function createPage(
+    page: Database['public']['Tables']['story_pages']['Insert']
+  ) {
+    return $fetch<Database['public']['Tables']['story_pages']['Row']>(
+      `/api/stories/${page.story_id}/pages`,
+      {
+        method: 'POST',
+        body: page,
+      }
+    )
   }
 
+  /**
+   * Updates an existing page
+   * @param {string} slug - The slug of the page to update
+   * @param {string} locale - The locale code for the page content
+   * @param {Array<{ id: string, content: { id: string, title: string | null, subtitle: string | null, text: string[] | null, imageSrc: string | null, imageAlt: string | null, buttonLabel: string | null, buttonLink: string | null, additionalContent: Record<string, unknown> | null } }>} sections - The updated page sections
+   * @returns {Promise<{ success: boolean }>} A promise containing the update status
+   */
   function updatePage(
     slug: string,
     locale: string,
@@ -180,6 +309,17 @@ export function useAPI() {
     })
   }
 
+  /**
+   * Fetches a locale by its code
+   * @param {string} localeCode - The code of the locale to fetch
+   * @returns {Promise<{ data: Ref<Database['public']['Tables']['locales']['Row']>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the locale data and loading states
+   */
+  function getLocale(localeCode: string) {
+    return useFetch<Database['public']['Tables']['locales']['Row']>(
+      `/api/locales/${localeCode}`
+    )
+  }
+
   return {
     // Stories
     getStories,
@@ -188,6 +328,7 @@ export function useAPI() {
     getStoryBySlug,
     getStoryPages,
     createStory,
+    createStoryWithLocale,
     updateStory,
     deleteStory,
     // Authors
@@ -201,5 +342,7 @@ export function useAPI() {
     getPage,
     createPage,
     updatePage,
+    // Locales
+    getLocale,
   }
 }
