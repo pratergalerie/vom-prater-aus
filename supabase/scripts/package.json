@@ -9,6 +9,6 @@
     "generate-data": "node generate_initial_data.js"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.39.0"
+    "@supabase/supabase-js": "^2.49.4"
   }
 }
