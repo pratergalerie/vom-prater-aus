@@ -19,6 +19,8 @@ export interface StoryPage {
   text: string | null
   image: string | null
   createdAt?: Date
+  modifiedAt?: Date
+  pageOrder?: number
 }
 
 export interface Story {
@@ -29,6 +31,7 @@ export interface Story {
   keywords: string[]
   pages: StoryPage[]
   createdAt: Date
+  modifiedAt: Date | null
   locale: 'en' | 'de'
   status?: 'draft' | 'submitted' | 'approved' | 'rejected'
   featured?: boolean
