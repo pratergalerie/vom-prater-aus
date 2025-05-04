@@ -2,89 +2,69 @@
   import type { PageLayout } from '~/types/frontend'
 
   const props = defineProps<{
-    pageIndex: number
+    pageIndex?: number
   }>()
 
   // Component accesses store directly
   const { story } = storeToRefs(useStoryStore())
-  const page = computed(() => story.value.pages[props.pageIndex])
+  const page = ref(story?.value?.pages[props.pageIndex ?? 0])
+  const { updatePage } = useStoryStore()
 
-  const layout = computed({
-    get: () => page.value?.layout,
-    set: (newLayout: PageLayout) => {
-      story.value.pages[props.pageIndex]!.layout = newLayout
-    },
-  })
-  const text = computed({
-    get: () => page.value?.text,
-    set: (newText: string) => {
-      story.value.pages[props.pageIndex]!.text = newText
-    },
-  })
-  const image = computed({
-    get: () => page.value?.image,
-    set: (newImage: string) => {
-      story.value.pages[props.pageIndex]!.image = newImage
-    },
-  })
-  const title = computed({
-    get: () => story.value.title,
-    set: (newTitle: string) => {
-      story.value.title = newTitle
-    },
-  })
-  const author = computed({
-    get: () => story.value.author,
-    set: (newAuthorName: string) => {
-      story.value.author.name = newAuthorName
-    },
-  })
-  const date = computed({
-    get: () => story.value.year,
-    set: (newDate: number) => {
-      story.value.year = newDate
-    },
+  watch(
+    () => props.pageIndex ?? 0,
+    (newPageIndex) => {
+      page.value = story?.value?.pages[newPageIndex]
+    }
+  )
+
+  watch(page, (newPage) => {
+    if (newPage) {
+      updatePage(props.pageIndex ?? 0, newPage)
+    }
   })
 
-  const imageOverText = ref<boolean>(true)
-  const textOverImage = ref<boolean>(false)
+  const layout = computed(() => {
+    return page.value?.layout || 'image-over-text'
+  })
+
+  const imageOverText = ref(false)
+  const textOverImage = ref(false)
+
+  // Initialize checkboxes based on initial layout
+  onMounted(() => {
+    if (layout.value === 'image-over-text') {
+      imageOverText.value = true
+      textOverImage.value = false
+    } else if (layout.value === 'text-over-image') {
+      imageOverText.value = false
+      textOverImage.value = true
+    }
+  })
+
+  watch(
+    layout,
+    (newLayout) => {
+      if (newLayout === 'image-over-text') {
+        imageOverText.value = true
+        textOverImage.value = false
+      } else if (newLayout === 'text-over-image') {
+        imageOverText.value = false
+        textOverImage.value = true
+      }
+    },
+    { immediate: true }
+  )
 
   watch(imageOverText, (newValue) => {
-    if (
-      !newValue &&
-      !textOverImage.value &&
-      (layout.value === 'image-over-text' || layout.value === 'text-over-image')
-    ) {
-      imageOverText.value = true
-      return
-    }
     if (newValue) {
+      page.value!.layout = 'image-over-text'
       textOverImage.value = false
-      layout.value = 'image-over-text'
     }
   })
 
   watch(textOverImage, (newValue) => {
-    if (
-      !newValue &&
-      !imageOverText.value &&
-      (layout.value === 'image-over-text' || layout.value === 'text-over-image')
-    ) {
-      textOverImage.value = true
-      return
-    }
     if (newValue) {
-      imageOverText.value = false
-      layout.value = 'text-over-image'
-    }
-  })
-
-  watch(layout, (newValue) => {
-    if (newValue === 'image-over-text') {
-      imageOverText.value = true
-      textOverImage.value = false
-    } else if (newValue === 'text-over-image') {
-      textOverImage.value = true
+      page.value!.layout = 'text-over-image'
       imageOverText.value = false
     }
   })
@@ -92,7 +72,9 @@
   const placeholderImage = '/imgs/page-placeholder-image.jpg'
 
   const pageImage = computed(() => {
-    return image.value ? image.value : placeholderImage
+    return story.value?.pages[props.pageIndex ?? 0]?.image
+      ? story.value?.pages[props.pageIndex ?? 0]?.image
+      : placeholderImage
   })
 
   const deleteActionDialogOpen = ref(false)
@@ -176,7 +158,7 @@
       if (file) {
         const reader = new FileReader()
         reader.onload = (event) => {
-          image.value = event.target?.result as string
+          page.value!.image = event.target?.result as string
         }
         reader.readAsDataURL(file)
       }
@@ -184,8 +166,22 @@
     input.click()
   }
 
+  function handleChangeLayout(layout: PageLayout) {
+    page.value!.layout = layout
+  }
+
   function handleAddSticker() {
     // TODO: implement sticker logic
+  }
+
+  function handleCheckboxChange(type: 'image-over-text' | 'text-over-image') {
+    if (type === 'image-over-text') {
+      page.value!.layout = 'image-over-text'
+      textOverImage.value = false
+    } else {
+      page.value!.layout = 'text-over-image'
+      imageOverText.value = false
+    }
   }
 </script>
 
@@ -196,7 +192,7 @@
   >
     <div
       class="page-content"
-      :class="{ 'text-over-image': textOverImage }"
+      :class="{ 'text-over-image': layout === 'text-over-image' }"
     >
       <div
         class="image-title-container"
@@ -210,6 +206,7 @@
           class="image-container"
         >
           <NuxtImg
+            v-if="pageImage"
             :src="pageImage"
             alt="Story page image"
           />
@@ -222,22 +219,22 @@
           :shadow="true"
           class="title-box"
           :class="{
-            'top-aligned': textOverImage,
-            'bottom-aligned': imageOverText,
+            'top-aligned': layout === 'text-over-image',
+            'bottom-aligned': layout === 'image-over-text',
           }"
         >
           <div
             v-if="pageIndex === 0"
             class="title-box-content"
           >
-            <h1>{{ title }}</h1>
+            <h1>{{ story?.title }}</h1>
             <div class="author-info">
               <span>{{ $t('components.storyPageEditor.byAuthor') }}</span>
-              <span class="name">{{ author.name }}</span>
+              <span class="name">{{ story?.author.name }}</span>
             </div>
             <div class="date">
               <Icon name="mdi:calendar-month" />
-              {{ date }}
+              {{ story?.year }}
             </div>
             <button
               class="story-details-edit-button"
@@ -250,7 +247,7 @@
       </div>
 
       <label
-        v-if="layout !== 'image'"
+        v-if="layout !== 'image' && page"
         for="page-text-input"
         class="text-container"
         :class="{
@@ -259,7 +256,7 @@
       >
         <textarea
           id="page-text-input"
-          v-model="text"
+          v-model="page.text"
           :placeholder="$t('components.storyPageEditor.pageTextPlaceholder')"
         />
       </label>
@@ -402,7 +399,7 @@
               }}
             </p>
             <div class="settings-container">
-              <button @click="layout = 'image-over-text'">
+              <button @click="handleChangeLayout('image-over-text')">
                 <Icon
                   name="custom:image-plus-text"
                   class="image-text-icon"
@@ -424,7 +421,7 @@
               <div class="image-text-options">
                 <BaseCheckbox
                   id="image-over-text"
-                  v-model:checked="imageOverText"
+                  v-model="imageOverText"
                   :label="
                     $t(
                       'components.storyPageEditor.dialogs.actions.pageLayout.imageOverText'
@@ -434,10 +431,11 @@
                   :disabled="
                     layout !== 'text-over-image' && layout !== 'image-over-text'
                   "
+                  @update:model-value="handleCheckboxChange('image-over-text')"
                 />
                 <BaseCheckbox
                   id="text-over-image"
-                  v-model:checked="textOverImage"
+                  v-model="textOverImage"
                   :label="
                     $t(
                       'components.storyPageEditor.dialogs.actions.pageLayout.textOverImage'
@@ -447,9 +445,10 @@
                   :disabled="
                     layout !== 'text-over-image' && layout !== 'image-over-text'
                   "
+                  @update:model-value="handleCheckboxChange('text-over-image')"
                 />
               </div>
-              <button @click="layout = 'image'">
+              <button @click="handleChangeLayout('image')">
                 <Icon name="mdi:image-outline" />
                 <span
                   :class="{
@@ -463,7 +462,7 @@
                   }}
                 </span>
               </button>
-              <button @click="layout = 'text'">
+              <button @click="handleChangeLayout('text')">
                 <Icon name="mdi:text" />
                 <span
                   :class="{
@@ -496,8 +495,6 @@
 <style scoped>
   .page-editor-container {
     position: relative;
-    min-width: 350px;
-    max-width: 500px;
     border: 1px solid var(--color-black);
 
     &::before {
@@ -660,6 +657,7 @@
     max-width: 500px;
     height: 40px;
     padding: 0 var(--padding-mobile);
+    margin: 0 auto;
     transform: translateY(-20px);
 
     .action-wrapper {

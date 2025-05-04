@@ -1,9 +1,11 @@
+import type { Database } from '~/types/supabase'
+
 // Frontend types
 export type PageLayout =
   | 'image-over-text'
   | 'text-over-image'
-  | 'text-only'
-  | 'image-only'
+  | 'text'
+  | 'image'
 
 export interface Author {
   id: string | null
@@ -17,7 +19,6 @@ export interface StoryPage {
   text: string | null
   image: string | null
   createdAt?: Date
-  modifiedAt?: Date | null
 }
 
 export interface Story {
@@ -29,8 +30,29 @@ export interface Story {
   pages: StoryPage[]
   createdAt: Date
   locale: 'en' | 'de'
-  status?: 'draft' | 'published' | 'archived'
+  status?: 'draft' | 'submitted' | 'approved' | 'rejected'
   featured?: boolean
   featuredImage?: string | null
   quote?: string | null
+}
+
+// Frontend types
+export interface PageSection {
+  id: string
+  name: string
+  type: string
+  order: number
+  content: PageSectionContent | null
+}
+
+export interface PageSectionContent {
+  id: string
+  title: string | null
+  subtitle: string | null
+  text: string[] | null
+  imageSrc: string | null
+  imageAlt: string | null
+  buttonLabel: string | null
+  buttonLink: string | null
+  additionalContent: Database['public']['Tables']['section_content']['Row']['additional_content']
 }

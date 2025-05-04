@@ -46,6 +46,26 @@ export default defineEventHandler(async (event) => {
             id,
             name,
             email
+          ),
+          pages:story_pages(
+            id,
+            layout,
+            text,
+            image,
+            page_order,
+            created_at
+          ),
+          locale:locale_id (
+            id,
+            code,
+            name
+          ),
+          keywords:stories_keywords(
+            created_at,
+            keyword_id (
+              id,
+              word
+            )
           )
         `
         )
@@ -94,10 +114,29 @@ export default defineEventHandler(async (event) => {
             id,
             name,
             email
+          ),
+          locale:locale_id (
+            id,
+            code,
+            name
+          ),
+          pages:story_pages(
+            id,
+            layout,
+            text,
+            image,
+            created_at,
+            modified_at
+          ),
+          keywords:stories_keywords(
+            id,
+            keyword_id (
+              id,
+              word
+            )
           )
         `
         )
-        .single()
 
       if (error) {
         console.error('Supabase error:', error)
@@ -132,6 +171,26 @@ export default defineEventHandler(async (event) => {
             id,
             name,
             email
+          ),
+          locale:locale_id (
+            id,
+            code,
+            name
+          ),
+          keywords:stories_keywords(
+            id,
+            keyword_id (
+              id,
+              word
+            )
+          )
+          pages:story_pages(
+            id,
+            layout,
+            text,
+            image,
+            created_at,
+            modified_at
           )
         `
         )

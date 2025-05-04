@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import type { PageLayout } from '~/types/frontend'
+
   useHead({
     title: 'Vom Prater Aus - Write your own story',
     meta: [
@@ -12,6 +14,7 @@
   definePageMeta({
     layout: 'no-footer',
   })
+
   const inputTypes = {
     TEXT: 'text',
     EMAIL: 'email',
@@ -31,9 +34,7 @@
 
   const { t } = useI18n({ useScope: 'global' })
 
-  const { story } = storeToRefs(useStoryStore())
-
-  type InputValues = {
+  type StoryFormData = {
     authorName: string
     email: string
     title: string
@@ -41,15 +42,15 @@
     locale: 'en' | 'de'
   }
 
-  type FormInput = {
-    key: keyof InputValues
+  type StoryFormInput = {
+    key: keyof StoryFormData
     type: InputType
     label: string
     placeholder: string
     validationKey: keyof typeof validationRules
   }
 
-  const inputValues = ref<InputValues>({
+  const storyFormData = ref<StoryFormData>({
     authorName: '',
     email: '',
     title: '',
@@ -59,6 +60,8 @@
 
   const termsAccepted = ref(false)
   const moderationAccepted = ref(false)
+  const isCreating = ref(false)
+  const error = ref<string | null>(null)
 
   const formErrors = ref({
     authorName: '',
@@ -74,19 +77,6 @@
   ) {
     formErrors.value[field] = error || ''
   }
-
-  watch(
-    () => inputValues.value,
-    (newValue) => {
-      if (step.value === 0) {
-        story.value.author.name = newValue.authorName
-        story.value.author.email = newValue.email
-      } else if (step.value === 1) {
-        story.value.title = newValue.title
-      }
-    },
-    { deep: true }
-  )
 
   const form = computed(() => {
     return {
@@ -109,7 +99,7 @@
                 'pages.create.form.steps.authorInfo.inputs.authorName.placeholder'
               ),
               validationKey: 'authorName',
-            } as FormInput,
+            } as StoryFormInput,
             {
               key: 'email',
               type: inputTypes.EMAIL,
@@ -118,7 +108,7 @@
                 'pages.create.form.steps.authorInfo.inputs.email.placeholder'
               ),
               validationKey: 'email',
-            } as FormInput,
+            } as StoryFormInput,
           ],
         },
         {
@@ -132,7 +122,7 @@
                 'pages.create.form.steps.storyInfo.inputs.title.placeholder'
               ),
               validationKey: 'title',
-            } as FormInput,
+            } as StoryFormInput,
             {
               key: 'year',
               type: inputTypes.SELECT,
@@ -140,8 +130,7 @@
               placeholder: t(
                 'pages.create.form.steps.storyInfo.inputs.year.placeholder'
               ),
-              validationKey: 'year',
-            } as FormInput,
+            } as StoryFormInput,
             {
               key: 'locale',
               type: inputTypes.SELECT,
@@ -151,7 +140,7 @@
               placeholder: t(
                 'pages.create.form.steps.storyInfo.inputs.language.placeholder'
               ),
-            } as FormInput,
+            } as StoryFormInput,
           ],
         },
       ],
@@ -182,9 +171,9 @@
   })
 
   const isFormDisabled = computed(() => {
-    const authorName = inputValues.value.authorName?.trim() || ''
-    const email = inputValues.value.email?.trim() || ''
-    const title = inputValues.value.title?.trim() || ''
+    const authorName = storyFormData.value.authorName?.trim() || ''
+    const email = storyFormData.value.email?.trim() || ''
+    const title = storyFormData.value.title?.trim() || ''
     const termsChecked = termsAccepted.value
     const moderationChecked = moderationAccepted.value
     const authorNameError = formErrors.value.authorName
@@ -229,38 +218,62 @@
   const currentStep = computed(() => form.value.steps[step.value])
 
   async function createStory() {
-    const author = story.value.author
+    isCreating.value = true
+    error.value = null
 
-    const authorData = await useAPI().createAuthor({
-      name: author.name,
-      email: author.email,
-    })
-
-    if (!authorData) {
-      console.error('Error creating author:', authorData)
-    } else {
-      const authorId = authorData.id
-
-      const storyData = await useAPI().createStory({
-        author_id: authorId,
-        created_at: new Date().toISOString(),
-        id: '',
-        modified_at: null,
-        title: inputValues.value.title,
-        year: 2025,
-        locale_id: 'en',
-        slug: inputValues.value.title.toLowerCase().replace(/\s+/g, '-'),
+    try {
+      // Create author first
+      const createdAuthor = await useAPI().createAuthor({
+        name: storyFormData.value.authorName,
+        email: storyFormData.value.email,
       })
 
-      if (!storyData) {
-        console.error('Error creating story:', storyData)
-      } else {
-        const router = useRouter()
-        router.push({
-          name: 'stories/edit',
-          params: { id: storyData.id },
-        })
+      if (!createdAuthor) {
+        throw new Error('Failed to create author')
       }
+
+      // Create story with the author ID
+      const storyData = await useAPI().createStoryWithLocale(
+        {
+          author_id: createdAuthor.id,
+          created_at: new Date().toISOString(),
+          modified_at: null,
+          title: storyFormData.value.title,
+          year: storyFormData.value.year,
+          slug: storyFormData.value.title.toLowerCase().replace(/\s+/g, '-'),
+          status: 'draft',
+          featured: false,
+          quote: '',
+          featured_image: '',
+        },
+        storyFormData.value.locale
+      )
+
+      if (!storyData?.id) {
+        throw new Error('Failed to create story: No ID returned')
+      }
+
+      // Create the first page for the story
+      const pageData = await useAPI().createPage({
+        story_id: storyData.id,
+        layout: 'image-over-text' as PageLayout,
+        text: '',
+        image: null,
+        page_order: 1,
+        created_at: new Date().toISOString(),
+      })
+
+      if (!pageData?.id) {
+        throw new Error('Failed to create story page: No ID returned')
+      }
+
+      const router = useRouter()
+      await router.push(`/stories/edit/${storyData.id}`)
+    } catch (err) {
+      console.error('Error in createStory:', err)
+      error.value = 'Failed to create story. Please try again.'
+    } finally {
+      isCreating.value = false
     }
   }
 
@@ -273,16 +286,16 @@
   }
 
   const getTextInputValue = (key: 'authorName' | 'email' | 'title'): string => {
-    return inputValues.value[key]
+    return storyFormData.value[key]
   }
 
-  const setInputValue = (key: keyof InputValues, value: string | number) => {
+  const setInputValue = (key: keyof StoryFormData, value: string | number) => {
     if (key === 'year') {
-      inputValues.value[key] = Number(value)
+      storyFormData.value[key] = Number(value)
     } else if (key === 'locale') {
-      inputValues.value[key] = value as 'en' | 'de'
+      storyFormData.value[key] = value as 'en' | 'de'
     } else {
-      inputValues.value[key] = String(value)
+      storyFormData.value[key] = String(value)
     }
   }
 
@@ -401,7 +414,7 @@
             <BaseSelect
               v-if="input.type === inputTypes.SELECT"
               :id="input.key"
-              v-model="inputValues[input.key]"
+              v-model="storyFormData[input.key]"
               :label="input.label"
               :placeholder="input.placeholder"
               :validation-key="input.validationKey"
@@ -430,12 +443,18 @@
             :icon="button.icon"
             :label="button.label"
             class="step-button"
-            :disabled="button.disabled"
+            :disabled="button.disabled || isCreating"
             @click.prevent="button.callback"
           />
         </div>
       </div>
     </form>
+    <div
+      v-if="error"
+      class="error-message"
+    >
+      {{ error }}
+    </div>
   </div>
 </template>
 
@@ -567,5 +586,11 @@
   .select-input {
     width: 100%;
     max-width: 200px;
+  }
+
+  .error-message {
+    margin-top: 1rem;
+    color: var(--color-red);
+    text-align: center;
   }
 </style>

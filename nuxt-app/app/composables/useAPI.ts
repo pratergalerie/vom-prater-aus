@@ -1,26 +1,43 @@
 import type { Database } from '~/types/supabase'
 
-// Define a type for stories with author data
-type StoryWithAuthor = Database['public']['Tables']['stories']['Row'] & {
+// Define a return type for stories
+type Story = Omit<
+  Database['public']['Tables']['stories']['Row'],
+  'author_id' | 'locale_id'
+> & {
   author: Database['public']['Tables']['authors']['Row']
+  pages: Database['public']['Tables']['story_pages']['Row'][]
+  locale: Pick<
+    Database['public']['Tables']['locales']['Row'],
+    'id' | 'code' | 'name'
+  >
+  keywords: Array<{
+    id: string
+    keyword_id: {
+      id: string
+      name: string
+    }
+  }>
 }
+
+type PageResponse = Database['public']['Tables']['story_pages']['Row']
 
 export function useAPI() {
   /**
-   * Fetches all stories with their author information
-   * @returns {Promise<{ data: Ref<StoryWithAuthor[]>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the stories data and loading states
+   * Fetches all stories
+   * @returns {Promise<{ data: Ref<Story[]>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the stories data and loading states
    */
   function getStories() {
-    return useFetch<StoryWithAuthor[]>('/api/stories')
+    return useFetch<Story[]>('/api/stories')
   }
 
   /**
-   * Fetches featured stories with their author information
+   * Fetches featured stories
    * @param {number} [limit] - Optional limit for the number of stories to fetch
-   * @returns {Promise<{ data: Ref<StoryWithAuthor[]>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the featured stories data and loading states
+   * @returns {Promise<{ data: Ref<Story[]>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the featured stories data and loading states
    */
   function getFeaturedStories(limit?: number) {
-    return useFetch<StoryWithAuthor[]>('/api/stories', {
+    return useFetch<Story[]>('/api/stories', {
       params: {
         featured: 'true',
         limit: limit || undefined,
@@ -29,21 +46,21 @@ export function useAPI() {
   }
 
   /**
-   * Fetches a single story by its ID with author information
+   * Fetches a single story by its ID
    * @param {string} id - The ID of the story to fetch
-   * @returns {Promise<{ data: Ref<StoryWithAuthor>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the story data and loading states
+   * @returns {Promise<{ data: Ref<Story>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the story data and loading states
    */
   function getStoryById(id: string) {
-    return useFetch<StoryWithAuthor>(`/api/stories/${id}`)
+    return useFetch<Story>(`/api/stories/${id}`)
   }
 
   /**
-   * Fetches a single story by its slug with author information
+   * Fetches a single story by its slug
    * @param {string} slug - The slug of the story to fetch
-   * @returns {Promise<{ data: Ref<StoryWithAuthor>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the story data and loading states
+   * @returns {Promise<{ data: Ref<Story>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the story data and loading states
    */
   function getStoryBySlug(slug: string) {
-    return useFetch<StoryWithAuthor>(`/api/stories/by-slug/${slug}`)
+    return useFetch<Story>(`/api/stories/by-slug/${slug}`)
   }
 
   /**
@@ -232,30 +249,10 @@ export function useAPI() {
    * Fetches a single page by slug and locale
    * @param {string} slug - The slug of the page to fetch
    * @param {string} locale - The locale code for the page content
-   * @returns {Promise<{ data: Ref<{ id: string, slug: string, sections: Array<{ id: string, name: string, type: string, order: number, content: { id: string, title: string | null, subtitle: string | null, text: string[] | null, imageSrc: string | null, imageAlt: string | null, buttonLabel: string | null, buttonLink: string | null, additionalContent: Record<string, unknown> | null } }> }>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the page data and loading states
+   * @returns {Promise<{ data: Ref<PageResponse>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the page data and loading states
    */
   function getPage(slug: string, locale: string) {
-    return useFetch<{
-      id: string
-      slug: string
-      sections: {
-        id: string
-        name: string
-        type: string
-        order: number
-        content: {
-          id: string
-          title: string | null
-          subtitle: string | null
-          text: string[] | null
-          imageSrc: string | null
-          imageAlt: string | null
-          buttonLabel: string | null
-          buttonLink: string | null
-          additionalContent: Record<string, unknown> | null
-        }
-      }[]
-    }>(`/api/pages/${slug}`, {
+    return useFetch<PageResponse>(`/api/pages/${slug}`, {
       params: { locale },
     })
   }

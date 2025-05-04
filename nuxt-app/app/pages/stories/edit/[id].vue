@@ -1,11 +1,9 @@
 <script lang="ts" setup>
-  const { story } = storeToRefs(useStoryStore())
+  import type { PageLayout, Story } from '~/types/frontend'
 
   definePageMeta({
     layout: 'no-footer',
   })
-
-  const currentPageIndex = ref(0)
 
   const deletePageConfirmationModalOpen = ref(false)
   const deleteStoryConfirmationModalOpen = ref(false)
@@ -13,7 +11,61 @@
   const exitEditorConfirmationModalOpen = ref(false)
   const storyDetailsModalOpen = ref(false)
 
-  const { addPage, deletePage } = useStoryStore()
+  const { addPage, deletePage, setStory, loadStory } = useStoryStore()
+  const { story, currentPageIndex } = storeToRefs(useStoryStore())
+
+  // Ensure currentPageIndex is properly initialized
+  watchEffect(() => {
+    if (
+      story.value?.pages &&
+      currentPageIndex.value >= story.value.pages.length
+    ) {
+      currentPageIndex.value = Math.max(0, story.value.pages.length - 1)
+    }
+  })
+
+  // First check if story exists in IndexedDB
+  const storyId = useRoute().params.id as string
+  await loadStory(storyId)
+
+  if (!story.value) {
+    // If story doesn't exist, fetch from backend
+    const { data: storyData } = await useAPI().getStoryById(storyId)
+    if (storyData.value) {
+      // Convert storyData to Story format
+      const convertedStory: Story = {
+        id: storyData.value.id,
+        title: storyData.value.title,
+        author: {
+          id: storyData.value.author.id,
+          name: storyData.value.author.name,
+          email: storyData.value.author.email,
+        },
+        year: storyData.value.year,
+        keywords: [],
+        pages:
+          storyData.value.pages?.map((page) => ({
+            id: page.id,
+            layout: page.layout as PageLayout,
+            text: page.text,
+            image: page.image,
+            createdAt: new Date(page.created_at || new Date()),
+            pageOrder: page.page_order,
+          })) || [],
+        createdAt: new Date(storyData.value.created_at || new Date()),
+        locale: storyData.value.locale.code as 'en' | 'de',
+        status: storyData.value.status as
+          | 'draft'
+          | 'submitted'
+          | 'approved'
+          | 'rejected',
+        featured: storyData.value.featured || false,
+        featuredImage: storyData.value.featured_image,
+        quote: storyData.value.quote,
+      }
+      setStory(convertedStory)
+    }
+  }
 
   function handleDeleteStory() {
     // TODO: Implement delete story
@@ -22,7 +74,16 @@
   }
 
   function handleAddPage() {
-    addPage()
+    const date = new Date()
+    const newPage = {
+      id: null,
+      layout: 'image-over-text' as PageLayout,
+      text: null,
+      image: null,
+      createdAt: date,
+      modifiedAt: date,
+    }
+    addPage(newPage)
     currentPageIndex.value++
   }
 
@@ -49,26 +110,14 @@
     router.push('/stories/explorer')
   }
 
-  const newStoryDetails = ref({
-    title: story.value.title,
-    author: story.value.author.name,
-    year: story.value.year,
-  })
-
   function handleSaveStoryDetails() {
-    story.value.title = newStoryDetails.value.title
-    story.value.author.name = newStoryDetails.value.author
-    story.value.year = newStoryDetails.value.year
     storyDetailsModalOpen.value = false
+    // TODO: Implement save new story details
   }
 
   function handleCancelEditStoryDetails() {
     storyDetailsModalOpen.value = false
-    newStoryDetails.value = {
-      title: story.value.title,
-      author: story.value.author.name,
-      year: story.value.year,
-    }
+    // TODO: Implement cancel edit story details
   }
 </script>
 
@@ -98,7 +147,11 @@
         {{ `${$t('components.storyPageEditor.page')} ${currentPageIndex + 1}` }}
       </span>
       <BaseButton
-        v-if="currentPageIndex < story.pages.length - 1"
+        v-if="
+          story?.pages &&
+          story?.pages.length > 0 &&
+          currentPageIndex < story.pages.length - 1
+        "
         type="primary"
         variant="icon"
         icon="mdi:arrow-right"
@@ -203,12 +256,15 @@
           class="story-detail-form"
           @submit.prevent
         >
-          <div class="story-details-form-row">
+          <div
+            v-if="story"
+            class="story-details-form-row"
+          >
             <label for="story-title">
               {{ $t('pages.stories.edit.modals.details.storyTitle') }}
               <input
                 id="story-title"
-                v-model="newStoryDetails.title"
+                v-model="story.title"
                 type="text"
                 aria-label="Story title"
               />
@@ -218,7 +274,7 @@
               {{ $t('pages.stories.edit.modals.details.authorName') }}
               <input
                 id="story-author"
-                v-model="newStoryDetails.author"
+                v-model="story.author.name"
                 type="text"
               />
             </label>
@@ -227,7 +283,7 @@
               {{ $t('pages.stories.edit.modals.details.storyYear') }}
               <input
                 id="story-year"
-                v-model="newStoryDetails.year"
+                v-model="story.year"
                 type="number"
                 aria-label="Story year"
               />
