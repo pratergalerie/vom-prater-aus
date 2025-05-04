@@ -35,7 +35,8 @@
           },
           "saveSubmit": {
             "saveChanges": "Änderungen speichern",
-            "submitStory": "Geschichte einreichen"
+            "submitStory": "Geschichte einreichen",
+            "saving": "Wird gespeichert..."
           },
           "pageLayout": {
             "title": "Seite konfigurieren",
@@ -158,6 +159,10 @@
             "confirm": "Speichern",
             "cancel": "Abbrechen"
           }
+        },
+        "snackbar": {
+          "saveSuccess": "Geschichte gespeichert",
+          "saveError": "Fehler beim Speichern der Geschichte"
         }
       }
     }

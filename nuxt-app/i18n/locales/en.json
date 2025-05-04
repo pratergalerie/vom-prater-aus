@@ -35,7 +35,8 @@
           },
           "saveSubmit": {
             "saveChanges": "Save changes",
-            "submitStory": "Submit story"
+            "submitStory": "Submit story",
+            "saving": "Saving..."
           },
           "pageLayout": {
             "title": "Page layout",
@@ -158,6 +159,10 @@
             "confirm": "Save",
             "cancel": "Cancel"
           }
+        },
+        "snackbar": {
+          "saveSuccess": "Story saved successfully",
+          "saveError": "Error saving story"
         }
       }
     }
