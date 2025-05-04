@@ -141,7 +141,7 @@ export function useAPI() {
     id: string,
     story: Database['public']['Tables']['stories']['Update']
   ) {
-    return useFetch<Database['public']['Tables']['stories']['Row']>(
+    return $fetch<Database['public']['Tables']['stories']['Row']>(
       `/api/stories/${id}`,
       {
         method: 'PUT',
@@ -317,6 +317,42 @@ export function useAPI() {
     )
   }
 
+  /**
+   * Updates an existing story page
+   * @param {string} storyId - The ID of the story
+   * @param {string} pageId - The ID of the page to update
+   * @param {Database['public']['Tables']['story_pages']['Update']} page - The updated page data
+   * @returns {Promise<Database['public']['Tables']['story_pages']['Row']>} A promise containing the updated page
+   */
+  function updateStoryPage(
+    storyId: string,
+    pageId: string,
+    page: Database['public']['Tables']['story_pages']['Update']
+  ) {
+    return $fetch<Database['public']['Tables']['story_pages']['Row']>(
+      `/api/stories/${storyId}/pages/${pageId}`,
+      {
+        method: 'PUT',
+        body: page,
+      }
+    )
+  }
+
+  /**
+   * Deletes a story page
+   * @param {string} storyId - The ID of the story
+   * @param {string} pageId - The ID of the page to delete
+   * @returns {Promise<{ success: boolean }>} A promise containing the deletion status
+   */
+  function deleteStoryPage(storyId: string, pageId: string) {
+    return $fetch<{ success: boolean }>(
+      `/api/stories/${storyId}/pages/${pageId}`,
+      {
+        method: 'DELETE',
+      }
+    )
+  }
+
   return {
     // Stories
     getStories,
@@ -339,6 +375,8 @@ export function useAPI() {
     getPage,
     createPage,
     updatePage,
+    updateStoryPage,
+    deleteStoryPage,
     // Locales
     getLocale,
   }
