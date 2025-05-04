@@ -71,7 +71,7 @@ This will generate the `initial_data.sql` file in the `supabase/scripts` directo
     "title": "Featured Stories",
     "text": ["Discover the unique stories shared by our community members."],
     "button_label": "View Stories",
-    "button_link": "/stories",
+    "button_link": "/stories/explorer",
     "image_src": null,
     "image_alt": "Featured Stories Section"
   }
