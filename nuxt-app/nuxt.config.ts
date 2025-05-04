@@ -8,6 +8,10 @@ export default defineNuxtConfig({
 
   devtools: {
     enabled: true,
+
+    timeline: {
+      enabled: true,
+    },
   },
 
   // Configure Nitro to use a different directory for temporary files
