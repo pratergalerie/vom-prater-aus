@@ -61,7 +61,6 @@ export default defineEventHandler(async (event) => {
             name
           ),
           keywords:stories_keywords(
-            created_at,
             keyword_id (
               id,
               word
@@ -129,7 +128,6 @@ export default defineEventHandler(async (event) => {
             modified_at
           ),
           keywords:stories_keywords(
-            id,
             keyword_id (
               id,
               word
@@ -178,7 +176,6 @@ export default defineEventHandler(async (event) => {
             name
           ),
           keywords:stories_keywords(
-            id,
             keyword_id (
               id,
               word
