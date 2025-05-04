@@ -1,6 +1,4 @@
 <script setup lang="ts">
-  import { ref, onMounted } from 'vue'
-
   const props = defineProps<{
     speechBubblePosition?: 'bottom-left' | 'bottom-center' | 'bottom-right'
   }>()
