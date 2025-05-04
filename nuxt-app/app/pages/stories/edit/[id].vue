@@ -11,16 +11,24 @@
   const exitEditorConfirmationModalOpen = ref(false)
   const storyDetailsModalOpen = ref(false)
 
-  const { addPage, deletePage, setStory, loadStory } = useStoryStore()
+  const snackbarOpen = ref(false)
+  const snackbarMessage = ref('')
+  const saving = ref(false)
+  const { addPage, deletePage, setStory, loadStory, setCurrentPageIndex } =
+    useStoryStore()
   const { story, currentPageIndex } = storeToRefs(useStoryStore())
 
   // Ensure currentPageIndex is properly initialized
   watchEffect(() => {
     if (
       story.value?.pages &&
-      currentPageIndex.value >= story.value.pages.length
+      currentPageIndex.value >= story.value.pages.length &&
+      story.value.pages.length > 0
     ) {
-      currentPageIndex.value = Math.max(0, story.value.pages.length - 1)
+      const newIndex = Math.max(0, story.value.pages.length - 1)
+      if (newIndex !== currentPageIndex.value) {
+        setCurrentPageIndex(newIndex)
+      }
     }
   })
 
@@ -41,6 +49,9 @@
           name: storyData.value.author.name,
           email: storyData.value.author.email,
         },
+        modifiedAt: storyData.value.modified_at
+          ? new Date(storyData.value.modified_at)
+          : null,
         year: storyData.value.year,
         keywords: [],
         pages:
@@ -50,6 +61,7 @@
             text: page.text,
             image: page.image,
             createdAt: new Date(page.created_at || new Date()),
+            modifiedAt: new Date(page.modified_at || new Date()),
             pageOrder: page.page_order,
           })) || [],
         createdAt: new Date(storyData.value.created_at || new Date()),
@@ -73,28 +85,124 @@
     router.push('/stories/explorer')
   }
 
-  function handleAddPage() {
+  async function handleAddPage() {
+    if (!story.value) return
+
     const date = new Date()
-    const newPage = {
-      id: null,
-      layout: 'image-over-text' as PageLayout,
-      text: null,
-      image: null,
-      createdAt: date,
-      modifiedAt: date,
+    try {
+      // Create the page on the server first
+      const newPage = await useAPI().createPage({
+        story_id: story.value.id,
+        layout: 'image-over-text',
+        text: null,
+        image: null,
+        page_order: story.value.pages.length + 1,
+        created_at: date.toISOString(),
+        modified_at: null,
+      })
+
+      // Update local state with the server-created page
+      addPage({
+        id: newPage.id,
+        layout: newPage.layout as PageLayout,
+        text: newPage.text,
+        image: newPage.image,
+        createdAt: newPage.created_at ? new Date(newPage.created_at) : date,
+        modifiedAt: newPage.modified_at
+          ? new Date(newPage.modified_at)
+          : undefined,
+        pageOrder: newPage.page_order,
+      })
+      setCurrentPageIndex(currentPageIndex.value + 1)
+    } catch (error) {
+      console.error('Error creating new page:', error)
+      // Show error notification
+      snackbarOpen.value = true
+      snackbarMessage.value = t('pages.stories.edit.snackbar.saveError')
     }
-    addPage(newPage)
-    currentPageIndex.value++
   }
 
-  function handleDeletePage() {
-    deletePage(currentPageIndex.value)
-    currentPageIndex.value--
-    deletePageConfirmationModalOpen.value = false
+  async function handleDeletePage() {
+    if (!story.value) return
+
+    const currentPage = story.value.pages[currentPageIndex.value]
+    if (!currentPage?.id) {
+      // If the page doesn't have an ID, just delete it from local state
+      deletePage(currentPageIndex.value)
+      setCurrentPageIndex(currentPageIndex.value - 1)
+      deletePageConfirmationModalOpen.value = false
+      return
+    }
+
+    try {
+      // Delete the page from the server first
+      await useAPI().deleteStoryPage(story.value.id, currentPage.id)
+
+      // If successful, update local state
+      deletePage(currentPageIndex.value)
+      setCurrentPageIndex(currentPageIndex.value - 1)
+      deletePageConfirmationModalOpen.value = false
+    } catch (error) {
+      console.error('Error deleting page:', error)
+      // Show error notification
+      snackbarOpen.value = true
+      snackbarMessage.value = t('pages.stories.edit.snackbar.saveError')
+    }
   }
 
-  function handleSaveChanges() {
-    // TODO: implement save logic
+  const { t } = useI18n()
+
+  async function handleSaveChanges() {
+    if (!story.value) return
+
+    saving.value = true
+    try {
+      // Update story details
+      const storyData = {
+        title: story.value.title,
+        author_id: story.value.author.id || undefined,
+        year: story.value.year,
+      }
+
+      // Update story in Supabase
+      await useAPI().updateStory(story.value.id, storyData)
+
+      // Update each page
+      for (const [index, page] of story.value.pages.entries()) {
+        if (page.id) {
+          // Update existing page
+          await useAPI().updateStoryPage(story.value.id, page.id, {
+            layout: page.layout,
+            text: page.text,
+            image: page.image,
+            page_order: index + 1,
+            modified_at: new Date().toISOString(),
+          })
+        } else {
+          // Create new page
+          await useAPI().createPage({
+            story_id: story.value.id,
+            layout: page.layout,
+            text: page.text,
+            image: page.image,
+            page_order: index + 1,
+            created_at: new Date().toISOString(),
+            modified_at: new Date().toISOString(),
+          })
+        }
+      }
+
+      // Show success notification
+      snackbarOpen.value = true
+      snackbarMessage.value = t('pages.stories.edit.snackbar.saveSuccess')
+    } catch (error) {
+      console.error('Error saving story:', error)
+      // Show error notification
+      snackbarOpen.value = true
+      snackbarMessage.value = t('pages.stories.edit.snackbar.saveError')
+    } finally {
+      saving.value = false
+    }
   }
 
   function handleSubmit() {
@@ -124,7 +232,9 @@
 <template>
   <div class="page-container">
     <StoryPageEditor
-      :page-index="currentPageIndex"
+      :story="story"
+      :current-page-index="currentPageIndex"
+      :saving="saving"
       class="story-editor"
       @delete-page="deletePageConfirmationModalOpen = true"
       @delete-story="deleteStoryConfirmationModalOpen = true"
@@ -135,29 +245,27 @@
       @edit-story-details="storyDetailsModalOpen = true"
     />
     <div class="page-navigation">
-      <BaseButton
+      <button
         v-if="currentPageIndex > 0"
-        type="primary"
-        variant="icon"
-        icon="mdi:arrow-left"
         class="page-navigation-button"
-        @click="currentPageIndex--"
-      />
+        @click="setCurrentPageIndex(currentPageIndex - 1)"
+      >
+        <Icon name="mdi:arrow-left" />
+      </button>
       <span class="page-navigation-text">
         {{ `${$t('components.storyPageEditor.page')} ${currentPageIndex + 1}` }}
       </span>
-      <BaseButton
+      <button
         v-if="
           story?.pages &&
           story?.pages.length > 0 &&
           currentPageIndex < story.pages.length - 1
         "
-        type="primary"
-        variant="icon"
-        icon="mdi:arrow-right"
         class="page-navigation-button"
-        @click="currentPageIndex++"
-      />
+        @click="setCurrentPageIndex(currentPageIndex + 1)"
+      >
+        <Icon name="mdi:arrow-right" />
+      </button>
     </div>
 
     <!-- Confirmation Modals -->
@@ -303,6 +411,12 @@
         </form>
       </div>
     </BaseModal>
+
+    <BaseSnackbar
+      v-model="snackbarOpen"
+      :message="snackbarMessage"
+      :timeout="5000"
+    />
   </div>
 </template>
 
@@ -332,6 +446,13 @@
     .page-navigation-button {
       width: 30px;
       height: 30px;
+      cursor: pointer;
+      background: none;
+      border: none;
+
+      span {
+        font-size: 1.5rem;
+      }
 
       &:first-child {
         grid-column: 1;

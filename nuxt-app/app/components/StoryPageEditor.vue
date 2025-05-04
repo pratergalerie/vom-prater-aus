@@ -1,30 +1,50 @@
 <script setup lang="ts">
-  import type { PageLayout } from '~/types/frontend'
+  import type { PageLayout, Story } from '~/types/frontend'
 
   const props = defineProps<{
-    pageIndex?: number
+    story: Story | null
+    currentPageIndex: number
+    saving?: boolean
   }>()
 
-  // Component accesses store directly
-  const { story } = storeToRefs(useStoryStore())
-  const page = ref(story?.value?.pages[props.pageIndex ?? 0])
+  // Remove direct store access
   const { updatePage } = useStoryStore()
 
+  const currentPage = computed(() => {
+    if (!props.story) return null
+    return props.story.pages[props.currentPageIndex]
+  })
+
+  // Only watch for actual content changes
   watch(
-    () => props.pageIndex ?? 0,
-    (newPageIndex) => {
-      page.value = story?.value?.pages[newPageIndex]
+    () => currentPage.value?.text,
+    (newText) => {
+      if (currentPage.value && newText !== undefined) {
+        updatePage(props.currentPageIndex, { text: newText })
+      }
     }
   )
 
-  watch(page, (newPage) => {
-    if (newPage) {
-      updatePage(props.pageIndex ?? 0, newPage)
+  watch(
+    () => currentPage.value?.image,
+    (newImage) => {
+      if (currentPage.value && newImage !== undefined) {
+        updatePage(props.currentPageIndex, { image: newImage })
+      }
     }
-  })
+  )
+
+  watch(
+    () => currentPage.value?.layout,
+    (newLayout) => {
+      if (currentPage.value && newLayout !== undefined) {
+        updatePage(props.currentPageIndex, { layout: newLayout })
+      }
+    }
+  )
 
   const layout = computed(() => {
-    return page.value?.layout || 'image-over-text'
+    return currentPage.value?.layout || 'image-over-text'
   })
 
   const imageOverText = ref(false)
@@ -56,15 +76,21 @@
   )
 
   watch(imageOverText, (newValue) => {
-    if (newValue) {
-      page.value!.layout = 'image-over-text'
+    if (newValue && currentPage.value) {
+      updatePage(props.currentPageIndex, {
+        ...currentPage.value,
+        layout: 'image-over-text',
+      })
       textOverImage.value = false
     }
   })
 
   watch(textOverImage, (newValue) => {
-    if (newValue) {
-      page.value!.layout = 'text-over-image'
+    if (newValue && currentPage.value) {
+      updatePage(props.currentPageIndex, {
+        ...currentPage.value,
+        layout: 'text-over-image',
+      })
       imageOverText.value = false
     }
   })
@@ -72,9 +98,7 @@
   const placeholderImage = '/imgs/page-placeholder-image.jpg'
 
   const pageImage = computed(() => {
-    return story.value?.pages[props.pageIndex ?? 0]?.image
-      ? story.value?.pages[props.pageIndex ?? 0]?.image
-      : placeholderImage
+    return currentPage.value?.image || placeholderImage
   })
 
   const deleteActionDialogOpen = ref(false)
@@ -155,10 +179,15 @@
     input.accept = 'image/*'
     input.onchange = (event) => {
       const file = (event.target as HTMLInputElement).files?.[0]
-      if (file) {
+      if (file && currentPage.value) {
         const reader = new FileReader()
         reader.onload = (event) => {
-          page.value!.image = event.target?.result as string
+          if (currentPage.value) {
+            updatePage(props.currentPageIndex, {
+              ...currentPage.value,
+              image: event.target?.result as string,
+            })
+          }
         }
         reader.readAsDataURL(file)
       }
@@ -167,7 +196,9 @@
   }
 
   function handleChangeLayout(layout: PageLayout) {
-    page.value!.layout = layout
+    if (currentPage.value) {
+      updatePage(props.currentPageIndex, { ...currentPage.value, layout })
+    }
   }
 
   function handleAddSticker() {
@@ -175,11 +206,17 @@
   }
 
   function handleCheckboxChange(type: 'image-over-text' | 'text-over-image') {
-    if (type === 'image-over-text') {
-      page.value!.layout = 'image-over-text'
+    if (type === 'image-over-text' && currentPage.value) {
+      updatePage(props.currentPageIndex, {
+        ...currentPage.value,
+        layout: 'image-over-text',
+      })
       textOverImage.value = false
-    } else {
-      page.value!.layout = 'text-over-image'
+    } else if (currentPage.value) {
+      updatePage(props.currentPageIndex, {
+        ...currentPage.value,
+        layout: 'text-over-image',
+      })
       imageOverText.value = false
     }
   }
@@ -212,7 +249,7 @@
           />
         </div>
         <CutoutShape
-          v-if="pageIndex === 0"
+          v-if="currentPageIndex === 0"
           shape-class="shape-textbox-1"
           color="pink"
           purpose="textbox"
@@ -224,7 +261,7 @@
           }"
         >
           <div
-            v-if="pageIndex === 0"
+            v-if="currentPageIndex === 0"
             class="title-box-content"
           >
             <h1>{{ story?.title }}</h1>
@@ -247,7 +284,7 @@
       </div>
 
       <label
-        v-if="layout !== 'image' && page"
+        v-if="layout !== 'image' && currentPage"
         for="page-text-input"
         class="text-container"
         :class="{
@@ -256,7 +293,7 @@
       >
         <textarea
           id="page-text-input"
-          v-model="page.text"
+          v-model="currentPage.text"
           :placeholder="$t('components.storyPageEditor.pageTextPlaceholder')"
         />
       </label>
@@ -284,7 +321,7 @@
         >
           <div class="dialog-content">
             <button
-              :disabled="pageIndex === 0"
+              :disabled="currentPageIndex === 0"
               @click="handleDeletePage"
             >
               <Icon name="mdi:close-box-outline" />
@@ -357,14 +394,30 @@
           class="dialog save-submit"
         >
           <div class="dialog-content">
-            <button @click="handleSaveChanges">
-              <Icon name="mdi:content-save-outline" />
-              {{
-                $t(
-                  'components.storyPageEditor.dialogs.actions.saveSubmit.saveChanges'
-                )
-              }}
-            </button>
+            <div class="save-changes-loading-container">
+              <div
+                v-if="saving"
+                class="save-changes-loading"
+              >
+                <span class="spinner"></span>
+                <span>{{
+                  $t(
+                    'components.storyPageEditor.dialogs.actions.saveSubmit.saving'
+                  )
+                }}</span>
+              </div>
+              <button
+                v-else
+                @click="handleSaveChanges"
+              >
+                <Icon name="mdi:content-save-outline" />
+                {{
+                  $t(
+                    'components.storyPageEditor.dialogs.actions.saveSubmit.saveChanges'
+                  )
+                }}
+              </button>
+            </div>
             <button @click="handleSubmit">
               <Icon name="mdi:send-variant-outline" />
               {{
@@ -804,6 +857,56 @@
       height: 1px;
       padding: 0;
       margin: -1px;
+    }
+  }
+
+  .save-changes-loading-container,
+  .save-changes-loading {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-family: var(--font-link);
+
+    span {
+      font-size: 0.8rem;
+      line-height: 1rem;
+      text-align: center;
+    }
+
+    .spinner {
+      width: 10px;
+      height: 10px;
+      border: 2px solid var(--color-black);
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+
+      @media screen and (prefers-reduced-motion: reduce) {
+        width: 10px;
+        height: 10px;
+        background: var(--color-black);
+        border-radius: 50%;
+        animation: none;
+      }
+    }
+  }
+
+  .save-changes-loading {
+    opacity: 0.5;
+  }
+
+  @keyframes spin {
+    /* stylelint-disable-next-line plugins/no-unused-selectors */
+    0% {
+      transform: rotate(0deg);
+    }
+
+    /* stylelint-disable-next-line plugins/no-unused-selectors */
+    100% {
+      transform: rotate(360deg);
     }
   }
 </style>
