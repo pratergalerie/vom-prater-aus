@@ -59,6 +59,7 @@ CREATE TABLE IF NOT EXISTS story_pages (
   image TEXT,
   page_order INTEGER NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()),
+  modified_at TIMESTAMP WITH TIME ZONE,
   CONSTRAINT layout_check CHECK (layout IN ('text', 'image', 'text-over-image', 'image-over-text'))
 );
 

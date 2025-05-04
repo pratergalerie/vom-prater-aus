@@ -352,6 +352,7 @@ export type Database = {
           id: string
           image: string | null
           layout: string
+          modified_at: string | null
           page_order: number
           story_id: string
           text: string | null
@@ -361,6 +362,7 @@ export type Database = {
           id?: string
           image?: string | null
           layout: string
+          modified_at?: string | null
           page_order: number
           story_id: string
           text?: string | null
@@ -370,6 +372,7 @@ export type Database = {
           id?: string
           image?: string | null
           layout?: string
+          modified_at?: string | null
           page_order?: number
           story_id?: string
           text?: string | null
