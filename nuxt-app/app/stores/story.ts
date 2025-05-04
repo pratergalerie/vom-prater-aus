@@ -4,27 +4,30 @@ import type { Story, StoryPage } from '~/types/frontend'
 export const useStoryStore = defineStore('story', () => {
   const localforage = useNuxtApp().$localForage as LocalForage
 
-  // State
-  const story = ref<Story | null>(null)
-  const currentPageIndex = ref(0)
-  const error = ref<string | null>(null)
+  // Private state
+  const _story = ref<Story | null>(null)
+  const _currentPageIndex = ref(0)
+  const _error = ref<string | null>(null)
 
-  // Computed
-  const hasStory = computed(() => !!story.value)
-  const currentPage = computed(() => story.value?.pages[currentPageIndex.value])
-  const cachedStory = computed(() => story.value)
-  const indexedDBError = computed(() => error.value)
+  // Getters
+  const story = computed<Story | null>(() => _story.value)
+  const currentPageIndex = computed(() => _currentPageIndex.value)
+  const currentPage = computed(
+    () => _story.value?.pages[_currentPageIndex.value]
+  )
+  const hasStory = computed(() => !!_story.value)
+  const error = computed(() => _error.value)
 
   // Watch for changes and auto-save to IndexedDB
   watch(
-    story,
+    _story,
     async (newStory) => {
       if (!newStory) return
       try {
         await saveToIndexedDB(newStory)
       } catch (err) {
         console.error('Error saving to IndexedDB:', err)
-        error.value = 'Failed to save story locally'
+        _error.value = 'Failed to save story locally'
       }
     },
     { deep: true }
@@ -33,7 +36,6 @@ export const useStoryStore = defineStore('story', () => {
   // IndexedDB Operations
   async function saveToIndexedDB(story: Story) {
     try {
-      // Create a serializable copy of the story
       const serializableStory = {
         id: story.id,
         title: story.title,
@@ -50,6 +52,8 @@ export const useStoryStore = defineStore('story', () => {
           text: page.text,
           image: page.image,
           createdAt: page.createdAt?.toISOString() || null,
+          modifiedAt: page.modifiedAt?.toISOString() || null,
+          pageOrder: page.pageOrder,
         })),
         createdAt: story.createdAt.toISOString(),
         locale: story.locale,
@@ -59,7 +63,6 @@ export const useStoryStore = defineStore('story', () => {
         quote: story.quote || null,
       }
 
-      // Debug: Check if the object is serializable
       try {
         JSON.stringify(serializableStory)
       } catch (err) {
@@ -76,18 +79,20 @@ export const useStoryStore = defineStore('story', () => {
 
   async function loadFromIndexedDB(storyId: string): Promise<Story | null> {
     try {
-      // Try loading with both key formats
       const loadedStory = await localforage.getItem<Story>(storyId)
-
       if (!loadedStory) return null
 
-      // Convert ISO strings back to Date objects
       return {
         ...loadedStory,
         createdAt: new Date(loadedStory.createdAt),
         pages: loadedStory.pages.map((page) => ({
-          ...page,
+          id: page.id,
+          layout: page.layout,
+          text: page.text,
+          image: page.image,
           createdAt: page.createdAt ? new Date(page.createdAt) : undefined,
+          modifiedAt: page.modifiedAt ? new Date(page.modifiedAt) : undefined,
+          pageOrder: page.pageOrder,
         })),
       } as Story
     } catch (err) {
@@ -98,7 +103,6 @@ export const useStoryStore = defineStore('story', () => {
 
   async function deleteFromIndexedDB(storyId: string) {
     try {
-      // Try deleting with both key formats
       await localforage.removeItem(storyId)
     } catch (err) {
       console.error('Error deleting from IndexedDB:', err)
@@ -108,109 +112,95 @@ export const useStoryStore = defineStore('story', () => {
 
   // Story Operations
   function setStory(storyData: Story) {
-    story.value = storyData
-    saveToIndexedDB(story.value)
+    _story.value = storyData
+    saveToIndexedDB(_story.value)
   }
 
   function updateStory(updates: Partial<Story>) {
-    if (!story.value) {
-      error.value = 'No story selected'
+    if (!_story.value) {
+      _error.value = 'No story selected'
       return
     }
 
-    story.value = {
-      ...story.value,
+    _story.value = {
+      ..._story.value,
       ...updates,
     }
-    saveToIndexedDB(story.value)
+    saveToIndexedDB(_story.value)
   }
 
   // Page Operations
   function addPage(page: StoryPage) {
-    if (!story.value) {
-      error.value = 'No story selected'
+    if (!_story.value) {
+      _error.value = 'No story selected'
       return
     }
 
-    story.value.pages.push(page)
-    saveToIndexedDB(story.value)
+    _story.value.pages.push(page)
+    saveToIndexedDB(_story.value)
   }
 
   function updatePage(pageIndex: number, updates: Partial<StoryPage>) {
-    if (!story.value) {
-      error.value = 'No story selected'
+    if (!_story.value) {
+      _error.value = 'No story selected'
       return
     }
 
-    const page = story.value.pages[pageIndex]
+    const page = _story.value.pages[pageIndex]
     if (!page) {
-      error.value = 'Page not found'
+      _error.value = 'Page not found'
       return
     }
 
-    story.value.pages[pageIndex] = { ...page, ...updates }
-    saveToIndexedDB(story.value)
+    _story.value.pages[pageIndex] = { ...page, ...updates }
+    saveToIndexedDB(_story.value)
   }
 
   function deletePage(pageIndex: number) {
-    if (!story.value) {
-      error.value = 'No story selected'
+    if (!_story.value) {
+      _error.value = 'No story selected'
       return
     }
 
-    story.value.pages.splice(pageIndex, 1)
-    saveToIndexedDB(story.value)
+    _story.value.pages.splice(pageIndex, 1)
+    saveToIndexedDB(_story.value)
   }
 
-  /**
-   * Deletes a story from IndexedDB
-   */
   function deleteStory(storyId: string) {
     if (!storyId) {
-      error.value = 'No story id provided'
+      _error.value = 'No story id provided'
       return
     }
 
     deleteFromIndexedDB(storyId)
-    story.value = null
+    _story.value = null
   }
 
-  /**
-   * Sets the current page index
-   * @param index - The index of the page to set
-   */
-  function setCurrentPage(index: number) {
-    if (!story.value) {
-      error.value = 'No story selected'
+  function setCurrentPageIndex(index: number) {
+    if (!_story.value) {
+      _error.value = 'No story selected'
       return
     }
 
-    if (index < 0 || index >= story.value.pages.length) {
-      error.value = 'Invalid page index'
+    if (index < 0 || index >= _story.value.pages.length) {
+      _error.value = 'Invalid page index'
       return
     }
 
-    currentPageIndex.value = index
+    _currentPageIndex.value = index
   }
 
-  /**
-   * Loads a story from IndexedDB (if it exists)
-   * @param storyId - The ID of the story to load
-   */
   async function loadStory(storyId: string) {
-    story.value = await loadFromIndexedDB(storyId)
+    _story.value = await loadFromIndexedDB(storyId)
   }
 
   return {
-    // State
+    // Getters
     story,
     currentPageIndex,
-
-    // Computed
-    hasStory,
     currentPage,
-    cachedStory,
-    indexedDBError,
+    hasStory,
+    error,
 
     // Story Operations
     setStory,
@@ -222,6 +212,6 @@ export const useStoryStore = defineStore('story', () => {
     addPage,
     updatePage,
     deletePage,
-    setCurrentPage,
+    setCurrentPageIndex,
   }
 })
