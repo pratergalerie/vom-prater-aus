@@ -131,7 +131,7 @@
       );
     }
 
-    @media screen and (min-width: 1000px) {
+    @media screen and (min-width: 768px) {
       right: max(
         calc(50% - 500px + var(--padding-desktop)),
         var(--padding-desktop)
