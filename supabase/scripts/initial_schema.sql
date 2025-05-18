@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS stories (
   featured_image TEXT,
   featured BOOLEAN DEFAULT FALSE,
   quote TEXT,
+  password TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()),
   modified_at TIMESTAMP WITH TIME ZONE,
   CONSTRAINT year_check CHECK (year >= 1000 AND year <= 9999),

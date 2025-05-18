@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const bcrypt = require("bcryptjs");
 
 // Path to the initial-data directory - handle both local and container environments
 const DATA_DIR =
@@ -11,6 +12,11 @@ const OUTPUT_FILE =
   process.env.NODE_ENV === "container"
     ? "/app/scripts/initial_data.sql" // Path in container
     : path.join(__dirname, "initial_data.sql"); // Path when running locally
+
+const PASSWORD_OUTPUT_FILE =
+  process.env.NODE_ENV === "container"
+    ? "/app/scripts/initial-story-passwords.txt"
+    : path.join(__dirname, "initial-story-passwords.txt");
 
 // Function to read JSON file
 function readJsonFile(filename) {
@@ -357,8 +363,18 @@ function extractQuoteFromStory(story) {
   return text.substring(0, 100).trim() + "...";
 }
 
+function generateRandomPassword(length = 12) {
+  const chars =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+";
+  let password = "";
+  for (let i = 0; i < length; i++) {
+    password += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return password;
+}
+
 // Generate SQL for stories
-function generateStoriesSql(stories) {
+function generateStoriesSql(stories, passwordMap) {
   if (!stories || !Array.isArray(stories)) {
     console.warn("Stories data is missing or invalid");
     return "";
@@ -369,7 +385,7 @@ DO $$
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM stories LIMIT 1) THEN
     -- Insert stories
-    INSERT INTO stories (title, slug, author_id, locale_id, year, status, featured_image, featured, quote)
+    INSERT INTO stories (title, slug, author_id, locale_id, year, status, featured_image, featured, quote, password)
     SELECT 
       s.title,
       s.slug,
@@ -383,7 +399,8 @@ BEGIN
         ELSE NULL
       END,
       s.featured,
-      s.quote
+      s.quote,
+      s.password
     FROM 
       (VALUES\n`;
 
@@ -410,6 +427,12 @@ BEGIN
       // Extract a quote from the story text
       const quote = extractQuoteFromStory(story);
 
+      // Generate and hash password
+      const plainPassword = generateRandomPassword();
+      const hash = bcrypt.hashSync(plainPassword, 10);
+      story.password = hash;
+      passwordMap[story.slug] = plainPassword;
+
       return `        (${escapeSqlString(story.title)}, ${escapeSqlString(
         story.slug
       )}, ${escapeSqlString(story.author_email)}, ${escapeSqlString(
@@ -418,12 +441,12 @@ BEGIN
         story.status || "draft"
       )}, ${escapeSqlString(featuredImage)}, ${
         story.featured ? "TRUE" : "FALSE"
-      }, ${escapeSqlString(quote)})`;
+      }, ${escapeSqlString(quote)}, ${escapeSqlString(hash)})`;
     })
     .join(",\n");
 
   sql += storyValues;
-  sql += `\n      ) AS s(title, slug, author_email, locale_code, year, status, featured_image, featured, quote)
+  sql += `\n      ) AS s(title, slug, author_email, locale_code, year, status, featured_image, featured, quote, password)
     JOIN authors a ON a.email = s.author_email
     JOIN locales l ON l.code = s.locale_code;
 
@@ -539,12 +562,23 @@ function generateSqlFile() {
     sql += generateSectionContentSql(sectionContent);
     sql += generateAuthorsSql(authors);
     sql += generateKeywordsSql(keywords);
-    sql += generateStoriesSql(stories);
+    const passwordMap = {};
+    sql += generateStoriesSql(stories, passwordMap);
 
     // Write to file
     console.log(`Writing SQL to ${OUTPUT_FILE}...`);
     fs.writeFileSync(OUTPUT_FILE, sql);
     console.log(`SQL file generated successfully at ${OUTPUT_FILE}`);
+
+    // Write passwords to a file
+    console.log(`Writing passwords to ${PASSWORD_OUTPUT_FILE}...`);
+    const passwordLines = Object.entries(passwordMap)
+      .map(([slug, password]) => `${slug}: ${password}`)
+      .join("\n");
+    fs.writeFileSync(PASSWORD_OUTPUT_FILE, passwordLines);
+    console.log(
+      `Passwords file generated successfully at ${PASSWORD_OUTPUT_FILE}`
+    );
   } catch (error) {
     console.error("Error generating SQL file:", error);
     process.exit(1); // Exit with error code
