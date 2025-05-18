@@ -13,6 +13,7 @@ nginx/ssl/*
 
 # Ignore dummy data
 initial-data/*
+supabase/scripts/initial-story-passwords.txt
 
 # Supabase volumes
 /supabase/volumes/db/data/
