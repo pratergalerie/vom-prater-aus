@@ -61,5 +61,6 @@
     "package-lock.json",
     "package.json"
   ],
-  "cSpell.ignoreWords": ["Keyval", "dlblur"]
+  "cSpell.ignoreWords": ["Keyval", "dlblur"],
+  "nuxtr.monorepoMode.DirectoryName": "nuxt-app"
 }
