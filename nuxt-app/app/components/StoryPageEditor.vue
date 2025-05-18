@@ -546,6 +546,8 @@
 </template>
 
 <style scoped>
+  /* stylelint-disable plugins/no-unused-selectors */
+
   .page-editor-container {
     position: relative;
     border: 1px solid var(--color-black);
@@ -899,12 +901,10 @@
   }
 
   @keyframes spin {
-    /* stylelint-disable-next-line plugins/no-unused-selectors */
     0% {
       transform: rotate(0deg);
     }
 
-    /* stylelint-disable-next-line plugins/no-unused-selectors */
     100% {
       transform: rotate(360deg);
     }
