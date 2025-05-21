@@ -3,6 +3,7 @@
 
   definePageMeta({
     layout: 'no-footer',
+    middleware: ['story-auth'],
   })
 
   const deletePageConfirmationModalOpen = ref(false)

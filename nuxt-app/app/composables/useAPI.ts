@@ -353,6 +353,19 @@ export function useAPI() {
     )
   }
 
+  /**
+   * Verifies a story password and returns an authentication token
+   * @param {string} storyId - The ID of the story to verify
+   * @param {string} password - The password to verify
+   * @returns {Promise<{ token: string }>} A promise containing the authentication token
+   */
+  function verifyStoryPassword(storyId: string, password: string) {
+    return $fetch<{ token: string }>('/api/stories/verify-password', {
+      method: 'POST',
+      body: { storyId, password },
+    })
+  }
+
   return {
     // Stories
     getStories,
@@ -364,6 +377,7 @@ export function useAPI() {
     createStoryWithLocale,
     updateStory,
     deleteStory,
+    verifyStoryPassword,
     // Authors
     getAuthors,
     getAuthor,

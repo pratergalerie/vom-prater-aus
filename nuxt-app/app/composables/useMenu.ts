@@ -13,6 +13,7 @@ export const useMenu = () => {
     'stories-id',
     'editor-id',
     'stories-slug',
+    'stories-unlock-id',
   ]
   const order = [
     'index',

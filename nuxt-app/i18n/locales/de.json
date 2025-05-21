@@ -164,6 +164,23 @@
           "saveSuccess": "Geschichte gespeichert",
           "saveError": "Fehler beim Speichern der Geschichte"
         }
+      },
+      "unlock": {
+        "title": "Geschichte entsperren",
+        "passwordLabel": "Passwort",
+        "passwordPlaceholder": "Passwort eingeben",
+        "invalidPassword": "Ungültiges Passwort",
+        "byAuthor": "Eine Geschichte von",
+        "storyYear": "Jahr der Geschichte",
+        "back": "Zurück",
+        "submit": "Entsperren und bearbeiten",
+        "text": {
+          "p1": "Du möchtest die folgende Geschichte bearbeiten:",
+          "p2": "Diese Geschichte kann nur von ihrem Autor bearbeitet werden. Um die Bearbeitung zu entsperren, bitte das Passwort eingeben, das an die E-Mail-Adresse des Autors gesendet wurde.",
+          "p3": "Wenn du das Passwort verloren hast, bitte {contactUs}.",
+          "p4": "Um das Passwort erneut zu erhalten, musst du es über die gleiche E-Mail-Adresse anfordern, die beim Erstellen der Geschichte verwendet wurde."
+        },
+        "contactUs": "das Vom Prater Aus-Team kontaktieren"
       }
     }
   }

@@ -164,6 +164,23 @@
           "saveSuccess": "Story saved successfully",
           "saveError": "Error saving story"
         }
+      },
+      "unlock": {
+        "title": "Unlock story",
+        "passwordLabel": "Password",
+        "passwordPlaceholder": "Enter the password",
+        "invalidPassword": "Invalid password",
+        "byAuthor": "A story by",
+        "storyYear": "Story year",
+        "back": "Back",
+        "submit": "Unlock and edit",
+        "text": {
+          "p1": "You would like to edit the following story:",
+          "p2": "This story can only be edited by its author. To unlock editing, please enter the password sent to the author's email.",
+          "p3": "If you have lost access to the password, {contactUs}.",
+          "p4": "In order to obtain the password again, you have to request it via the same email address that was used to create the story."
+        },
+        "contactUs": "contact the Vom Prater Aus team"
       }
     }
   }

@@ -266,6 +266,7 @@ export type Database = {
           id: string
           locale_id: string
           modified_at: string | null
+          password: string | null
           quote: string | null
           slug: string
           status: string
@@ -280,6 +281,7 @@ export type Database = {
           id?: string
           locale_id: string
           modified_at?: string | null
+          password?: string | null
           quote?: string | null
           slug: string
           status?: string
@@ -294,6 +296,7 @@ export type Database = {
           id?: string
           locale_id?: string
           modified_at?: string | null
+          password?: string | null
           quote?: string | null
           slug?: string
           status?: string
