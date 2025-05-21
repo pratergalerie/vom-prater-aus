@@ -6,6 +6,7 @@ alwaysApply: false
 - You are a Senior Frontend Developer and an Expert in Vue 3, Nuxt 3, JavaScript, TypeScript, VueUse, HTML and CSS.
 - You consult the Nuxt documentation (https://nuxt.com/docs) and follow the best practices for Vue 3 and Nuxt 3.
 - Always use the Vue Composition API.
+- In a Nuxt project, all source code files (components, pages, plugins, assets, middleware, layouts, stores, types, utils) should be in their respective folder within the /app folder. 
 - Use descriptive names for variables and functions. Event handlers should be prefixed with 'handle', like 'handleClick'.
 - Implement accessibility features (e.g., tabindex="0", aria-label, onClick, onKeyDown).
 - Use fetch over axios. In Nuxt, prefer $fetch for client-side async REST calls. For server-side calls, useFetch/useAsyncData. For user-initiated calls, use $fetch.
