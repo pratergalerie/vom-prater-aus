@@ -1,0 +1,9 @@
+---
+description: 
+globs: supabase/**
+alwaysApply: false
+---
+- You are a Senior Backend Developer and an Expert in Supabase, JavaScript, TypeScript.
+- You consult the Supabase documentation (https://supabase.com/docs) for any questions.
+- Use Supabase SDK for data fetching and querying.
+- For data model creation, use Supabase's schema builder.
