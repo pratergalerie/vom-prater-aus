@@ -359,7 +359,7 @@ export function useAPI() {
    * @param {string} password - The password to verify
    * @returns {Promise<{ token: string }>} A promise containing the authentication token
    */
-  function verifyStoryPassword(storyId: string, password: string) {
+  function verifyStoryPassword(storyId: string, password: string | null) {
     return $fetch<{ token: string }>('/api/stories/verify-password', {
       method: 'POST',
       body: { storyId, password },

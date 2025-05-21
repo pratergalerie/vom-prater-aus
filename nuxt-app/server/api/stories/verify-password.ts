@@ -9,10 +9,10 @@ export default defineEventHandler(async (event) => {
     const body = await readBody(event)
     const { storyId, password } = body
 
-    if (!storyId || !password) {
+    if (!storyId) {
       throw createError({
         statusCode: 400,
-        statusMessage: 'Story ID and password are required',
+        statusMessage: 'Story ID is required',
       })
     }
 
@@ -32,10 +32,21 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    if (!story.password) {
+    // If the story has no password set or if this is a new story being created
+    if (!story.password || password === null) {
+      const token = jwt.sign(
+        { storyId: story.id },
+        process.env.NUXT_STORY_JWT_SECRET || 'default-secret',
+        { expiresIn: '24h' }
+      )
+      return { token }
+    }
+
+    // For existing password-protected stories, password is required
+    if (!password) {
       throw createError({
         statusCode: 400,
-        statusMessage: 'Story is not password protected',
+        statusMessage: 'Password is required',
       })
     }
 

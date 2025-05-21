@@ -267,6 +267,12 @@
         throw new Error('Failed to create story page: No ID returned')
       }
 
+      // Generate and store token for immediate access
+      const { token } = await useAPI().verifyStoryPassword(storyData.id, null)
+      if (import.meta.client) {
+        sessionStorage.setItem(`story_token_${storyData.id}`, token)
+      }
+
       const router = useRouter()
       await router.push(`/stories/edit/${storyData.id}`)
     } catch (err) {
