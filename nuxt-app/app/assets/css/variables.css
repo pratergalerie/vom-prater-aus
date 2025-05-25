@@ -15,8 +15,30 @@
 
   /* --- Typography colors --- */
   --color-text: var(--color-black);
+  --color-text-light: var(--color-grey);
   --color-text-highlight: var(--color-mustard);
   --color-heading: var(--color-black);
+
+  /* --- Status colors --- */
+  --color-success: var(--color-mint);
+  --color-success-light: rgb(90 171 130 / 10%);
+  --color-success-dark: rgb(60 141 100);
+
+  --color-error: var(--color-red);
+  --color-error-light: rgb(255 0 0 / 10%);
+  --color-error-dark: rgb(150 0 0);
+
+  --color-warning: var(--color-mustard);
+  --color-warning-light: rgb(249 184 93 / 10%);
+  --color-warning-dark: rgb(219 154 63);
+
+  --color-primary: var(--color-cerulean);
+  --color-primary-light: rgb(46 124 246 / 10%);
+  --color-primary-dark: rgb(16 94 216);
+
+  /* --- Background colors --- */
+  --color-background: var(--color-beige);
+  --color-background-light: var(--color-white);
 
   /* *------------------------------ Fonts --------------------------------* */
 
