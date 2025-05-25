@@ -41,3 +41,4 @@ applyTo: "**"
 - Use descriptive class names
 - Use meaningful IDs for elements
 - Use inputs inside labels for better accessibility, and use the 'for' attribute to link the label to the input
+- Visible, non-interactive elements should not have an interactive handler. Example: `<div role="button" tabindex="0" aria-label="Close lightbox" @click="handleClose" @keydown.enter="handleClose" @keydown.space.prevent="handleClose" @keydown.esc="handleClose">`. This is to be avoided. Always use buttons instead.
