@@ -21,7 +21,7 @@ alwaysApply: false
 - Use the <template> tag for templates.
 - Use the <style scoped> tag for styles.
 - Use Pinia for state management.
-- Use CSS for styling.
+- Use CSS for styling, never use Tailwind or any other CSS framework.
 - While writing CSS, use nesting and the & nesting selector whenever it makes sense.
 - Use kebab-case for class names (e.g., .header-container).
 - Implement responsive design; use a mobile-first approach.
