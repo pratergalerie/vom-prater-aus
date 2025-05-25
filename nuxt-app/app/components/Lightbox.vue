@@ -8,7 +8,7 @@
   const emit = defineEmits(['close'])
 
   const imageRef = ref<HTMLImageElement | null>(null)
-  const containerRef = ref<HTMLDivElement | null>(null)
+  const containerRef = ref<HTMLButtonElement | null>(null)
   const scale = ref(1)
   const position = ref({ x: 0, y: 0 })
   const isDragging = ref(false)
@@ -24,6 +24,11 @@
     const delta = event.deltaY
     const zoomFactor = delta > 0 ? 0.9 : 1.1
     const newScale = scale.value * zoomFactor
+    scale.value = Math.min(Math.max(newScale, 1), 4)
+  }
+
+  function handleZoomClick() {
+    const newScale = scale.value * 1.1
     scale.value = Math.min(Math.max(newScale, 1), 4)
   }
 
@@ -98,6 +103,35 @@
     position.value = { x: 0, y: 0 }
   }
 
+  function handleKeyDown(event: KeyboardEvent) {
+    switch (event.key) {
+      case 'ArrowLeft':
+        position.value.x -= 10
+        break
+      case 'ArrowRight':
+        position.value.x += 10
+        break
+      case 'ArrowUp':
+        position.value.y -= 10
+        break
+      case 'ArrowDown':
+        position.value.y += 10
+        break
+      case '=':
+      case '+':
+        handleZoomClick()
+        break
+      case '-':
+        if (scale.value > 1) {
+          scale.value = Math.max(scale.value * 0.9, 1)
+        }
+        break
+      case 'Escape':
+        handleClose()
+        break
+    }
+  }
+
   watch(
     () => props.isOpen,
     (newValue) => {
@@ -122,18 +156,22 @@
     class="lightbox"
     aria-modal="true"
   >
-    <button
+    <div
       class="lightbox-backdrop"
+      role="button"
+      tabindex="0"
+      aria-label="Close lightbox"
       @click="handleClose"
+      @keydown.enter="handleClose"
+      @keydown.space.prevent="handleClose"
       @keydown.esc="handleClose"
     >
       <button
         ref="containerRef"
+        type="button"
         class="lightbox-container"
-        role="dialog"
         aria-modal="true"
-        aria-label="Image viewer"
-        tabindex="0"
+        aria-label="Image viewer. Use arrow keys to pan, + and - to zoom"
         @click.stop
         @wheel.prevent="handleWheel"
         @mousedown="handleMouseDown"
@@ -144,12 +182,17 @@
         @touchstart="handleTouchStart"
         @touchmove="handleTouchMove"
         @touchend="handleTouchEnd"
+        @keydown="handleKeyDown"
       >
-        <button
+        <div
           v-if="scale <= 1"
           class="image-button"
+          role="button"
+          tabindex="0"
           aria-label="Zoom image"
-          @click.stop
+          @click.stop="handleZoomClick"
+          @keydown.enter="handleZoomClick"
+          @keydown.space.prevent="handleZoomClick"
         >
           <NuxtImg
             ref="imageRef"
@@ -161,7 +204,7 @@
               cursor: scale > 1 ? 'grab' : 'zoom-in',
             }"
           />
-        </button>
+        </div>
         <div
           v-else
           class="image-container"
@@ -177,23 +220,23 @@
             }"
           />
         </div>
-        <BaseButton
-          type="secondary"
-          variant="icon"
-          icon="mdi:close"
-          class="close-button"
-          @click="handleClose"
-        />
-        <BaseButton
-          v-if="scale > 1"
-          type="secondary"
-          variant="icon"
-          icon="mdi:image-filter-center-focus"
-          class="reset-button"
-          @click="resetZoom"
-        />
       </button>
-    </button>
+      <BaseButton
+        type="secondary"
+        variant="icon"
+        icon="mdi:close"
+        class="close-button"
+        @click.stop="handleClose"
+      />
+      <BaseButton
+        v-if="scale > 1"
+        type="secondary"
+        variant="icon"
+        icon="mdi:image-filter-center-focus"
+        class="reset-button"
+        @click.stop="resetZoom"
+      />
+    </div>
   </dialog>
 </template>
 
@@ -247,7 +290,8 @@
 
   .close-button,
   .reset-button {
-    position: absolute;
+    position: fixed;
+    z-index: 1001;
     width: 40px;
     height: 40px;
   }
