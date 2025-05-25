@@ -8,14 +8,17 @@ export const useMenu = () => {
   const { t } = useI18n({ useScope: 'global' })
 
   const router = useRouter()
-  const excludedRoutes = [
+
+  const menuExcludedRoutes = [
     'stories-edit-id',
     'stories-id',
     'editor-id',
     'stories-slug',
     'stories-unlock-id',
+    'admin-login',
+    'admin-dashboard',
   ]
-  const order = [
+  const menuOrder = [
     'index',
     'prater',
     'stories-explorer',
@@ -25,19 +28,57 @@ export const useMenu = () => {
     'terms',
   ]
 
+  const footerExcludedRoutes = [
+    'index',
+    'stories-edit-id',
+    'stories-id',
+    'editor-id',
+    'stories-slug',
+    'stories-unlock-id',
+    'admin-login',
+  ]
+
+  const footerOrder = [
+    'prater',
+    'stories-explorer',
+    'stories-create',
+    'about',
+    'privacy',
+    'terms',
+    'admin-dashboard',
+  ]
+
   const menuRoutes = computed(() =>
     router
       .getRoutes()
       .filter(
         (route) =>
           route.name !== undefined &&
-          !excludedRoutes.includes(route.name as string)
+          !menuExcludedRoutes.includes(route.name as string)
       )
       .map((route) => {
         return {
           title: t(`components.menu.nav.${route.name as string}`),
           path: route.path,
-          order: order.indexOf(route.name as string),
+          order: menuOrder.indexOf(route.name as string),
+        }
+      })
+      .sort((a, b) => a.order - b.order)
+  )
+
+  const footerRoutes = computed(() =>
+    router
+      .getRoutes()
+      .filter(
+        (route) =>
+          route.name !== undefined &&
+          !footerExcludedRoutes.includes(route.name as string)
+      )
+      .map((route) => {
+        return {
+          title: t(`components.menu.nav.${route.name as string}`),
+          path: route.path,
+          order: footerOrder.indexOf(route.name as string),
         }
       })
       .sort((a, b) => a.order - b.order)
@@ -47,5 +88,6 @@ export const useMenu = () => {
     isOpen,
     toggleMenu,
     menuRoutes,
+    footerRoutes,
   }
 }

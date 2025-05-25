@@ -25,29 +25,46 @@ export default defineEventHandler(async (event) => {
       const limit = query.limit ? parseInt(query.limit as string) : undefined
 
       // Start building the query
-      let supabaseQuery = client.from('stories').select(
-        `
+      let supabaseQuery = client.from('stories').select(`
+        id,
+        title,
+        slug,
+        year,
+        status,
+        featured_image,
+        quote,
+        featured,
+        created_at,
+        modified_at,
+        author:author_id (
           id,
-          title,
-          slug,
-          year,
-          status,
-          featured_image,
-          quote,
-          featured,
-          created_at,
-          modified_at,
-          author:author_id (
-            id,
-            name,
-            email
-          )
-        `
-      )
+          name,
+          email
+        ),
+        locale:locale_id (
+          id,
+          code,
+          name
+        )
+      `)
 
       // Apply featured filter if specified
       if (featured) {
         supabaseQuery = supabaseQuery.eq('featured', true)
+      }
+
+      // Filter by status based on admin parameter
+      const isAdmin = query.admin === 'true'
+      if (isAdmin) {
+        // For admin dashboard, show submitted, approved, and rejected stories
+        supabaseQuery = supabaseQuery.in('status', [
+          'submitted',
+          'approved',
+          'rejected',
+        ])
+      } else {
+        // For public views, only show approved stories
+        supabaseQuery = supabaseQuery.eq('status', 'approved')
       }
 
       // Apply limit if specified
@@ -81,7 +98,7 @@ export default defineEventHandler(async (event) => {
       const hash = bcrypt.hashSync(plainPassword, 10)
       body.password = hash
 
-      const { data, error } = await client
+      const { data: storyData, error } = await client
         .from('stories')
         .insert(body)
         .select(
@@ -100,6 +117,11 @@ export default defineEventHandler(async (event) => {
             id,
             name,
             email
+          ),
+          locale:locale_id (
+            id,
+            code,
+            name
           )
         `
         )
@@ -113,35 +135,41 @@ export default defineEventHandler(async (event) => {
         })
       }
 
-      const anonKey = process.env.SUPABASE_ANON_KEY
+      const anonKey = process.env.SUPABASE_KEY
 
       if (!anonKey) {
         throw createError({
           statusCode: 500,
-          statusMessage: 'SUPABASE_ANON_KEY is not set',
+          statusMessage: 'SUPABASE_KEY is not set',
         })
       }
 
       // 2. Call the Edge Function to send the email
       try {
-        await $fetch('http://kong:8000/functions/v1/send-story-password', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${anonKey}`,
-          },
-          body: {
-            email: data.author.email,
-            storyId: data.id,
-            password: plainPassword,
-          },
-        })
+        const client = await serverSupabaseClient<Database>(event)
+        const { error: functionError } = await client.functions.invoke(
+          'send-story-password',
+          {
+            body: {
+              email: storyData.author.email,
+              storyId: storyData.id,
+              password: plainPassword,
+            },
+          }
+        )
+
+        if (functionError) {
+          throw createError({
+            statusCode: 500,
+            statusMessage: 'Failed to send email',
+          })
+        }
       } catch (error) {
         console.error('Edge Function error:', error)
         // Still return the data even if email fails
       }
 
-      return data
+      return storyData
     }
   } catch (error) {
     console.error('Server error:', error)

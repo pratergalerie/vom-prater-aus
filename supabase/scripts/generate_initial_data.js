@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const bcrypt = require("bcryptjs");
+const { createClient } = require("@supabase/supabase-js");
 
 // Path to the initial-data directory - handle both local and container environments
 const DATA_DIR =
@@ -17,6 +18,12 @@ const PASSWORD_OUTPUT_FILE =
   process.env.NODE_ENV === "container"
     ? "/app/scripts/initial-story-passwords.txt"
     : path.join(__dirname, "initial-story-passwords.txt");
+
+// Initialize Supabase client
+const supabase = createClient(
+  process.env.SUPABASE_URL || "http://kong:8000",
+  process.env.SUPABASE_SERVICE_ROLE_KEY
+);
 
 // Function to read JSON file
 function readJsonFile(filename) {
@@ -526,6 +533,61 @@ END $$;\n\n`;
   return sql;
 }
 
+// Function to create admin user using Supabase Auth
+async function createAdminUser() {
+  if (!process.env.ADMIN_EMAIL || !process.env.ADMIN_PASSWORD) {
+    console.error(
+      "Error: ADMIN_EMAIL and ADMIN_PASSWORD environment variables must be set"
+    );
+    process.exit(1);
+  }
+
+  const maxRetries = 10;
+  const retryDelay = 3000; // 3 seconds
+
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      console.log(`Attempt ${attempt} to create admin user...`);
+      const { data, error } = await supabase.auth.signUp({
+        email: process.env.ADMIN_EMAIL,
+        password: process.env.ADMIN_PASSWORD,
+        options: {
+          data: {
+            role: "admin",
+          },
+        },
+      });
+
+      if (error) throw error;
+
+      if (data.user) {
+        console.log("User created successfully:", data.user.email);
+
+        // Confirm the email since we're in a trusted environment
+        const { error: confirmError } =
+          await supabase.auth.admin.updateUserById(data.user.id, {
+            email_confirm: true,
+          });
+
+        if (confirmError) throw confirmError;
+
+        return;
+      }
+      return;
+    } catch (error) {
+      console.error(`Attempt ${attempt} failed:`, error.message);
+      if (attempt === maxRetries) {
+        console.error("Max retries reached. Exiting...");
+        process.exit(1);
+      }
+      console.log(
+        `Waiting ${retryDelay / 1000} seconds before next attempt...`
+      );
+      await new Promise((resolve) => setTimeout(resolve, retryDelay));
+    }
+  }
+}
+
 // Main function to generate the SQL file
 function generateSqlFile() {
   try {
@@ -585,5 +647,19 @@ function generateSqlFile() {
   }
 }
 
+// Main execution
+async function main() {
+  try {
+    // Create admin user first
+    await createAdminUser();
+
+    // Then generate SQL file
+    await generateSqlFile();
+  } catch (error) {
+    console.error("Error in main execution:", error);
+    process.exit(1);
+  }
+}
+
 // Run the script
-generateSqlFile();
+main().catch(console.error);

@@ -15,7 +15,8 @@
         "privacy": "Privacy policy",
         "terms": "Terms of use",
         "stories-create": "Create a story",
-        "stories-explorer": "Discover stories"
+        "stories-explorer": "Discover stories",
+        "admin-dashboard": "Admin Dashboard"
       }
     },
     "storyPageEditor": {

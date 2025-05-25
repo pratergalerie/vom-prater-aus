@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  const { menuRoutes } = useMenu()
+  const { footerRoutes } = useMenu()
 </script>
 
 <template>
@@ -22,7 +22,7 @@
         <nav>
           <ul>
             <li
-              v-for="(route, index) in menuRoutes"
+              v-for="(route, index) in footerRoutes"
               :key="index"
             >
               <NuxtLink :to="route.path">{{ route.title }}</NuxtLink>

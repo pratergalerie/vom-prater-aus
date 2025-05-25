@@ -14,8 +14,7 @@ services:
       - 24678:24678 # HMR
     environment:
       - SUPABASE_URL=${SUPABASE_URL}
-      - SUPABASE_KEY=${SUPABASE_KEY}
-      - SUPABASE_ANON_KEY=${ANON_KEY}
+      - SUPABASE_KEY=${ANON_KEY}
       - STYLELINT_CSS_VARIABLES_PATH=/app/app/assets/css/variables.css
     networks:
       - frontend-network
@@ -40,8 +39,7 @@ services:
       - 3000:3000
     environment:
       - SUPABASE_URL=${SUPABASE_URL}
-      - SUPABASE_KEY=${SUPABASE_KEY}
-      - SUPABASE_ANON_KEY=${ANON_KEY}
+      - SUPABASE_KEY=${ANON_KEY}
     networks:
       - frontend-network
     depends_on:
@@ -81,8 +79,7 @@ services:
       DEFAULT_PROJECT_NAME: ${STUDIO_DEFAULT_PROJECT}
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}
 
-      SUPABASE_URL: http://kong:8000
-      SUPABASE_PUBLIC_URL: ${SUPABASE_PUBLIC_URL}
+      SUPABASE_URL: ${SUPABASE_URL}
       SUPABASE_ANON_KEY: ${ANON_KEY}
       SUPABASE_SERVICE_KEY: ${SERVICE_ROLE_KEY}
       AUTH_JWT_SECRET: ${JWT_SECRET}
@@ -413,7 +410,7 @@ services:
         condition: service_healthy
     environment:
       JWT_SECRET: ${JWT_SECRET}
-      SUPABASE_URL: http://kong:8000
+      SUPABASE_URL: ${SUPABASE_URL}
       SUPABASE_ANON_KEY: ${ANON_KEY}
       SUPABASE_SERVICE_ROLE_KEY: ${SERVICE_ROLE_KEY}
       SUPABASE_DB_URL: postgresql://postgres:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
@@ -477,7 +474,24 @@ services:
     working_dir: /app
     environment:
       - NODE_ENV=container
+      - ADMIN_EMAIL=${ADMIN_EMAIL}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_SERVICE_ROLE_KEY=${SERVICE_ROLE_KEY}
     command: sh -c "cd scripts && npm install && node generate_initial_data.js"
+    networks:
+      - supabase-network
+    depends_on:
+      auth:
+        condition: service_healthy
+      kong:
+        condition: service_started
+      db:
+        condition: service_healthy
+    profiles:
+      - dev
+      - prod
+
   storage-initial-images-upload:
     image: node:18-alpine
     container_name: supabase-storage-initial-images-upload
@@ -554,9 +568,7 @@ services:
       ]
     networks:
       - supabase-network
-    depends_on:
-      db-initial-data-generation:
-        condition: service_completed_successfully
+
   supavisor:
     container_name: supabase-pooler
     image: supabase/supavisor:1.1.56
