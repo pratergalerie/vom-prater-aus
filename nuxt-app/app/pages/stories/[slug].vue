@@ -2,7 +2,10 @@
   import type { Database } from '~/types/supabase'
 
   type StoryPage = Database['public']['Tables']['story_pages']['Row']
-  type Story = Database['public']['Tables']['stories']['Row'] & {
+  type Story = Omit<
+    Database['public']['Tables']['stories']['Row'],
+    'author_id' | 'locale_id'
+  > & {
     author: Database['public']['Tables']['authors']['Row']
   }
 
@@ -36,7 +39,7 @@
     story.value = storyData.value
 
     // Fetch story pages
-    const { data: pagesData } = await api.getStoryPages(story.value.id)
+    const { data: pagesData } = await api.getStoryPagesServer(story.value.id)
     if (pagesData.value) {
       storyPages.value = pagesData.value.sort(
         (a, b) => a.page_order - b.page_order
