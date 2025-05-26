@@ -101,10 +101,36 @@
     return currentPage.value?.image || placeholderImage
   })
 
-  const deleteActionDialogOpen = ref(false)
-  const addActionDialogOpen = ref(false)
-  const saveSubmitActionDialogOpen = ref(false)
-  const pageLayoutActionDialogOpen = ref(false)
+  const showDeleteDialog = ref(false)
+  const showAddDialog = ref(false)
+  const showSaveSubmitDialog = ref(false)
+  const showSettingsDialog = ref(false)
+
+  function toggleDialog(
+    dialogToToggle: 'delete' | 'add' | 'save-submit' | 'settings'
+  ) {
+    // Close all dialogs first
+    showDeleteDialog.value = false
+    showAddDialog.value = false
+    showSaveSubmitDialog.value = false
+    showSettingsDialog.value = false
+
+    // Then open the requested dialog if it wasn't already open
+    switch (dialogToToggle) {
+      case 'delete':
+        showDeleteDialog.value = true
+        break
+      case 'add':
+        showAddDialog.value = true
+        break
+      case 'save-submit':
+        showSaveSubmitDialog.value = true
+        break
+      case 'settings':
+        showSettingsDialog.value = true
+        break
+    }
+  }
 
   const editorMenu = [
     {
@@ -115,30 +141,22 @@
     {
       id: 'delete',
       icon: 'mdi:delete',
-      action: () => {
-        deleteActionDialogOpen.value = true
-      },
+      action: () => toggleDialog('delete'),
     },
     {
       id: 'add',
       icon: 'mdi:add',
-      action: () => {
-        addActionDialogOpen.value = true
-      },
+      action: () => toggleDialog('add'),
     },
     {
       id: 'save-submit',
       icon: 'custom:save-submit',
-      action: () => {
-        saveSubmitActionDialogOpen.value = true
-      },
+      action: () => toggleDialog('save-submit'),
     },
     {
       id: 'settings',
       icon: 'mdi:settings',
-      action: () => {
-        pageLayoutActionDialogOpen.value = true
-      },
+      action: () => toggleDialog('settings'),
     },
   ]
 
@@ -201,9 +219,9 @@
     }
   }
 
-  function handleAddSticker() {
-    // TODO: implement sticker logic
-  }
+  // function handleAddSticker() {
+  //   // TODO: implement sticker logic
+  // }
 
   function handleCheckboxChange(type: 'image-over-text' | 'text-over-image') {
     if (type === 'image-over-text' && currentPage.value) {
@@ -312,12 +330,17 @@
         :key="index"
         class="action-wrapper"
       >
+        <!-- --------------------- Delete Page Modal ----------------------- -->
         <BaseDialog
           v-if="action.id === 'delete'"
-          v-model="deleteActionDialogOpen"
+          v-model:is-open="showDeleteDialog"
           :modal="false"
+          width="200px"
+          top="50%"
+          left="50%"
+          transform="translate(-50%, -80%)"
           speech-bubble-position="bottom-center"
-          class="dialog delete"
+          class="dialog"
         >
           <div class="dialog-content">
             <button
@@ -342,12 +365,17 @@
           </div>
         </BaseDialog>
 
+        <!-- ----------------------- Add Page Modal ------------------------ -->
         <BaseDialog
           v-if="action.id === 'add'"
-          v-model="addActionDialogOpen"
+          v-model:is-open="showAddDialog"
           :modal="false"
+          width="200px"
+          top="50%"
+          left="50%"
+          transform="translate(-50%, -80%)"
           speech-bubble-position="bottom-center"
-          class="dialog add"
+          class="dialog"
         >
           <div class="dialog-content">
             <button @click="handleAddImage">
@@ -377,21 +405,28 @@
               <Icon name="mdi:note-plus-outline" />
               {{ $t('components.storyPageEditor.dialogs.actions.add.addPage') }}
             </button>
-            <button @click="handleAddSticker">
+            <!-- Commented out for now, maybe will be added later -->
+            <!-- <button @click="handleAddSticker">
               <Icon name="mdi:shape-polygon-plus" />
               {{
                 $t('components.storyPageEditor.dialogs.actions.add.addSticker')
               }}
-            </button>
+            </button> -->
           </div>
         </BaseDialog>
 
+        <!-- ---------------------- Save/Submit Modal ---------------------- -->
+
         <BaseDialog
           v-if="action.id === 'save-submit'"
-          v-model="saveSubmitActionDialogOpen"
+          v-model:is-open="showSaveSubmitDialog"
           :modal="false"
+          width="250px"
+          top="50%"
+          left="50%"
+          transform="translate(-50%, -80%)"
           speech-bubble-position="bottom-center"
-          class="dialog save-submit"
+          class="dialog"
         >
           <div class="dialog-content">
             <div class="save-changes-loading-container">
@@ -429,21 +464,23 @@
           </div>
         </BaseDialog>
 
+        <!-- ---------------------- Settings Modal ------------------------ -->
+
         <BaseDialog
           v-if="action.id === 'settings'"
-          v-model="pageLayoutActionDialogOpen"
+          v-model:is-open="showSettingsDialog"
           :modal="false"
+          :title="
+            $t('components.storyPageEditor.dialogs.actions.pageLayout.title')
+          "
+          width="330px"
+          top="50%"
+          left="50%"
+          transform="translate(-92%, -68%)"
           speech-bubble-position="bottom-right"
           class="dialog settings"
         >
           <div class="dialog-content">
-            <h2>
-              {{
-                $t(
-                  'components.storyPageEditor.dialogs.actions.pageLayout.title'
-                )
-              }}
-            </h2>
             <p>
               {{
                 $t(
@@ -764,64 +801,19 @@
       }
     }
 
-    h2,
     p {
       font-size: 0.8rem;
     }
   }
 
   .dialog {
-    position: absolute;
-    bottom: 50px;
-    left: 50%;
-    height: 100px;
-    transform: translateX(-50%);
-
-    &.delete {
-      width: 25vw;
-      min-width: 250px;
-    }
-
-    &.add {
-      width: 40vw;
-      min-width: 360px;
-      max-width: 400px;
-      height: 110px;
-
-      @media screen and (max-width: 360px) {
-        width: 25vw;
-        min-width: 250px;
-        height: 200px;
-
-        .dialog-content {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 0.5rem;
-
-          button:nth-child(3) {
-            display: flex;
-            grid-column: 1 / 3;
-            align-items: center;
-            justify-content: center;
-            justify-self: center;
-            width: 50%;
-          }
-        }
-      }
-    }
-
-    &.save-submit {
-      width: 25vw;
-      min-width: 250px;
-    }
-
     &.settings {
-      left: 50%;
-      width: 50vw;
-      min-width: 300px;
-      max-width: 400px;
-      height: 280px;
-      transform: translateX(-95%);
+      &:deep(h2) {
+        width: 100%;
+        font-size: 1rem;
+        text-align: center;
+        transform: translateX(10px);
+      }
 
       .dialog-content {
         flex-direction: column;
@@ -832,6 +824,7 @@
       .settings-container {
         display: grid;
         grid-template-columns: 1.5fr 2fr;
+        gap: 0.5rem 1rem;
         width: 100%;
 
         button {
