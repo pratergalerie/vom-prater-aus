@@ -7,10 +7,10 @@
   })
 
   const deletePageConfirmationModalOpen = ref(false)
-  const deleteStoryConfirmationModalOpen = ref(false)
-  const submitConfirmationModalOpen = ref(false)
+  const showDeleteModal = ref(false)
+  const showSubmitModal = ref(false)
   const exitEditorConfirmationModalOpen = ref(false)
-  const storyDetailsModalOpen = ref(false)
+  const showDetailsModal = ref(false)
 
   const snackbarOpen = ref(false)
   const snackbarMessage = ref('')
@@ -39,7 +39,7 @@
 
   if (!story.value) {
     // If story doesn't exist, fetch from backend
-    const { data: storyData } = await useAPI().getStoryById(storyId)
+    const { data: storyData } = await useAPI().getStoryByIdServer(storyId)
     if (storyData.value) {
       // Convert storyData to Story format
       const convertedStory: Story = {
@@ -220,12 +220,12 @@
   }
 
   function handleSaveStoryDetails() {
-    storyDetailsModalOpen.value = false
+    showDetailsModal.value = false
     // TODO: Implement save new story details
   }
 
   function handleCancelEditStoryDetails() {
-    storyDetailsModalOpen.value = false
+    showDetailsModal.value = false
     // TODO: Implement cancel edit story details
   }
 </script>
@@ -238,12 +238,12 @@
       :saving="saving"
       class="story-editor"
       @delete-page="deletePageConfirmationModalOpen = true"
-      @delete-story="deleteStoryConfirmationModalOpen = true"
+      @delete-story="showDeleteModal = true"
       @add-page="handleAddPage"
       @save-changes="handleSaveChanges"
-      @submit="submitConfirmationModalOpen = true"
+      @submit="showSubmitModal = true"
       @exit-editor="exitEditorConfirmationModalOpen = true"
-      @edit-story-details="storyDetailsModalOpen = true"
+      @edit-story-details="showDetailsModal = true"
     />
     <div class="page-navigation">
       <button
@@ -269,13 +269,18 @@
       </button>
     </div>
 
-    <!-- Confirmation Modals -->
+    <!-- ------------------------------------------------------------------- -->
+    <!-- --------------------------- Modals -------------------------------- -->
+    <!-- ------------------------------------------------------------------- -->
 
-    <BaseModal v-model="exitEditorConfirmationModalOpen">
+    <!-- --------------- Exit Editor Confirmation Modal -------------------- -->
+    <BaseDialog
+      v-model:is-open="exitEditorConfirmationModalOpen"
+      modal
+      :width="320"
+      :title="$t('pages.stories.edit.modals.exitEditor.title')"
+    >
       <div class="modal-content exit">
-        <h2>
-          {{ $t('pages.stories.edit.modals.exitEditor.title') }}
-        </h2>
         <p>
           {{ $t('pages.stories.edit.modals.exitEditor.description') }}
         </p>
@@ -291,13 +296,16 @@
           </button>
         </div>
       </div>
-    </BaseModal>
+    </BaseDialog>
 
-    <BaseModal v-model="deletePageConfirmationModalOpen">
+    <!-- --------------- Delete Page Confirmation Modal -------------------- -->
+    <BaseDialog
+      v-model:is-open="deletePageConfirmationModalOpen"
+      modal
+      width="300"
+      :title="$t('pages.stories.edit.modals.deletePage.title')"
+    >
       <div class="modal-content delete">
-        <h2>
-          {{ $t('pages.stories.edit.modals.deletePage.title') }}
-        </h2>
         <p>
           {{ $t('pages.stories.edit.modals.deletePage.description') }}
         </p>
@@ -312,18 +320,21 @@
           </button>
         </div>
       </div>
-    </BaseModal>
+    </BaseDialog>
 
-    <BaseModal v-model="deleteStoryConfirmationModalOpen">
+    <!-- -------------- Delete Story Confirmation Modal -------------------- -->
+    <BaseDialog
+      v-model:is-open="showDeleteModal"
+      modal
+      width="300px"
+      :title="$t('pages.stories.edit.modals.deleteStory.title')"
+    >
       <div class="modal-content delete">
-        <h2>
-          {{ $t('pages.stories.edit.modals.deleteStory.title') }}
-        </h2>
         <p>
           {{ $t('pages.stories.edit.modals.deleteStory.description') }}
         </p>
         <div class="modal-actions">
-          <button @click="deleteStoryConfirmationModalOpen = false">
+          <button @click="showDeleteModal = false">
             <Icon name="mdi:close" />
             {{ $t('pages.stories.edit.modals.deletePage.cancel') }}
           </button>
@@ -333,18 +344,21 @@
           </button>
         </div>
       </div>
-    </BaseModal>
+    </BaseDialog>
 
-    <BaseModal v-model="submitConfirmationModalOpen">
+    <!-- ---------------- Submit Story Confirmation Modal ------------------ -->
+    <BaseDialog
+      v-model:is-open="showSubmitModal"
+      modal
+      width="350px"
+      :title="$t('pages.stories.edit.modals.submitStory.title')"
+    >
       <div class="modal-content submit">
-        <h2>
-          {{ $t('pages.stories.edit.modals.submitStory.title') }}
-        </h2>
         <p>
           {{ $t('pages.stories.edit.modals.submitStory.description') }}
         </p>
         <div class="modal-actions">
-          <button @click="submitConfirmationModalOpen = false">
+          <button @click="showSubmitModal = false">
             <Icon name="mdi:close" />
             {{ $t('pages.stories.edit.modals.submitStory.cancel') }}
           </button>
@@ -354,13 +368,16 @@
           </button>
         </div>
       </div>
-    </BaseModal>
+    </BaseDialog>
 
-    <BaseModal v-model="storyDetailsModalOpen">
+    <!-- --------------------- Story Details Modal ------------------------- -->
+    <BaseDialog
+      v-model:is-open="showDetailsModal"
+      modal
+      width="350px"
+      :title="$t('pages.stories.edit.modals.details.title')"
+    >
       <div class="modal-content story-properties">
-        <h2>
-          {{ $t('pages.stories.edit.modals.details.title') }}
-        </h2>
         <form
           class="story-detail-form"
           @submit.prevent
@@ -411,7 +428,7 @@
           </div>
         </form>
       </div>
-    </BaseModal>
+    </BaseDialog>
 
     <BaseSnackbar
       v-model="snackbarOpen"
@@ -476,7 +493,6 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    align-items: center;
     justify-content: center;
     width: 100%;
     height: 100%;
@@ -484,6 +500,7 @@
     .modal-actions {
       display: flex;
       gap: 1rem;
+      justify-content: center;
     }
 
     button {
@@ -513,12 +530,8 @@
     }
 
     p {
-      line-height: 1.5;
-    }
-
-    h2,
-    p {
       font-size: 0.8rem;
+      line-height: 1.5;
     }
 
     .story-detail-form {
