@@ -101,7 +101,7 @@
     grid-area: content;
     gap: 2rem;
     width: 100%;
-    max-width: var(--main-max-width);
+    max-width: var(--max-width);
     padding: 80px var(--padding-mobile);
     margin: 0 auto;
     overflow: hidden;

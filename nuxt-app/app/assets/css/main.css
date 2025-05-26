@@ -19,7 +19,7 @@ main {
   container-type: inline-size;
   container-name: main-container;
   min-width: 300px;
-  max-width: var(--main-max-width);
+  max-width: var(--max-width);
   margin: 0 auto;
   box-sizing: border-box;
 

@@ -50,7 +50,7 @@
     display: flex;
     align-items: center;
     width: 100%;
-    max-width: var(--main-max-width);
+    max-width: var(--max-width);
     height: 100%;
     padding: 0 var(--padding-mobile);
     margin: 0 auto;
