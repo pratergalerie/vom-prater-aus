@@ -17,6 +17,7 @@ export const useMenu = () => {
     'stories-unlock-id',
     'admin-login',
     'admin-dashboard',
+    'admin-story-id',
   ]
   const menuOrder = [
     'index',
@@ -36,6 +37,7 @@ export const useMenu = () => {
     'stories-slug',
     'stories-unlock-id',
     'admin-login',
+    'admin-story-id',
   ]
 
   const footerOrder = [
