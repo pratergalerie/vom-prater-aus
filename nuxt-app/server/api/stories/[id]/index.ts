@@ -9,9 +9,9 @@ const UUID_REGEX =
 export default defineEventHandler(async (event) => {
   try {
     const client = await serverSupabaseClient<Database>(event)
-    const id = event.context.params?.id
+    const storyId = event.context.params?.id
 
-    if (!id) {
+    if (!storyId) {
       throw createError({
         statusCode: 400,
         statusMessage: 'Story ID is required',
@@ -19,16 +19,19 @@ export default defineEventHandler(async (event) => {
     }
 
     // Validate that the ID is a UUID
-    if (!UUID_REGEX.test(id)) {
+    if (!UUID_REGEX.test(storyId)) {
       throw createError({
         statusCode: 400,
         statusMessage: 'Invalid story ID format',
       })
     }
 
-    // Handle GET request - Get story by ID
+    // Handle GET request - Get single story
     if (event.method === 'GET') {
-      const { data, error } = await client
+      const query = getQuery(event)
+      const isAdmin = query.admin === 'true'
+
+      let supabaseQuery = client
         .from('stories')
         .select(
           `
@@ -47,42 +50,26 @@ export default defineEventHandler(async (event) => {
             name,
             email
           ),
-          pages:story_pages(
-            id,
-            layout,
-            text,
-            image,
-            page_order,
-            created_at
-          ),
           locale:locale_id (
             id,
             code,
             name
-          ),
-          keywords:stories_keywords(
-            keyword_id (
-              id,
-              word
-            )
           )
         `
         )
-        .eq('id', id)
-        .single()
+        .eq('id', storyId)
+
+      // For non-admin requests, only return approved stories
+      if (!isAdmin) {
+        supabaseQuery = supabaseQuery.eq('status', 'approved')
+      }
+
+      const { data, error } = await supabaseQuery.single()
 
       if (error) {
-        console.error('Supabase error:', error)
         throw createError({
           statusCode: Number(error.code),
           statusMessage: error.message,
-        })
-      }
-
-      if (!data) {
-        throw createError({
-          statusCode: 404,
-          statusMessage: 'Story not found',
         })
       }
 
@@ -93,10 +80,16 @@ export default defineEventHandler(async (event) => {
     if (event.method === 'PUT') {
       const body = await readBody(event)
 
-      const { data, error } = await client
+      // Update story
+      const { data: storyData, error: updateError } = await client
         .from('stories')
-        .update(body)
-        .eq('id', id)
+        .update({
+          status: body.status,
+          featured: body.featured,
+          quote: body.quote,
+          modified_at: new Date().toISOString(),
+        })
+        .eq('id', storyId)
         .select(
           `
           id,
@@ -118,33 +111,43 @@ export default defineEventHandler(async (event) => {
             id,
             code,
             name
-          ),
-          pages:story_pages(
-            id,
-            layout,
-            text,
-            image,
-            created_at,
-            modified_at
-          ),
-          keywords:stories_keywords(
-            keyword_id (
-              id,
-              word
-            )
           )
         `
         )
+        .single()
 
-      if (error) {
-        console.error('Supabase error:', error)
+      if (updateError) {
         throw createError({
-          statusCode: Number(error.code),
-          statusMessage: error.message,
+          statusCode: Number(updateError.code),
+          statusMessage: updateError.message,
         })
       }
 
-      return data
+      // If status is being updated to approved or rejected, send email notification
+      if (body.status === 'approved' || body.status === 'rejected') {
+        try {
+          const { error: functionError } = await client.functions.invoke(
+            'send-moderation-result',
+            {
+              body: {
+                email: storyData.author.email,
+                storyId: storyData.id,
+                status: body.status,
+                storyTitle: storyData.title,
+              },
+            }
+          )
+
+          if (functionError) {
+            console.error('Failed to send moderation email:', functionError)
+          }
+        } catch (error) {
+          console.error('Edge Function error:', error)
+          // Continue even if email fails
+        }
+      }
+
+      return storyData
     }
 
     // Handle DELETE request - Delete story
@@ -152,7 +155,7 @@ export default defineEventHandler(async (event) => {
       const { data, error } = await client
         .from('stories')
         .delete()
-        .eq('id', id)
+        .eq('id', storyId)
         .select(
           `
           id,
@@ -203,6 +206,11 @@ export default defineEventHandler(async (event) => {
 
       return data
     }
+
+    throw createError({
+      statusCode: 405,
+      statusMessage: 'Method not allowed',
+    })
   } catch (error) {
     console.error('Server error:', error)
     throw createError({

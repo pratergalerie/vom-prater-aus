@@ -1,22 +1,75 @@
 <script setup lang="ts">
-  const props = defineProps<{
-    speechBubblePosition?: 'bottom-left' | 'bottom-center' | 'bottom-right'
-  }>()
+  const props = withDefaults(
+    defineProps<{
+      title?: string
+      width?: number | string
+      minWidth?: number | string
+      backdrop?: boolean
+      modal?: boolean
+      top?: number | string
+      left?: number | string
+      right?: number | string
+      bottom?: number | string
+      transform?: string
+      speechBubblePosition?:
+        | 'bottom-left'
+        | 'bottom-center'
+        | 'bottom-right'
+        | undefined
+    }>(),
+    {
+      title: '',
+      width: 300,
+      minWidth: 200,
+      height: 100,
+      backdrop: true,
+      modal: true,
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      transform: 'none',
+      speechBubblePosition: undefined,
+    }
+  )
 
-  const open = defineModel<boolean>({ default: false })
+  const isOpen = defineModel<boolean>('is-open', { default: false })
 
   const dialogRef = ref<HTMLDialogElement | null>(null)
   const shapeClipPath = ref('')
 
   function close() {
-    open.value = false
+    if (dialogRef.value) {
+      isOpen.value = false
+    }
   }
 
-  watch(open, (isOpen) => {
-    if (isOpen) {
-      dialogRef.value?.show()
-    } else {
-      dialogRef.value?.close()
+  onMounted(() => {
+    // Initialize clip path
+    shapeClipPath.value = `polygon(${randomizeClipPath()})`
+
+    // Add close on ESC key
+    dialogRef.value?.addEventListener('cancel', (event) => {
+      event.preventDefault()
+      close()
+    })
+  })
+
+  onUnmounted(() => {
+    dialogRef.value?.removeEventListener('cancel', close)
+  })
+
+  watch(isOpen, (newValue) => {
+    if (!dialogRef.value) return
+
+    if (newValue && !dialogRef.value.open) {
+      if (props.modal) {
+        dialogRef.value.showModal()
+      } else {
+        dialogRef.value.show()
+      }
+    } else if (!newValue && dialogRef.value.open) {
+      dialogRef.value.close()
     }
   })
 
@@ -32,6 +85,56 @@
     [0, 2],
   ]
 
+  const dialogWidth = computed(() => {
+    // Return a width within the range of 200px to 600px
+    if (typeof props.width === 'number') {
+      return `${Math.min(Math.max(props.width, 200), 600)}px`
+    }
+    return props.width
+  })
+
+  const dialogMinWidth = computed(() => {
+    if (typeof props.minWidth === 'number') {
+      return `${Math.min(Math.max(props.minWidth, 200), 600)}px`
+    }
+    return props.minWidth
+  })
+
+  const dialogTop = computed(() => {
+    if (typeof props.top === 'number') {
+      return `${props.top}px`
+    }
+    return props.top
+  })
+
+  const dialogLeft = computed(() => {
+    if (typeof props.left === 'number') {
+      return `${props.left}px`
+    }
+    return props.left
+  })
+
+  const dialogRight = computed(() => {
+    if (typeof props.right === 'number') {
+      return `${props.right}px`
+    }
+    return props.right
+  })
+
+  const dialogBottom = computed(() => {
+    if (typeof props.bottom === 'number') {
+      return `${props.bottom}px`
+    }
+    return props.bottom
+  })
+
+  const dialogTransform = computed(() => {
+    if (typeof props.transform === 'string') {
+      return props.transform
+    }
+    return 'none'
+  })
+
   function randomizeClipPath() {
     return baseClipPathPoints
       .map(([x, y]) => {
@@ -40,41 +143,35 @@
       })
       .join(', ')
   }
-
-  onMounted(() => {
-    shapeClipPath.value = `polygon(${randomizeClipPath()})`
-  })
-
-  onClickOutside(dialogRef, () => {
-    open.value = false
-  })
 </script>
 
 <template>
-  <dialog ref="dialogRef">
-    <div class="dialog-container">
-      <div
-        class="dialog-content"
-        :style="{ clipPath: shapeClipPath }"
-      >
-        <div
-          class="halftone background"
-          :style="{ clipPath: shapeClipPath }"
-        ></div>
-        <button
-          class="close-button"
-          @click="close"
-        >
-          <Icon name="mdi:close" />
-        </button>
-
-        <slot />
+  <dialog
+    ref="dialogRef"
+    :class="{ 'absolute-position': !modal }"
+  >
+    <div class="dialog-wrapper">
+      <div class="dialog-content">
+        <div class="halftone background" />
+        <div class="dialog-content-inner">
+          <div class="header">
+            <h2 v-if="title">{{ title }}</h2>
+            <button
+              type="button"
+              class="close-button"
+              @click="close"
+            >
+              <Icon name="mdi:close" />
+            </button>
+          </div>
+          <slot />
+        </div>
       </div>
 
       <div
-        v-if="props.speechBubblePosition"
+        v-if="speechBubblePosition"
         class="speech-bubble"
-        :class="props.speechBubblePosition"
+        :class="speechBubblePosition"
       />
     </div>
   </dialog>
@@ -82,49 +179,92 @@
 
 <style scoped>
   dialog {
-    z-index: 1000;
-    width: fit-content;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    width: v-bind(dialogWidth);
+    min-width: v-bind(dialogMinWidth);
     height: fit-content;
     padding: 0;
+    margin: auto;
     background: transparent;
     border: none;
+    container-type: inline-size;
+    container-name: dialog-container;
+
+    &::backdrop {
+      background: rgb(0 0 0 / 50%);
+    }
+
+    &.absolute-position {
+      position: absolute;
+      inset: v-bind(dialogTop) v-bind(dialogRight) v-bind(dialogBottom)
+        v-bind(dialogLeft);
+      z-index: 1000;
+      transform: v-bind(dialogTransform);
+    }
   }
 
-  .dialog-container {
+  .dialog-wrapper {
     position: relative;
-    width: 100%;
-    height: 100%;
-    filter: drop-shadow(-5px 5px 0 rgb(0 0 0 / 100%));
+    width: calc(100% - 16px);
+    filter: drop-shadow(-8px 8px 0 var(--color-black));
+    transform: translate(8px, 0);
   }
 
   .dialog-content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    box-sizing: border-box;
+    position: relative;
     width: 100%;
-    height: 100%;
-    padding: var(--padding-mobile);
+    background-color: var(--color-white);
+    clip-path: v-bind(shapeClipPath);
   }
 
   .background {
     position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -2;
-    width: 100%;
-    height: 100%;
-    background-color: var(--color-white);
+    inset: 0;
+    z-index: 0;
+  }
 
-    &.halftone {
-      --opacity: 0.8;
+  .dialog-content-inner {
+    position: relative;
+    z-index: 1;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 1.5rem;
+    background-color: transparent;
+
+    /* If no title, remove the gap between the header and the content */
+    &:not(:has(h2)) {
+      gap: 0;
+    }
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 1.5rem;
+
+    h2 {
+      margin: 0;
+      font-size: 1.2rem;
+      line-height: 1.4rem;
+    }
+
+    /* If no title, align the close button to the right */
+    &:not(:has(h2)) {
+      justify-content: flex-end;
     }
   }
 
   .close-button {
-    position: absolute;
-    top: calc(var(--padding-mobile) * 1.2);
-    right: var(--padding-mobile);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 1.5rem;
     height: 1.5rem;
     color: var(--color-black);
@@ -133,7 +273,6 @@
     border: none;
   }
 
-  /* Speech bubble triangle */
   .speech-bubble {
     position: absolute;
     bottom: -10px;
@@ -143,27 +282,29 @@
     border-color: var(--color-white) transparent transparent transparent;
     border-style: solid;
     border-width: 12px 10px 0;
-  }
 
-  /* Position variants */
-  .speech-bubble.bottom-left {
-    left: 20px;
-    filter: drop-shadow(-3px -2px 0 var(--color-black));
-    transform: translateY(-5px) rotate(-90deg);
-    scale: 2;
-  }
+    /* stylelint-disable-next-line plugins/no-unused-selectors */
+    &.bottom-left {
+      left: 20px;
+      filter: drop-shadow(-3px -2px 0 var(--color-black));
+      transform: translateY(-5px) rotate(-90deg);
+      scale: 2;
+    }
 
-  .speech-bubble.bottom-center {
-    left: 50%;
-    filter: drop-shadow(-1px 3px 0 var(--color-black));
-    transform: translateX(-26%) skew(-0.02turn, 5deg);
-    scale: 2;
-  }
+    /* stylelint-disable-next-line plugins/no-unused-selectors */
+    &.bottom-center {
+      left: 50%;
+      filter: drop-shadow(-1px 3px 0 var(--color-black));
+      transform: translateX(-26%) skew(-0.02turn, 5deg);
+      scale: 2;
+    }
 
-  .speech-bubble.bottom-right {
-    right: 30px;
-    filter: drop-shadow(3px -1px 0 var(--color-black));
-    transform: translateY(-7px) rotate(90deg);
-    scale: 3;
+    /* stylelint-disable-next-line plugins/no-unused-selectors */
+    &.bottom-right {
+      right: 30px;
+      filter: drop-shadow(3px -1px 0 var(--color-black));
+      transform: translateY(-7px) rotate(90deg);
+      scale: 3;
+    }
   }
 </style>

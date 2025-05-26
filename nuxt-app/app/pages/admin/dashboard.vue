@@ -34,6 +34,28 @@
   const isLoading = ref(true)
   const error = ref('')
 
+  const searchQuery = ref('')
+  const selectedStatus = ref('all')
+
+  const statusOptions = {
+    all: 'Alle',
+    submitted: 'Eingerecht',
+    approved: 'Genehmigt',
+    rejected: 'Abgelehnt',
+  }
+
+  // Computed property for filtered stories
+  const filteredStories = computed(() => {
+    return stories.value.filter((story) => {
+      const matchesSearch = story.title
+        .toLowerCase()
+        .includes(searchQuery.value.toLowerCase())
+      const matchesStatus =
+        selectedStatus.value === 'all' || story.status === selectedStatus.value
+      return matchesSearch && matchesStatus
+    })
+  })
+
   // Load stories
   async function loadStories() {
     try {
@@ -95,10 +117,14 @@
     <header class="dashboard-header">
       <h1>Admin Dashboard</h1>
       <button
-        class="sign-out-button"
+        class="sign-out-button highlight"
         @click="handleSignOut"
       >
         Ausloggen
+        <Icon
+          name="mdi:logout"
+          class="logout-icon"
+        />
       </button>
     </header>
 
@@ -113,6 +139,33 @@
       <div class="stories-panel">
         <div class="panel-header">
           <h2>Geschichten</h2>
+          <div class="filter-controls">
+            <div class="search-container">
+              <Icon
+                name="mdi:magnify"
+                class="search-icon"
+              />
+              <label for="story-search">
+                <input
+                  id="story-search"
+                  v-model="searchQuery"
+                  type="text"
+                  placeholder="Nach Titel suchen..."
+                  class="search-input"
+                />
+              </label>
+            </div>
+            <select
+              v-model="selectedStatus"
+              class="status-filter"
+              aria-label="Filter by status"
+            >
+              <option value="all">{{ statusOptions.all }}</option>
+              <option value="submitted">{{ statusOptions.submitted }}</option>
+              <option value="approved">{{ statusOptions.approved }}</option>
+              <option value="rejected">{{ statusOptions.rejected }}</option>
+            </select>
+          </div>
         </div>
 
         <div
@@ -144,64 +197,114 @@
               </tr>
             </thead>
             <tbody>
-              <tr
-                v-for="story in stories"
-                :key="story.id"
-              >
-                <td>
-                  <div class="story-title">
-                    {{ story.title }}
-                  </div>
-                  <div class="story-locale">
-                    {{ story.locale?.name }}
-                  </div>
-                </td>
-                <td>
-                  <div class="author-name">
-                    {{ story.author?.name }}
-                  </div>
-                  <div class="author-email">
-                    {{ story.author?.email }}
-                  </div>
-                </td>
-                <td>
-                  <span :class="['status-badge', story.status]">
-                    {{ story.status }}
-                  </span>
-                </td>
-                <td>
-                  {{
-                    story.created_at
-                      ? new Date(story.created_at).toLocaleDateString()
-                      : ''
-                  }}
-                </td>
-                <td>
-                  <div class="story-actions">
-                    <button
-                      v-if="story.status === 'submitted'"
-                      class="approve-button"
-                      @click="updateStoryStatus(story.id, 'approved')"
-                    >
-                      Approve
-                    </button>
-                    <button
-                      v-if="story.status === 'submitted'"
-                      class="reject-button"
-                      @click="updateStoryStatus(story.id, 'rejected')"
-                    >
-                      Reject
-                    </button>
-                    <NuxtLink
-                      :to="`/stories/${story.slug}`"
-                      class="view-link"
-                      target="_blank"
-                    >
-                      View
-                    </NuxtLink>
-                  </div>
+              <tr class="divider-row">
+                <td colspan="5">
+                  <Divider
+                    type="horizontal"
+                    color="var(--color-grey)"
+                    width="100%"
+                    height="15px"
+                    margin="0"
+                    class="divider"
+                  />
                 </td>
               </tr>
+              <template
+                v-for="(story, index) in filteredStories"
+                :key="story.id"
+              >
+                <tr>
+                  <td data-label="Titel">
+                    <span class="mobile-label">Titel</span>
+                    <div class="story-title">
+                      {{ story.title }}
+                    </div>
+                    <div class="story-locale">
+                      {{ story.locale?.name }}
+                    </div>
+                  </td>
+                  <td data-label="Autor">
+                    <span class="mobile-label">Autor</span>
+                    <div class="author-name">
+                      {{ story.author?.name }}
+                    </div>
+                    <div class="author-email">
+                      {{ story.author?.email }}
+                    </div>
+                  </td>
+                  <td data-label="Status">
+                    <span class="mobile-label">Status</span>
+                    <span :class="['status-badge', story.status]">
+                      {{ story.status }}
+                    </span>
+                  </td>
+                  <td data-label="Erstellt">
+                    <span class="mobile-label">Erstellt</span>
+                    {{
+                      story.created_at
+                        ? new Date(story.created_at).toLocaleDateString()
+                        : ''
+                    }}
+                  </td>
+                  <td data-label="Aktionen">
+                    <span class="mobile-label">Aktionen</span>
+                    <div class="story-actions">
+                      <button
+                        v-if="story.status === 'submitted'"
+                        class="approve-button"
+                        @click="updateStoryStatus(story.id, 'approved')"
+                      >
+                        Approve
+                      </button>
+                      <button
+                        v-if="story.status === 'submitted'"
+                        class="reject-button"
+                        @click="updateStoryStatus(story.id, 'rejected')"
+                      >
+                        Reject
+                      </button>
+                      <NuxtLink
+                        :to="`/admin/story/${story.id}`"
+                        class="view-link highlight"
+                      >
+                        Moderieren
+                        <Icon
+                          name="mdi:arrow-right"
+                          class="arrow-right"
+                        />
+                      </NuxtLink>
+                    </div>
+                  </td>
+                </tr>
+                <tr
+                  v-if="index !== stories.length - 1"
+                  class="divider-row"
+                >
+                  <td colspan="5">
+                    <Divider
+                      type="horizontal"
+                      color="var(--color-grey)"
+                      width="100%"
+                      height="15px"
+                      margin="0"
+                    />
+                  </td>
+                </tr>
+                <tr
+                  v-if="index !== stories.length - 1"
+                  class="mobile-divider"
+                >
+                  <td colspan="5">
+                    <Divider
+                      type="horizontal"
+                      color="var(--color-grey)"
+                      width="100%"
+                      height="15px"
+                      margin="0"
+                    />
+                  </td>
+                </tr>
+              </template>
             </tbody>
           </table>
         </div>
@@ -211,12 +314,16 @@
 </template>
 
 <style scoped>
+  .admin-dashboard {
+    container-type: inline-size;
+    container-name: admin-dashboard;
+  }
+
   .dashboard-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 2rem 0;
-    border-bottom: 1px solid var(--color-border);
 
     & h1 {
       font-size: 1.5rem;
@@ -226,10 +333,15 @@
   }
 
   .sign-out-button {
+    --highlight-color: var(--color-error-light);
+
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
     padding: 0.5rem 1rem;
+    font-family: var(--font-button);
     color: var(--color-error);
     cursor: pointer;
-    background: none;
     border: none;
 
     &:hover,
@@ -252,20 +364,89 @@
     border-radius: 4px;
   }
 
-  .stories-panel {
-    background-color: var(--color-background-light);
-    border: 1px solid var(--color-border);
-    border-radius: 4px;
-  }
-
   .panel-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
     padding: 1rem;
-    border-bottom: 1px solid var(--color-border);
 
     & h2 {
       font-size: 1.25rem;
       font-weight: 500;
       color: var(--color-text);
+    }
+  }
+
+  .filter-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    & label {
+      width: 100%;
+    }
+
+    & .search-icon {
+      position: absolute;
+      left: 0.75rem;
+      font-size: 1.25rem;
+      color: var(--color-text-light);
+    }
+
+    @container admin-dashboard (max-width: 700px) {
+      width: 100%;
+    }
+  }
+
+  .search-input {
+    box-sizing: border-box;
+    min-width: 200px;
+    padding: 0.5rem 1rem 0.5rem 2.5rem;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    background-color: var(--color-background);
+    border: 1px solid var(--color-text-light);
+    border-radius: 4px;
+
+    &::placeholder {
+      color: var(--color-text-light);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-primary);
+    }
+
+    @container admin-dashboard (max-width: 700px) {
+      width: 100%;
+    }
+  }
+
+  .status-filter {
+    padding: 0.5rem 2rem 0.5rem 1rem;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    appearance: none;
+    cursor: pointer;
+    background-color: var(--color-background);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23666' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+    border: 1px solid var(--color-text-light);
+    border-radius: 4px;
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-primary);
     }
   }
 
@@ -277,26 +458,97 @@
   }
 
   .stories-table-container {
+    position: relative;
+    max-height: calc(70vh - var(--header-height));
     overflow-x: auto;
+
+    @media (max-width: 768px) {
+      max-height: none;
+      overflow-x: visible;
+    }
   }
 
   .stories-table {
     width: 100%;
     border-collapse: collapse;
 
-    & th,
-    & td {
-      padding: 1rem;
-      text-align: left;
-      border-bottom: 1px solid var(--color-border);
-    }
-
     & th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      padding: 1rem;
       font-size: 0.875rem;
       font-weight: 500;
       color: var(--color-text-light);
+      text-align: left;
       text-transform: uppercase;
       background-color: var(--color-background);
+    }
+
+    & td {
+      padding: 1rem;
+      text-align: left;
+    }
+
+    & .divider-row {
+      & td {
+        padding: 0;
+      }
+
+      @container admin-dashboard (max-width: 700px) {
+        display: none;
+      }
+    }
+
+    @container admin-dashboard (max-width: 700px) {
+      & thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        white-space: nowrap;
+        border: 0;
+        clip: rect(0, 0, 0, 0);
+      }
+
+      & tbody {
+        display: block;
+      }
+
+      & tr {
+        display: block;
+        margin-bottom: 1.5rem;
+      }
+
+      & td {
+        display: block;
+        padding: 0.75rem 1rem;
+        text-align: left;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        &[data-label] {
+          & .mobile-label {
+            display: block;
+          }
+        }
+      }
+
+      & .divider-row {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        white-space: nowrap;
+        border: 0;
+        clip: rect(0, 0, 0, 0);
+      }
     }
   }
 
@@ -371,14 +623,93 @@
   }
 
   .view-link {
+    --highlight-color: var(--color-primary-light);
+
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
     padding: 0.25rem 0.5rem;
     font-size: 0.875rem;
     color: var(--color-primary);
-    text-decoration: none;
 
     &:hover,
     &:focus {
       color: var(--color-primary-dark);
+    }
+  }
+
+  .mobile-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    white-space: nowrap;
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+
+    @container admin-dashboard (max-width: 700px) {
+      position: static;
+      display: block;
+      width: auto;
+      height: auto;
+      padding: 0;
+      margin: 0;
+      margin-bottom: 0.25rem;
+      overflow: visible;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--color-text-light);
+      text-transform: uppercase;
+      white-space: normal;
+      clip: auto;
+    }
+  }
+
+  .mobile-divider {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    white-space: nowrap;
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+
+    @container admin-dashboard (max-width: 700px) {
+      position: static;
+      display: table-row;
+      width: auto;
+      height: auto;
+      height: 20px;
+      padding: 0;
+      margin: 0;
+      overflow: visible;
+      white-space: normal;
+      clip: auto;
+
+      & td {
+        height: 20px;
+      }
+    }
+  }
+
+  @container admin-dashboard (max-width: 700px) {
+    .panel-header {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .filter-controls {
+      flex-direction: column;
+      width: 100%;
+
+      & .search-container,
+      & .status-filter {
+        width: 100%;
+      }
     }
   }
 </style>

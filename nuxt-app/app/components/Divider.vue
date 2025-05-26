@@ -4,6 +4,7 @@
     color: string
     width?: number | string
     height?: number | string
+    margin?: number | string
   }>()
 
   const dividerColor = computed(() => {
@@ -17,6 +18,10 @@
   const dividerHeight = computed(() => {
     return props.height ? props.height : '20px'
   })
+
+  const dividerMargin = computed(() => {
+    return props.margin ? props.margin : '0 20px'
+  })
 </script>
 
 <template>
@@ -28,7 +33,7 @@
     :style="{
       width: type === 'horizontal' ? dividerWidth : '20px',
       height: type === 'horizontal' ? dividerHeight : '100%',
-      margin: type === 'horizontal' ? '20px 0' : '0 20px',
+      margin: dividerMargin,
     }"
   >
     <defs>

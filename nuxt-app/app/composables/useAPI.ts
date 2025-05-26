@@ -50,7 +50,11 @@ export function useAPI() {
    * @param {string} id - The ID of the story to fetch
    * @returns {Promise<{ data: Ref<Story>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the story data and loading states
    */
-  function getStoryById(id: string) {
+  function getStoryByIdClient(id: string) {
+    return $fetch<Story>(`/api/stories/${id}`)
+  }
+
+  function getStoryByIdServer(id: string) {
     return useFetch<Story>(`/api/stories/${id}`)
   }
 
@@ -68,8 +72,14 @@ export function useAPI() {
    * @param {string} storyId - The ID of the story to fetch pages for
    * @returns {Promise<{ data: Ref<Database['public']['Tables']['story_pages']['Row'][]>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the story pages data and loading states
    */
-  function getStoryPages(storyId: string) {
+  function getStoryPagesServer(storyId: string) {
     return useFetch<Database['public']['Tables']['story_pages']['Row'][]>(
+      `/api/stories/${storyId}/pages`
+    )
+  }
+
+  function getStoryPagesClient(storyId: string) {
+    return $fetch<Database['public']['Tables']['story_pages']['Row'][]>(
       `/api/stories/${storyId}/pages`
     )
   }
@@ -370,9 +380,11 @@ export function useAPI() {
     // Stories
     getStories,
     getFeaturedStories,
-    getStoryById,
+    getStoryByIdServer,
+    getStoryByIdClient,
     getStoryBySlug,
-    getStoryPages,
+    getStoryPagesServer,
+    getStoryPagesClient,
     createStory,
     createStoryWithLocale,
     updateStory,
