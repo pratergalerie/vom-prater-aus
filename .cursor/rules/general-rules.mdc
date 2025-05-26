@@ -41,3 +41,8 @@ alwaysApply: false
 ## HTML Guidelines
 
 - Always include form inputs (<input>) inside <label> elements for accessibility purposes
+
+## CSS Guidelines
+
+- When styling containers, consider responsiveness best practices for adapting containers to all screen sizes- 
+- Use container queries (@container) instead of @media queries as much as possible- 
