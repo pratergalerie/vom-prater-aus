@@ -26,6 +26,7 @@ export interface StoryPage {
 export interface Story {
   id: string
   title: string
+  slug: string
   author: Author
   year: number
   keywords: string[]

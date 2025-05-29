@@ -31,6 +31,32 @@ export default defineEventHandler(async (event) => {
       const query = getQuery(event)
       const isAdmin = query.admin === 'true'
 
+      // Get the story token from the cookie
+      const storyToken =
+        getCookie(event, `story_token_${storyId}`) || query.token
+
+      // First, check if the story exists without any conditions
+      const { data: storyExists, error: existsError } = await client
+        .from('stories')
+        .select('id')
+        .eq('id', storyId)
+
+      if (existsError) {
+        console.error('Error checking story existence:', existsError)
+        throw createError({
+          statusCode: Number(existsError.code),
+          statusMessage: existsError.message,
+        })
+      }
+
+      if (!storyExists || storyExists.length === 0) {
+        console.error('Story not found:', storyId)
+        throw createError({
+          statusCode: 404,
+          statusMessage: 'Story not found',
+        })
+      }
+
       let supabaseQuery = client
         .from('stories')
         .select(
@@ -54,26 +80,55 @@ export default defineEventHandler(async (event) => {
             id,
             code,
             name
+          ),
+          pages:story_pages (
+            id,
+            layout,
+            text,
+            image,
+            created_at,
+            modified_at,
+            page_order
           )
         `
         )
         .eq('id', storyId)
 
-      // For non-admin requests, only return approved stories
-      if (!isAdmin) {
+      // For non-admin requests, only return approved stories or stories with valid token
+      if (!isAdmin && !storyToken) {
         supabaseQuery = supabaseQuery.eq('status', 'approved')
       }
 
-      const { data, error } = await supabaseQuery.single()
+      // Execute query without single() first to debug
+      const { data: stories, error: queryError } = await supabaseQuery
 
-      if (error) {
+      if (queryError) {
+        console.error('Error fetching story:', queryError)
         throw createError({
-          statusCode: Number(error.code),
-          statusMessage: error.message,
+          statusCode: Number(queryError.code),
+          statusMessage: queryError.message,
         })
       }
 
-      return data
+      // Log debugging information
+      console.log('Stories found:', stories?.length)
+      console.log('First story:', stories?.[0]?.id)
+      console.log('Admin mode:', isAdmin)
+      console.log('Has story token:', !!storyToken)
+      console.log('Story status:', stories?.[0]?.status)
+
+      // If no stories found after filters, return appropriate error
+      if (!stories || stories.length === 0) {
+        throw createError({
+          statusCode: 404,
+          statusMessage: isAdmin
+            ? 'Story not found'
+            : 'Story not found or not accessible',
+        })
+      }
+
+      // Now we can safely use single() since we know we have exactly one result
+      return stories[0]
     }
 
     // Handle PUT request - Update story

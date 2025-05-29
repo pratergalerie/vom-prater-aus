@@ -46,16 +46,45 @@ export function useAPI() {
   }
 
   /**
-   * Fetches a single story by its ID
+   * Fetches a single story by its ID. This is an isomorphic method that works on both server and client.
+   * Use this method in component setup or page data fetching.
    * @param {string} id - The ID of the story to fetch
+   * @param {Object} options - Additional options
+   * @param {boolean} options.admin - Whether to fetch in admin mode
+   * @param {string} options.token - Story token for author access
    * @returns {Promise<{ data: Ref<Story>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the story data and loading states
    */
-  function getStoryByIdClient(id: string) {
-    return $fetch<Story>(`/api/stories/${id}`)
+  function getStoryById(
+    id: string,
+    options?: { admin?: boolean; token?: string | null }
+  ) {
+    return useFetch<Story>(`/api/stories/${id}`, {
+      params: {
+        admin: options?.admin ? 'true' : undefined,
+        token: options?.token || undefined,
+      },
+    })
   }
 
-  function getStoryByIdServer(id: string) {
-    return useFetch<Story>(`/api/stories/${id}`)
+  /**
+   * Imperatively fetches a story by ID. This is a client-only method.
+   * Use this method for user interactions and client-side effects.
+   * @param {string} id - The ID of the story to fetch
+   * @param {Object} options - Additional options
+   * @param {boolean} options.admin - Whether to fetch in admin mode
+   * @param {string} options.token - Story token for author access
+   * @returns {Promise<Story>} A promise containing the story data
+   */
+  function fetchStoryById(
+    id: string,
+    options?: { admin?: boolean; token?: string | null }
+  ) {
+    return $fetch<Story>(`/api/stories/${id}`, {
+      params: {
+        admin: options?.admin ? 'true' : undefined,
+        token: options?.token || undefined,
+      },
+    })
   }
 
   /**
@@ -72,13 +101,13 @@ export function useAPI() {
    * @param {string} storyId - The ID of the story to fetch pages for
    * @returns {Promise<{ data: Ref<Database['public']['Tables']['story_pages']['Row'][]>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the story pages data and loading states
    */
-  function getStoryPagesServer(storyId: string) {
+  function getStoryPages(storyId: string) {
     return useFetch<Database['public']['Tables']['story_pages']['Row'][]>(
       `/api/stories/${storyId}/pages`
     )
   }
 
-  function getStoryPagesClient(storyId: string) {
+  function fetchStoryPages(storyId: string) {
     return $fetch<Database['public']['Tables']['story_pages']['Row'][]>(
       `/api/stories/${storyId}/pages`
     )
@@ -380,11 +409,11 @@ export function useAPI() {
     // Stories
     getStories,
     getFeaturedStories,
-    getStoryByIdServer,
-    getStoryByIdClient,
+    getStoryById,
+    fetchStoryById,
     getStoryBySlug,
-    getStoryPagesServer,
-    getStoryPagesClient,
+    getStoryPages,
+    fetchStoryPages,
     createStory,
     createStoryWithLocale,
     updateStory,
