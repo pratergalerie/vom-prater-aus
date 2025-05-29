@@ -21,7 +21,7 @@
 
   /* --- Status colors --- */
   --color-success: var(--color-mint);
-  --color-success-light: rgb(90 171 130 / 10%);
+  --color-success-light: rgb(90 171 130 / 30%);
   --color-success-dark: rgb(60 141 100);
 
   --color-error: var(--color-red);
@@ -29,7 +29,7 @@
   --color-error-dark: rgb(150 0 0);
 
   --color-warning: var(--color-mustard);
-  --color-warning-light: rgb(249 184 93 / 10%);
+  --color-warning-light: rgb(249 184 93 / 30%);
   --color-warning-dark: rgb(219 154 63);
 
   --color-primary: var(--color-cerulean);
@@ -56,6 +56,7 @@
 
   /* *------------------------------ Layout --------------------------------* */
   --header-height: 90px;
+  --footer-height: 530px;
   --max-width: 1000px;
 
   @media (min-width: 768px) {
