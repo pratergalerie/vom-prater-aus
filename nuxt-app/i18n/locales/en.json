@@ -15,7 +15,7 @@
         "privacy": "Privacy policy",
         "terms": "Terms of use",
         "stories-create": "Create a story",
-        "stories-explorer": "Discover stories",
+        "stories-list": "Discover stories",
         "admin-dashboard": "Admin Dashboard"
       }
     },
@@ -182,6 +182,11 @@
           "p4": "In order to obtain the password again, you have to request it via the same email address that was used to create the story."
         },
         "contactUs": "contact the Vom Prater Aus team"
+      },
+      "submitted": {
+        "title": "Story submitted",
+        "text": "We are happy that you have submitted your story. Your story will now be moderated by our team. You will receive an email notification once the moderation is complete. You cannot edit your story after submission.",
+        "button": "Check out other stories"
       }
     }
   }
