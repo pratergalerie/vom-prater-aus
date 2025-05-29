@@ -251,17 +251,25 @@
                     <div class="story-actions">
                       <button
                         v-if="story.status === 'submitted'"
-                        class="approve-button"
+                        class="approve-button highlight"
                         @click="updateStoryStatus(story.id, 'approved')"
                       >
-                        Approve
+                        Genehmigen
+                        <Icon
+                          name="mdi:check"
+                          class="check-icon"
+                        />
                       </button>
                       <button
                         v-if="story.status === 'submitted'"
-                        class="reject-button"
+                        class="reject-button highlight"
                         @click="updateStoryStatus(story.id, 'rejected')"
                       >
-                        Reject
+                        Ablehnen
+                        <Icon
+                          name="mdi:close"
+                          class="close-icon"
+                        />
                       </button>
                       <NuxtLink
                         :to="`/admin/story/${story.id}`"
@@ -592,19 +600,32 @@
 
   .story-actions {
     display: flex;
-    gap: 0.5rem;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: flex-start;
+
+    @container admin-dashboard (max-width: 700px) {
+      flex-direction: row;
+      align-items: center;
+    }
   }
 
   .approve-button,
   .reject-button {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
     padding: 0.25rem 0.5rem;
+    font-family: var(--font-button);
     font-size: 0.875rem;
+    text-decoration: underline;
     cursor: pointer;
-    background: none;
     border: none;
   }
 
   .approve-button {
+    --highlight-color: var(--color-success-light);
+
     color: var(--color-success);
 
     &:hover,
@@ -614,6 +635,8 @@
   }
 
   .reject-button {
+    --highlight-color: var(--color-error-light);
+
     color: var(--color-error);
 
     &:hover,
