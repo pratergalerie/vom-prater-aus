@@ -38,13 +38,19 @@
   await loadStory(storyId)
 
   if (!story.value) {
+    // Get the story token from session storage
+    const storyToken = sessionStorage.getItem(`story_token_${storyId}`)
+
     // If story doesn't exist, fetch from backend
-    const { data: storyData } = await useAPI().getStoryByIdServer(storyId)
+    const { data: storyData } = await useAPI().getStoryById(storyId, {
+      token: storyToken,
+    })
     if (storyData.value) {
       // Convert storyData to Story format
       const convertedStory: Story = {
         id: storyData.value.id,
         title: storyData.value.title,
+        slug: storyData.value.slug,
         author: {
           id: storyData.value.author.id,
           name: storyData.value.author.name,
@@ -206,10 +212,30 @@
     }
   }
 
-  function handleSubmit() {
-    // TODO: Implement submit story
-    const router = useRouter()
-    router.push('/stories/submitted')
+  async function handleSubmit() {
+    showSubmitModal.value = false
+
+    try {
+      // First save any pending changes
+      await handleSaveChanges()
+
+      if (!story.value) return
+
+      // Update story status to submitted
+      await useAPI().updateStory(story.value.id, {
+        status: 'submitted',
+        modified_at: new Date().toISOString(),
+      })
+
+      // Navigate to submitted page
+      const router = useRouter()
+      router.push('/stories/submitted')
+    } catch (error) {
+      console.error('Error submitting story:', error)
+      // Show error notification
+      snackbarOpen.value = true
+      snackbarMessage.value = t('pages.stories.edit.snackbar.saveError')
+    }
   }
 
   function handleExitEditor() {
