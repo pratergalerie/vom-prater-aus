@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-  import type { Database } from '~/types/supabase'
+  import type { Story } from '~/types/frontend'
+  import { transformStoryData } from '~/utils/story'
 
   useHead({
     title: 'Vom Prater Aus - Story Moderation',
@@ -14,22 +15,6 @@
   definePageMeta({
     layout: 'no-footer',
   })
-
-  type Story = Omit<
-    Database['public']['Tables']['stories']['Row'],
-    'author_id' | 'locale_id'
-  > & {
-    author: Database['public']['Tables']['authors']['Row']
-    locale: {
-      id: string
-      code: string
-      name: string
-    }
-    pages: Database['public']['Tables']['story_pages']['Row'][]
-    createdAt: Date
-    modifiedAt: Date
-    status: 'draft' | 'submitted' | 'approved' | 'rejected'
-  }
 
   const route = useRoute()
   const router = useRouter()
@@ -47,59 +32,21 @@
   const api = useAPI()
 
   // Load story data
-  const { data: storyData, error: fetchStoryError } = await api.getStoryById(
-    storyId,
-    {
-      admin: true,
-    }
-  )
+  const {
+    data: storyData,
+    error,
+    status,
+  } = await api.getStoryById(storyId, {
+    admin: true,
+  })
   if (storyData.value) {
     quote.value = storyData.value.quote || ''
     isFeatured.value = storyData.value.featured || false
-
-    // Fetch story pages
-    const { data: pagesData, error: fetchStoryPagesError } =
-      await api.getStoryPages(storyId)
-    if (pagesData.value) {
-      // Transform the data to match the expected format
-      story.value = {
-        id: storyData.value.id,
-        title: storyData.value.title,
-        created_at: storyData.value.created_at,
-        modified_at: storyData.value.modified_at,
-        featured: storyData.value.featured,
-        featured_image: storyData.value.featured_image,
-        password: storyData.value.password,
-        quote: storyData.value.quote,
-        slug: storyData.value.slug,
-        author: storyData.value.author,
-        locale: {
-          id: storyData.value.locale.id,
-          code: storyData.value.locale.code,
-          name: storyData.value.locale.name,
-        },
-        year: storyData.value.year,
-        pages: pagesData.value,
-        createdAt: new Date(storyData.value.created_at || new Date()),
-        modifiedAt: new Date(storyData.value.modified_at || new Date()),
-        status: storyData.value.status as
-          | 'draft'
-          | 'submitted'
-          | 'approved'
-          | 'rejected',
-      }
-    }
-
-    if (fetchStoryPagesError.value) {
-      throw createError({
-        statusCode: 500,
-        statusMessage: fetchStoryPagesError.value.message,
-      })
-    }
+    story.value = transformStoryData(storyData.value)
   }
 
-  if (fetchStoryError.value) {
-    if (fetchStoryError.value.statusCode === 404) {
+  if (error.value) {
+    if (error.value.statusCode === 404) {
       throw createError({
         statusCode: 404,
         statusMessage: 'Story not found',
@@ -107,7 +54,7 @@
     }
     throw createError({
       statusCode: 500,
-      statusMessage: fetchStoryError.value.message,
+      statusMessage: error.value.message,
     })
   }
 
@@ -146,103 +93,104 @@
 </script>
 
 <template>
-  <Suspense>
-    <template #default>
-      <div class="admin-story-view">
-        <div class="page-container">
-          <div class="story-container">
-            <StoryViewer
-              v-if="story"
-              :story="story"
-              :story-pages="story.pages"
-            />
-          </div>
-
-          <AdminModerationSidebar
-            v-model:is-open="isSidebarOpen"
-            v-model:is-featured="isFeatured"
-            v-model:quote="quote"
-            :story="story"
-            @approve="
-              () => {
-                console.log('approve')
-                showApproveDialog = true
-              }
-            "
-            @reject="
-              () => {
-                console.log('reject')
-                showRejectDialog = true
-              }
-            "
-            @return="router.push('/admin/dashboard')"
-          />
-        </div>
-
-        <!-- Approve Dialog -->
-        <BaseDialog
-          v-model:is-open="showApproveDialog"
-          title="Approve Story"
-          :width="400"
-        >
-          <p>
-            Bist du dir sicher, dass du diese Geschichte genehmigen möchtest?
-            Der Autor wird benachrichtigt.
-          </p>
-          <div class="modal-actions">
-            <button @click="showApproveDialog = false">Abbrechen</button>
-            <button
-              class="approve-button"
-              @click="handleApprove"
-            >
-              Genehmigen
-            </button>
-          </div>
-        </BaseDialog>
-
-        <!-- Reject Dialog -->
-        <BaseDialog
-          v-model:is-open="showRejectDialog"
-          title="Geschichte ablehnen"
-          :width="400"
-        >
-          <p>
-            Bist du dir sicher, dass du diese Geschichte ablehnen möchtest? Der
-            Autor wird benachrichtigt.
-          </p>
-          <label for="reject-reason">
-            Grund für Ablehnung:
-            <textarea
-              id="reject-reason"
-              v-model="rejectReason"
-              placeholder=""
-              rows="8"
-            />
-          </label>
-
-          <div class="modal-actions">
-            <button @click="showRejectDialog = false">Abbrechen</button>
-            <button
-              class="reject-button"
-              @click="handleReject"
-            >
-              Ablehnen
-            </button>
-          </div>
-        </BaseDialog>
-      </div>
-    </template>
-    <template #fallback>
-      <div class="loading-container">
+  <div class="admin-story-view">
+    <div class="page-container">
+      <div
+        v-if="status === 'pending'"
+        class="loading-container"
+      >
         <div class="loading-spinner" />
       </div>
-    </template>
-    <template #error>
-      <div class="error-container">
-        <p>Ein Fehler ist aufgetreten. Bitte versuche es erneut.</p>
+
+      <div v-else-if="error">
+        <div class="error-container">
+          <p>Ein Fehler ist aufgetreten. Bitte versuche es erneut.</p>
+        </div>
       </div>
-    </template>
-  </Suspense>
+
+      <div
+        v-else
+        class="story-container"
+      >
+        <StoryViewer
+          v-if="story"
+          :story="story"
+        />
+      </div>
+
+      <AdminModerationSidebar
+        v-model:is-open="isSidebarOpen"
+        v-model:is-featured="isFeatured"
+        v-model:quote="quote"
+        :story="story"
+        @approve="
+          () => {
+            console.log('approve')
+            showApproveDialog = true
+          }
+        "
+        @reject="
+          () => {
+            console.log('reject')
+            showRejectDialog = true
+          }
+        "
+        @return="router.push('/admin/dashboard')"
+      />
+    </div>
+
+    <!-- Approve Dialog -->
+    <BaseDialog
+      v-model:is-open="showApproveDialog"
+      title="Approve Story"
+      :width="400"
+    >
+      <p>
+        Bist du dir sicher, dass du diese Geschichte genehmigen möchtest? Der
+        Autor wird benachrichtigt.
+      </p>
+      <div class="modal-actions">
+        <button @click="showApproveDialog = false">Abbrechen</button>
+        <button
+          class="approve-button"
+          @click="handleApprove"
+        >
+          Genehmigen
+        </button>
+      </div>
+    </BaseDialog>
+
+    <!-- Reject Dialog -->
+    <BaseDialog
+      v-model:is-open="showRejectDialog"
+      title="Geschichte ablehnen"
+      :width="400"
+    >
+      <p>
+        Bist du dir sicher, dass du diese Geschichte ablehnen möchtest? Der
+        Autor wird benachrichtigt.
+      </p>
+      <label for="reject-reason">
+        Grund für Ablehnung:
+        <textarea
+          id="reject-reason"
+          v-model="rejectReason"
+          placeholder=""
+          rows="8"
+        />
+      </label>
+
+      <div class="modal-actions">
+        <button @click="showRejectDialog = false">Abbrechen</button>
+        <button
+          class="reject-button"
+          @click="handleReject"
+        >
+          Ablehnen
+        </button>
+      </div>
+    </BaseDialog>
+  </div>
 </template>
 
 <style scoped>

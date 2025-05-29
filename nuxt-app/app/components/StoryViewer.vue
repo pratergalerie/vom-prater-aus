@@ -1,17 +1,8 @@
 <script lang="ts" setup>
-  import type { Database } from '~/types/supabase'
-
-  type StoryPage = Database['public']['Tables']['story_pages']['Row']
-  type Story = Omit<
-    Database['public']['Tables']['stories']['Row'],
-    'author_id' | 'locale_id'
-  > & {
-    author: Database['public']['Tables']['authors']['Row']
-  }
+  import type { Story } from '~/types/frontend'
 
   const props = defineProps<{
-    story: Story | null
-    storyPages: StoryPage[]
+    story: Story
     showCloseButton?: boolean
   }>()
 
@@ -21,14 +12,14 @@
   const currentLightboxAlt = ref('')
 
   const currentPage = computed(() => {
-    return props.storyPages[currentPageIndex.value]
+    return props.story?.pages[currentPageIndex.value]
   })
 
-  const topImageMasksIndexes = props.storyPages.map(() => {
+  const topImageMasksIndexes = props.story?.pages.map(() => {
     return Math.floor(Math.random() * 3) + 1
   })
 
-  const bottomImageMasksIndexes = props.storyPages.map(() => {
+  const bottomImageMasksIndexes = props.story?.pages.map(() => {
     return Math.floor(Math.random() * 3) + 1
   })
 
@@ -64,7 +55,10 @@
 </script>
 
 <template>
-  <div class="story-container">
+  <div
+    v-if="story"
+    class="story-container"
+  >
     <article
       class="story-page"
       :class="{ inverted: currentPage?.layout === 'text-over-image' }"
@@ -132,8 +126,8 @@
       />
       <div class="pagination">
         <button
-          v-for="(page, index) in storyPages"
-          :key="page.id"
+          v-for="(page, index) in story.pages"
+          :key="page.id || index"
           @click="handlePageChange(index)"
         >
           <span :class="{ active: currentPageIndex === index }" />

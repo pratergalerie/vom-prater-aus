@@ -11,24 +11,43 @@ type Story = Omit<
     Database['public']['Tables']['locales']['Row'],
     'id' | 'code' | 'name'
   >
-  keywords: Array<{
-    id: string
-    keyword_id: {
+  keywords: {
+    keyword: {
       id: string
-      name: string
+      word: string
     }
-  }>
+  }[]
 }
 
 type PageResponse = Database['public']['Tables']['story_pages']['Row']
 
 export function useAPI() {
   /**
-   * Fetches all stories
+   * Fetches all stories, optionally filtered by admin mode
+   * @param {Object} options - Additional options
+   * @param {boolean} options.admin - Whether to fetch in admin mode (default: false) - this will return all stories, including draft and submitted stories
    * @returns {Promise<{ data: Ref<Story[]>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the stories data and loading states
    */
-  function getStories() {
-    return useFetch<Story[]>('/api/stories')
+  function getStories(options?: { admin?: boolean }) {
+    return useFetch<Story[]>('/api/stories', {
+      params: {
+        admin: options?.admin ? 'true' : undefined,
+      },
+    })
+  }
+
+  /**
+   * Fetches all stories, optionally filtered by admin mode
+   * @param {Object} options - Additional options
+   * @param {boolean} options.admin - Whether to fetch in admin mode (default: false) - this will return all stories, including draft and submitted stories
+   * @returns {Promise<Story[]>} A promise containing the stories data
+   */
+  function fetchStories(options?: { admin?: boolean }) {
+    return $fetch<Story[]>('/api/stories', {
+      params: {
+        admin: options?.admin ? 'true' : undefined,
+      },
+    })
   }
 
   /**
@@ -52,16 +71,18 @@ export function useAPI() {
    * @param {Object} options - Additional options
    * @param {boolean} options.admin - Whether to fetch in admin mode
    * @param {string} options.token - Story token for author access
+   * @param {boolean} options.pages - Whether to fetch story pages
    * @returns {Promise<{ data: Ref<Story>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the story data and loading states
    */
   function getStoryById(
     id: string,
-    options?: { admin?: boolean; token?: string | null }
+    options?: { admin?: boolean; token?: string | null; pages?: boolean }
   ) {
     return useFetch<Story>(`/api/stories/${id}`, {
       params: {
         admin: options?.admin ? 'true' : undefined,
         token: options?.token || undefined,
+        pages: options?.pages ? 'true' : undefined,
       },
     })
   }
@@ -73,16 +94,18 @@ export function useAPI() {
    * @param {Object} options - Additional options
    * @param {boolean} options.admin - Whether to fetch in admin mode
    * @param {string} options.token - Story token for author access
+   * @param {boolean} options.pages - Whether to fetch story pages
    * @returns {Promise<Story>} A promise containing the story data
    */
   function fetchStoryById(
     id: string,
-    options?: { admin?: boolean; token?: string | null }
+    options?: { admin?: boolean; token?: string | null; pages?: boolean }
   ) {
     return $fetch<Story>(`/api/stories/${id}`, {
       params: {
         admin: options?.admin ? 'true' : undefined,
         token: options?.token || undefined,
+        pages: options?.pages ? 'true' : undefined,
       },
     })
   }
@@ -92,8 +115,12 @@ export function useAPI() {
    * @param {string} slug - The slug of the story to fetch
    * @returns {Promise<{ data: Ref<Story>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the story data and loading states
    */
-  function getStoryBySlug(slug: string) {
-    return useFetch<Story>(`/api/stories/by-slug/${slug}`)
+  function getStoryBySlug(slug: string, options?: { pages?: boolean }) {
+    return useFetch<Story>(`/api/stories/by-slug/${slug}`, {
+      params: {
+        pages: options?.pages ? 'true' : undefined,
+      },
+    })
   }
 
   /**
@@ -408,6 +435,7 @@ export function useAPI() {
   return {
     // Stories
     getStories,
+    fetchStories,
     getFeaturedStories,
     getStoryById,
     fetchStoryById,

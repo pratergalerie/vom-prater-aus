@@ -1,18 +1,6 @@
 <script setup lang="ts">
+  import type { Story } from '~/types/frontend'
   import type { Database } from '~/types/supabase'
-
-  type Story = Database['public']['Tables']['stories']['Row'] & {
-    author: {
-      id: string
-      name: string
-      email: string
-    }
-    locale: {
-      id: string
-      code: string
-      name: string
-    }
-  }
 
   useHead({
     title: 'Vom Prater Aus - Admin Dashboard',
@@ -29,9 +17,9 @@
   })
 
   const router = useRouter()
+  const { updateStory } = useAPI()
 
   const stories = ref<Story[]>([])
-  const isLoading = ref(true)
   const error = ref('')
 
   const searchQuery = ref('')
@@ -46,7 +34,7 @@
 
   // Computed property for filtered stories
   const filteredStories = computed(() => {
-    return stories.value.filter((story) => {
+    return stories.value.filter((story: Story) => {
       const matchesSearch = story.title
         .toLowerCase()
         .includes(searchQuery.value.toLowerCase())
@@ -56,38 +44,69 @@
     })
   })
 
-  // Load stories
-  async function loadStories() {
-    try {
-      isLoading.value = true
-      const storiesData = await $fetch<Story[]>('/api/stories', {
-        params: {
-          admin: 'true',
-        },
-      })
-
-      stories.value = storiesData
-    } catch (err) {
-      if (err instanceof Error) {
-        error.value = err.message
-      } else {
-        error.value = 'An unknown error occurred'
+  type APIStory = Omit<
+    Database['public']['Tables']['stories']['Row'],
+    'author_id' | 'locale_id'
+  > & {
+    author: Database['public']['Tables']['authors']['Row']
+    pages: Database['public']['Tables']['story_pages']['Row'][]
+    locale: Pick<
+      Database['public']['Tables']['locales']['Row'],
+      'id' | 'code' | 'name'
+    >
+    keywords: Array<{
+      id: string
+      keyword_id: {
+        id: string
+        name: string
       }
-    } finally {
-      isLoading.value = false
+    }>
+  }
+
+  function convertToFrontendStory(apiStory: APIStory): Story {
+    return {
+      id: apiStory.id,
+      title: apiStory.title,
+      slug: apiStory.slug,
+      author: apiStory.author,
+      year: apiStory.year,
+      keywords: [],
+      pages: [],
+      createdAt: new Date(apiStory.created_at || new Date()),
+      modifiedAt: apiStory.modified_at ? new Date(apiStory.modified_at) : null,
+      locale: apiStory.locale.code as 'en' | 'de',
+      status: apiStory.status as Story['status'],
+      featured: apiStory.featured || false,
+      featuredImage: apiStory.featured_image,
+      quote: apiStory.quote,
     }
+  }
+
+  // Load stories
+  const {
+    data: storiesData,
+    error: storiesError,
+    status,
+  } = await useAPI().getStories({
+    admin: true,
+  })
+  if (storiesData.value) {
+    stories.value = storiesData.value.map(convertToFrontendStory)
+  } else if (storiesError.value) {
+    throw createError({
+      statusCode: 500,
+      statusMessage: storiesError.value.message,
+    })
   }
 
   // Update story status
   async function updateStoryStatus(storyId: string, newStatus: string) {
     try {
-      const { error: updateError } = await useFetch(`/api/stories/${storyId}`, {
-        method: 'PUT',
-        body: { status: newStatus },
-      })
-
-      if (updateError) throw updateError
-      await loadStories()
+      await updateStory(storyId, { status: newStatus })
+      const updatedStories = await useAPI().fetchStories({ admin: true })
+      if (updatedStories) {
+        stories.value = updatedStories.map(convertToFrontendStory)
+      }
     } catch (err) {
       if (err instanceof Error) {
         error.value = err.message
@@ -105,11 +124,6 @@
       router.push('/admin/login')
     }
   }
-
-  // Load stories on mount
-  onMounted(() => {
-    loadStories()
-  })
 </script>
 
 <template>
@@ -136,7 +150,24 @@
         {{ error }}
       </div>
 
-      <div class="stories-panel">
+      <div
+        v-if="status === 'pending'"
+        class="loading-message"
+      >
+        Geschichten werden geladen...
+      </div>
+
+      <div
+        v-else-if="stories.length === 0"
+        class="empty-message"
+      >
+        Keine Geschichten gefunden.
+      </div>
+
+      <div
+        v-else
+        class="stories-panel"
+      >
         <div class="panel-header">
           <h2>Geschichten</h2>
           <div class="filter-controls">
@@ -168,24 +199,7 @@
           </div>
         </div>
 
-        <div
-          v-if="isLoading"
-          class="loading-message"
-        >
-          Geschichten werden geladen...
-        </div>
-
-        <div
-          v-else-if="stories.length === 0"
-          class="empty-message"
-        >
-          Keine Geschichten gefunden.
-        </div>
-
-        <div
-          v-else
-          class="stories-table-container"
-        >
+        <div class="stories-table-container">
           <table class="stories-table">
             <thead>
               <tr>
@@ -220,7 +234,7 @@
                       {{ story.title }}
                     </div>
                     <div class="story-locale">
-                      {{ story.locale?.name }}
+                      {{ story.locale === 'en' ? 'English' : 'Deutsch' }}
                     </div>
                   </td>
                   <td data-label="Autor">
@@ -241,8 +255,8 @@
                   <td data-label="Erstellt">
                     <span class="mobile-label">Erstellt</span>
                     {{
-                      story.created_at
-                        ? new Date(story.created_at).toLocaleDateString()
+                      story.createdAt
+                        ? story.createdAt.toLocaleDateString()
                         : ''
                     }}
                   </td>

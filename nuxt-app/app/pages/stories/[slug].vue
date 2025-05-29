@@ -1,13 +1,6 @@
 <script lang="ts" setup>
-  import type { Database } from '~/types/supabase'
-
-  type StoryPage = Database['public']['Tables']['story_pages']['Row']
-  type Story = Omit<
-    Database['public']['Tables']['stories']['Row'],
-    'author_id' | 'locale_id'
-  > & {
-    author: Database['public']['Tables']['authors']['Row']
-  }
+  import type { Story } from '~/types/frontend'
+  import { transformStoryData } from '~/utils/story'
 
   definePageMeta({
     layout: 'no-footer',
@@ -17,46 +10,32 @@
   const api = useAPI()
 
   const storySlug = route.params.slug as string
-  const story = ref<Story | null>(null)
-  const storyPages = ref<StoryPage[]>([])
+  const story = ref<Story>()
 
   // Fetch story data by slug
-  const { data: storyData } = await api.getStoryBySlug(storySlug)
+  const { data: storyData, status, error } = await api.getStoryBySlug(storySlug)
   if (storyData.value) {
-    story.value = storyData.value
-
-    // Fetch story pages
-    const { data: pagesData } = await api.getStoryPages(story.value.id)
-    if (pagesData.value) {
-      storyPages.value = pagesData.value.sort(
-        (a, b) => a.page_order - b.page_order
-      )
-    }
+    story.value = transformStoryData(storyData.value)
   }
 </script>
 
 <template>
-  <Suspense>
-    <template #default>
-      <StoryViewer
-        v-if="story"
-        :story="story"
-        :story-pages="storyPages"
-        :show-close-button="true"
-        @close="$router.back()"
-      />
-    </template>
-    <template #fallback>
-      <div class="loading-container">
-        <div class="loading-spinner" />
-      </div>
-    </template>
-    <template #error>
-      <div class="error-container">
-        <p>Ein Fehler ist aufgetreten. Bitte versuche es erneut.</p>
-      </div>
-    </template>
-  </Suspense>
+  <div v-if="status === 'pending'">
+    <div class="loading-container">
+      <div class="loading-spinner" />
+    </div>
+  </div>
+  <div v-else-if="error">
+    <div class="error-container">
+      <p>Ein Fehler ist aufgetreten. Bitte versuche es erneut.</p>
+    </div>
+  </div>
+  <StoryViewer
+    v-else-if="story"
+    :story="story"
+    :show-close-button="true"
+    @close="$router.back()"
+  />
 </template>
 
 <style scoped>

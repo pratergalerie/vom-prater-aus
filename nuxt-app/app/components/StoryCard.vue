@@ -1,11 +1,9 @@
 <script lang="ts" setup>
   import type { Story } from '~/types/frontend'
 
-  interface Props {
+  defineProps<{
     story: Story
-  }
-
-  defineProps<Props>()
+  }>()
 </script>
 
 <template>
@@ -40,10 +38,10 @@
         >
           <span
             v-for="keyword in story.keywords"
-            :key="keyword"
+            :key="keyword.id"
             class="keyword"
           >
-            {{ keyword }}
+            {{ keyword.word }}
           </span>
         </div>
       </div>

@@ -29,7 +29,7 @@ export interface Story {
   slug: string
   author: Author
   year: number
-  keywords: string[]
+  keywords: Keyword[]
   pages: StoryPage[]
   createdAt: Date
   modifiedAt: Date | null
@@ -38,6 +38,11 @@ export interface Story {
   featured?: boolean
   featuredImage?: string | null
   quote?: string | null
+}
+
+export interface Keyword {
+  id: string
+  word: string
 }
 
 // Frontend types

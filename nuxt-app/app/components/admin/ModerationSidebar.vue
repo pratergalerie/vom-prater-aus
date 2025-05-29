@@ -1,41 +1,20 @@
 <script lang="ts" setup>
-  import type { Database } from '~/types/supabase'
+  import type { Story } from '~/types/frontend'
 
-  type Story = Omit<
-    Database['public']['Tables']['stories']['Row'],
-    'author_id' | 'locale_id'
-  > & {
-    author: {
-      id: string
-      name: string
-      email: string
-    }
-    locale: {
-      id: string
-      code: string
-      name: string
-    }
-    pages: Database['public']['Tables']['story_pages']['Row'][]
-    createdAt: Date
-    modifiedAt: Date
-    status: 'draft' | 'submitted' | 'approved' | 'rejected'
-  }
-
-  interface Props {
+  defineProps<{
     story: Story | null
     isOpen: boolean
     isFeatured: boolean
     quote: string
-  }
+  }>()
 
   interface Emits {
     (e: 'update:isOpen' | 'update:isFeatured', value: boolean): void
     (e: 'update:quote', value: string): void
     (e: 'approve' | 'reject' | 'return'): void
   }
-
-  defineProps<Props>()
   const emit = defineEmits<Emits>()
+
   const shapeClipPath = ref('')
   const buttonClipPath = ref('')
 
@@ -136,14 +115,14 @@
 
             <div class="info-group">
               <span>Sprache:</span>
-              <p>{{ story.locale.name }}</p>
+              <p>{{ story.locale }}</p>
             </div>
 
             <div class="info-group">
               <span>Erstellt:</span>
               <p>
                 {{
-                  new Date(story.created_at || '').toLocaleDateString('de-DE')
+                  new Date(story.createdAt || '').toLocaleDateString('de-DE')
                 }}
               </p>
             </div>
