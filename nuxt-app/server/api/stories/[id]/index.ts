@@ -81,14 +81,14 @@ export default defineEventHandler(async (event) => {
             code,
             name
           ),
+          keywords:stories_keywords (
+            keyword:keyword_id (
+              id,
+              word
+            )
+          ),
           pages:story_pages (
-            id,
-            layout,
-            text,
-            image,
-            created_at,
-            modified_at,
-            page_order
+            *
           )
         `
         )
@@ -166,6 +166,12 @@ export default defineEventHandler(async (event) => {
             id,
             code,
             name
+          ),
+          keywords:stories_keywords (
+            keyword:keyword_id (
+              id,
+              word
+            )
           )
         `
         )

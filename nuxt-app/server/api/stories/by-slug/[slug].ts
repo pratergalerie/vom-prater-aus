@@ -34,6 +34,20 @@ export default defineEventHandler(async (event) => {
             id,
             name,
             email
+          ),
+          locale:locale_id (
+            id,
+            code,
+            name
+          ),
+          keywords:stories_keywords (
+            keyword:keyword_id (
+              id,
+              word
+            )
+          ),
+          pages:story_pages (
+            *
           )
         `
         )

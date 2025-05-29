@@ -22,10 +22,13 @@ export default defineEventHandler(async (event) => {
       // Get query parameters
       const query = getQuery(event)
       const featured = query.featured === 'true'
+      const pages = query.pages === 'true'
       const limit = query.limit ? parseInt(query.limit as string) : undefined
 
       // Start building the query
-      let supabaseQuery = client.from('stories').select(`
+      let supabaseQuery = client.from('stories').select(
+        pages
+          ? `
         id,
         title,
         slug,
@@ -45,8 +48,46 @@ export default defineEventHandler(async (event) => {
           id,
           code,
           name
+        ),
+        keywords:stories_keywords (
+            keyword:keyword_id (
+              id,
+              word
+            )
+          ),
+        pages:story_pages (
+          *
         )
-      `)
+      `
+          : `
+        id,
+        title,
+        slug,
+        year,
+        status,
+        featured_image,
+        quote,
+        featured,
+        created_at,
+        modified_at,
+        author:author_id (
+          id,
+          name,
+          email
+        ),
+        locale:locale_id (
+          id,
+          code,
+          name
+        ),
+        keywords:stories_keywords (
+            keyword:keyword_id (
+              id,
+              word
+            )
+          )
+      `
+      )
 
       // Apply featured filter if specified
       if (featured) {
