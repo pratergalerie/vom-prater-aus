@@ -25,7 +25,7 @@
   const { locale } = useI18n()
 
   // Get story details for display
-  const { data: story } = await api.getStoryByIdServer(storyId)
+  const { data: story } = await api.getStoryById(storyId)
 
   // Store the token in session storage
   function storeToken(token: string) {
