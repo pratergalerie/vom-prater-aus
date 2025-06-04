@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import type { User } from '@supabase/supabase-js'
 
 export const useAuthStore = defineStore('Auth', () => {
-  const user = ref<User | null>(null)
+  const user = useSessionStorage<User | null>('user', null)
 
   function setUser(newUser: User | null) {
     user.value = newUser
