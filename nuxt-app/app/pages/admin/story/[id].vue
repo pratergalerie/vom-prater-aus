@@ -14,6 +14,7 @@
 
   definePageMeta({
     layout: 'no-footer',
+    middleware: 'admin',
   })
 
   const route = useRoute()
