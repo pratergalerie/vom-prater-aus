@@ -34,10 +34,6 @@
     overflow: hidden;
   }
 
-  main {
-    margin-top: var(--header-height);
-  }
-
   .slide-enter-active,
   .slide-leave-active {
     transition: transform 0.5s;

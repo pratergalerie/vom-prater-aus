@@ -39,14 +39,6 @@
 </template>
 
 <style scoped>
-  main {
-    margin-top: var(--header-height);
-  }
-
-  .footer {
-    margin-top: 100px;
-  }
-
   .slide-enter-active,
   .slide-leave-active {
     transition: transform 0.5s;

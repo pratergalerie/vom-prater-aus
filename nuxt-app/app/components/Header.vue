@@ -1,14 +1,24 @@
 <script setup lang="ts"></script>
 
 <template>
-  <header>
-    <div class="header-container">
-      <Logo />
-    </div>
-  </header>
+  <div class="header-wrapper">
+    <header>
+      <div class="header-container">
+        <Logo />
+      </div>
+    </header>
+  </div>
 </template>
 
 <style scoped>
+  .header-wrapper {
+    position: relative;
+    width: 100%;
+    height: var(--header-height);
+    margin: 0 auto;
+    background-color: var(--color-beige);
+  }
+
   header {
     position: fixed;
     top: 0;
@@ -16,6 +26,7 @@
     z-index: 99;
     box-sizing: border-box;
     width: 100%;
+    max-width: var(--max-width);
     height: var(--header-height);
     background-color: var(--color-beige);
     mask: url('/svgs/header/masks/mobile.svg');

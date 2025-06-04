@@ -1,9 +1,24 @@
 <script setup lang="ts">
   const { footerRoutes } = useMenu()
+
+  const footerRef = ref<HTMLElement | null>(null)
+
+  const footerHeight = computed(() => {
+    if (!footerRef.value) return 'auto'
+    const heightPx = `${useElementSize(footerRef).height.value + 100}px`
+    return heightPx
+  })
+
+  watch(footerHeight, (newHeight) => {
+    document.documentElement.style.cssText = `--footer-height: ${newHeight}`
+  })
 </script>
 
 <template>
-  <footer class="footer">
+  <footer
+    ref="footerRef"
+    class="footer"
+  >
     <div class="top-shape">
       <img
         src="/svgs/textures/noise.svg"
@@ -66,6 +81,7 @@
     height: calc(100vh - var(--header-height));
     container-type: inline-size;
     container-name: footer;
+    margin-top: 100px;
 
     @container (min-width: 768px) {
       height: auto;

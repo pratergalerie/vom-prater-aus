@@ -56,8 +56,11 @@
 
   /* *------------------------------ Layout --------------------------------* */
   --header-height: 90px;
-  --footer-height: 530px;
+  --footer-height: 328px;
   --max-width: 1000px;
+  --full-height-header-footer: calc(
+    100vh - (var(--footer-height) + var(--header-height))
+  );
 
   @media (min-width: 768px) {
     --header-height: 120px;
