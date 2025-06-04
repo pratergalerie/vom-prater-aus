@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import type { Story } from '~/types/frontend'
-  import type { Database } from '~/types/supabase'
+  import { transformStoryData } from '~/utils/story'
 
   useHead({
     title: 'Vom Prater Aus - Admin Dashboard',
@@ -14,6 +14,7 @@
 
   definePageMeta({
     layout: 'no-footer',
+    middleware: 'admin',
   })
 
   const router = useRouter()
@@ -32,7 +33,6 @@
     rejected: 'Abgelehnt',
   }
 
-  // Computed property for filtered stories
   const filteredStories = computed(() => {
     return stories.value.filter((story: Story) => {
       const matchesSearch = story.title
@@ -43,44 +43,6 @@
       return matchesSearch && matchesStatus
     })
   })
-
-  type APIStory = Omit<
-    Database['public']['Tables']['stories']['Row'],
-    'author_id' | 'locale_id'
-  > & {
-    author: Database['public']['Tables']['authors']['Row']
-    pages: Database['public']['Tables']['story_pages']['Row'][]
-    locale: Pick<
-      Database['public']['Tables']['locales']['Row'],
-      'id' | 'code' | 'name'
-    >
-    keywords: Array<{
-      id: string
-      keyword_id: {
-        id: string
-        name: string
-      }
-    }>
-  }
-
-  function convertToFrontendStory(apiStory: APIStory): Story {
-    return {
-      id: apiStory.id,
-      title: apiStory.title,
-      slug: apiStory.slug,
-      author: apiStory.author,
-      year: apiStory.year,
-      keywords: [],
-      pages: [],
-      createdAt: new Date(apiStory.created_at || new Date()),
-      modifiedAt: apiStory.modified_at ? new Date(apiStory.modified_at) : null,
-      locale: apiStory.locale.code as 'en' | 'de',
-      status: apiStory.status as Story['status'],
-      featured: apiStory.featured || false,
-      featuredImage: apiStory.featured_image,
-      quote: apiStory.quote,
-    }
-  }
 
   // Load stories
   const {
