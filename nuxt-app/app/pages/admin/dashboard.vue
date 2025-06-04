@@ -53,7 +53,7 @@
     admin: true,
   })
   if (storiesData.value) {
-    stories.value = storiesData.value.map(convertToFrontendStory)
+    stories.value = storiesData.value.map(transformStoryData)
   } else if (storiesError.value) {
     throw createError({
       statusCode: 500,
@@ -67,7 +67,7 @@
       await updateStory(storyId, { status: newStatus })
       const updatedStories = await useAPI().fetchStories({ admin: true })
       if (updatedStories) {
-        stories.value = updatedStories.map(convertToFrontendStory)
+        stories.value = updatedStories.map(transformStoryData)
       }
     } catch (err) {
       if (err instanceof Error) {
