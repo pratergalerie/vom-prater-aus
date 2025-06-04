@@ -94,8 +94,8 @@
 </script>
 
 <template>
-  <div class="admin-story-view">
-    <div class="page-container">
+  <div class="page-container">
+    <div class="story-container">
       <div
         v-if="status === 'pending'"
         class="loading-container"
@@ -111,7 +111,7 @@
 
       <div
         v-else
-        class="story-container"
+        class="story-wrapper"
       >
         <StoryViewer
           v-if="story"
@@ -195,11 +195,11 @@
 </template>
 
 <style scoped>
-  .admin-story-view {
+  .page-container {
     height: calc(100dvh - var(--header-height));
   }
 
-  .page-container {
+  .story-container {
     position: relative;
     width: 100%;
     max-width: var(--max-width);
@@ -208,7 +208,7 @@
     overflow: hidden;
   }
 
-  .story-container {
+  .story-wrapper {
     width: 100%;
     height: 100%;
     padding-right: 320px; /* Add space for the sidebar */

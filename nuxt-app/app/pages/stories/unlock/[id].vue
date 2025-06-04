@@ -82,7 +82,7 @@
 
 <template>
   <main>
-    <div class="unlock-container">
+    <div class="page-container">
       <h1>{{ $t('pages.stories.unlock.title') }}</h1>
 
       <form @submit.prevent="handlePasswordSubmit">
@@ -217,5 +217,16 @@
       gap: 1rem;
       justify-content: space-between;
     }
+  }
+
+  .page-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    width: 100%;
+    max-width: 400px;
+    padding: 2rem;
+    margin: 0 auto;
   }
 </style>

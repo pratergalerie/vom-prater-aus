@@ -89,7 +89,7 @@
 </script>
 
 <template>
-  <div class="admin-dashboard">
+  <div class="page-container">
     <header class="dashboard-header">
       <h1>Admin Dashboard</h1>
       <button
@@ -298,7 +298,7 @@
 </template>
 
 <style scoped>
-  .admin-dashboard {
+  .page-container {
     container-type: inline-size;
     container-name: admin-dashboard;
   }

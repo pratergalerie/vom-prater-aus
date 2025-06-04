@@ -52,7 +52,7 @@
 </script>
 
 <template>
-  <div class="stories-list-page">
+  <div class="page-container">
     <h1 class="page-title">Stories</h1>
 
     <div
@@ -90,8 +90,7 @@
 </template>
 
 <style scoped>
-  .stories-list-page {
-    max-width: 1200px;
+  .page-container {
     padding: 2rem;
     margin: 0 auto;
   }
@@ -120,7 +119,7 @@
   }
 
   @media (max-width: 768px) {
-    .stories-list-page {
+    .page-container {
       padding: 1rem;
     }
 

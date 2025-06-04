@@ -213,7 +213,7 @@
 </script>
 
 <template>
-  <div class="scene-container">
+  <div class="page-container">
     <TresCanvas window-size>
       <StoriesExplorer :story-elements="storyElements" />
     </TresCanvas>
@@ -221,7 +221,7 @@
 </template>
 
 <style scoped>
-  .scene-container {
+  .page-container {
     position: fixed;
     top: 0;
     left: 0;

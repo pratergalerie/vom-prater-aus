@@ -322,7 +322,7 @@
 <template>
   <div
     ref="containerRef"
-    class="form-container"
+    class="page-container"
   >
     <h1>{{ $t('pages.create.form.title') }}</h1>
     <form>
@@ -465,7 +465,7 @@
 </template>
 
 <style scoped>
-  .form-container {
+  .page-container {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
