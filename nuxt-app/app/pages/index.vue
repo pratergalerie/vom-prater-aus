@@ -78,28 +78,28 @@
           data-rellax-speed="-0.5"
         />
       </ClientOnly>
-      <h1>{{ section.content.title }}</h1>
+      <h1>{{ section.content?.title }}</h1>
       <NuxtImg
-        v-if="section.content.imageSrc"
-        :src="section.content.imageSrc"
-        :alt="section.content.imageAlt || ''"
+        v-if="section.content?.imageSrc"
+        :src="section.content?.imageSrc"
+        :alt="section.content?.imageAlt || ''"
       />
       <div class="text-block">
         <p
-          v-for="(paragraph, index) in section.content.text"
+          v-for="(paragraph, index) in section.content?.text"
           :key="index"
         >
           {{ paragraph }}
         </p>
       </div>
       <BaseButton
-        v-if="section.content.buttonLabel"
+        v-if="section.content?.buttonLabel"
         class="button"
         type="primary"
         variant="label-icon"
         icon="mdi:arrow-right"
-        :label="section.content.buttonLabel"
-        :href="section.content.buttonLink"
+        :label="section.content?.buttonLabel"
+        :href="section.content?.buttonLink"
       />
     </section>
 

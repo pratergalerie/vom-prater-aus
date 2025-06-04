@@ -19,7 +19,27 @@ type Story = Omit<
   }[]
 }
 
-type PageResponse = Database['public']['Tables']['story_pages']['Row']
+type Page = {
+  id: string
+  slug: string
+  sections: {
+    id: string
+    name: string
+    type: string
+    order: number
+    content: {
+      id: string
+      title: string | null
+      subtitle: string | null
+      text: string[] | null
+      imageSrc: string | null
+      imageAlt: string | null
+      buttonLabel: string | null
+      buttonLink: string | null
+      additionalContent: unknown
+    } | null
+  }[]
+}
 
 export function useAPI() {
   /**
@@ -318,7 +338,7 @@ export function useAPI() {
    * @returns {Promise<{ data: Ref<PageResponse>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the page data and loading states
    */
   function getPage(slug: string, locale: string) {
-    return useFetch<PageResponse>(`/api/pages/${slug}`, {
+    return useFetch<Page>(`/api/pages/${slug}`, {
       params: { locale },
     })
   }
