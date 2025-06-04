@@ -143,6 +143,7 @@
     min-height: 100vh;
     container-type: inline-size;
     container-name: main-container;
+    overflow-x: hidden;
 
     @container (min-width: 768px) {
       gap: 100px;
@@ -296,6 +297,8 @@
     inset: 0;
     z-index: -1;
     width: 100%;
+    height: 100%;
+    overflow: hidden;
     pointer-events: none;
   }
 
@@ -305,7 +308,7 @@
 
     &.shape-1 {
       top: 150px;
-      left: -20px;
+      left: 0;
       width: 80%;
 
       @container (min-width: 768px) {
@@ -315,7 +318,7 @@
 
     &.shape-2 {
       top: 600px;
-      right: 50px;
+      right: 0;
       width: 90%;
 
       @container (min-width: 768px) {
@@ -325,7 +328,7 @@
 
     &.shape-3 {
       top: 1200px;
-      right: -80px;
+      right: 0;
       width: 50%;
 
       @container (min-width: 768px) {
@@ -335,7 +338,7 @@
 
     &.shape-4 {
       top: 1800px;
-      left: -50px;
+      left: 0;
       width: 50%;
       transform: rotate(10deg);
 
