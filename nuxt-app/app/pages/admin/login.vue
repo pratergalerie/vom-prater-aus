@@ -45,8 +45,11 @@
 </script>
 
 <template>
-  <div class="login-container">
-    <form @submit.prevent="handleSignIn">
+  <div class="page-container">
+    <form
+      class="login-form"
+      @submit.prevent="handleSignIn"
+    >
       <h1>Admin Login</h1>
 
       <div
@@ -58,86 +61,56 @@
       </div>
 
       <div class="form-group">
-        <label for="email">
-          E-Mail
-          <input
-            id="email"
-            v-model="email"
-            type="email"
-            placeholder="E-Mail"
-            required
-            :disabled="loading"
-            autocomplete="email"
-        /></label>
+        <BaseTextInput
+          id="email"
+          v-model="email"
+          type="email"
+          placeholder="E-Mail"
+          label="E-Mail"
+          validation-key="email"
+          required
+          :disabled="loading"
+        />
       </div>
 
       <div class="form-group">
-        <label for="password">
-          Password
-          <input
-            id="password"
-            v-model="password"
-            type="password"
-            placeholder="Password"
-            required
-            :disabled="loading"
-            autocomplete="current-password"
-        /></label>
+        <BaseTextInput
+          id="password"
+          v-model="password"
+          type="password"
+          placeholder="Password"
+          label="Password"
+          required
+          :disabled="loading"
+        />
       </div>
 
-      <button
-        type="submit"
+      <BaseButton
+        type="secondary"
+        variant="label-icon"
+        label="Sign In"
+        icon="mdi:login"
         :disabled="loading"
-      >
-        {{ loading ? 'Signing in...' : 'Sign In' }}
-      </button>
+        @click="handleSignIn"
+      />
     </form>
   </div>
 </template>
 
 <style scoped>
-  .login-container {
+  .page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: var(--full-height-header-footer);
+  }
+
+  .login-form {
     max-width: 400px;
-    padding: 20px;
-    margin: 40px auto;
   }
 
   .form-group {
     margin-bottom: 20px;
-
-    & label {
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    & input {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid rgb(204 204 204);
-      border-radius: 4px;
-    }
-  }
-
-  .error-message {
-    padding: 10px;
-    margin-bottom: 20px;
-    color: rgb(220 53 69);
-    background-color: rgb(248 215 218);
-    border-radius: 4px;
-  }
-
-  button {
-    width: 100%;
-    padding: 10px;
-    color: white;
-    cursor: pointer;
-    background-color: rgb(0 123 255);
-    border: none;
-    border-radius: 4px;
-
-    &:disabled {
-      cursor: not-allowed;
-      background-color: rgb(204 204 204);
-    }
   }
 </style>
