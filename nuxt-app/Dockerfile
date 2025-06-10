@@ -6,13 +6,19 @@ FROM node:${NODE_VERSION}-slim AS build
 # Set the working directory inside the container
 WORKDIR /app
 
+# Define build-time environment variables
+ARG SUPABASE_URL
+ARG SUPABASE_KEY
+ENV SUPABASE_URL=${SUPABASE_URL}
+ENV SUPABASE_KEY=${SUPABASE_KEY}
+
 # Copy package files first for better caching
 COPY package*.json ./
 
 # Install dependencies
 RUN npm ci
 
-# Copy the rest of the application files
+# Copy the rest of the application
 COPY . .
 
 # Build the application
@@ -24,8 +30,8 @@ FROM node:${NODE_VERSION}-slim
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy everything from the build stage
-COPY --from=build /app ./
+# Copy only the necessary files from the build stage
+COPY --from=build /app/.output ./
 
 # Define environment variables
 ENV HOST=0.0.0.0
@@ -35,4 +41,4 @@ ENV NODE_ENV=production
 EXPOSE 3000
 
 # Start the application
-CMD ["node", ".output/server/index.mjs"]
+CMD ["node", "server/index.mjs"]

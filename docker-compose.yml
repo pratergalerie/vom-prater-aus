@@ -33,6 +33,9 @@ services:
     build:
       context: ./nuxt-app
       dockerfile: Dockerfile
+      args:
+        SUPABASE_URL: ${SUPABASE_URL}
+        SUPABASE_KEY: ${ANON_KEY}
     profiles:
       - prod
     ports:
