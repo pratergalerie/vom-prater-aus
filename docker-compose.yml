@@ -1,6 +1,6 @@
 services:
   nuxt-app-dev:
-    container_name: nuxt-app
+    container_name: nuxt-app-dev
     build:
       context: ./nuxt-app
       dockerfile: Dockerfile.dev
@@ -29,7 +29,7 @@ services:
     command: sh -c "mkdir -p /tmp/nitro-storage && chmod 777 /tmp/nitro-storage && npm run dev"
 
   nuxt-app-prod:
-    container_name: nuxt-app
+    container_name: nuxt-app-prod
     build:
       context: ./nuxt-app
       dockerfile: Dockerfile
@@ -47,10 +47,6 @@ services:
       - auth
       - rest
       - db
-    # Create a directory for Nitro storage to avoid
-    # "listen EADDRINUSE: address already in use /tmp/nitro/worker-X.sock"
-    # errors
-    command: sh -c "mkdir -p /tmp/nitro-storage && chmod 777 /tmp/nitro-storage && npm run build && npm run start"
 
   # Import all Supabase services
   studio:

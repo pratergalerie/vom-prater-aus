@@ -6,15 +6,14 @@ FROM node:${NODE_VERSION}-slim AS build
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy package.json and pnpm-lock.yaml files to the working directory
-COPY ./package.json /app/
-COPY ./package-lock.json /app/
+# Copy package files first for better caching
+COPY package*.json ./
 
-## Install dependencies
-RUN npm install
+# Install dependencies
+RUN npm ci
 
-# Copy the rest of the application files to the working directory
-COPY . ./
+# Copy the rest of the application files
+COPY . .
 
 # Build the application
 RUN npm run build
@@ -25,15 +24,15 @@ FROM node:${NODE_VERSION}-slim
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the output from the build stage to the working directory
-COPY --from=build /app/.output ./
+# Copy everything from the build stage
+COPY --from=build /app ./
 
 # Define environment variables
-ENV HOST=0.0.0.0 NODE_ENV=production
+ENV HOST=0.0.0.0
 ENV NODE_ENV=production
 
 # Expose the port the application will run on
 EXPOSE 3000
 
 # Start the application
-CMD ["node","/app/server/index.mjs"]
+CMD ["node", ".output/server/index.mjs"]
