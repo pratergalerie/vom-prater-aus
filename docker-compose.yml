@@ -13,8 +13,8 @@ services:
       - 3000:3000
       - 24678:24678 # HMR
     environment:
-      - SUPABASE_URL=${SUPABASE_URL}
-      - SUPABASE_KEY=${ANON_KEY}
+      - NUXT_PUBLIC_SUPABASE_URL=${SUPABASE_URL}
+      - NUXT_PUBLIC_SUPABASE_KEY=${ANON_KEY}
       - STYLELINT_CSS_VARIABLES_PATH=/app/app/assets/css/variables.css
     networks:
       - frontend-network
@@ -34,15 +34,15 @@ services:
       context: ./nuxt-app
       dockerfile: Dockerfile
       args:
-        SUPABASE_URL: ${SUPABASE_URL}
-        SUPABASE_KEY: ${ANON_KEY}
+        NUXT_PUBLIC_SUPABASE_URL: ${SUPABASE_URL}
+        NUXT_PUBLIC_SUPABASE_KEY: ${ANON_KEY}
     profiles:
       - prod
     ports:
       - 3000:3000
     environment:
-      - SUPABASE_URL=${SUPABASE_URL}
-      - SUPABASE_KEY=${ANON_KEY}
+      - NUXT_PUBLIC_SUPABASE_URL=${SUPABASE_URL}
+      - NUXT_PUBLIC_SUPABASE_KEY=${ANON_KEY}
     networks:
       - frontend-network
     depends_on:
@@ -541,7 +541,9 @@ services:
       - db-config:/etc/postgresql-custom
       # Add our application migrations
       - ./supabase/scripts/initial_schema.sql:/docker-entrypoint-initdb.d/migrations/01-initial_schema.sql:Z
-      - ./supabase/scripts/initial_data.sql:/docker-entrypoint-initdb.d/migrations/02-initial_data.sql:Z
+      - type: bind
+        source: ./supabase/scripts/initial_data.sql
+        target: /docker-entrypoint-initdb.d/migrations/02-initial_data.sql
       - ./supabase/scripts/indexes_and_triggers.sql:/docker-entrypoint-initdb.d/migrations/03-indexes_and_triggers.sql:Z
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "postgres", "-h", "localhost"]

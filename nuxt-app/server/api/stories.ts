@@ -176,15 +176,6 @@ export default defineEventHandler(async (event) => {
         })
       }
 
-      const anonKey = process.env.SUPABASE_KEY
-
-      if (!anonKey) {
-        throw createError({
-          statusCode: 500,
-          statusMessage: 'SUPABASE_KEY is not set',
-        })
-      }
-
       // 2. Call the Edge Function to send the email
       try {
         const client = await serverSupabaseClient<Database>(event)
