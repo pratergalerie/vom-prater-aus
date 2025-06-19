@@ -74,14 +74,22 @@ ssh-keygen -t rsa -b 4096 -C "github-actions@your-domain.com" -f ~/.ssh/github_a
 cat ~/.ssh/github_actions.pub
 ```
 
-Add the public key to your server's authorized keys:
+**Important:** Copy the public key output - you'll need it for the next step.
+
+Configure SSH to use this key for GitHub:
 
 ```bash
-# Add to authorized keys
-cat ~/.ssh/github_actions.pub >> ~/.ssh/authorized_keys
+# Create SSH config file
+cat > ~/.ssh/config << 'EOF'
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/github_actions
+    IdentitiesOnly yes
+EOF
 
 # Set proper permissions
-chmod 600 ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/config
 chmod 600 ~/.ssh/github_actions
 ```
 
@@ -90,12 +98,23 @@ chmod 600 ~/.ssh/github_actions
 ```bash
 # Make the deployment script executable
 chmod +x deploy-auto.sh
-chmod +x deploy.sh
 ```
 
 ## GitHub Repository Setup
 
-### 1. Add GitHub Secrets
+### 1. Add Deploy Key to GitHub Repository
+
+**This step is crucial and was missing from the original instructions:**
+
+1. Go to your GitHub repository: `https://github.com/your-username/your-repo-name`
+2. Navigate to **Settings** → **Deploy keys**
+3. Click **Add deploy key**
+4. Give it a title (e.g., "Server Deploy Key")
+5. Paste the public key content (from `cat ~/.ssh/github_actions.pub`) into the **Key** field
+6. Check **Allow write access** if you want to allow pushing (optional for deployments)
+7. Click **Add key**
+
+### 2. Add GitHub Secrets
 
 Go to your GitHub repository → Settings → Secrets and variables → Actions, and add the following secrets:
 
@@ -109,7 +128,7 @@ To get the private key content:
 cat ~/.ssh/github_actions
 ```
 
-### 2. Push the Workflow Files
+### 3. Push the Workflow Files
 
 Make sure the following files are in your repository:
 - `.github/workflows/deploy.yml`
@@ -117,7 +136,18 @@ Make sure the following files are in your repository:
 
 ## Testing the Setup
 
-### 1. Test Manual Deployment
+### 1. Test SSH Connection
+
+Before testing the deployment, verify SSH access works:
+
+```bash
+# Test SSH connection to GitHub
+ssh -i ~/.ssh/github_actions -T git@github.com
+```
+
+You should see a welcome message like: "Hi username! You've successfully authenticated..."
+
+### 2. Test Manual Deployment
 
 First, test the deployment script manually on your server:
 
@@ -126,7 +156,7 @@ cd /root/vom-prater-aus
 ./deploy-auto.sh
 ```
 
-### 2. Test GitHub Actions
+### 3. Test GitHub Actions
 
 Make a small change to your code and push to the main branch:
 
@@ -162,9 +192,16 @@ Go to your GitHub repository → Actions tab to see deployment logs and status.
 ### 3. Common Issues
 
 #### SSH Connection Issues
+- **Most Common**: Forgetting to add the deploy key to GitHub repository settings
 - Verify the SSH key is correctly added to GitHub secrets
 - Check that the server user has the correct permissions
 - Ensure the SSH port is correct
+- Test SSH connection manually: `ssh -i ~/.ssh/github_actions -T git@github.com`
+
+#### Git Authentication Issues
+- If you see "fatal: could not read Username for 'https://github.com'", the repository is using HTTPS instead of SSH
+- Change remote URL to SSH: `git remote set-url origin git@github.com:username/repo-name.git`
+- Ensure the deploy key is added to the repository
 
 #### Docker Issues
 - Make sure Docker and Docker Compose are installed
