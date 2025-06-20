@@ -19,6 +19,8 @@
   --color-text-highlight: var(--color-mustard);
   --color-heading: var(--color-black);
 
+  --color-grey-light: rgb(100 100 100 / 30%);
+
   /* --- Status colors --- */
   --color-success: var(--color-mint);
   --color-success-light: rgb(90 171 130 / 30%);
@@ -32,9 +34,9 @@
   --color-warning-light: rgb(249 184 93 / 30%);
   --color-warning-dark: rgb(219 154 63);
 
-  --color-primary: var(--color-cerulean);
-  --color-primary-light: rgb(46 124 246 / 30%);
-  --color-primary-dark: rgb(16 94 216);
+  --color-primary: var(--color-mustard);
+  --color-primary-light: rgb(249 184 93 / 30%);
+  --color-primary-dark: rgb(219 154 63);
 
   /* --- Background colors --- */
   --color-background: var(--color-beige);

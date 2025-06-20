@@ -15,6 +15,16 @@
     ],
   })
 
+  const containerRef = ref<HTMLElement | null>(null)
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const rellaxInstance = useRellax('.rellax', {
+    wrapper: containerRef.value as HTMLElement,
+    center: true,
+    vertical: true,
+    horizontal: false,
+  })
+
   // Fetch approved stories
 
   const { data, error, status } = await api.getStories()
@@ -48,7 +58,26 @@
     console.error('Error fetching stories:', error.value)
   }
 
-  // Fetch stories on mount
+  // Use a ref that starts as false and only updates on client side
+  const isMasonry = ref(false)
+
+  // Only run on client side to prevent hydration mismatch
+  onMounted(() => {
+    const updateMasonry = () => {
+      isMasonry.value = window.innerWidth > 768
+    }
+
+    // Set initial value
+    updateMasonry()
+
+    // Add resize listener
+    window.addEventListener('resize', updateMasonry)
+
+    // Cleanup on unmount
+    onUnmounted(() => {
+      window.removeEventListener('resize', updateMasonry)
+    })
+  })
 </script>
 
 <template>
@@ -78,12 +107,16 @@
 
     <div
       v-else
+      ref="containerRef"
       class="stories-grid"
+      :class="{ masonry: isMasonry }"
     >
       <StoryCard
         v-for="story in stories"
         :key="story.id"
         :story="story"
+        class="rellax"
+        :data-rellax-speed="Math.random() * -2"
       />
     </div>
   </div>
@@ -109,13 +142,20 @@
   }
 
   .error {
-    color: red;
+    color: var(--color-error);
   }
 
   .stories-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
+    gap: 4rem 2rem;
+
+    &.masonry {
+      /* Make left column items have a Y offset */
+      .story-card:nth-child(2n + 1) {
+        margin-top: 2rem;
+      }
+    }
   }
 
   @media (max-width: 768px) {
