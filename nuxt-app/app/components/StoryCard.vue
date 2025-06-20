@@ -30,7 +30,9 @@
         </template>
       </div>
       <div class="story-info">
-        <h2 class="story-title">{{ story.title }}</h2>
+        <NuxtLink :to="`/stories/${story.slug}`">
+          <h2 class="story-title">{{ story.title }}</h2>
+        </NuxtLink>
         <div class="story-meta">
           <p class="story-author">
             Von
@@ -142,12 +144,13 @@
   .story-info {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.7rem;
     padding: 1.5rem;
   }
 
   .story-title {
     font-size: 1.5rem;
+    line-height: 1.8rem;
     color: var(--color-text);
   }
 

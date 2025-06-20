@@ -19,12 +19,11 @@ export const useMenu = () => {
     'admin-dashboard',
     'admin-story-id',
     'stories-submitted',
-    'stories-explorer',
   ]
   const menuOrder = [
     'index',
     'prater',
-    'stories-list',
+    'stories',
     'stories-create',
     'about',
     'privacy',
@@ -41,7 +40,6 @@ export const useMenu = () => {
     'admin-login',
     'admin-story-id',
     'stories-submitted',
-    'stories-explorer',
   ]
 
   const footerOrder = [
