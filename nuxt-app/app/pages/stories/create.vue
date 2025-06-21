@@ -396,7 +396,7 @@
           v-for="(input, index) in currentStep?.inputs"
           :key="index"
         >
-          <BaseTextInput
+          <BaseInput
             v-if="
               input.type === inputTypes.TEXT || input.type === inputTypes.EMAIL
             "

@@ -61,7 +61,7 @@
       </div>
 
       <div class="form-group">
-        <BaseTextInput
+        <BaseInput
           id="email"
           v-model="email"
           type="email"
@@ -74,7 +74,7 @@
       </div>
 
       <div class="form-group">
-        <BaseTextInput
+        <BaseInput
           id="password"
           v-model="password"
           type="password"

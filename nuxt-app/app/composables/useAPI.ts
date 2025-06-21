@@ -404,6 +404,16 @@ export function useAPI() {
   }
 
   /**
+   * Fetches the top 10 most used keywords
+   * @returns {Promise<{ data: Ref<{ id: string; word: string; count: number; locale: string }[]>, pending: Ref<boolean>, error: Ref<Error | null> }>} A promise containing the keywords data and loading states
+   */
+  function getKeywords() {
+    return useFetch<
+      { id: string; word: string; count: number; locale: string }[]
+    >('/api/keywords')
+  }
+
+  /**
    * Updates an existing story page
    * @param {string} storyId - The ID of the story
    * @param {string} pageId - The ID of the page to update
@@ -482,5 +492,7 @@ export function useAPI() {
     deleteStoryPage,
     // Locales
     getLocale,
+    // Keywords
+    getKeywords,
   }
 }

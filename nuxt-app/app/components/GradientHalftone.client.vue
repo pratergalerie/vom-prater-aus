@@ -122,6 +122,8 @@
     position: absolute;
     width: 100%;
     height: v-bind(heightPx);
+    pointer-events: none;
+    user-select: none;
     background: v-bind(backgroundGradient);
   }
 

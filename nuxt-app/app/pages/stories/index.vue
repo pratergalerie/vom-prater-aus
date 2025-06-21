@@ -6,7 +6,6 @@
 
   const api = useAPI()
   const stories = ref<Story[]>([])
-  const viewMode = ref<'list' | 'explorer'>('list')
 
   // SEO
   useHead({
@@ -148,12 +147,12 @@
   }
 
   async function loadStoryElementsContent() {
-    if (!stories.value) return
+    if (!filteredStories.value) return
 
     const distance = 4000 // Range for X and Y
     const maxAttempts = 100 // Avoid infinite loops
 
-    for (const story of stories.value) {
+    for (const story of filteredStories.value) {
       let texture: Texture
       let width: number
       let height: number
@@ -271,47 +270,77 @@
     })
   }
 
+  const viewMode = ref<'list' | 'explorer'>('list')
+  const showSearchDialog = ref(false)
+  const filteredStories = ref<Story[]>([])
+
+  // Initialize filtered stories with all stories
+  onMounted(() => {
+    filteredStories.value = stories.value
+  })
+
+  // Handle search dialog filter results
+  function handleSearchFilter(filteredResults: Story[]) {
+    filteredStories.value = filteredResults
+  }
+
   // Watch for view mode changes and load explorer content when needed
   watch(viewMode, async (newMode) => {
     if (
       newMode === 'explorer' &&
-      stories.value &&
+      filteredStories.value &&
       storyElements.value.length === 0
     ) {
       await loadStoryElementsContent()
     }
   })
 
-  // Load explorer content on mount if explorer mode is selected
-  onMounted(async () => {
-    if (viewMode.value === 'explorer' && stories.value) {
+  // Watch for filtered stories changes and reload explorer content
+  watch(filteredStories, async (newStories) => {
+    if (viewMode.value === 'explorer' && newStories) {
+      storyElements.value = [] // Clear existing elements
       await loadStoryElementsContent()
     }
   })
 
-  function handleViewModeToggle() {
-    viewMode.value = viewMode.value === 'list' ? 'explorer' : 'list'
-  }
+  // Load explorer content on mount if explorer mode is selected
+  onMounted(async () => {
+    if (viewMode.value === 'explorer' && filteredStories.value) {
+      await loadStoryElementsContent()
+    }
+  })
 </script>
 
 <template>
   <div class="page-container">
     <div class="page-header">
       <h1 class="page-title">Stories</h1>
-      <div class="view-mode-toggle">
-        <BaseButton
-          :type="viewMode === 'list' ? 'primary' : 'secondary'"
-          variant="label-icon"
-          :icon="'mdi:view-list'"
-          label="List"
-          @click="handleViewModeToggle"
-        />
-        <BaseButton
-          :type="viewMode === 'explorer' ? 'primary' : 'secondary'"
-          variant="label-icon"
-          :icon="'mdi:view-grid'"
-          label="Explorer"
-          @click="handleViewModeToggle"
+      <div class="actions-container">
+        <div class="actions-controls">
+          <BaseButton
+            icon="mdi:search"
+            type="primary"
+            variant="icon"
+            @click="showSearchDialog = true"
+          />
+          <div class="view-mode-switcher-container">
+            <StoriesViewSwitcher
+              v-model:mode="viewMode"
+              list-icon="mdi:view-list"
+              explorer-icon="mdi:view-grid"
+              list-label="List"
+              explorer-label="Explorer"
+            />
+            <div class="current-mode-label">
+              <span>
+                {{ viewMode === 'explorer' ? 'Explorer' : 'List' }} View
+              </span>
+            </div>
+          </div>
+        </div>
+        <GradientHalftone
+          direction="bottom"
+          class="gradient-halftone"
         />
       </div>
     </div>
@@ -348,7 +377,7 @@
       :class="{ masonry: isMasonry }"
     >
       <StoryCard
-        v-for="story in stories"
+        v-for="story in filteredStories"
         :key="story.id"
         :story="story"
         class="rellax"
@@ -365,15 +394,17 @@
         <StoriesExplorer :story-elements="storyElements" />
       </TresCanvas>
     </div>
+
+    <!-- Search Dialog -->
+    <StoriesSearchDialog
+      v-model:is-open="showSearchDialog"
+      :stories="stories"
+      @filter="handleSearchFilter"
+    />
   </div>
 </template>
 
 <style scoped>
-  .page-container {
-    padding: 2rem;
-    margin: 0 auto;
-  }
-
   .page-header {
     display: flex;
     gap: 2rem;
@@ -387,14 +418,62 @@
     font-size: 2.5rem;
   }
 
-  .view-mode-toggle {
-    position: absolute;
+  .actions-container {
+    position: fixed;
     right: 50%;
-    bottom: 50px;
+    bottom: 0;
     z-index: 100;
+    width: 100%;
+    height: 80px;
+    transform: translateX(50%);
+  }
+
+  .gradient-halftone {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+  }
+
+  .actions-controls {
+    box-sizing: border-box;
     display: flex;
     gap: 1rem;
-    transform: translateX(50%);
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: var(--max-width);
+    height: 100%;
+    padding: 0 var(--padding-desktop);
+    margin: 0 auto;
+
+    @media (max-width: 768px) {
+      padding: 0 var(--padding-mobile);
+    }
+
+    @media (max-width: 1024px) {
+      padding: 0 var(--padding-tablet);
+    }
+  }
+
+  .view-mode-switcher-container {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .current-mode-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 40px;
+    font-family: var(--font-button);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-black);
+    text-transform: uppercase;
   }
 
   .loading,
@@ -413,6 +492,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 4rem 2rem;
+    margin-bottom: 10rem;
 
     &.masonry {
       /* Make left column items have a Y offset */
@@ -430,10 +510,6 @@
   }
 
   @media (max-width: 768px) {
-    .page-container {
-      padding: 1rem;
-    }
-
     .page-header {
       flex-direction: column;
       gap: 1rem;
@@ -445,9 +521,18 @@
       font-size: 2rem;
     }
 
-    .view-mode-toggle {
+    .actions-container {
       justify-content: center;
       width: 100%;
+    }
+
+    .view-mode-switcher-container {
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .current-mode-label {
+      font-size: 12px;
     }
 
     .stories-grid {
