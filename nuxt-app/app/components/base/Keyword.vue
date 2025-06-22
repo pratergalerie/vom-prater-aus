@@ -1,8 +1,14 @@
 <script lang="ts" setup>
-  const props = defineProps<{
-    keyword: string
-    id: string
-  }>()
+  const props = withDefaults(
+    defineProps<{
+      keyword: string
+      id: string
+      selected?: boolean
+    }>(),
+    {
+      selected: false,
+    }
+  )
 
   const emit = defineEmits<{
     (e: 'click', id: string): void
@@ -11,14 +17,28 @@
   function handleClick() {
     emit('click', props.id)
   }
+
+  const buttonRef = useTemplateRef('buttonRef')
+
+  watch(
+    () => props.selected,
+    () => {
+      // Remove focus from the button if not selected
+      if (buttonRef.value) {
+        buttonRef.value.blur()
+      }
+    }
+  )
 </script>
 
 <template>
   <button
+    ref="buttonRef"
     class="keyword highlight"
+    :class="{ selected: selected }"
     @click="handleClick"
   >
-    {{ keyword }}
+    <span class="keyword-text">{{ keyword }}</span>
   </button>
 </template>
 
@@ -51,8 +71,18 @@
 
       &:hover,
       &:focus {
-        --color-highlight: var(--color-cerulean);
+        --color-highlight: var(--color-mustard);
       }
     }
+
+    &.selected {
+      --color-highlight: var(--color-mustard);
+    }
+  }
+
+  .keyword-text {
+    text-wrap: nowrap;
+    pointer-events: none;
+    user-select: none;
   }
 </style>

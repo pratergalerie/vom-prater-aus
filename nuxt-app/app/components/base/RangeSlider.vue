@@ -107,7 +107,7 @@
         <BaseInput
           :id="`${id}-min`"
           v-model="minValue"
-          label="From"
+          :label="$t('components.rangeSlider.from')"
           :placeholder="`${min}`"
           type="number"
         />
@@ -117,7 +117,7 @@
         <BaseInput
           :id="`${id}-max`"
           v-model="maxValue"
-          label="To"
+          :label="$t('components.rangeSlider.to')"
           :placeholder="`${max}`"
           type="number"
         />

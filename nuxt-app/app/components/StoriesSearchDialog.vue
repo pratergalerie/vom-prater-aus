@@ -118,7 +118,7 @@
 <template>
   <BaseDialog
     v-model:is-open="isOpen"
-    title="Search & Filter Stories"
+    :title="$t('components.storiesSearchDialog.title')"
     :width="500"
     class="search-dialog"
   >
@@ -129,21 +129,23 @@
           id="story-search"
           v-model="searchQuery"
           type="text"
-          label="Search Stories"
-          placeholder="Search by title or keywords..."
+          :label="$t('components.storiesSearchDialog.searchLabel')"
+          :placeholder="$t('components.storiesSearchDialog.searchPlaceholder')"
         />
       </div>
 
       <!-- Keywords Filter -->
       <div class="keywords-section">
-        <h3 class="section-title">Popular Keywords</h3>
+        <h3 class="section-title">
+          {{ $t('components.storiesSearchDialog.popularKeywords') }}
+        </h3>
         <div class="keywords-list">
           <BaseKeyword
             v-for="keyword in keywords"
             :id="keyword.id"
             :key="keyword.id"
             :keyword="keyword.word"
-            :class="{ selected: selectedKeywords.includes(keyword.word) }"
+            :selected="selectedKeywords.includes(keyword.word)"
             @click="handleKeywordToggle(keyword.word)"
           />
         </div>
@@ -155,7 +157,7 @@
           v-if="storyYears[0] && storyYears[1]"
           id="year-range"
           v-model="yearRange"
-          label="Year Range"
+          :label="$t('components.storiesSearchDialog.yearRange')"
           :min="storyYears[0]"
           :max="storyYears[1]"
           :step="1"
@@ -168,8 +170,11 @@
           <span class="results-count">
             {{
               filteredStories.length > 0
-                ? `${filteredStories.length} of ${stories.length} stories found`
-                : 'No stories with these filters found'
+                ? $t('components.storiesSearchDialog.resultsCount', {
+                    count: filteredStories.length,
+                    total: stories.length,
+                  })
+                : $t('components.storiesSearchDialog.noResults')
             }}
           </span>
         </div>
@@ -178,7 +183,7 @@
           <BaseButton
             type="secondary"
             variant="label-icon"
-            label="Clear Filters"
+            :label="$t('components.storiesSearchDialog.clearFilters')"
             icon="mdi:refresh"
             class="clear-filters-button"
             @click="handleClearFilters"
@@ -186,7 +191,7 @@
           <BaseButton
             type="primary"
             variant="label-icon"
-            label="Apply Filters"
+            :label="$t('components.storiesSearchDialog.applyFilters')"
             icon="mdi:filter"
             class="apply-filters-button"
             @click="handleApplyFilters"
@@ -251,9 +256,8 @@
     background: radial-gradient(
       circle,
       rgb(255 255 255 / 100%) 0%,
-      rgb(255 255 255 / 0%) 100%
+      rgb(255 255 255 / 50%) 100%
     );
-    border-radius: 0.5rem;
   }
 
   .results-count {
@@ -273,12 +277,5 @@
     width: 200px;
     min-width: 200px;
     height: 40px;
-  }
-
-  :deep(.keyword.selected) {
-    --color-highlight: var(--color-mustard);
-
-    color: var(--color-black);
-    background: var(--color-mustard);
   }
 </style>

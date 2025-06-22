@@ -19,6 +19,25 @@
         "admin-dashboard": "Admin Dashboard"
       }
     },
+    "storiesSearchDialog": {
+      "title": "Search & Filter Stories",
+      "searchPlaceholder": "Search by title or keywords...",
+      "searchLabel": "Search Stories",
+      "popularKeywords": "Popular Keywords",
+      "yearRange": "Year Range",
+      "resultsCount": "{count} of {total} stories found",
+      "noResults": "No stories with these filters found",
+      "clearFilters": "Clear Filters",
+      "applyFilters": "Apply Filters"
+    },
+    "rangeSlider": {
+      "from": "From",
+      "to": "To"
+    },
+    "storiesViewSwitcher": {
+      "list": "List",
+      "explorer": "Explorer"
+    },
     "storyPageEditor": {
       "pageTextPlaceholder": "Enter the text for your story page",
       "byAuthor": "A story by",
@@ -123,6 +142,16 @@
       }
     },
     "stories": {
+      "index": {
+        "title": "Stories",
+        "loading": "Loading stories...",
+        "error": "Error loading stories",
+        "noStories": "No stories available at the moment.",
+        "viewMode": {
+          "list": "List View",
+          "explorer": "Explorer View"
+        }
+      },
       "edit": {
         "modals": {
           "deletePage": {

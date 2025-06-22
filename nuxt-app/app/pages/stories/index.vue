@@ -22,16 +22,6 @@
     layout: 'no-footer',
   })
 
-  const containerRef = ref<HTMLElement | null>(null)
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const rellaxInstance = useRellax('.rellax', {
-    wrapper: containerRef.value as HTMLElement,
-    center: true,
-    vertical: true,
-    horizontal: false,
-  })
-
   // Fetch approved stories
   const { data, error, status } = await api.getStories()
   if (data.value) {
@@ -69,21 +59,21 @@
 
   // Only run on client side to prevent hydration mismatch
   onMounted(() => {
-    const updateMasonry = () => {
-      isMasonry.value = window.innerWidth > 768
-    }
-
     // Set initial value
     updateMasonry()
 
     // Add resize listener
     window.addEventListener('resize', updateMasonry)
-
-    // Cleanup on unmount
-    onUnmounted(() => {
-      window.removeEventListener('resize', updateMasonry)
-    })
   })
+
+  // Cleanup on unmount
+  onUnmounted(() => {
+    window.removeEventListener('resize', updateMasonry)
+  })
+
+  function updateMasonry() {
+    isMasonry.value = window.innerWidth > 768
+  }
 
   // Explorer mode logic
   type StoryElement = {
@@ -309,12 +299,38 @@
       await loadStoryElementsContent()
     }
   })
+
+  // Generate random speeds for story cards to avoid hydration mismatch
+  const storyCardSpeeds = ref<Record<string, number>>({})
+
+  onMounted(() => {
+    // Generate random speeds for each story after mounting
+    filteredStories.value.forEach((story) => {
+      storyCardSpeeds.value[story.id] =
+        Math.random() * Math.random() > 0.5 ? -1 : 1
+    })
+  })
+
+  // Watch for filtered stories changes and regenerate speeds
+  watch(filteredStories, () => {
+    // Only regenerate speeds if we're on the client side
+    if (import.meta.client) {
+      storyCardSpeeds.value = {}
+      filteredStories.value.forEach((story) => {
+        storyCardSpeeds.value[story.id] =
+          Math.random() * Math.random() > 0.5 ? -1 : 1
+      })
+    }
+  })
 </script>
 
 <template>
-  <div class="page-container">
+  <div
+    ref="containerRef"
+    class="page-container"
+  >
     <div class="page-header">
-      <h1 class="page-title">Stories</h1>
+      <h1 class="page-title">{{ $t('pages.stories.index.title') }}</h1>
       <div class="actions-container">
         <div class="actions-controls">
           <BaseButton
@@ -328,12 +344,16 @@
               v-model:mode="viewMode"
               list-icon="mdi:view-list"
               explorer-icon="mdi:view-grid"
-              list-label="List"
-              explorer-label="Explorer"
+              :list-label="$t('components.storiesViewSwitcher.list')"
+              :explorer-label="$t('components.storiesViewSwitcher.explorer')"
             />
             <div class="current-mode-label">
               <span>
-                {{ viewMode === 'explorer' ? 'Explorer' : 'List' }} View
+                {{
+                  viewMode === 'explorer'
+                    ? $t('pages.stories.index.viewMode.explorer')
+                    : $t('pages.stories.index.viewMode.list')
+                }}
               </span>
             </div>
           </div>
@@ -350,7 +370,7 @@
       v-if="status === 'pending'"
       class="loading"
     >
-      Loading stories...
+      {{ $t('pages.stories.index.loading') }}
     </div>
 
     <!-- Error state -->
@@ -358,7 +378,7 @@
       v-else-if="error"
       class="error"
     >
-      {{ error }}
+      {{ $t('pages.stories.index.error') }}
     </div>
 
     <!-- No stories state -->
@@ -366,7 +386,7 @@
       v-else-if="stories.length === 0"
       class="no-stories"
     >
-      No stories available at the moment.
+      {{ $t('pages.stories.index.noStories') }}
     </div>
 
     <!-- List view -->
@@ -381,7 +401,7 @@
         :key="story.id"
         :story="story"
         class="rellax"
-        :data-rellax-speed="Math.random() * -2"
+        :data-rellax-speed="storyCardSpeeds[story.id] || 0"
       />
     </div>
 
@@ -401,10 +421,19 @@
       :stories="stories"
       @filter="handleSearchFilter"
     />
+
+    <CutoutsBackground v-if="viewMode === 'list'" />
   </div>
 </template>
 
 <style scoped>
+  .page-container {
+    position: relative;
+    min-height: 100vh;
+    container-type: inline-size;
+    container-name: main-container;
+  }
+
   .page-header {
     display: flex;
     gap: 2rem;
