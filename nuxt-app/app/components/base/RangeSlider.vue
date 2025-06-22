@@ -188,6 +188,7 @@
     flex: 1;
     flex-direction: column;
     gap: 0.25rem;
+    max-width: 200px;
 
     input {
       box-sizing: border-box;

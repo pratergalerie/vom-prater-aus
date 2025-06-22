@@ -12,10 +12,15 @@
   const api = useAPI()
   const isOpen = defineModel<boolean>('is-open', { default: false })
 
-  // Search and filter state
+  // Search and filter state (current input values)
   const searchQuery = ref('')
   const selectedKeywords = ref<string[]>([])
   const yearRange = ref<[number, number]>([1980, 2024])
+
+  // Applied filter state (what's actually being used for filtering)
+  const appliedSearchQuery = ref('')
+  const appliedKeywords = ref<string[]>([])
+  const appliedYearRange = ref<[number, number]>([1980, 2024])
 
   // Keywords data
   const { data: keywordsData } = await api.getKeywords()
@@ -35,43 +40,43 @@
         storyYears.value[0] ?? 1980,
         storyYears.value[1] ?? 2024,
       ]
+      appliedYearRange.value = [
+        storyYears.value[0] ?? 1980,
+        storyYears.value[1] ?? 2024,
+      ]
     }
   })
 
-  // Filter stories based on search criteria
+  // Filter stories based on applied search criteria
   const filteredStories = computed(() => {
     return props.stories.filter((story) => {
       // Search query filter (title and keywords)
       const searchMatch =
-        !searchQuery.value ||
-        story.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+        !appliedSearchQuery.value ||
+        story.title
+          .toLowerCase()
+          .includes(appliedSearchQuery.value.toLowerCase()) ||
         story.keywords.some((keyword) =>
-          keyword.word.toLowerCase().includes(searchQuery.value.toLowerCase())
+          keyword.word
+            .toLowerCase()
+            .includes(appliedSearchQuery.value.toLowerCase())
         )
 
       // Keywords filter
       const keywordMatch =
-        selectedKeywords.value.length === 0 ||
-        selectedKeywords.value.some((selectedKeyword) =>
+        appliedKeywords.value.length === 0 ||
+        appliedKeywords.value.some((selectedKeyword) =>
           story.keywords.some((keyword) => keyword.word === selectedKeyword)
         )
 
       // Year range filter
       const yearMatch =
-        story.year >= yearRange.value[0] && story.year <= yearRange.value[1]
+        story.year >= appliedYearRange.value[0] &&
+        story.year <= appliedYearRange.value[1]
 
       return searchMatch && keywordMatch && yearMatch
     })
   })
-
-  // Watch for filter changes and emit filtered results
-  watch(
-    [searchQuery, selectedKeywords, yearRange, filteredStories],
-    () => {
-      emit('filter', filteredStories.value)
-    },
-    { immediate: true }
-  )
 
   function handleKeywordToggle(keyword: string) {
     const index = selectedKeywords.value.indexOf(keyword)
@@ -82,10 +87,31 @@
     }
   }
 
+  function handleApplyFilters() {
+    // Apply the current input values to the applied filter state
+    appliedSearchQuery.value = searchQuery.value
+    appliedKeywords.value = [...selectedKeywords.value]
+    appliedYearRange.value = [...yearRange.value]
+
+    // Emit the filtered results
+    emit('filter', filteredStories.value)
+  }
+
   function handleClearFilters() {
+    // Clear both input and applied filter states
     searchQuery.value = ''
     selectedKeywords.value = []
     yearRange.value = [storyYears.value[0] ?? 1980, storyYears.value[1] ?? 2024]
+
+    appliedSearchQuery.value = ''
+    appliedKeywords.value = []
+    appliedYearRange.value = [
+      storyYears.value[0] ?? 1980,
+      storyYears.value[1] ?? 2024,
+    ]
+
+    // Emit the unfiltered results
+    emit('filter', props.stories)
   }
 </script>
 
@@ -140,7 +166,11 @@
       <div class="results-section">
         <div class="results-info">
           <span class="results-count">
-            {{ filteredStories.length }} of {{ stories.length }} stories
+            {{
+              filteredStories.length > 0
+                ? `${filteredStories.length} of ${stories.length} stories found`
+                : 'No stories with these filters found'
+            }}
           </span>
         </div>
 
@@ -152,6 +182,14 @@
             icon="mdi:refresh"
             class="clear-filters-button"
             @click="handleClearFilters"
+          />
+          <BaseButton
+            type="primary"
+            variant="label-icon"
+            label="Apply Filters"
+            icon="mdi:filter"
+            class="apply-filters-button"
+            @click="handleApplyFilters"
           />
         </div>
       </div>
@@ -199,16 +237,17 @@
 
   .results-section {
     display: flex;
+    flex-direction: column;
+    gap: 1rem;
     align-items: center;
     justify-content: space-between;
-    padding-top: 1rem;
+    margin-top: -1.5rem;
   }
 
   .results-info {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.5rem 1rem;
     background: radial-gradient(
       circle,
       rgb(255 255 255 / 100%) 0%,
@@ -229,7 +268,8 @@
     align-items: center;
   }
 
-  .clear-filters-button {
+  .clear-filters-button,
+  .apply-filters-button {
     width: 200px;
     min-width: 200px;
     height: 40px;
