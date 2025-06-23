@@ -317,7 +317,7 @@
   }
 
   .sign-out-button {
-    --highlight-color: var(--color-error-light);
+    --color-highlight: var(--color-error-light);
 
     display: flex;
     gap: 0.5rem;
@@ -600,7 +600,7 @@
   }
 
   .approve-button {
-    --highlight-color: var(--color-success-light);
+    --color-highlight: var(--color-success-light);
 
     color: var(--color-success);
 
@@ -611,7 +611,7 @@
   }
 
   .reject-button {
-    --highlight-color: var(--color-error-light);
+    --color-highlight: var(--color-error-light);
 
     color: var(--color-error);
 
@@ -622,7 +622,7 @@
   }
 
   .view-link {
-    --highlight-color: var(--color-primary-light);
+    --color-highlight: var(--color-primary-light);
 
     display: flex;
     gap: 0.5rem;

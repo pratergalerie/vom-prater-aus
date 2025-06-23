@@ -14,10 +14,29 @@
         "prater": "Über Berliner Prater",
         "privacy": "Datenschutzerklärung",
         "terms": "Nutzungsbedingungen",
-        "stories-list": "Geschichten entdecken",
+        "stories": "Geschichten entdecken",
         "stories-create": "Geschichte erstellen",
         "admin-dashboard": "Admin Dashboard"
       }
+    },
+    "storiesSearchDialog": {
+      "title": "Geschichten suchen & filtern",
+      "searchPlaceholder": "Nach Titel oder Schlüsselwörtern suchen...",
+      "searchLabel": "Geschichten suchen",
+      "popularKeywords": "Beliebte Schlüsselwörter",
+      "yearRange": "Jahresbereich",
+      "resultsCount": "{count} von {total} Geschichten gefunden",
+      "noResults": "Keine Geschichten mit diesen Filtern gefunden",
+      "clearFilters": "Filter löschen",
+      "applyFilters": "Filter anwenden"
+    },
+    "rangeSlider": {
+      "from": "Von",
+      "to": "Bis"
+    },
+    "storiesViewSwitcher": {
+      "list": "Liste",
+      "explorer": "Explorer"
     },
     "storyPageEditor": {
       "pageTextPlaceholder": "Gib den Text für die Story-Seite ein",
@@ -123,6 +142,16 @@
       }
     },
     "stories": {
+      "index": {
+        "title": "Geschichten",
+        "loading": "Geschichten werden geladen...",
+        "error": "Fehler beim Laden der Geschichten",
+        "noStories": "Derzeit sind keine Geschichten verfügbar.",
+        "viewMode": {
+          "list": "Listenansicht",
+          "explorer": "Entdecken-Ansicht"
+        }
+      },
       "edit": {
         "modals": {
           "deletePage": {

@@ -37,11 +37,24 @@
 
   const dialogRef = ref<HTMLDialogElement | null>(null)
   const shapeClipPath = ref('')
+  const originalBodyStyle = ref<string>('')
 
   function close() {
     if (dialogRef.value) {
       isOpen.value = false
     }
+  }
+
+  function lockScroll() {
+    // Store the original body style
+    originalBodyStyle.value = document.body.style.overflow
+    // Prevent scrolling
+    document.body.style.overflow = 'hidden'
+  }
+
+  function unlockScroll() {
+    // Restore the original body style
+    document.body.style.overflow = originalBodyStyle.value
   }
 
   onMounted(() => {
@@ -57,6 +70,8 @@
 
   onUnmounted(() => {
     dialogRef.value?.removeEventListener('cancel', close)
+    // Ensure scroll is unlocked when component is unmounted
+    unlockScroll()
   })
 
   watch(isOpen, (newValue) => {
@@ -65,11 +80,14 @@
     if (newValue && !dialogRef.value.open) {
       if (props.modal) {
         dialogRef.value.showModal()
+        lockScroll()
       } else {
         dialogRef.value.show()
+        lockScroll()
       }
     } else if (!newValue && dialogRef.value.open) {
       dialogRef.value.close()
+      unlockScroll()
     }
   })
 
@@ -179,16 +197,18 @@
 
 <style scoped>
   dialog {
-    position: relative;
-    align-items: center;
-    justify-content: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
     width: v-bind(dialogWidth);
     min-width: v-bind(dialogMinWidth);
     height: fit-content;
+    max-height: 90vh;
     padding: 0;
-    margin: auto;
+    margin: 0;
     background: transparent;
     border: none;
+    transform: translate(-50%, -50%);
     container-type: inline-size;
     container-name: dialog-container;
 
@@ -223,6 +243,10 @@
     position: absolute;
     inset: 0;
     z-index: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    user-select: none;
   }
 
   .dialog-content-inner {

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  type InputType = 'text' | 'email' | 'password'
+  type InputType = 'text' | 'email' | 'password' | 'number'
 
   const props = defineProps<{
     id: string

@@ -121,7 +121,7 @@
           </p>
         </div>
         <div class="input-group">
-          <BaseTextInput
+          <BaseInput
             id="story-password"
             :model-value="password"
             type="password"

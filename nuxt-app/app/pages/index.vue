@@ -29,16 +29,6 @@
     )
   }
 
-  const containerRef = ref<HTMLElement | null>(null)
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const rellaxInstance = useRellax('.rellax', {
-    wrapper: containerRef.value as HTMLElement,
-    center: true,
-    vertical: true,
-    horizontal: false,
-  })
-
   const storiesSlides = computed(() => {
     if (!featuredStories.value) return []
     return featuredStories?.value.map((story) => ({
@@ -63,7 +53,7 @@
 <template>
   <div
     ref="containerRef"
-    class="content-wrapper"
+    class="page-container"
   >
     <section
       v-for="section in homepageContent?.sections"
@@ -102,38 +92,12 @@
         :href="section.content?.buttonLink"
       />
     </section>
-
-    <div class="cutouts">
-      <NuxtImg
-        src="/svgs/cutouts/1.svg"
-        alt="Floating shape 1"
-        class="floating-shape shape-1 rellax"
-        data-rellax-speed="3"
-      />
-      <NuxtImg
-        src="/svgs/cutouts/2.svg"
-        alt="Floating shape 2"
-        class="floating-shape shape-2 rellax"
-        data-rellax-speed="2"
-      />
-      <NuxtImg
-        src="/svgs/cutouts/3.svg"
-        alt="Floating shape 3"
-        class="floating-shape shape-3 rellax"
-        data-rellax-speed="-3"
-      />
-      <NuxtImg
-        src="/svgs/cutouts/4.svg"
-        alt="Floating shape 4"
-        class="floating-shape shape-4 rellax"
-        data-rellax-speed="-1"
-      />
-    </div>
+    <CutoutsBackground />
   </div>
 </template>
 
 <style scoped>
-  .content-wrapper {
+  .page-container {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -143,7 +107,6 @@
     min-height: 100vh;
     container-type: inline-size;
     container-name: main-container;
-    overflow-x: hidden;
 
     @container (min-width: 768px) {
       gap: 100px;
@@ -288,62 +251,6 @@
         @container (min-width: 768px) {
           align-self: flex-start;
         }
-      }
-    }
-  }
-
-  .cutouts {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    pointer-events: none;
-  }
-
-  .floating-shape {
-    position: absolute;
-    mix-blend-mode: multiply;
-
-    &.shape-1 {
-      top: 150px;
-      left: 0;
-      width: 80%;
-
-      @container (min-width: 768px) {
-        width: 40%;
-      }
-    }
-
-    &.shape-2 {
-      top: 600px;
-      right: 0;
-      width: 90%;
-
-      @container (min-width: 768px) {
-        width: 50%;
-      }
-    }
-
-    &.shape-3 {
-      top: 1200px;
-      right: 0;
-      width: 50%;
-
-      @container (min-width: 768px) {
-        width: 30%;
-      }
-    }
-
-    &.shape-4 {
-      top: 1800px;
-      left: 0;
-      width: 50%;
-      transform: rotate(10deg);
-
-      @container (min-width: 768px) {
-        width: 25%;
       }
     }
   }

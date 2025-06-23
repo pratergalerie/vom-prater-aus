@@ -251,9 +251,13 @@
           drop-shadow(-2px 2px 0 var(--color-black));
       }
 
-      &.icon .button-shape {
-        filter: drop-shadow(-3px 3px 0 var(--color-white))
-          drop-shadow(-1px 1px 0 var(--color-black));
+      &.primary.icon .button-shape {
+        filter: drop-shadow(-4px 4px 0 var(--color-black));
+      }
+
+      &.secondary.icon .button-shape {
+        filter: drop-shadow(-4px 4px 0 var(--color-white))
+          drop-shadow(-2px 2px 0 var(--color-black));
       }
     }
 
@@ -396,6 +400,8 @@
   }
 
   .button-icon {
+    width: 65%;
+    height: 65%;
     margin: auto;
   }
 

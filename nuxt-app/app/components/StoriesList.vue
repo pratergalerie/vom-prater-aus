@@ -1,7 +1,24 @@
 <script lang="ts" setup>
   import type { Database } from '~/types/supabase'
 
-  type Story = Database['public']['Tables']['stories']['Row']
+  // Use the Story type from the API composable instead of the database type
+  type Story = Omit<
+    Database['public']['Tables']['stories']['Row'],
+    'author_id' | 'locale_id'
+  > & {
+    author: Database['public']['Tables']['authors']['Row']
+    pages: Database['public']['Tables']['story_pages']['Row'][]
+    locale: Pick<
+      Database['public']['Tables']['locales']['Row'],
+      'id' | 'code' | 'name'
+    >
+    keywords: {
+      keyword: {
+        id: string
+        word: string
+      }
+    }[]
+  }
   type Author = Database['public']['Tables']['authors']['Row']
 
   const api = useAPI()
@@ -15,7 +32,7 @@
 
     // Fetch authors for all stories
     const authorIds = [
-      ...new Set(stories.value.map((story) => story.author_id)),
+      ...new Set(stories.value.map((story) => story.author.id)),
     ]
     const authorPromises = authorIds.map((id) => api.getAuthor(id))
     const authorResults = await Promise.all(authorPromises)
@@ -53,7 +70,7 @@
           <p class="author">
             Von
             <span class="author-name">{{
-              authors[story.author_id]?.name || 'Unknown'
+              story.author?.name || 'Unknown'
             }}</span>
           </p>
           <p class="year">{{ story.year }}</p>
