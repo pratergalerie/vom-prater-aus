@@ -7,6 +7,10 @@
   const { user } = storeToRefs(useAuthStore())
   const { setUser } = useAuthStore()
 
+  definePageMeta({
+    layout: 'no-footer',
+  })
+
   // If user is already logged in, redirect to dashboard
   watchEffect(() => {
     if (user.value) {
@@ -46,12 +50,9 @@
 
 <template>
   <div class="page-container">
-    <form
-      class="login-form"
-      @submit.prevent="handleSignIn"
-    >
-      <h1>Admin Login</h1>
+    <h1>Admin Login</h1>
 
+    <form @submit.prevent="handleSignIn">
       <div
         v-if="error"
         class="error-message"
@@ -101,12 +102,17 @@
   .page-container {
     display: flex;
     flex-direction: column;
+    gap: 20px;
     align-items: center;
     justify-content: center;
-    height: var(--full-height-header-footer);
+    height: calc(100vh - var(--header-height));
   }
 
-  .login-form {
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
     max-width: 400px;
   }
 

@@ -81,103 +81,100 @@
 </script>
 
 <template>
-  <main>
-    <div class="page-container">
-      <h1>{{ $t('pages.stories.unlock.title') }}</h1>
+  <div class="page-container">
+    <h1>{{ $t('pages.stories.unlock.title') }}</h1>
 
-      <form @submit.prevent="handlePasswordSubmit">
-        <div
-          v-if="story"
-          class="story-info"
-        >
-          <p>{{ $t('pages.stories.unlock.text.p1') }}</p>
-          <div class="story-details">
-            <h2>{{ story.title }}</h2>
-            <p>
-              {{ $t('pages.stories.unlock.byAuthor') }}
-              {{ story.author.name }}
-            </p>
-          </div>
+    <form @submit.prevent="handlePasswordSubmit">
+      <div
+        v-if="story"
+        class="story-info"
+      >
+        <p>{{ $t('pages.stories.unlock.text.p1') }}</p>
+        <div class="story-details">
+          <h2>{{ story.title }}</h2>
           <p>
-            {{ $t('pages.stories.unlock.text.p2') }}
-          </p>
-          <p>
-            <i18n-t
-              scope="global"
-              keypath="pages.stories.unlock.text.p3"
-              tag="span"
-            >
-              <template #contactUs>
-                <a
-                  :href="`mailto:vomprateraus@pratergalerie.de?subject=${emailSubject}&body=${emailBody}`"
-                >
-                  {{ $t('pages.stories.unlock.contactUs') }}
-                </a>
-              </template>
-            </i18n-t>
-          </p>
-          <p>
-            {{ $t('pages.stories.unlock.text.p4') }}
+            {{ $t('pages.stories.unlock.byAuthor') }}
+            {{ story.author.name }}
           </p>
         </div>
-        <div class="input-group">
-          <BaseInput
-            id="story-password"
-            :model-value="password"
-            type="password"
-            :label="$t('pages.stories.unlock.passwordLabel')"
-            :placeholder="$t('pages.stories.unlock.passwordPlaceholder')"
-            @update:model-value="password = $event"
-            @update:error="(error) => handleValidationError('password', error)"
-          />
-          <p
-            v-if="passwordError"
-            class="error-message"
+        <p>
+          {{ $t('pages.stories.unlock.text.p2') }}
+        </p>
+        <p>
+          <i18n-t
+            scope="global"
+            keypath="pages.stories.unlock.text.p3"
+            tag="span"
           >
-            {{ passwordError }}
-          </p>
-        </div>
+            <template #contactUs>
+              <a
+                :href="`mailto:vomprateraus@pratergalerie.de?subject=${emailSubject}&body=${emailBody}`"
+              >
+                {{ $t('pages.stories.unlock.contactUs') }}
+              </a>
+            </template>
+          </i18n-t>
+        </p>
+        <p>
+          {{ $t('pages.stories.unlock.text.p4') }}
+        </p>
+      </div>
+      <div class="input-group">
+        <BaseInput
+          id="story-password"
+          :model-value="password"
+          type="password"
+          :label="$t('pages.stories.unlock.passwordLabel')"
+          :placeholder="$t('pages.stories.unlock.passwordPlaceholder')"
+          @update:model-value="password = $event"
+          @update:error="(error) => handleValidationError('password', error)"
+        />
+        <p
+          v-if="passwordError"
+          class="error-message"
+        >
+          {{ passwordError }}
+        </p>
+      </div>
 
-        <div class="actions">
-          <BaseButton
-            type="secondary"
-            variant="label-icon"
-            icon="mdi:arrow-left"
-            :label="$t('pages.stories.unlock.back')"
-            @click="router.back()"
-          />
-          <BaseButton
-            type="primary"
-            variant="label-icon"
-            icon="mdi:lock-open"
-            :label="$t('pages.stories.unlock.submit')"
-            :loading="isLoading"
-            :disabled="!password || isLoading"
-            @click="handlePasswordSubmit"
-          />
-        </div>
-      </form>
-    </div>
-  </main>
+      <div class="actions">
+        <BaseButton
+          type="primary"
+          variant="label-icon"
+          icon="mdi:lock-open"
+          :label="$t('pages.stories.unlock.submit')"
+          :loading="isLoading"
+          :disabled="!password || isLoading"
+          @click="handlePasswordSubmit"
+        />
+        <BaseButton
+          type="secondary"
+          variant="label-icon"
+          icon="mdi:arrow-left"
+          :label="$t('pages.stories.unlock.back')"
+          @click="router.push('/')"
+        />
+      </div>
+    </form>
+  </div>
 </template>
 
 <style scoped>
-  main {
-    box-sizing: border-box;
+  .page-container {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    width: 100%;
-    height: calc(100dvh - var(--header-height) - 50px);
-    padding-top: 50px;
-    container-name: page-container;
-    container-type: inline-size;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - var(--header-height));
   }
 
-  h1 {
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-    line-height: 1.8rem;
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 400px;
   }
 
   .story-info {
@@ -211,22 +208,5 @@
     justify-content: center;
     width: 100%;
     margin-top: 2rem;
-
-    @container (min-width: 600px) {
-      flex-direction: row;
-      gap: 1rem;
-      justify-content: space-between;
-    }
-  }
-
-  .page-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    justify-content: center;
-    width: 100%;
-    max-width: 400px;
-    padding: 2rem;
-    margin: 0 auto;
   }
 </style>
