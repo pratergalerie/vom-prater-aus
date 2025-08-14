@@ -191,53 +191,51 @@
 </script>
 
 <template>
-  <Teleport to="#teleports">
-    <Transition name="fade">
+  <Transition name="fade">
+    <div
+      v-if="isVisible"
+      class="menu-container"
+      :class="{ 'menu-visible': isOpen, 'menu-closing': isTransitioning }"
+    >
       <div
-        v-show="isVisible"
-        class="menu-container"
-        :class="{ 'menu-visible': isOpen, 'menu-closing': isTransitioning }"
+        class="illustration"
+        :style="{
+          clipPath: illustrationClipPath,
+          transition: isIllustrationTransitioning
+            ? 'none'
+            : 'clip-path 0.3s ease',
+        }"
       >
-        <div
-          class="illustration"
-          :style="{
-            clipPath: illustrationClipPath,
-            transition: isIllustrationTransitioning
-              ? 'none'
-              : 'clip-path 0.3s ease',
-          }"
-        >
-          <NuxtImg
-            :src="illustrationImage"
-            alt="Berliner Prater"
-            loading="lazy"
-          />
-        </div>
-        <menu
-          aria-label="Menu"
-          :style="{
-            clipPath: menuClipPath,
-            transition: isMenuTransitioning ? 'none' : 'clip-path 0.3s ease',
-          }"
-        >
-          <nav>
-            <ul>
-              <li
-                v-for="(route, index) in menuRoutes"
-                :key="index"
-                :style="{
-                  '--animation-delay': `${index * 0.1}s`,
-                }"
+        <NuxtImg
+          :src="illustrationImage"
+          alt="Berliner Prater"
+          :modifiers="{ grayscale: true }"
+        />
+      </div>
+      <menu
+        aria-label="Menu"
+        :style="{
+          clipPath: menuClipPath,
+          transition: isMenuTransitioning ? 'none' : 'clip-path 0.3s ease',
+        }"
+      >
+        <nav>
+          <ul>
+            <li
+              v-for="(route, index) in menuRoutes"
+              :key="index"
+              :style="{
+                '--animation-delay': `${index * 0.1}s`,
+              }"
+            >
+              <NuxtLink
+                :to="route.path"
+                @click="closeMenu"
               >
-                <NuxtLink
-                  :to="route.path"
-                  @click="closeMenu"
-                >
-                  {{ route.title }}
-                </NuxtLink>
-              </li>
-            </ul>
-          </nav>
+                {{ route.title }}
+              </NuxtLink>
+            </li>
+          </ul>
 
           <div class="divider-container">
             <Divider
@@ -272,30 +270,32 @@
               {{ locale.code }}
             </a>
           </div>
-        </menu>
-      </div>
-    </Transition>
-  </Teleport>
+        </nav>
+      </menu>
+    </div>
+  </Transition>
 </template>
 
 <style scoped>
   .menu-container {
     position: fixed;
-    top: var(--header-height);
+    top: 0;
     z-index: 100;
+    display: grid;
+    grid-template-rows: 30% 10% 1fr;
     width: 100%;
-    height: calc(100vh - var(--header-height));
+    height: 100%;
+    padding-top: var(--header-height);
     pointer-events: none;
     container-name: menu-container;
     container-type: size;
     contain: size layout style;
+    background-color: var(--color-beige);
   }
 
   .illustration {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
+    grid-row: 1 / 3;
+    grid-column: 1;
     background-color: var(--color-mustard);
     mask: v-bind(illustrationMask);
     mask-size: 100% auto;
@@ -305,37 +305,20 @@
       clip-path 0.3s ease;
 
     img {
-      position: absolute;
-      top: calc(var(--header-height));
-      left: 50%;
-      height: 70%;
-      padding: 0%;
-      margin: 0;
+      height: 100%;
       object-fit: cover;
       mix-blend-mode: multiply;
-      filter: grayscale(1);
-      transform: translate(-50%, -50%);
     }
   }
 
-  .menu-top {
-    display: block;
-    width: 100%;
-    height: 80px;
-    object-fit: cover;
-  }
-
   menu {
-    position: absolute;
-    bottom: 0;
-    box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    grid-row: 2 / 4;
+    grid-column: 1;
     gap: 0;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    height: 80%;
     padding: 0 var(--padding-mobile);
     margin: 0;
     color: var(--color-beige);
@@ -378,6 +361,7 @@
     flex-direction: column;
     justify-content: center;
     width: 100%;
+    max-width: var(--max-width);
     height: fit-content;
     padding: 0;
     margin: 0;
@@ -607,7 +591,7 @@
 
   .fade-enter-active,
   .fade-leave-active {
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s linear;
 
     @media screen and (prefers-reduced-motion: reduce) {
       transition: none;

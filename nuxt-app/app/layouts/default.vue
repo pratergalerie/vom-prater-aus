@@ -9,37 +9,31 @@
       document.body.style.overflow = ''
     }
   })
-
-  const footerRef = ref<HTMLElement | null>(null)
 </script>
 
 <template>
-  <div class="layout-container">
+  <div class="layout-wrapper">
     <Header />
-
     <Menu />
-    <MenuToggle />
-
-    <Transition name="fade">
-      <main
-        v-if="!isOpen"
-        class="main"
-      >
-        <slot />
-      </main>
-    </Transition>
-    <Transition name="fade">
-      <Footer
-        v-if="!isOpen"
-        ref="footerRef"
-        class="footer"
-      />
-    </Transition>
-    <CutoutsBackground />
+    <main>
+      <slot />
+      <CutoutsBackground />
+    </main>
+    <Footer />
   </div>
 </template>
 
 <style scoped>
+  .layout-wrapper {
+    height: 100%;
+  }
+
+  main {
+    position: relative;
+    max-width: var(--max-width);
+    padding: 6rem 0;
+  }
+
   .slide-enter-active,
   .slide-leave-active {
     transition: transform 0.5s;

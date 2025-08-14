@@ -81,7 +81,6 @@
     height: calc(100vh - var(--header-height));
     container-type: inline-size;
     container-name: footer;
-    margin-top: 100px;
 
     @container (min-width: 768px) {
       height: auto;

@@ -254,8 +254,8 @@ BEGIN
       locales l
     WHERE 
       s.name IN (${uniqueSections
-        .map((name) => escapeSqlString(name))
-        .join(", ")})
+      .map((name) => escapeSqlString(name))
+      .join(", ")})
     ON CONFLICT (section_id, locale_id) DO NOTHING;
   END IF;
 END $$;\n`;
@@ -446,9 +446,8 @@ BEGIN
         story.locale_code
       )}, ${story.year || 0}, ${escapeSqlString(
         story.status || "draft"
-      )}, ${escapeSqlString(featuredImage)}, ${
-        story.featured ? "TRUE" : "FALSE"
-      }, ${escapeSqlString(quote)}, ${escapeSqlString(hash)})`;
+      )}, ${escapeSqlString(featuredImage)}, ${story.featured ? "TRUE" : "FALSE"
+        }, ${escapeSqlString(quote)}, ${escapeSqlString(hash)})`;
     })
     .join(",\n");
 

@@ -124,20 +124,22 @@
     },
     "home": {
       "sections": {
-        "create": {
-          "button": "Create a story",
-          "text": "Here you can share your unforgettable moments and photos in Prater until 2007 with other visitors.",
-          "title": "Tell your Prater story"
+        "stories": {
+          "title": "A place full of memories",
+          "text": "Discover visitors' memories about their personal experiences at one of Berlin's most popular and culturally rich locations.",
+          "button": "All memories"
         },
         "prater": {
-          "button": "Discover Berliner Prater",
-          "text": "Opened in 1837 as a garden venue, the Berlin Prater attracted those seeking relaxation in nature. It featured summer theater, acrobatics, boxing matches, and a space for political discussions. Today, it remains a central gathering place, now home to the Volksbühne and Prater Gallery, key venues for the independent art scene.",
-          "title": "A place to remember"
+          "title": "About the history of the Berlin Prater",
+          "imageAlt": "MISSING",
+          "text": "Opened in 1837 as a garden tavern just outside the city gates, the Berlin Prater has always attracted those seeking relaxation and adventure in nature. Entertainment was offered in the Prater hall and beer garden, but it was also a place of political agitation and discussion.\nAs the city grew and changed, the Prater remained a central meeting point for the neighborhood, where people gathered to eat, drink, debate, dance, and celebrate together. Today, the Prater is under municipal management. After the renovation is completed, the Volksbühne and independent theater groups will perform in the main hall, while the Prater Galerie for contemporary art will occupy a side wing.",
+          "button": "Discover the history"
         },
-        "stories": {
-          "button": "See all stories",
-          "text": "Discover stories from visitors about their personal experiences in one of Berlin's most popular and culturally rich places.",
-          "title": "Personal stories from Berliner Prater"
+        "create": {
+          "title": "Tell your Prater memory",
+          "imageAlt": "MISSING",
+          "text": "There is no ONE single history of the Prater. It is made up of many stories – of your memories and images. Share them with us!",
+          "button": "Create your memory"
         }
       }
     },

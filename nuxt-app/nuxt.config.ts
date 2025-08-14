@@ -66,8 +66,6 @@ export default defineNuxtConfig({
     '@nuxtjs/supabase',
   ],
   i18n: {
-    restructureDir: './i18n',
-    vueI18n: 'config.ts',
     locales: [
       {
         code: 'en',
@@ -80,8 +78,7 @@ export default defineNuxtConfig({
         file: 'de.json',
       },
     ],
-    langDir: 'locales',
-    defaultLocale: 'en',
+    defaultLocale: 'de',
     strategy: 'no_prefix',
   },
 
