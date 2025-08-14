@@ -421,8 +421,6 @@
       :stories="stories"
       @filter="handleSearchFilter"
     />
-
-    <CutoutsBackground v-if="viewMode === 'list'" />
   </div>
 </template>
 

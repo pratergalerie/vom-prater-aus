@@ -35,6 +35,7 @@
         class="footer"
       />
     </Transition>
+    <CutoutsBackground />
   </div>
 </template>
 

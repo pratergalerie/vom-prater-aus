@@ -92,7 +92,6 @@
         :href="section.content?.buttonLink"
       />
     </section>
-    <CutoutsBackground />
   </div>
 </template>
 

@@ -26,6 +26,7 @@
         <slot />
       </main>
     </Transition>
+    <CutoutsBackground />
   </div>
 </template>
 
