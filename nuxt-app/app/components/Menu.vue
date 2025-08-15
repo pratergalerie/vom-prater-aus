@@ -191,7 +191,7 @@
 </script>
 
 <template>
-  <Transition name="fade">
+  <Transition>
     <div
       v-if="isVisible"
       class="menu-container"
@@ -282,15 +282,13 @@
     top: 0;
     z-index: 100;
     display: grid;
-    grid-template-rows: 30% 10% 1fr;
+    grid-template-rows: 40% 10% 1fr;
     width: 100%;
     height: 100%;
-    padding-top: var(--header-height);
     pointer-events: none;
     container-name: menu-container;
     container-type: size;
     contain: size layout style;
-    background-color: var(--color-beige);
   }
 
   .illustration {
@@ -309,9 +307,15 @@
       object-fit: cover;
       mix-blend-mode: multiply;
     }
+
+    @media screen and (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
   }
 
   menu {
+    --animation-time: 0.2s;
+
     display: flex;
     flex-direction: column;
     grid-row: 2 / 4;
@@ -321,7 +325,6 @@
     justify-content: center;
     padding: 0 var(--padding-mobile);
     margin: 0;
-    color: var(--color-beige);
     pointer-events: all;
     outline: none;
     background-color: var(--color-viridian);
@@ -424,7 +427,7 @@
     color: var(--color-beige);
     opacity: 0;
     transform: translateX(20px);
-    animation: slide-in 0.3s ease-out forwards;
+    animation: slide-in var(--animation-time) ease-out forwards;
     animation-delay: v-bind(languageSwitcherDelay);
 
     @media screen and (prefers-reduced-motion: reduce) {
@@ -465,7 +468,7 @@
     & :deep(.divider-path) {
       stroke-dasharray: 1000;
       stroke-dashoffset: 1000;
-      animation: draw-path 0.5s ease-out forwards;
+      animation: draw-path 0.3s ease-out forwards;
       animation-delay: v-bind(dividerDelay);
 
       @media screen and (prefers-reduced-motion: reduce) {
@@ -480,7 +483,7 @@
     opacity: 1;
     transform: translateX(0);
     transform-origin: right center;
-    animation: slide-out 0.3s ease-out forwards;
+    animation: slide-out var(--animation-time) ease-out forwards;
     animation-delay: var(--animation-delay);
 
     @media screen and (prefers-reduced-motion: reduce) {
@@ -492,7 +495,7 @@
     opacity: 0;
     transform: translateX(20px);
     transform-origin: right center;
-    animation: slide-in 0.3s ease-out forwards;
+    animation: slide-in var(--animation-time) ease-out forwards;
     animation-delay: var(--animation-delay);
 
     @media screen and (prefers-reduced-motion: reduce) {
@@ -504,7 +507,7 @@
     opacity: 1;
     transform: translateX(0);
     transform-origin: right center;
-    animation: slide-out 0.3s ease-out forwards;
+    animation: slide-out var(--animation-time) ease-out forwards;
     animation-delay: v-bind(dividerDelay);
 
     @media screen and (prefers-reduced-motion: reduce) {
@@ -516,7 +519,7 @@
     opacity: 0;
     transform: translateX(20px);
     transform-origin: right center;
-    animation: slide-in 0.3s ease-out forwards;
+    animation: slide-in var(--animation-time) ease-out forwards;
     animation-delay: v-bind(dividerDelay);
 
     @media screen and (prefers-reduced-motion: reduce) {
@@ -528,7 +531,7 @@
     opacity: 1;
     transform: translateX(0);
     transform-origin: right center;
-    animation: slide-out 0.3s ease-out forwards;
+    animation: slide-out var(--animation-time) ease-out forwards;
     animation-delay: v-bind(languageSwitcherDelay);
 
     @media screen and (prefers-reduced-motion: reduce) {
@@ -540,7 +543,7 @@
     opacity: 0;
     transform: translateX(20px);
     transform-origin: right center;
-    animation: slide-in 0.3s ease-out forwards;
+    animation: slide-in var(--animation-time) ease-out forwards;
     animation-delay: v-bind(languageSwitcherDelay);
 
     @media screen and (prefers-reduced-motion: reduce) {
@@ -551,7 +554,7 @@
   @keyframes slide-in {
     from {
       opacity: 0;
-      transform: translateX(20px);
+      transform: translateX(4ch);
     }
 
     to {
@@ -568,7 +571,7 @@
 
     to {
       opacity: 0;
-      transform: translateX(20px);
+      transform: translateX(4ch);
     }
   }
 
@@ -587,20 +590,6 @@
     justify-content: flex-end;
     width: 100%;
     max-width: var(--max-width);
-  }
-
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: opacity 0.3s linear;
-
-    @media screen and (prefers-reduced-motion: reduce) {
-      transition: none;
-    }
-  }
-
-  .fade-enter-from,
-  .fade-leave-to {
-    opacity: 0;
   }
 
   .menu-closing {
