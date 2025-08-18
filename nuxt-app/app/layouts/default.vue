@@ -17,14 +17,15 @@
     <Menu />
     <main>
       <slot />
-      <CutoutsBackground />
     </main>
+    <CutoutsBackground />
     <Footer />
   </div>
 </template>
 
 <style scoped>
   .layout-wrapper {
+    position: relative;
     height: 100%;
   }
 

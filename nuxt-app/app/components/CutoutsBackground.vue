@@ -1,17 +1,14 @@
 <script lang="ts" setup>
   const cutouts = ref<
     Array<{
-      id: string
       src: string
-      speed: number
+      alignSelf: 'flex-start' | 'center' | 'flex-end'
+      justifySelf: 'left' | 'center' | 'right'
       position: {
         top: string
         left: string
       }
-      size: {
-        width: string
-        height: string
-      }
+      size: string
     }>
   >([])
 
@@ -35,40 +32,26 @@
   })
 
   function generateCutouts(svgFiles: Array<{ filename: string; url: string }>) {
-    // Define row spacing and positioning
-    const rowSpacing = 25 // percentage between rows
-    const leftMargin = -5 // percentage from left edge (negative value to go beyond the edge)
-    const rightMargin = 35 // percentage from right edge (moved more towards left)
-    const minSize = 100 // minimum size in pixels
-    const maxSize = 400 // maximum size in pixels
-
     cutouts.value = svgFiles.map((file, index) => {
-      // Calculate row position (one per row)
-      const rowTop = 10 + index * rowSpacing
-
-      // Alternate between left and right sides
-      const isLeftSide = index % 2 === 0
-      const sidePosition = isLeftSide ? leftMargin : 100 - rightMargin
+      const isTop = index < svgFiles.length / 2
+      const isLeft = index % 2 === 0
 
       // Add some randomness within the side area
-      const randomOffset = (Math.random() - 0.5) * 10 // ±5% variation
-      const finalLeft = Math.min(95, sidePosition + randomOffset)
+      const randomOffsetY = Math.ceil((Math.random() - 0.5) * 10) // ±5% variation
+      const randomOffsetX = Math.ceil((Math.random() - 0.5) * 10) // ±5% variation
 
       // Random size within bounds
-      const size = minSize + Math.random() * (maxSize - minSize)
+      const size = Math.ceil(10 + Math.random() * (10 - 5))
 
       return {
-        id: `cutout-${index + 1}`,
         src: file.url,
-        speed: Math.random() * 4 - 2,
+        alignSelf: isTop ? 'flex-start' : 'center',
+        justifySelf: isLeft ? 'left' : 'right',
         position: {
-          top: `${rowTop}%`,
-          left: `${finalLeft}%`,
+          top: `${randomOffsetY}%`,
+          left: `${randomOffsetX}%`,
         },
-        size: {
-          width: `${size}px`,
-          height: `${size}px`,
-        },
+        size: `${size}vw`,
       }
     })
   }
@@ -76,54 +59,58 @@
 
 <template>
   <ClientOnly>
-    <div
-      v-if="cutouts.length > 0"
-      class="cutouts-background"
-    >
-      <div
-        v-for="cutout in cutouts"
-        :key="cutout.id"
-        v-rellax
-        class="cutout rellax"
+    <div class="cutouts-background">
+      <img
+        v-for="(cutout, index) in cutouts"
+        :key="index"
+        :src="cutout.src"
+        alt=""
         :style="{
-          top: cutout.position.top,
-          left: cutout.position.left,
-          width: cutout.size.width,
-          height: cutout.size.height,
+          '--parallax-speed': 1 + (index + 1) / 10,
+          zIndex: index,
+          alignSelf: cutout.alignSelf,
+          justifySelf: cutout.justifySelf,
+          maxWidth: cutout.size,
         }"
-        :data-rellax-speed="cutout.speed"
-      >
-        <img
-          :src="cutout.src"
-          :alt="cutout.id"
-          :style="{
-            width: '100%',
-            height: '100%',
-            objectFit: 'contain',
-          }"
-        />
-      </div>
+      />
     </div>
   </ClientOnly>
 </template>
 
 <style scoped>
   .cutouts-background {
+    --cutout-max-height: 400px;
+
+    /* Initialize variable to prevent error  */
+    --parallax-speed: 0;
+
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 1;
+    box-sizing: border-box;
+    display: grid;
     width: 100%;
     height: 100%;
-    padding: 0;
+    padding-top: var(--header-height);
     margin: 0 auto;
+    overflow: clip;
     pointer-events: none;
-    user-select: none;
     mix-blend-mode: multiply;
+    opacity: 0.5;
+
+    & > img {
+      animation: parallax linear both;
+      animation-timeline: view();
+
+      @media (prefers-reduced-motion: reduce) {
+        animation: none;
+      }
+    }
   }
 
-  .cutout {
-    position: absolute;
-    transform: translate(-50%, -50%);
+  @keyframes parallax {
+    to {
+      transform: translateY(calc(50vh * var(--parallax-speed))) rotate(90deg);
+    }
   }
 </style>
