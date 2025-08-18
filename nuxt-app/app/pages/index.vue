@@ -72,7 +72,7 @@
         variant="label-icon"
         icon="mdi:arrow-right"
         :label="t('pages.home.sections.stories.button')"
-        href="/stories/stories"
+        href="/stories"
       />
     </section>
 
@@ -91,7 +91,7 @@
         variant="label-icon"
         icon="mdi:arrow-right"
         :label="t('pages.home.sections.prater.button')"
-        href="/stories/prater"
+        href="/prater"
       />
     </section>
 
