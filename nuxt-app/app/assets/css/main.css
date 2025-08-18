@@ -3,12 +3,13 @@
 @import url('./textures.css');
 @import url('./shapes.css');
 
-body {
-  min-height: 100vh;
-  margin: 0;
+html {
+  scrollbar-gutter: stable;
 }
 
 body {
+  min-height: 100vh;
+  margin: 0;
   background-color: var(--color-beige);
 
   &::before {
