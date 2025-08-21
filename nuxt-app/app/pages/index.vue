@@ -64,8 +64,10 @@
           data-rellax-speed="-0.5"
         />
       </ClientOnly>
-      <h1>{{ t('pages.home.sections.stories.title') }}</h1>
-      <p>{{ t('pages.home.sections.stories.text') }}</p>
+      <div class="section-text">
+        <h1>{{ t('pages.home.sections.stories.title') }}</h1>
+        <p>{{ t('pages.home.sections.stories.text') }}</p>
+      </div>
       <BaseButton
         class="button"
         type="primary"
@@ -83,8 +85,10 @@
         :alt="t('pages.home.sections.prater.imageAlt')"
         :modifiers="{ grayscale: true }"
       />
-      <h1>{{ t('pages.home.sections.prater.title') }}</h1>
-      <p>{{ t('pages.home.sections.prater.text') }}</p>
+      <div class="section-text">
+        <h1>{{ t('pages.home.sections.prater.title') }}</h1>
+        <p>{{ t('pages.home.sections.prater.text') }}</p>
+      </div>
       <BaseButton
         class="button"
         type="primary"
@@ -97,13 +101,15 @@
 
     <!-- Create Section -->
     <section>
-      <h1>{{ t('pages.home.sections.create.title') }}</h1>
       <NuxtImg
         src="imgs/create-story.jpg"
         :alt="t('pages.home.sections.create.imageAlt')"
         :modifiers="{ grayscale: true }"
       />
-      <p>{{ t('pages.home.sections.create.text') }}</p>
+      <div class="section-text">
+        <h1>{{ t('pages.home.sections.create.title') }}</h1>
+        <p>{{ t('pages.home.sections.create.text') }}</p>
+      </div>
       <BaseButton
         class="button"
         type="primary"
@@ -120,14 +126,20 @@
   .layout-container {
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    gap: 8rem;
     width: 100%;
   }
 
   section {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 4rem;
+
+    & .section-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
 
     &:nth-child(even) {
       align-items: flex-end;
@@ -136,13 +148,9 @@
         max-width: 70%;
       }
 
-      & p {
+      & .section-text {
         text-align: right;
       }
-    }
-
-    @container (min-width: 768px) {
-      gap: 1.5rem;
     }
   }
 </style>
