@@ -12,27 +12,25 @@
 </script>
 
 <template>
-  <div class="layout-wrapper">
+  <div>
     <Header />
-    <Menu />
     <main>
       <slot />
+      <CutoutsBackground />
     </main>
-    <CutoutsBackground />
+    <Menu />
     <Footer />
   </div>
 </template>
 
 <style scoped>
-  .layout-wrapper {
-    position: relative;
-    height: 100%;
-  }
-
   main {
     position: relative;
+    box-sizing: border-box;
+    width: 100%;
     max-width: var(--max-width);
-    padding: 6rem 0;
+    padding: var(--space-2xl-3xl) var(--space-s-m);
+    margin: 0 auto;
   }
 
   .slide-enter-active,

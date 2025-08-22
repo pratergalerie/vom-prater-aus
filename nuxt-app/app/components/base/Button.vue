@@ -213,12 +213,6 @@
     transition: filter 0.2s ease-out;
 
     @media screen and (prefers-reduced-motion: reduce) {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      filter: v-bind(dropShadow);
       transition: none;
     }
   }
@@ -226,10 +220,8 @@
   button {
     display: grid;
     width: 100%;
-    min-width: 300px;
     max-width: 400px;
     height: 60px;
-    padding: 0;
     color: var(--color-black);
     cursor: pointer;
     background: none;
@@ -276,78 +268,13 @@
     }
 
     @media screen and (prefers-reduced-motion: reduce) {
-      display: grid;
-      width: 100%;
-      min-width: 300px;
-      max-width: 400px;
-      height: 60px;
-      padding: 0;
-      color: var(--color-black);
-      cursor: pointer;
-      background: none;
-      border: none;
-      container-type: inline-size;
-      container-name: button-container;
       transition: none;
-
-      &:hover,
-      &:focus {
-        transform: scale(1.01);
-
-        &.primary .button-shape {
-          filter: drop-shadow(-8px 8px 0 var(--color-black));
-        }
-
-        &.secondary .button-shape {
-          filter: drop-shadow(-6px 6px 0 var(--color-white))
-            drop-shadow(-2px 2px 0 var(--color-black));
-        }
-
-        &.icon .button-shape {
-          filter: drop-shadow(-3px 3px 0 var(--color-white))
-            drop-shadow(-1px 1px 0 var(--color-black));
-        }
-      }
     }
   }
 
   a {
     color: inherit;
     text-decoration: none;
-  }
-
-  @container (min-width: 500px) {
-    max-width: 360px;
-  }
-
-  @media screen and (prefers-reduced-motion: reduce) {
-    display: grid;
-    width: 100%;
-    min-width: 300px;
-    max-width: 500px;
-    height: 60px;
-    padding: 0;
-    color: var(--color-black);
-    cursor: pointer;
-    background: none;
-    border: none;
-    container-type: inline-size;
-    container-name: button-container;
-    transition: none;
-
-    &:hover,
-    &:focus {
-      transform: scale(1.02);
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    @container (min-width: 500px) {
-      max-width: 360px;
-    }
   }
 
   .button-content {
@@ -392,6 +319,8 @@
     gap: 0.5rem;
     align-items: center;
     justify-content: center;
+    padding: var(--space-3xs);
+    transform: translateY(-5%);
   }
 
   .button-label {
@@ -407,8 +336,6 @@
 
   .button-label,
   .button-label-icon {
-    font-family: var(--font-button);
-    font-size: 1rem;
     transition: transform 0.2s ease-out;
 
     &.secondary {
@@ -416,13 +343,7 @@
     }
 
     @media screen and (prefers-reduced-motion: reduce) {
-      font-family: var(--font-button);
-      font-size: 1rem;
       transition: none;
-
-      &.secondary {
-        color: var(--color-white);
-      }
     }
   }
 

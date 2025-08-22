@@ -35,11 +35,13 @@
   }
 
   header {
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
     max-width: var(--max-width);
+    padding: 0 var(--space-s-m);
 
     &::before {
       position: absolute;
@@ -51,14 +53,6 @@
       content: '';
       background: url('@/assets/svgs/noise.svg');
       mix-blend-mode: multiply;
-    }
-
-    @media (min-width: 500px) {
-      padding: 0 var(--padding-tablet);
-    }
-
-    @media (min-width: 768px) {
-      padding: 0 var(--padding-desktop);
     }
   }
 </style>

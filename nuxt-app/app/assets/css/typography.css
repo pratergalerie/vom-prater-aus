@@ -1,9 +1,9 @@
 @import url('./variables.css');
 
-html,
 body {
+  font-size: var(--step-0);
   font-family: var(--font-text);
-  font-size: var(--font-size);
+  font-size-adjust: 0.48;
   line-height: 1.5;
   color: var(--color-text);
 }
@@ -16,22 +16,42 @@ h5,
 h6 {
   margin: 0;
   font-family: var(--font-heading);
+  font-weight: 600;
   color: var(--color-heading);
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: var(--step-3);
+}
+
+h2 {
+  font-size: var(--step-2);
+}
+
+h3 {
+  font-size: var(--step-1);
 }
 
 p {
   margin: 0;
+  max-width: 70ch;
   font-family: var(--font-text);
-  font-size: var(--font-size);
+  font-weight: 200;
   color: var(--color-text);
-  line-height: calc(1rem * 1.3);
 }
 
 a {
   font-family: var(--font-link);
   font-weight: 400;
   color: var(--color-link);
+  text-underline-offset: 0.25rem;
   text-decoration: underline;
+}
+
+button {
+  font-family: var(--font-button);
+  font-size: var(--step-0);
 }
 
 .highlight {

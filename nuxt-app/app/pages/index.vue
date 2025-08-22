@@ -65,14 +65,13 @@
         />
       </ClientOnly>
       <div class="section-text">
-        <h1>{{ t('pages.home.sections.stories.title') }}</h1>
+        <h2>{{ t('pages.home.sections.stories.title') }}</h2>
         <p>{{ t('pages.home.sections.stories.text') }}</p>
       </div>
       <BaseButton
         class="button"
         type="primary"
-        variant="label-icon"
-        icon="mdi:arrow-right"
+        variant="label"
         :label="t('pages.home.sections.stories.button')"
         href="/stories"
       />
@@ -86,14 +85,13 @@
         :modifiers="{ grayscale: true }"
       />
       <div class="section-text">
-        <h1>{{ t('pages.home.sections.prater.title') }}</h1>
+        <h2>{{ t('pages.home.sections.prater.title') }}</h2>
         <p>{{ t('pages.home.sections.prater.text') }}</p>
       </div>
       <BaseButton
         class="button"
         type="primary"
-        variant="label-icon"
-        icon="mdi:arrow-right"
+        variant="label"
         :label="t('pages.home.sections.prater.button')"
         href="/prater"
       />
@@ -107,14 +105,13 @@
         :modifiers="{ grayscale: true }"
       />
       <div class="section-text">
-        <h1>{{ t('pages.home.sections.create.title') }}</h1>
+        <h2>{{ t('pages.home.sections.create.title') }}</h2>
         <p>{{ t('pages.home.sections.create.text') }}</p>
       </div>
       <BaseButton
         class="button"
         type="primary"
-        variant="label-icon"
-        icon="mdi:arrow-right"
+        variant="label"
         :label="t('pages.home.sections.create.button')"
         href="/stories/create"
       />
@@ -126,19 +123,19 @@
   .layout-container {
     display: flex;
     flex-direction: column;
-    gap: 8rem;
+    gap: var(--space-2xl-3xl);
     width: 100%;
   }
 
   section {
     display: flex;
     flex-direction: column;
-    gap: 4rem;
+    gap: var(--space-l-xl);
 
     & .section-text {
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      gap: var(--space-s-m);
     }
 
     &:nth-child(even) {

@@ -385,10 +385,6 @@
     li {
       --animation-delay: 0s;
 
-      font-family: var(--font-link);
-      font-size: 1rem;
-      font-weight: 700;
-      line-height: 1.5rem;
       color: var(--color-beige);
       text-align: right;
       cursor: pointer;
@@ -398,20 +394,6 @@
 
       &.slide-out {
         animation: none;
-      }
-
-      & a {
-        text-decoration: none;
-      }
-
-      @container menu-container (min-width: 500px) {
-        font-size: 1.2rem;
-        line-height: 1.5rem;
-      }
-
-      @container menu-container (min-width: var(--max-width)) {
-        font-size: 1.5rem;
-        line-height: 2rem;
       }
     }
   }

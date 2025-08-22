@@ -27,36 +27,6 @@ body {
   }
 }
 
-main {
-  padding: 0 var(--padding-mobile);
-  width: 100%;
-  margin: 0 auto;
-  box-sizing: border-box;
-
-  @media (min-width: 500px) {
-    padding: 0 var(--padding-tablet);
-  }
-
-  @media (min-width: 768px) {
-    padding: 0 var(--padding-desktop);
-  }
-
-  @media (min-height: 1024px) {
-    height: auto;
-  }
-}
-
-h1 {
-  font-size: 2rem;
-  line-height: 1.2;
-}
-
-p {
-  max-width: 70ch;
-  font-size: 1.125rem;
-  line-height: 1.4;
-}
-
 img {
   width: 100%;
   object-fit: cover;
