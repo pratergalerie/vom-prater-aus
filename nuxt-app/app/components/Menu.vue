@@ -1,11 +1,6 @@
 <script setup lang="ts">
   const illustrationImage = ref<string>('')
 
-  const {
-    locale: currentLocale,
-    locales,
-    setLocale,
-  } = useI18n({ useScope: 'global' })
 
   const { isOpen, toggleMenu, menuRoutes } = useMenu()
 
@@ -251,24 +246,12 @@
           </div>
 
           <div
-            class="lang-switcher"
-            aria-label="Language switcher"
+            class="lang-switcher-wrapper"
+            :style="{
+              '--animation-delay': languageSwitcherDelay,
+            }"
           >
-            <a
-              v-for="locale in locales"
-              :key="locale.code"
-              href="#"
-              :class="{
-                active: locale.code === currentLocale,
-                highlight: locale.code === currentLocale,
-              }"
-              :style="{
-                '--animation-delay': languageSwitcherDelay,
-              }"
-              @click.prevent.stop="setLocale(locale.code)"
-            >
-              {{ locale.code }}
-            </a>
+            <LanguageSwitcher />
           </div>
         </nav>
       </menu>
@@ -398,51 +381,6 @@
     }
   }
 
-  .lang-switcher {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    justify-content: flex-end;
-    width: 100%;
-    max-width: var(--max-width);
-    margin: 0;
-    color: var(--color-beige);
-    opacity: 0;
-    transform: translateX(20px);
-    animation: slide-in var(--animation-time) ease-out forwards;
-    animation-delay: v-bind(languageSwitcherDelay);
-
-    @media screen and (prefers-reduced-motion: reduce) {
-      animation: none;
-    }
-
-    a {
-      padding: 0 0.5rem;
-      font-family: var(--font-link);
-      font-size: 1rem;
-      line-height: 1.5rem;
-      color: var(--color-beige);
-      text-align: right;
-      text-transform: uppercase;
-      text-decoration: none;
-      cursor: pointer;
-
-      &.active {
-        font-weight: 700;
-        color: var(--color-black);
-      }
-
-      @container menu-container (min-width: 500px) {
-        font-size: 1.2rem;
-        line-height: 1.5rem;
-      }
-
-      @container menu-container (min-width: var(--max-width)) {
-        font-size: 1.5rem;
-        line-height: 2rem;
-      }
-    }
-  }
 
   .divider {
     opacity: 1;
@@ -509,24 +447,40 @@
     }
   }
 
-  .menu-container:not(.menu-visible) .lang-switcher {
-    opacity: 1;
-    transform: translateX(0);
-    transform-origin: right center;
-    animation: slide-out var(--animation-time) ease-out forwards;
-    animation-delay: v-bind(languageSwitcherDelay);
+  .lang-switcher-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0;
+    opacity: 0;
+    transform: translateX(20px);
+    animation: slide-in var(--animation-time) ease-out forwards;
+    animation-delay: var(--animation-delay);
 
     @media screen and (prefers-reduced-motion: reduce) {
       animation: none;
     }
   }
 
-  .menu-container.menu-visible .lang-switcher {
+  .menu-container:not(.menu-visible) .lang-switcher-wrapper {
+    opacity: 1;
+    transform: translateX(0);
+    transform-origin: right center;
+    animation: slide-out var(--animation-time) ease-out forwards;
+    animation-delay: var(--animation-delay);
+
+    @media screen and (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+
+  .menu-container.menu-visible .lang-switcher-wrapper {
     opacity: 0;
     transform: translateX(20px);
     transform-origin: right center;
     animation: slide-in var(--animation-time) ease-out forwards;
-    animation-delay: v-bind(languageSwitcherDelay);
+    animation-delay: var(--animation-delay);
 
     @media screen and (prefers-reduced-motion: reduce) {
       animation: none;
