@@ -15,93 +15,66 @@
 </script>
 
 <template>
-  <footer
-    ref="footerRef"
-    class="footer"
-  >
-    <div class="top-shape">
-      <img
-        src="/svgs/footer/top-shape.svg"
-        alt=""
-      />
-    </div>
-    <div class="footer-wrapper">
-      <div class="footer-content">
-        <div class="title-and-nav">
-          <h2>{{ $t('components.footer.title') }}</h2>
-          <nav>
-            <ul>
-              <li
-                v-for="(route, index) in footerRoutes"
-                :key="index"
-              >
-                <NuxtLink :to="route.path">{{ route.title }}</NuxtLink>
-              </li>
-            </ul>
-          </nav>
-        </div>
-        <div class="logos-and-text">
-          <p>
-            {{ $t('components.footer.text') }}
-          </p>
-          <div class="logos">
-            <img
-              src="/logos/prater-galerie.svg"
-              alt="Logo"
-            />
-            <img
-              src="/logos/kommunale.png"
-              alt="Logo"
-            />
-            <img
-              src="/logos/berlin-stadt-regierung.png"
-              alt="Logo"
-            />
-          </div>
+  <div class="footer-wrapper">
+    <footer
+      ref="footerRef"
+    >
+      <div class="title-and-nav">
+        <h2>{{ $t('components.footer.title') }}</h2>
+        <nav>
+          <ul>
+            <li
+              v-for="(route, index) in footerRoutes"
+              :key="index"
+            >
+              <NuxtLink :to="route.path">{{ route.title }}</NuxtLink>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="logos-and-text">
+        <p>
+          {{ $t('components.footer.text') }}
+        </p>
+        <div class="logos">
+          <img
+            src="/logos/prater-galerie.svg"
+            alt="Logo"
+          />
+          <img
+            src="/logos/kommunale.png"
+            alt="Logo"
+          />
+          <img
+            src="/logos/berlin-stadt-regierung.png"
+            alt="Logo"
+          />
         </div>
       </div>
-    </div>
-  </footer>
+    </footer>
+  </div>
 </template>
 
 <style scoped>
-  footer {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .top-shape {
-    width: 100%;
-    height: 22px;
-
-    img {
-      width: 100%;
-      height: 22px;
-      object-fit: cover;
-    }
-  }
-
   .footer-wrapper {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
     width: 100%;
+    padding: 0 var(--space-s-m);
+    color: var(--color-beige);
     background: var(--color-viridian);
+    clip-path: polygon(0% 8.8%, 26.98% 7.02%, 43.98% 13.02%, 70.85% 5.15%, 97.26% 10.74%, 100% 13.75%, 100% 100%, 0% 100%);
   }
 
-  .footer-content {
-    box-sizing: border-box;
+  footer {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(30ch, 1fr));
     gap: 2rem;
+    width: 100%;
     max-width: var(--max-width);
-    padding: var(--space-2xl-3xl) var(--space-s-m);
-    margin: 0 auto;
-    overflow: hidden;
-    color: var(--color-beige);
-    container-type: inline-size;
-    container-name: footer-content;
-
-    @container (min-width: 768px) {
-      display: grid;
-    }
+    padding: var(--space-2xl-3xl) 0;
+    margin-top: var(--space-xl-2xl);
   }
 
   .title-and-nav,
@@ -132,10 +105,6 @@
       margin: 0;
       font-size: var(--step-0);
       list-style-type: none;
-
-      @media (max-height: 700px) {
-        gap: 0.5rem;
-      }
     }
 
     a {
