@@ -463,30 +463,6 @@
     }
   }
 
-  .menu-container:not(.menu-visible) .lang-switcher-wrapper {
-    opacity: 1;
-    transform: translateX(0);
-    transform-origin: right center;
-    animation: slide-out var(--animation-time) ease-out forwards;
-    animation-delay: var(--animation-delay);
-
-    @media screen and (prefers-reduced-motion: reduce) {
-      animation: none;
-    }
-  }
-
-  .menu-container.menu-visible .lang-switcher-wrapper {
-    opacity: 0;
-    transform: translateX(20px);
-    transform-origin: right center;
-    animation: slide-in var(--animation-time) ease-out forwards;
-    animation-delay: var(--animation-delay);
-
-    @media screen and (prefers-reduced-motion: reduce) {
-      animation: none;
-    }
-  }
-
   @keyframes slide-in {
     from {
       opacity: 0;

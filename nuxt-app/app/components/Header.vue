@@ -19,19 +19,7 @@
     width: 100%;
     height: var(--header-height);
     background-color: var(--color-beige);
-    mask-image: url('/svgs/header/masks/mobile.svg');
-    mask-repeat: no-repeat;
-    mask-position: center;
-    mask-size: cover;
-    mask-composite: exclude;
-
-    @media (min-width: 500px) {
-      mask-image: url('/svgs/header/masks/tablet.svg');
-    }
-
-    @media (min-width: 768px) {
-      mask-image: url('/svgs/header/masks/desktop.svg');
-    }
+    clip-path: polygon(0% 0%, 100% 0%, 100% 76.25%, 97.26% 89.26%, 88.20% 73.20%, 83.73% 91.73%, 77.69% 78.69%, 70.85% 94.85%, 61.69% 78.69%, 53.76% 93.76%, 43.98% 76.98%, 36.05% 92.05%, 26.98% 92.98%, 23.99% 95.99%, 15.61% 80.61%, 1.26% 89.26%, 0% 73.20%, 0% 100%);
   }
 
   header {
