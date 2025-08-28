@@ -1,7 +1,6 @@
 <script setup lang="ts">
   const illustrationImage = ref<string>('')
 
-
   const { isOpen, toggleMenu, menuRoutes } = useMenu()
 
   const languageSwitcherDelay = computed(() => {
@@ -380,7 +379,6 @@
       }
     }
   }
-
 
   .divider {
     opacity: 1;

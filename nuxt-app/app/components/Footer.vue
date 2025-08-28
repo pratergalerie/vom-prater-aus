@@ -16,9 +16,7 @@
 
 <template>
   <div class="footer-wrapper">
-    <footer
-      ref="footerRef"
-    >
+    <footer ref="footerRef">
       <div class="title-and-nav">
         <h2>{{ $t('components.footer.title') }}</h2>
         <nav>
@@ -64,7 +62,16 @@
     padding: 0 var(--space-s-m);
     color: var(--color-beige);
     background: var(--color-viridian);
-    clip-path: polygon(0% 8.8%, 26.98% 7.02%, 43.98% 13.02%, 70.85% 5.15%, 97.26% 10.74%, 100% 13.75%, 100% 100%, 0% 100%);
+    clip-path: polygon(
+      0% 8.8%,
+      26.98% 7.02%,
+      43.98% 13.02%,
+      70.85% 5.15%,
+      97.26% 10.74%,
+      100% 13.75%,
+      100% 100%,
+      0% 100%
+    );
   }
 
   footer {
