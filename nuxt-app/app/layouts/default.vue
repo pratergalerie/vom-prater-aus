@@ -12,22 +12,26 @@
 </script>
 
 <template>
-  <div>
+  <div class="layout-wrapper">
     <Header />
     <main>
       <slot />
-      <CutoutsBackground />
     </main>
     <Menu />
+    <CutoutsBackground />
     <Footer />
   </div>
 </template>
 
 <style scoped>
-  main {
+  .layout-wrapper {
     position: relative;
+    min-height: 100vh;
+    overflow: clip;
+  }
+
+  main {
     box-sizing: border-box;
-    width: 100%;
     max-width: var(--max-width);
     padding: var(--space-2xl-3xl) var(--space-s-m);
     margin: 0 auto;

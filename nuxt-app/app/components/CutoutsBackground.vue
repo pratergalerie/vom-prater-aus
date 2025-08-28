@@ -9,6 +9,9 @@
         left: string
       }
       size: string
+      rotationSpeed: number
+      rotationDirection: number
+      rotationDegree: number
     }>
   >([])
 
@@ -31,27 +34,53 @@
     }
   })
 
+  const minCutoutSize = 20
+  const maxCutoutSize = 30
+  const cutoutsCount = computed(() => cutouts.value.length)
+
   function generateCutouts(svgFiles: Array<{ filename: string; url: string }>) {
+    const alignSelfOptions = ['center', 'flex-end'] as const
+    const justifySelfOptions = ['left', 'center', 'right'] as const
+
+    // Shuffle justifySelf options to ensure no duplicates
+    const shuffledJustifySelf = [...justifySelfOptions].sort(
+      () => Math.random() - 0.5
+    )
+
     cutouts.value = svgFiles.map((file, index) => {
-      const isTop = index < svgFiles.length / 2
-      const isLeft = index % 2 === 0
+      // Use shuffled array and cycle through if needed
+      const randomAlignSelf =
+        alignSelfOptions[Math.floor(Math.random() * alignSelfOptions.length)] ??
+        'center'
+      const randomJustifySelf =
+        shuffledJustifySelf[index % shuffledJustifySelf.length] ?? 'center'
 
       // Add some randomness within the side area
       const randomOffsetY = Math.ceil((Math.random() - 0.5) * 10) // ±5% variation
       const randomOffsetX = Math.ceil((Math.random() - 0.5) * 10) // ±5% variation
 
+      // Random rotation speed, direction, and degree
+      const rotationSpeed = 0.5 + Math.random() * 1.5 // 0.5x to 2x speed
+      const rotationDirection = Math.random() < 0.5 ? 1 : -1 // clockwise or counterclockwise
+      const rotationDegree = Math.random() * 90 // 0deg to 90deg
+
       // Random size within bounds
-      const size = Math.ceil(10 + Math.random() * (10 - 5))
+      const size = Math.ceil(
+        minCutoutSize + Math.random() * (maxCutoutSize - minCutoutSize)
+      )
 
       return {
         src: file.url,
-        alignSelf: isTop ? 'flex-start' : 'center',
-        justifySelf: isLeft ? 'left' : 'right',
+        alignSelf: randomAlignSelf,
+        justifySelf: randomJustifySelf,
         position: {
           top: `${randomOffsetY}%`,
           left: `${randomOffsetX}%`,
         },
         size: `${size}vw`,
+        rotationSpeed: rotationSpeed,
+        rotationDirection: rotationDirection,
+        rotationDegree: rotationDegree,
       }
     })
   }
@@ -60,47 +89,57 @@
 <template>
   <ClientOnly>
     <div class="cutouts-background">
-      <img
+      <div
+        class="cutout-wrapper"
         v-for="(cutout, index) in cutouts"
+        // Do not render the last cutout because it is mostly hidden behind footer
+        v-show="index < cutouts.length - 1"
         :key="index"
-        :src="cutout.src"
-        alt=""
-        :style="{
-          '--parallax-speed': 1 + (index + 1) / 10,
-          zIndex: index,
-          alignSelf: cutout.alignSelf,
-          justifySelf: cutout.justifySelf,
-          maxWidth: cutout.size,
-        }"
-      />
+      >
+        <img
+          :src="cutout.src"
+          alt=""
+          :style="{
+            '--parallax-speed': 3 - index * 0.3,
+            '--rotation-speed': cutout.rotationSpeed,
+            '--rotation-direction': cutout.rotationDirection,
+            '--rotation-degree': cutout.rotationDegree,
+            zIndex: index,
+            alignSelf: cutout.alignSelf,
+            justifySelf: cutout.justifySelf,
+            maxWidth: cutout.size,
+          }"
+        />
+      </div>
     </div>
   </ClientOnly>
 </template>
 
 <style scoped>
   .cutouts-background {
-    --cutout-max-height: 400px;
-
-    /* Initialize variable to prevent error  */
+    /* Initialize variables to prevent error  */
     --parallax-speed: 0;
+    --rotation-speed: 1;
+    --rotation-direction: 1;
+    --rotation-degree: 90;
 
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
     box-sizing: border-box;
     display: grid;
+    grid-template-rows: repeat(v-bind(cutoutsCount), 1fr);
     width: 100%;
+    max-width: calc(var(--max-width) + v-bind(maxCutoutSize + 'vw'));
     height: 100%;
     padding-top: var(--header-height);
     margin: 0 auto;
-    overflow: clip;
     pointer-events: none;
     mix-blend-mode: multiply;
     opacity: 0.5;
 
-    & > img {
+    & > div > img {
       animation: parallax linear both;
-      animation-timeline: view();
+      animation-timeline: scroll(block root);
 
       @media (prefers-reduced-motion: reduce) {
         animation: none;
@@ -108,9 +147,21 @@
     }
   }
 
+  .cutout-wrapper {
+    display: grid;
+    width: 100%;
+    height: 100%;
+  }
+
   @keyframes parallax {
     to {
-      transform: translateY(calc(50vh * var(--parallax-speed))) rotate(90deg);
+      transform: translateY(calc(25vh * var(--parallax-speed)))
+        rotate(
+          calc(
+            var(--rotation-degree) * 1deg * var(--rotation-speed) *
+              var(--rotation-direction)
+          )
+        );
     }
   }
 </style>
