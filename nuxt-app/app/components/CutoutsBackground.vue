@@ -92,7 +92,6 @@
       <div
         class="cutout-wrapper"
         v-for="(cutout, index) in cutouts"
-        // Do not render the last cutout because it is mostly hidden behind footer
         v-show="index < cutouts.length - 1"
         :key="index"
       >
