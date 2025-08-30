@@ -26,7 +26,7 @@ services:
     # Create a directory for Nitro storage to avoid
     # "listen EADDRINUSE: address already in use /tmp/nitro/worker-X.sock"
     # errors
-    command: sh -c "mkdir -p /tmp/nitro-storage && chmod 777 /tmp/nitro-storage && npm run dev"
+    command: sh -c "mkdir -p /tmp/nitro-storage && chmod 777 /tmp/nitro-storage && npm install && npm run dev"
 
   nuxt-app-prod:
     container_name: nuxt-app-prod
