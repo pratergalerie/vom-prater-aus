@@ -13,7 +13,7 @@
 
   function chooseRandomMenuImage() {
     const randomImage = Math.floor(Math.random() * 10) + 1
-    illustrationImage.value = `/imgs/prater/prater${randomImage}.jpeg`
+    illustrationImage.value = `/imgs/prater/prater${randomImage}.jpg`
   }
 
   const windowSize = useWindowSize()
