@@ -34,6 +34,7 @@
     box-sizing: border-box;
     max-width: var(--max-width);
     padding: var(--space-2xl-3xl) var(--space-s-m);
+    padding-top: var(--space-s-m);
     margin: 0 auto;
   }
 
