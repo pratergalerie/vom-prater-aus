@@ -176,6 +176,14 @@ export default defineEventHandler(async (event) => {
         })
       }
 
+      // Transform featured_image URL to use correct Supabase storage URL
+      if (storyData.featured_image) {
+        const { data } = client.storage
+          .from('stories-storage')
+          .getPublicUrl(storyData.featured_image)
+        storyData.featured_image = data.publicUrl
+      }
+
       // 2. Call the Edge Function to send the email
       try {
         const client = await serverSupabaseClient<Database>(event)

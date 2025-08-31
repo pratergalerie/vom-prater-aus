@@ -33,7 +33,7 @@
         ],
         "button_label": "Learn More",
         "button_link": "/about",
-        "image_src": "http://localhost:8000/storage/v1/object/public/content-storage/berliner-prater.jpg",
+        "image_src": "berliner-prater.jpg",
         "image_alt": "Berliner Prater Section"
     },
     {
@@ -46,7 +46,7 @@
         ],
         "button_label": "Mehr erfahren",
         "button_link": "/about",
-        "image_src": "http://localhost:8000/storage/v1/object/public/content-storage/berliner-prater.jpg",
+        "image_src": "berliner-prater.jpg",
         "image_alt": "Berliner Prater Sektion"
     },
     {
@@ -58,7 +58,7 @@
         ],
         "button_label": "Create Story",
         "button_link": "/stories/create",
-        "image_src": "http://localhost:8000/storage/v1/object/public/content-storage/create-story.jpg",
+        "image_src": "create-story.jpg",
         "image_alt": "Create Your Story Section"
     },
     {
@@ -70,7 +70,7 @@
         ],
         "button_label": "Geschichte erstellen",
         "button_link": "/stories/create",
-        "image_src": "http://localhost:8000/storage/v1/object/public/content-storage/create-story.jpg",
+        "image_src": "create-story.jpg",
         "image_alt": "Erstellen Sie Ihre Geschichte Sektion"
     }
 ]

@@ -75,8 +75,6 @@ button {
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
   margin: 0;
-  padding: 0.2rem 0.4rem;
-  margin: -0.2rem -0.4rem;
   border-radius: 5px 0 0 7.5px;
   text-shadow:
     -1px 1px 2.4px color-mix(in srgb, var(--color-highlight) 70%, transparent),
