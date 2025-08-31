@@ -62,7 +62,7 @@
                   v-if="slide"
                   :to="slide.link.href"
                 >
-                  <span class="highlight">{{ slide.link.text }}</span>
+                  <span class="title highlight">{{ slide.link.text }}</span>
                 </NuxtLink>
 
                 <span class="year">{{ slide.year }}</span>
@@ -131,8 +131,13 @@
 
   .copyright {
     grid-area: copyright;
-    font-size: 0.75em;
+    /* stylelint-disable-next-line */
+    font-size: var(--step--1);
     text-align: left;
+  }
+
+  .title {
+    font-size: var(--step-1);
   }
 
   .quote-wrapper {
@@ -145,6 +150,7 @@
     display: flex;
     width: fit-content;
     padding: var(--space-xs-s);
+    font-size: var(--step-1);
     font-style: italic;
     text-wrap: balanced;
   }
