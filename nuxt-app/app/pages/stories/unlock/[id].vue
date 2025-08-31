@@ -9,10 +9,6 @@
     ],
   })
 
-  definePageMeta({
-    layout: 'no-footer',
-  })
-
   const route = useRoute()
   const router = useRouter()
   const api = useAPI()

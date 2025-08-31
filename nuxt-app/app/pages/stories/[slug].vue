@@ -2,10 +2,6 @@
   import type { Story } from '~/types/frontend'
   import { transformStoryData } from '~/utils/story'
 
-  definePageMeta({
-    layout: 'no-footer',
-  })
-
   const route = useRoute()
   const api = useAPI()
 

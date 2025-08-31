@@ -11,10 +11,6 @@
     ],
   })
 
-  definePageMeta({
-    layout: 'no-footer',
-  })
-
   const inputTypes = {
     TEXT: 'text',
     EMAIL: 'email',

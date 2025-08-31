@@ -13,7 +13,6 @@
   })
 
   definePageMeta({
-    layout: 'no-footer',
     middleware: 'admin',
   })
 

@@ -18,10 +18,6 @@
     ],
   })
 
-  definePageMeta({
-    layout: 'no-footer',
-  })
-
   // Fetch approved stories
   const { data, error, status } = await api.getStories()
   if (data.value) {

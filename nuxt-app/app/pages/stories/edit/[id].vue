@@ -2,7 +2,6 @@
   import type { PageLayout, Story } from '~/types/frontend'
 
   definePageMeta({
-    layout: 'no-footer',
     middleware: ['story-auth'],
   })
 

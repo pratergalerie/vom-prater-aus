@@ -7,10 +7,6 @@
   const { user } = storeToRefs(useAuthStore())
   const { setUser } = useAuthStore()
 
-  definePageMeta({
-    layout: 'no-footer',
-  })
-
   // If user is already logged in, redirect to dashboard
   watchEffect(() => {
     if (user.value) {
