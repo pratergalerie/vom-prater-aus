@@ -127,7 +127,21 @@ export default defineEventHandler(async (event) => {
         })
       }
 
-      return data
+      // Transform featured_image URL to use correct Supabase storage URL
+      const storiesData = data?.map((story) => {
+        if (story.featured_image) {
+          const host =
+            process.env.NODE_ENV === 'production'
+              ? process.env.NUXT_PUBLIC_SUPABASE_URL
+              : 'http://localhost:8000'
+          const storageUrl = `${host}/storage/v1/object/public/stories-storage/${story.featured_image}`
+
+          return { ...story, ...{ featured_image: storageUrl } }
+        }
+        return story
+      })
+
+      return storiesData
     }
 
     // Handle POST request - Create new story
@@ -174,14 +188,6 @@ export default defineEventHandler(async (event) => {
           statusCode: Number(error.code),
           statusMessage: error.message,
         })
-      }
-
-      // Transform featured_image URL to use correct Supabase storage URL
-      if (storyData.featured_image) {
-        const { data } = client.storage
-          .from('stories-storage')
-          .getPublicUrl(storyData.featured_image)
-        storyData.featured_image = data.publicUrl
       }
 
       // 2. Call the Edge Function to send the email
