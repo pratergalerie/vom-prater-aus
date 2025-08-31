@@ -72,6 +72,17 @@
     }
   },
   "pages": {
+    "about": {
+      "title": "About the Project",
+      "description": "\\\"Vom Prater Aus\\\" is an archival project by Prater Galerie and Prater Digital that makes the lived history of the Berlin Prater before its temporary closure in 2017, accessible to all. The aim is to create a diverse, multi-perspective portrait of this unique historical icon. Contemporary witnesses are warmly invited to upload both written pieces and images to contribute to a growing and vibrant repository of knowledge. \\\"Vom Prater Aus\\\" is continuously expanding and curated by our team.",
+      "acknowledgment": "Special thanks go to the developer Mateus Knelsen, who made a significant contribution to the realisation of the project.",
+      "credits": {
+        "idea": "Idea:",
+        "ideaPerson": "Lena Prents",
+        "implementation": "Conception and Implementation:",
+        "implementationPeople": "Lena Prents, Sigrid Melchior, Helena Doppelbauer (project lead 2025-26), Marlene Bart, Katharina von Hagenow, Tereza Havlíková (project lead 2023-2024)"
+      }
+    },
     "create": {
       "form": {
         "title": "Write your Prater story",

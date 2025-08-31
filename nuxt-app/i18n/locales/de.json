@@ -72,6 +72,17 @@
     }
   },
   "pages": {
+    "about": {
+      "title": "Über das Projekt",
+      "description": "\\\"Vom Prater Aus\\\" ist ein Archivprojekt der Prater Galerie und Prater Digital, das individuelle Erinnerungen an den Berliner Prater vor seiner vorläufigen Schließung im Jahr 2017 zugänglich macht. Sein Ziel ist es, ein vielfältiges, multiperspektivisches Bild dieses einzigartigen historischen Ortes zu zeichnen. Zeitzeug:innen sind herzlich eingeladen, sowohl Bilder als auch Texte hochzuladen und so zu einem wachsenden und lebendigen Wissensspeicher beizutragen. \\\"Vom Prater Aus\\\" wird kontinuierlich erweitert und von unserem Team betreut.",
+      "acknowledgment": "Ein besonderer Dank gilt dem Entwickler Mateus Knelsen, der einen entscheidenden Beitrag zur Realisierung des Projektes geleistet hat.",
+      "credits": {
+        "idea": "Idee:",
+        "ideaPerson": "Lena Prents",
+        "implementation": "Konzeption und Umsetzung:",
+        "implementationPeople": "Lena Prents, Sigrid Melchior, Helena Doppelbauer (Projektleitung 2025-26), Marlene Bart, Katharina von Hagenow, Tereza Havlíková (Projektleitung 2023-24)"
+      }
+    },
     "create": {
       "form": {
         "title": "Schreib deine Prater-Geschichte",
