@@ -124,7 +124,7 @@
 
   .image {
     width: 100%;
-    aspect-ratio: 4/3;
+    aspect-ratio: 16/9;
     object-fit: cover;
     filter: grayscale(100%);
   }
