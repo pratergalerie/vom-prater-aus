@@ -74,7 +74,7 @@
   "pages": {
     "about": {
       "title": "Über das Projekt",
-      "description": "\\\"Vom Prater Aus\\\" ist ein Archivprojekt der Prater Galerie und Prater Digital, das individuelle Erinnerungen an den Berliner Prater vor seiner vorläufigen Schließung im Jahr 2017 zugänglich macht. Sein Ziel ist es, ein vielfältiges, multiperspektivisches Bild dieses einzigartigen historischen Ortes zu zeichnen. Zeitzeug:innen sind herzlich eingeladen, sowohl Bilder als auch Texte hochzuladen und so zu einem wachsenden und lebendigen Wissensspeicher beizutragen. \\\"Vom Prater Aus\\\" wird kontinuierlich erweitert und von unserem Team betreut.",
+      "description": "\"Vom Prater Aus\" ist ein Archivprojekt der Prater Galerie und Prater Digital, das individuelle Erinnerungen an den Berliner Prater vor seiner vorläufigen Schließung im Jahr 2017 zugänglich macht. Sein Ziel ist es, ein vielfältiges, multiperspektivisches Bild dieses einzigartigen historischen Ortes zu zeichnen. Zeitzeug:innen sind herzlich eingeladen, sowohl Bilder als auch Texte hochzuladen und so zu einem wachsenden und lebendigen Wissensspeicher beizutragen. \"Vom Prater Aus\" wird kontinuierlich erweitert und von unserem Team betreut.",
       "acknowledgment": "Ein besonderer Dank gilt dem Entwickler Mateus Knelsen, der einen entscheidenden Beitrag zur Realisierung des Projektes geleistet hat.",
       "credits": {
         "idea": "Idee:",
@@ -229,6 +229,128 @@
         "title": "Geschichte eingereicht",
         "text": "Wir freuen uns, dass du deine Geschichte eingereicht hast. Deine Geschichte wird nun von unserem Team moderiert. Du erhältst eine E-Mail-Benachrichtigung, sobald die Moderation abgeschlossen ist. Nach dem Einreichen kannst du deine Geschichte nicht mehr bearbeiten.",
         "button": "Zur Geschichte"
+      }
+    },
+    "prater": {
+      "title": "Zur Geschichte des Berliner Praters",
+      "intro": {
+        "description": {
+          "p1": "Hier findet ihr die wichtigsten historischen Stationen des Berliner Praters zusammengefasst. Die vorliegenden Kurztexte basieren auf der Publikation \"Berliner Prater – Ein Berliner Vergnügungsgarten von den 1830er Jahren bis heute\" der Historikerin Johanna Niedbalski – der bislang ausführlichsten Darstellung der Geschichte des Berliner Praters.",
+          "p2": "Wenn ihr mehr über die Geschichte erfahren möchtet, empfehlen wir euch neben unseren Publikationen auch den Audiowalk \"SPEKTAKEL zwischen KAFFEEKÜCHE und KLASSENKAMPF\" der Künstlerin Caroline Böttcher, mit dem ihr euch auf eine akustische Zeitreise durch den Berliner Prater begeben könnt."
+        }
+      },
+      "history": {
+        "beginnings": {
+          "title": "Die Anfänge des Berliner Praters",
+          "year": "1831-1895",
+          "text": {
+            "p1": "In den 1830er-Jahren vor den Toren der Stadt als Gartenlokal eröffnet, lockte der Berliner Prater seit jeher Erholungssuchende und Erlebnisfreudige ins Grüne – egal ob Beamte, Kaufleute oder Dienstpersonal. Bald schon kamen kulturelle Highlights im Saal und auf der Freilichtbühne hinzu. Orchester spielten auf, zahlreiche Besucher:innen erfreuten sich an Sommertheater und Tanztee, Variété samt Seiltänzer:innenakrobatik in schwindelerregenden Höhen, Ringkämpfen und dem Billardsalon. Künstler:innen mit Rang und Namen, von Nah und Fern, fanden den Weg auf die Bühnen des Praters.",
+            "p2": "Zu sehen ist hier eine der ältesten Ansichtskarten des Berliner Praters, um 1895. Links oben: die Fassade des Hauses auf der Kastanienallee 7 von 1856 und der Tordurchfahrt von 1875. Rechts oben: der Tanz- und Veranstaltungssaal. Unten: der Garten mit Sommerbühne und offener Halle, in der Schießstände und Verkaufsbuden waren."
+          }
+        },
+        "coffeeKitchen": {
+          "title": "Die Kaffeeküche",
+          "year": "1905",
+          "text": {
+            "p1": "\"Der alte Brauch wird nicht gebrochen, hier können Familien Kaffee kochen\" war zu Beginn des 19. Jahrhunderts ein geflügeltes Wort in Berliner Gartenlokalen. Um die Getränkekonzession zu umgehen, wurde nur heißes Wasser und das zum Kaffeekochen benötigte Geschirr angeboten. Das Kaffeepulver mussten die Gäste selbst mitbringen. Diese Tradition stammte aus dem 18. Jahrhundert und nahm ihren Anfang wohl in den Gartenlokalen Treptows. Dort boten sächsische Kolonist:innen den Spaziergänger:innen Kaffee an. Als ihnen der Berliner Magistrat die Schanklizenz verweigerte, boten sie fortan nurmehr heißes Wasser an und verliehen das zum Kaffeekochen benötigte Geschirr. Diese Praxis setzte sich überall in und um Berlin durch und blieb in manchen Lokalen bis in die 1950er-Jahre bestehen."
+          }
+        },
+        "gardenLocations": {
+          "title": "Berliner Gartenlokale",
+          "text": {
+            "p1": "Der Berliner Prater war keineswegs das einzige Gartenlokal in und um Berlin. Die Gartenlokale hatten eine große Bedeutung für die damalige Bevölkerung. Hier konnte sie für eine Weile den beengten Wohnverhältnissen der rasant wachsenden Stadt entfliehen und sich von der anstrengenden Arbeit erholen. Kein Wunder also, dass die Lokale von den Berliner Bürger:innen sehr geschätzt wurden und an schönen Wochenenden im Sommer regelrechte Völkerwanderungen zu diesen Ausflugszielen stattfanden."
+          }
+        },
+        "boxingMatches": {
+          "title": "Boxkämpfe im Pratergarten",
+          "year": "1949",
+          "text": {
+            "p1": "Nach dem zweiten Weltkrieg wurde der Berliner Prater an den ehemaligen Ringkämpfer Hans Schwarz verpachtet, der dort neben dem gastronomischen Betrieb wieder Boxkämpfe veranstaltete.",
+            "p2": "Boxkampf im Pratergarten, 15. Mai 1949. Der 19-jährige gebürtige Prenzlauer Berger und spätere Europameister Gustav \"Bubi\" Scholz traf im gut besuchten Pratergarten auf Helmut Hörauf und gewann bereits in der ersten Runde. Im Bild ist Hörauf zu sehen, der nach einem Leberhaken k. o. ging."
+          }
+        },
+        "defaPremiere": {
+          "title": "Das DEFA Premierenkino",
+          "year": "1954",
+          "text": {
+            "p1": "Nach einem kurzen Intermezzo der Volksbühne wurde der Theatersaal zum Kinosaal umgebaut und diente der DEFA als Premierenkino.",
+            "p2": "DEFA Kastanienallee, Frühjahr 1954. Zwei Mitarbeiter:innen des VEB \"Aktivist\" unterhalten sich über den im Hintergrund angekündigten Film \"Ernst Thälmann, Sohn seiner Klasse\". Die Prämiere des von der SED-Führung in Auftrag gegebenen Films wurde mit großem propagandistischem Aufwand gefeiert.",
+            "p3": "Mitte der 1960er-Jahre wurde das Kino technisch aufgerüstet und auf das in der DDR entwickelte Breitbandformat \"Totalvision\" umgestellt. Trotz dieser Aufrüstung blieb es danach nurmehr bis 1966 bestehen, da die DEFA inzwischen deutlich größere Standorte hatte."
+          }
+        },
+        "renovation": {
+          "title": "Umbau des Pratergartens",
+          "year": "1958",
+          "text": {
+            "p1": "Da der Pratergarten über die Jahre immer mehr verwahrlost war, erfolgte Ende der 1950er Jahre ein größerer Umbau. Es entstanden eine neue große Gartenbühne mit Tanzfläche und neue Wirtschaftsräume, das alte Tanzlokal wurde saniert und umgebaut. Die Umbauarbeiten wurden mit über 50.000 Aufbaustunden von freiwilligen Helfer:innen des Nationalen Aufbauwerks unterstützt."
+          }
+        },
+        "reopening": {
+          "title": "Wiedereröffnung nach dem Umbau",
+          "year": "1960",
+          "text": {
+            "p1": "Nach einer umfangreichen Sanierung fand die erneute Eröffnung des Pratergartens im Rahmen eines Volksfestes zum 1. Mai 1960 statt. Nun kam auch die über 100-jährige Tradition des Kaffeekochens zu einem Ende, da die Handelsorganisation die Bewirtung übernahm. Es entstand ein durch den Bezirk Prenzlauer Berg geförderter Multifunktionsort mit Musik, Tanz, geselligen Veranstaltungen, politischen Versammlungen der Massenorganisationen der DDR, Trainings- und Wettkämpfen sowie dem DEFA-Kino im Saal."
+          }
+        },
+        "openAirStage": {
+          "title": "Die Freilichtbühne",
+          "year": "1960",
+          "text": {
+            "p1": "Die Freilichtbühne entstand im Zuge der Umbau- und Renovierungsarbeiten, die den baufälligen und verwahrlosten Prater in ein Sport- und Kulturzentrum für den Arbeiterbezirk verwandeln sollte. Konzipiert von den Architekten Wladimir Rubinow und Udo Schultz gilt sie mit ihrer dynamischen Form als ein besonders schönes Beispiel für die Architektur der Nachkriegsmoderne. Denn im Gegensatz zur typisierten Alltagsarchitektur der DDR durften Kulturbauten eine gewisse Exzentrik aufweisen, die sich auch in anderen bekannten Bauten des Architekten Rubinow wiederfindet – etwa der Stadthalle in Karl-Marx-Stadt (Chemnitz).",
+            "p2": "Nach der Eröffnung 1960 stand die Bühne für ein facettenreiches Programm mit Musik- und Sprechtheater, Tanz, Präsentation und Feiern zur Verfügung. Durch die dynamische Gestaltung, die es unter anderem ermöglichte, das Publikum stärker in das Geschehen miteinzubeziehen, war sie vielseitig einsetzbar und lud mit Veranstaltungen für alle Generationen zur aktiven Teilhabe der Besucher:innen ein."
+          }
+        },
+        "firstGallery": {
+          "title": "Die erste Galerie am Prater",
+          "year": "1967-1969",
+          "text": {
+            "p1": "Ab 1967 wurde der Prater zum Kulturzentrum, schließlich zum Kreiskulturhaus des Stadtbezirks Prenzlauer Berg.",
+            "p2": "Der Künstler Skip Pahler eröffnete im selben Jahr eine Galerie gleich gegenüber vom Prater, da er der Ansicht war, dass gerade in diesem Arbeiterbezirk den Menschen die Kunst nahegebracht werden sollte. Neben den Kunstwerken wurden auch Skizzen und Vorstudien sowie Material und Werkzeuge der Künstler:innen mit ausgestellt. Das Ladenlokal auf der Kastanienallee 100 wurde von 1967 bis 1969 bespielt."
+          }
+        },
+        "districtCulturalCenter": {
+          "title": "Das Kreiskulturhaus",
+          "year": "1967-1986",
+          "text": {
+            "p1": "Das Kreiskulturhaus bot ein sehr abwechslungsreiches Programm: neben Jugendtanz und Blasmusik für ältere Menschen fanden Modenschauen und Wettkämpfe in Judo, Gewichtheben und Boxen statt. Mit Kinderprogramm, Seniorenveranstaltungen, Hausfrauennachmittagen und Kulturveranstaltungen für die Arbeiter:innen war für jede Alters- und Zielgruppe etwas dabei. Auch die 40-50 Laienkunstgruppen des Bezirks fanden im Prater Platz für ihre Proben und Aufführungen. So stiegen die Besucher:innenzahlen über die Jahre immer weiter, bis der Prater aus allen Nähten platzte und ein großer Teil der Kulturarbeit im Frühjahr 1986 in ein neues Kulturzentrum im Ernst-Thälmann-Park zog."
+          }
+        },
+        "galleryAtPrater": {
+          "title": "Galerie am Prater",
+          "year": "1973-2005",
+          "text": {
+            "p1": "Auf Initiative des Malers Wolfgang Leber wurde zu den Weltjugendfestspielen 1973 die kommunale Galerie am Prater eröffnet, in der vor allem jungen Künstler:innen eine Plattform gegeben wurde. Auch Auktionen und Verkaufsausstellungen fanden statt. Die Arbeit der Galerie wurde maßgeblich von Kulturschaffenden geprägt, die das vielfältige Programm weitgehend in Eigenregie umgesetzt haben."
+          }
+        },
+        "postWallConstruction": {
+          "title": "Bauarbeiten nach der Wende",
+          "year": "1991-1995",
+          "text": {
+            "p1": "Nach dem Fall der Mauer und der wiedergewonnenen Einheit fanden im Prater viele Veranstaltungen mit Ost- und Westberliner Kulturschaffenden statt. Wie die meisten Altbauten des Stadtbezirks war der Prater jedoch baufällig, weshalb intensiv über seine Zukunft diskutiert und auch eine Privatisierung in Erwägung gezogen wurde. Am Ende blieb er in kommunaler Hand und es begannen nicht enden wollende Bauarbeiten, im Zuge derer der Prater für mehrere Jahre geschlossen blieb. Erst als die Volksbühne unter der Intendanz von Frank Castorf ihr Interesse an der Nutzung des Pratersaals bekundete, konnten die Bauarbeiten zügig fertiggestellt und 1995 der Betrieb der Volksbühne aufgenommen werden."
+          }
+        },
+        "chance2000": {
+          "title": "Chance 2000 von Christoph Schlingensief",
+          "year": "1998",
+          "text": {
+            "p1": "Im März 1998 fand im Prater die Auftaktveranstaltung der theatralischen Aktion Chance 2000 des Aktionskünstlers Christoph Schlingensief statt. Gemeinsam mit vielen Mitstreiter:innen gründete er in einem im Prater aufgebauten Zirkuszelt die gleichnamige Partei, auch Partei der letzten Chance genannt. Im Mai konnte man für 9 Tage auf dem Pratergelände im Hotel Prora übernachten, einem Zeltlager, das \"Erholung und Agitation, Abschalten vom Alltag und Einklinken in die Bewegung gleichermaßen ermöglichen\" sollte."
+          }
+        },
+        "bastardClub": {
+          "title": "Der Bastard Club",
+          "year": "1999-2007",
+          "text": {
+            "p1": "Neben der Volksbühne war zwischen 1999 und 2007 der Bastard Club im Prater zu Hause. Der Betreiber gehörte zu den Mitbegründern des Clubs Maria am Ostbahnhof - der viel kleinere Club in der Kastanienallee wurde dann - quasi als das Kind von Maria - Bastard genannt. Das Publikum war vielfältig, es kamen Kulturproduzent:innen, BIPoC-Künstler:innen und Menschen, die auch davor schon im Prater gewesen waren. Unter anderem legte dort auch das DJ/MC-Kollektiv FEMMES WITH FATAL BREAKS auf. Unter dem Titel Vollversammlung luden sie damals explizit weiblich gelesene DJs in den Bastard Club ein."
+          }
+        },
+        "praterGallery": {
+          "title": "Galerie im Prater",
+          "year": "2005-2007",
+          "text": {
+            "p1": "2005 wurde die Kastanienallee 100 saniert und die Galerie am Prater musste ausziehen. Unter dem Titel \"jetzt hier!\" fand die erste Ausstellung nach dem Umzug in das gegenüberliegende Pratergebäude statt.",
+            "p2": "In den folgenden zwei Jahren zeigte die Galerie im Prater noch 23 Ausstellungen. Im Juli 2007 stellte sie aufgrund von Sanierungsarbeiten im Prater nach insgesamt 328 Ausstellungen vorübergehend den Betrieb ein."
+          }
+        }
       }
     }
   }

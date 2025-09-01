@@ -74,7 +74,7 @@
   "pages": {
     "about": {
       "title": "About the Project",
-      "description": "\\\"Vom Prater Aus\\\" is an archival project by Prater Galerie and Prater Digital that makes the lived history of the Berlin Prater before its temporary closure in 2017, accessible to all. The aim is to create a diverse, multi-perspective portrait of this unique historical icon. Contemporary witnesses are warmly invited to upload both written pieces and images to contribute to a growing and vibrant repository of knowledge. \\\"Vom Prater Aus\\\" is continuously expanding and curated by our team.",
+      "description": "\"Vom Prater Aus\" is an archival project by Prater Galerie and Prater Digital that makes the lived history of the Berlin Prater before its temporary closure in 2017, accessible to all. The aim is to create a diverse, multi-perspective portrait of this unique historical icon. Contemporary witnesses are warmly invited to upload both written pieces and images to contribute to a growing and vibrant repository of knowledge. \"Vom Prater Aus\" is continuously expanding and curated by our team.",
       "acknowledgment": "Special thanks go to the developer Mateus Knelsen, who made a significant contribution to the realisation of the project.",
       "credits": {
         "idea": "Idea:",
@@ -229,6 +229,128 @@
         "title": "Story submitted",
         "text": "We are happy that you have submitted your story. Your story will now be moderated by our team. You will receive an email notification once the moderation is complete. You cannot edit your story after submission.",
         "button": "Check out other stories"
+      }
+    },
+    "prater": {
+      "title": "About the history of the Berlin Prater",
+      "intro": {
+        "description": {
+          "p1": "We have put together a summary of the most important historical milestones of the Berlin Prater. These brief texts are based on the publication \"The Berlin Prater – A Berlin pleasure garden from the 1830s to today\" by historian Johanna Niedbalski – the most comprehensive account of the Prater's history to date.",
+          "p2": "If you would like to learn more, we recommend not only our publications but also the German-language audio walk \"SPEKTAKEL zwischen KAFFEEKÜCHE und KLASSENKAMPF\" by the artist Caroline Böttcher, which takes you on an acoustic journey through the history of the Berlin Prater."
+        }
+      },
+      "history": {
+        "beginnings": {
+          "title": "The Beginnings of the Berlin Prater",
+          "year": "1831-1895",
+          "text": {
+            "p1": "Opened in the 1830s as a beer garden just outside the city gates, the Berlin Prater has always been a big draw for people seeking relaxation and entertainment in the open air – regardless of class or cultural background. The Prater soon began hosting shows and musical events in the hall and on the open-air stage. Orchestras performed, and countless visitors enjoyed summer theatre performances, afternoon dances, variety shows featuring tightrope acrobatics at dizzying heights and wrestling matches. The billiard salon was also a popular attraction. Renowned artists from far and wide found their way onto the Prater's stages.",
+            "p2": "This is an image of one of the first postcards depicting the Berlin Prater, dating back to 1895. It shows the Prater façade at Kastanienallee No.7, with the 1875 archway, the dance and events room, as well as the garden with its summer stage, as well as the open-air hall that housed shooting galleries and vendor's booths."
+          }
+        },
+        "coffeeKitchen": {
+          "title": "The Coffee Kitchen",
+          "year": "1905",
+          "text": {
+            "p1": "'The old custom remains unbroken, families can make coffee here' – proclaims a sign hanging at the entrances to most Berlin garden establishments at the beginning of the 19th century. To bypass the beverage licensing laws, only hot water and the utensils needed for making coffee were provided. Guests had to bring their own ground coffee. This tradition dated back to the 18th century and probably originated in the garden taverns of Treptow. There, migrants from Saxony sold coffee to people out for a stroll. When the Berlin Magistrate denied them a license to serve beverages, they instead offered only hot water and provided the necessary coffee-making equipment for a fee. This practice spread throughout Berlin and the surrounding area, remaining common in some beer gardens right up until the 1950s."
+          }
+        },
+        "gardenLocations": {
+          "title": "Berlin Open-air Venues",
+          "text": {
+            "p1": "The Berlin Prater was by no means the only open-air venue in and around Berlin. These beer gardens played an important role for Berliners at the time. They offered working-class people a chance to escape their cramped living conditions in the rapidly expanding areas of the city and recover from their hard physical work. No wonder these venues were so popular among Berlin's citizens, young and old. On pleasant summer weekends, they were real hotspots, attracting droves of Berliners."
+          }
+        },
+        "boxingMatches": {
+          "title": "Boxing Matches in the Pratergarten",
+          "year": "1949",
+          "text": {
+            "p1": "After the Second World War, the Berlin Prater was leased to former wrestler Hans Schwarz, who, in addition to running the restaurant business, initiated the return of boxing matches there.",
+            "p2": "Boxing match at the Pratergarten, 15 May 1949. 19-year-old Gustav \"Bubi\" Scholz, a native of Prenzlauer Berg and future European champion, fought against Helmut Hörauf at the well-attended Pratergarten, winning in the first round. The photo shows Hörauf, who was knocked out after a hook to the liver."
+          }
+        },
+        "defaPremiere": {
+          "title": "The DEFA Premiere Venue",
+          "year": "1954",
+          "text": {
+            "p1": "After a brief period under the Volksbühne management, the theatre hall was converted into a cinema, where DEFA (the state-owned film studio of the GDR) then premiered its films.",
+            "p2": "DEFA Kastanienallee, spring 1954: Two employees of the VEB \"Aktivist\" discuss the film Ernst Thälmann, Sohn seiner Klasse, which is advertised in the background. The film, commissioned by the SED leadership, was one of the most important and expensive propaganda films made in the GDR and its premiere was celebrated as such.",
+            "p3": "In the mid-1960s, the cinema technology was upgraded and converted to Totalvision, a widescreen format developed in the GDR. Despite this modernisation, it remained in operation only until 1966, as DEFA had by then moved on to substantially larger venues."
+          }
+        },
+        "renovation": {
+          "title": "Renovation of the Pratergarten",
+          "year": "1958",
+          "text": {
+            "p1": "Over the years, the Pratergarten had fallen increasingly into disrepair, so construction works got underway at the end of the 1950s. A new large open-air stage with a dance floor and new service areas were created, and the old dance hall was renovated and rebuilt. The renovation work was undertaken in part by volunteers from the Nationales Aufbauwerk (National Reconstruction Committee) who contributed over 50,000 hours of their time."
+          }
+        },
+        "reopening": {
+          "title": "Reopening after the Renovation",
+          "year": "1960",
+          "text": {
+            "p1": "After extensive renovations, the Pratergarten reopened during the annual May Day celebrations in 1960. One tradition that was then relegated to the past was the century-old tradition of families making their own coffee, with the state-run Handelsorganisation (Trade Organisation) taking on the food and drinks. A multifunctional venue emerged, financed by the borough of Prenzlauer Berg, offering music, dancing, social gatherings, political rallies, sports events and training sessions, as well as the DEFA cinema."
+          }
+        },
+        "openAirStage": {
+          "title": "The Open-Air Stage",
+          "year": "1960",
+          "text": {
+            "p1": "The open-air stage was part of the reconstruction and renovation aimed at transforming the dilapidated and neglected Prater into a contemporary sports and cultural centre for the working-class district. Designed by architects Wladimir Rubinow and Udo Schultz, it is a particularly fine example of postwar modernist architecture, due to its dynamic form. Unlike the ubiquitous prefab housing architecture of the GDR, cultural buildings were allowed a certain degree of eccentricity – a trait also evident in other well-known works by Rubinow, such as the Stadthalle in Karl-Marx-Stadt (present-day Chemnitz).",
+            "p2": "After its opening in 1960, the open-air stage boasted a diverse programme of musical and spoken theatre, dance, presentations, and celebrations. Its dynamic design allowed, among other things, for greater audience participation during performances, making it a versatile venue. With events aimed at all generations, it was an inclusive and engaging venue."
+          }
+        },
+        "firstGallery": {
+          "title": "The first gallery at the Prater",
+          "year": "1967-1969",
+          "text": {
+            "p1": "Starting in 1967, the Prater became a Kulturhaus (cultural centre) and eventually the Kreiskulturhaus (district cultural centre) for Prenzlauer Berg.",
+            "p2": "That same year, the artist Skip Pahler opened a gallery directly across from the Prater, believing that art should be accessible to everyone, especially in this workers' district. In addition to artworks, the gallery also displayed sketches, studies and artists' materials and tools. The storefront at Kastanienallee No. 100 was used for exhibitions from 1967 to 1969."
+          }
+        },
+        "districtCulturalCenter": {
+          "title": "The Kreiskulturhaus",
+          "year": "1967-1986",
+          "text": {
+            "p1": "The Kreiskulturhaus (district cultural centre) offered a wide range of events: In addition to youth dances and brass bands for older people, there were fashion shows and sporting events, including judo, weightlifting, and boxing tournaments. With children's programmes, events for senior citizens, afternoon women's groups, and cultural events for workers, there was something for every age group and target audience. The 40 to 50 amateur art groups of the district also found space in the Prater for their rehearsals and performances. Over the years, visitor numbers steadily increased until the Prater could no longer accommodate the crowds. In the spring of 1986, a large portion of the cultural activities was relocated to a new cultural centre in Ernst-Thälmann Park."
+          }
+        },
+        "galleryAtPrater": {
+          "title": "Gallery at the Prater",
+          "year": "1973-2005",
+          "text": {
+            "p1": "The municipal gallery at the Prater was opened on the initiative of local artist Wolfgang Leber, during the World Festival of Youth and Students in 1973. It primarily provided a platform for young artists, with auctions and sales exhibitions held there. The gallery's day-to-day business was run by local artists who curated and organised the diverse programme."
+          }
+        },
+        "postWallConstruction": {
+          "title": "Construction Work After the Fall of the Berlin Wall",
+          "year": "1991-1995",
+          "text": {
+            "p1": "After the fall of the Berlin Wall and reunification, the Prater hosted numerous events involving creatives from both East and West Berlin. Like most of the district's old buildings, however, the Prater was in a state of disrepair. Its future became the subject of intense debate, and privatisation was mooted. After intense discussions, it remained in the hands of the district council but was then closed for several years due to seemingly never-ending construction work. It was only when the Volksbühne, under the artistic direction of Frank Castorf, expressed interest in using the Prater hall that the renovations were finally completed, allowing the Volksbühne to begin operations there in 1995."
+          }
+        },
+        "chance2000": {
+          "title": "Chance 2000 by Christoph Schlingensief",
+          "year": "1998",
+          "text": {
+            "p1": "In March 1998, the Prater hosted the inaugural event of the political theatre project Chance 2000 by the performance artist Christoph Schlingensief. Together with many collaborators, he founded a political party of the same name—also known as the Partei der letzten Chance (Last Chance Party)—in a circus tent set up in the Prater. In May, visitors could spend nine days at the Hotel Prora, an impromptu camping ground on the Prater site, intended to \"offer both recreation and agitation, switching off from everyday life\" as well as \"getting involved in the movement.\""
+          }
+        },
+        "bastardClub": {
+          "title": "The Bastard Club",
+          "year": "1999-2007",
+          "text": {
+            "p1": "In addition to the Volksbühne, the Bastard Club was also based at the Prater between 1999 and 2007. The manager was one of the co-founders of the club Maria am Ostbahnhof – and the much smaller club on Kastanienallee was dubbed Bastard, as the offspring of Maria so to speak. The audience was a mixed bunch, with upcoming cultural influencers, BIPoC artists, as well as the old regulars at the Prater. Among others, the DJ/MC collective FEMMES WITH FATAL BREAKS performed there. Under the title Vollversammlung (General Assembly), they specifically invited female-presenting DJs to play at the Bastard Club."
+          }
+        },
+        "praterGallery": {
+          "title": "The Prater Gallery",
+          "year": "2005-2007",
+          "text": {
+            "p1": "In 2005, renovations of Kastanienallee No. 100 were undertaken, and the Galerie am Prater had to move out. The first exhibition after the move to the Prater building across the road took place with the title \"jetzt hier!\" (\"now here!\").",
+            "p2": "Over the following two years, the gallery held another 23 exhibitions at the Prater. In July 2007, the Prater Gallery temporarily closed due to renovation work – after a total of 328 exhibitions."
+          }
+        }
       }
     }
   }
