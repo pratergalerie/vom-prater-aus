@@ -231,6 +231,53 @@
         "button": "Check out other stories"
       }
     },
+    "privacy": {
+      "title": "Privacy Policy",
+      "intro": "In accordance with the provisions of Articles 13, 14 and 21 of the General Data Protection Regulation (GDPR), we hereby inform you about the processing of your personal data in connection with sharing posts on the website.",
+      "description": "To ensure that you are fully informed about the processing of your personal data, please take note of the following information.",
+      "sections": {
+        "responsible": {
+          "title": "1. RESPONSIBLE BODY WITH REGARD TO DATA PROTECTION LAW",
+          "content": "Bezirksamt Pankow von Berlin\nAmt für Weiterbildung und Kultur\nMatthias Zarbock\nDanziger Straße 101\n10405 Berlin\nTel.: (030) 90295-3837\nE-Mail: Matthias.Zarbock{'@'}ba-pankow.berlin.de"
+        },
+        "contact": {
+          "title": "2. CONTACT INFORMATION OF THE DATA PROTECTION OFFICER",
+          "content": "Matthias Zarbock\nDanziger Street 101\n10405 Berlin\nPhone: (030) 90295-3837\nE-Mail: Matthias.Zarbock{'@'}ba-pankow.berlin.de"
+        },
+        "purposes": {
+          "title": "3. PURPOSES AND LEGAL BASES OF DATA PROCESSING",
+          "consent": "Consent (Art. 6 para. 1 lit. a) GDPR): The processing of e-mail addresses, user names and post content is based on the express consent of the users. This consent should be documented in writing as proof.",
+          "contractual": "Fulfillment of contractual obligations (Art. 6 para. 1 lit. b) GDPR): The storage and management of user data is necessary to fulfill our contractual obligations, in particular the provision of the platform and the possibility for users to publish and manage their contributions.",
+          "legitimateInterests": "Legitimate interests (Art. 6 para. 1 lit. f) GDPR): We store certain data to maintain the integrity of the platform and for the process of content moderation. For example, moderators must be able to delete inappropriate content. In addition, users should be able to request the deletion of their post after it has been published. For this purpose, an e-mail address has been set up to which authors can send their deletion requests: vomprateraus{'@'}pratergalerie.de."
+        },
+        "dataCategories": {
+          "title": "4. CATEGORIES OF PERSONAL DATA",
+          "intro": "The following data is collected:",
+          "email": "E-mail address: For registration and notifications.",
+          "username": "User name: Freely selectable and not necessarily linked to the user's real name.",
+          "content": "Post content: This includes texts and images uploaded by users.",
+          "processing": "This data is processed as part of the provision and use of the platform."
+        },
+        "recipients": {
+          "title": "5. RECIPIENT OF THE DATA",
+          "content": "We only pass on your personal data within Prater Galerie, and only to those departments and persons who require it to fulfill the purpose of the data processing."
+        },
+        "retention": {
+          "title": "6. DATA RETENTION",
+          "content": "Your personal data will be deleted or destroyed as soon as the purpose for which it was collected ceases to exist."
+        },
+        "rights": {
+          "title": "7. YOUR RIGHTS",
+          "intro": "According to the European General Data Protection Regulation, you have the following rights:",
+          "withdrawal": "You have the right to withdraw your declaration of consent regarding data protection law at any time. The withdrawal of consent shall not affect the lawfulness of processing based on consent before its withdrawal (Art. 7 (3) GDPR)",
+          "access": "If your personal data is processed, you have the right to obtain information about the personal data stored about you (Art. 15 GDPR).",
+          "rectification": "If incorrect personal data is processed, you have the right to rectification (Art. 16 GDPR).",
+          "erasure": "If the legal requirements are met, you can request the deletion or restriction of processing and object to the processing (Art. 17, 18, 21 GDPR).",
+          "portability": "If you have consented to the data processing or a contract for data processing exists and the data processing is carried out using automated procedures, you may have a right to data portability (Art. 20 GDPR).",
+          "complaint": "In addition, you have the right to lodge a complaint with the Berlin Commissioner for Data Protection and Freedom of Information, Alt-Moabit 59-61, 10555 Berlin (supervisory authority), if you believe that your personal data is being processed unlawfully. The right to lodge a complaint exists without prejudice to any other administrative or judicial remedy."
+        }
+      }
+    },
     "prater": {
       "title": "About the history of the Berlin Prater",
       "intro": {

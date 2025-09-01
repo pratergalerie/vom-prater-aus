@@ -231,6 +231,53 @@
         "button": "Zur Geschichte"
       }
     },
+    "privacy": {
+      "title": "Datenschutzerklärung",
+      "intro": "Gemäß den Vorgaben der Art. 13, 14 und 21 der Datenschutz-Grundverordnung (DSGVO) informieren wir Sie hiermit über die Verarbeitung Ihrer personenbezogenen Daten im Zusammenhang mit dem Teilen von Beiträgen auf der Webseite.",
+      "description": "Um zu gewährleisten, dass Sie in vollem Umfang über die Verarbeitung Ihrer personenbezogenen Daten informiert sind, nehmen Sie bitte nachstehende Informationen zur Kenntnis.",
+      "sections": {
+        "responsible": {
+          "title": "1. VERANTWORTLICHE STELLE IM SINNE DES DATENSCHUTZRECHTS",
+          "content": "Bezirksamt Pankow von Berlin\nAmt für Weiterbildung und Kultur\nMatthias Zarbock\nDanziger Straße 101\n10405 Berlin\nTel.: (030) 90295-3837\nE-Mail: Matthias.Zarbock{'@'}ba-pankow.berlin.de"
+        },
+        "contact": {
+          "title": "2. KONTAKTDATEN DES DATENSCHUTZBEAUFTRAGTEN",
+          "content": "Matthias Zarbock\nDanziger Straße 101\n10405 Berlin\nTel.: (030) 90295-3837\nE-Mail: Matthias.Zarbock{'@'}ba-pankow.berlin.de"
+        },
+        "purposes": {
+          "title": "3. ZWECKE UND RECHTSGRUNDLAGEN DER VERARBEITUNG",
+          "consent": "Einwilligung (Art. 6 Abs. 1 lit. a) DSGVO): Die Verarbeitung der E-Mail-Adressen, Benutzer:innennamen und Beitragsinhalte basiert auf der ausdrücklichen Einwilligung der Nutzer:innen. Diese Einwilligung sollte zum Nachweis schriftlich dokumentiert werden.",
+          "contractual": "Erfüllung vertraglicher Pflichten (Art. 6 Abs. 1 lit. b) DSGVO): Die Speicherung und Verwaltung der Nutzer:innendaten ist notwendig, um unsere vertraglichen Verpflichtungen zu erfüllen, insbesondere die Bereitstellung der Plattform und die Möglichkeit für die Nutzer:innen, ihre Beiträge zu veröffentlichen und zu verwalten.",
+          "legitimateInterests": "Berechtigte Interessen (Art. 6 Abs. 1 lit. f) DSGVO): Wir speichern bestimmte Daten zur Wahrung der Integrität der Plattform und für den Moderationsprozess. Moderator:innen müssen z.B. in der Lage sein, unangemessene Inhalte zu löschen. Außerdem sollen Nutzer:innen die Möglichkeit haben, nach der Veröffentlichung ihres Beitrags dessen Löschung zu beantragen. Hierfür ist die E-Mail-Adresse vomprateraus{'@'}pratergalerie.de eingerichtet worden, an die Autor:innen ihre Löschanfragen richten können."
+        },
+        "dataCategories": {
+          "title": "4. KATEGORIEN PERSONENBEZOGENER DATEN",
+          "intro": "Es werden folgende Daten erhoben:",
+          "email": "E-Mail-Adresse: Zur Registrierung und für Benachrichtigungen.",
+          "username": "Benutzer:innenname: Frei wählbar und nicht zwingend mit dem realen Namen des Nutzers/der Nutzerin verbunden.",
+          "content": "Beitragsinhalte: Das umfasst die Texte und von den Nutzer:innen hochgeladene Bilder.",
+          "processing": "Diese Daten werden im Rahmen der Bereitstellung und Nutzung der Plattform verarbeitet."
+        },
+        "recipients": {
+          "title": "5. EMPFÄNGERIN DER DATEN",
+          "content": "Wir geben Ihre personenbezogenen Daten nur innerhalb der Prater Galerie und ausschließlich an die Bereiche und Personen weiter, die diese zur Umsetzung des Zwecks der Verarbeitung benötigen."
+        },
+        "retention": {
+          "title": "6. DAUER DER DATENSPEICHERUNG",
+          "content": "Ihre personenbezogenen Daten werden gelöscht bzw. vernichtet, sobald der Zweck, für den diese Daten erhoben wurden, wegfällt."
+        },
+        "rights": {
+          "title": "7. IHRE RECHTE",
+          "intro": "Nach der Europäischen Datenschutzgrundverordnung stehen Ihnen folgende Rechte zu:",
+          "withdrawal": "Sie haben das Recht, Ihre datenschutzrechtliche Einwilligungserklärung jederzeit zu widerrufen. Durch den Widerruf der Einwilligung wird die Rechtmäßigkeit der aufgrund der Einwilligung bis zum Widerruf erfolgten Verarbeitung nicht berührt (Art. 7 Abs. 3 DSGVO)",
+          "access": "Werden Ihre personenbezogenen Daten verarbeitet, so haben Sie das Recht, Auskunft über die zu ihrer Person gespeicherten Daten zu erhalten. (Art. 15 DSGVO).",
+          "rectification": "Sollten unrichtige personenbezogenen Daten verarbeitet werden, steht Ihnen ein Recht auf Berichtigung zu (Art. 16 DSGVO).",
+          "erasure": "Liegen die gesetzlichen Voraussetzungen vor, so können Sie die Löschung oder Einschränkung der Verarbeitung verlangen sowie Widerspruch gegen die Verarbeitung einlegen (Art. 17, 18, 21 DSGVO).",
+          "portability": "Wenn Sie in die Datenverarbeitung eingewilligt haben oder ein Vertrag zur Datenverarbeitung besteht und die Datenverarbeitung mithilfe automatisierter Verfahren durchgeführt wird, steht Ihnen gegebenenfalls ein Recht auf Datenübertragbarkeit zu (Art. 20 DSGVO).",
+          "complaint": "Darüber hinaus besteht ein Beschwerderecht bei der Berliner Beauftragten für Datenschutz und Informationsfreiheit, Alt-Moabit 59-61, 10555 Berlin (Aufsichtsbehörde), wenn Sie der Ansicht sind, dass die Verarbeitung Ihrer personenbezogenen Daten nicht rechtmäßig erfolgt. Das Beschwerderecht besteht unbeschadet eines anderweitigen verwaltungsrechtlichen oder gerichtlichen Rechtsbehelfs."
+        }
+      }
+    },
     "prater": {
       "title": "Zur Geschichte des Berliner Praters",
       "intro": {
