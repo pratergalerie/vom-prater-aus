@@ -278,6 +278,65 @@
         }
       }
     },
+    "terms": {
+      "title": "Terms of use of Vom Prater aus, the digital archive of the Prater Galerie",
+      "intro": "Regarding the use of Vom Prater aus, the digital archive of the Prater Galerie, the following conditions apply.",
+      "purpose": "The digital archive is intended to serve as a collection of memories directed at the public. In order to include the greatest possible number of contributors from the most diverse and varied backgrounds, we follow the guidelines provided by the Berlin Code of Conduct.",
+      "publishing": "The publication of texts and images is only permitted if you as a user accept these terms of use.",
+      "sections": {
+        "registration": {
+          "title": "§ 1 Registration",
+          "content": {
+            "li1": "In order to contribute a post to the online archive Vom Prater aus, you must register with an e-mail address and user name via the corresponding online form. Your e-mail address is only required to edit your post before publication and will not be passed on to anyone else. After registering through the online form, you will receive a confirmation e-mail to verify your e-mail address and confirm your registration.",
+            "li2": "You can use all the functions of our online archive Vom Prater aus free of charge. On the page \"Write about your Prater memory,\" (in German: \"Schreibe deine Prater-Erinnerung\") you can provide an e-mail address and a user name. Your e-mail address is required to receive a link and a password allowing you to open and edit your memory at any time. Once you release your post for publication, you will no longer be able to edit it.",
+            "p1": "Before final publication, your post will be checked by the Prater Galerie team to make sure it complies with the terms of use, especially § 2.",
+            "li3": "There is no legal claim to the publication of your content. If your post violates the rules outlined in § 2, you will be informed of the violation by the Prater Galerie team and invited to revise your post in accordance with the rules. The post can only be published once it has been revised.",
+            "li4": "The link and password to edit your post can only be used by you yourself. Furthermore, as the author of your post you are responsible for protecting it from misuse. Protect your account information from third-party access! It is not permitted to use trademarked words or internet addresses as user names.",
+            "li5": "The Prater Galerie team will strive to provide the service with as few interruptions as possible. Even with all due care, downtime in which the web servers cannot be accessed due to technical issues or other problems beyond the Prater Galerie's control (fault of third parties, force majeure, hacker attacks etc.) cannot be ruled out. The user acknowledges that 100% availability of the website is not technically feasible.",
+            "li6": "The Prater Galerie team reserves the right to modify and expand the content and structure of the platform as well as the corresponding user interfaces if this does not compromise or only insignificantly compromises the fulfilment of the contract concluded with the user."
+          }
+        },
+        "obligations": {
+          "title": "§ 2 Terms of use: Obligations as a user",
+          "content": {
+            "li1": "As a user, you undertake that you will not publish any posts that violate these rules, morality or otherwise violate applicable German law. In particular, you are prohibited from:",
+            "sublist": {
+              "li1": "publishing discriminatory, offensive or untrue content;",
+              "li2": "using content protected by law, especially copyright and trademark law, without authorisation;",
+              "li3": "posting your topic on the online archive multiple times;",
+              "li4": "publishing third-party texts and images on the online archive without the consent of the author;",
+              "li5": "engaging in advertising. This also applies to so-called covert advertising, e.g. providing links to your own website in your posts."
+            },
+            "li2": "As a user, you undertake to check before publishing your posts whether they contain information that you do not wish to publish. Your posts may be retrieved in search engines and thus become accessible across the globe. There is no claim for deletion or correction of such search engine entries against the Prater Galerie team.",
+            "li3": "In case of violation, especially of the aforementioned rules § 2 para. 1 and 2, your content will not be published by the Prater Galerie team. We will inform you of the violation and invite you to revise your post in accordance with the rules.",
+            "li4": "If third parties or other users sue the Prater Galerie for potential legal violations arising from a) your posted content or b) your use of the services, you must indemnify the Prater Galerie against all claims, including damages. You shall also bear the costs incurred by the Prater Galerie as a result. This especially includes the costs of any necessary legal defence. The Prater Galerie may demand a reasonable advance payment from you for this purpose. Furthermore, you must support the Prater Galerie with information and documents for legal defence. All further rights and claims for damages of the Prater Galerie shall remain unaffected. These obligations do not apply if you are not responsible for the potential infringement."
+          }
+        },
+        "rightsTransfer": {
+          "title": "§ 3 Transfer of rights of use",
+          "content": {
+            "p1": "The copyright for your posts, insofar as they are protected by copyright, remains with you as the user.",
+            "p2": "However, by contributing a post, you grant the Prater Galerie the right to keep it on its websites permanently, to log it in the Prater Galerie database, to save it and to make it available for retrieval. Furthermore, the Prater Galerie may make your posts available for non-commercial and scientific purposes as well as for use by the press.",
+            "p3": "Moreover, you allow the Prater Galerie to use your posts for digital and analogue public relations work, e.g. on its websites, in social networks, newsletters and in print media.",
+            "p4": "If you are registered as an artist or photographer with VG Bild-Kunst, please send an informal e-mail to info{'@'}bildkunst.de in which you exempt us from the costs of using your images in the digital archive Vom Prater aus.",
+            "p5": "The Prater Galerie also reserves the right to delete, edit or rearrange posts."
+          }
+        },
+        "liability": {
+          "title": "§ 4 Limitation of liability",
+          "content": {
+            "p1": "The Prater Galerie accepts no liability whatsoever for the content posted in the digital archive Vom Prater aus, in particular for its accuracy or completeness."
+          }
+        },
+        "duration": {
+          "title": "§ 5 Duration",
+          "content": {
+            "list1": "These terms of use shall apply for the duration of the existence of the Prater Galerie digital archive. If the website is updated or relaunched, the Prater Galerie shall endeavour to transfer all data to the new website.",
+            "li2": "If the user wishes his or her post to be deleted, he or she shall notify the Prater Galerie team via e-mail at vomprateraus{'@'}pratergalerie.de. The Prater Galerie will then delete the posts."
+          }
+        }
+      }
+    },
     "prater": {
       "title": "About the history of the Berlin Prater",
       "intro": {

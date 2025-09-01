@@ -278,6 +278,66 @@
         }
       }
     },
+    "terms": {
+      "title": "Nutzungsbedingungen des digitalen Archivs der Prater Galerie Vom Prater aus",
+      "intro": "Für die Nutzung des digitalen Archivs Vom Prater aus der Prater Galerie gelten nachfolgende Bedingungen.",
+      "purpose": "Sinn und Zweck des digitalen Archivs ist eine an die Öffentlichkeit gerichtete Sammlung von Erinnerungen. Um die größtmögliche Anzahl an Beitragenden mit den vielfältigsten und unterschiedlichsten Hintergründen einzubeziehen, richten wir uns nach den Vorgaben des Berlin Code of Conduct.",
+      "publishing": "Das Veröffentlichen von Texten und Bildern ist nur zulässig, wenn Sie als Nutzer:in diese Nutzungsbedingungen akzeptieren.",
+      "sections": {
+        "registration": {
+          "title": "§ 1 Registrierung",
+          "content": {
+            "li1": "Voraussetzung für das Veröffentlichen eines Beitrags im Online-Archiv Vom Prater aus ist die Registrierung über das entsprechende Online-Formular mit einer Mailadresse und einem Benutzer:innennamen. Ihre Mailadresse dient ausschließlich zur weiteren Bearbeitung Ihres Beitrags vor Veröffentlichung und wird nicht weitergeleitet. Nach der Registrierung über das Online-Formular bekommen Sie eine Bestätigungsemail zur Verifizierung Ihrer Mailadresse zugeschickt, mit der Sie Ihre Registrierung bestätigen können.",
+            "li2": "Sie können alle Funktionen unseres Online-Archivs Vom Prater aus kostenlos nutzen. Über die Seite „Schreibe deine Prater-Erinnerung\" können Sie eine Mailadresse und einen Benutzer:innennamen eingeben. Die Mailadresse wird benötigt, um einen Link und ein Passwort zu erhalten, sodass Sie Ihre Erinnerung jederzeit öffnen und bearbeiten können. Sobald Sie Ihren Beitrag zur Veröffentlichung freigeben, können Sie ihn nicht mehr bearbeiten.",
+            "p1": "Vor der finalen Veröffentlichung wird Ihr Beitrag vom Team der Prater Galerie auf die Einhaltung der Nutzungsbedingungen, insbesondere § 2, geprüft.",
+            "li3": "Es gibt grundsätzlich keinen Rechtsanspruch auf Freischaltung Ihrer Inhalte. Sollte Ihr Beitrag gegen die Regeln aus § 2 verstoßen, werden Sie vom Team der Prater Galerie über den Verstoß informiert und eingeladen, Ihren Beitrag den Regeln entsprechend zu überarbeiten. Erst nach der Überarbeitung kann der Beitrag veröffentlicht werden.",
+            "li4": "Der Link und das Passwort zur Überarbeitung Ihres Beitrags darf nur von Ihnen selbst genutzt werden. Ebenso sind Sie als Verfasser:in Ihres Beitrags für den Schutz vor dessen Missbrauch verantwortlich: Schützen Sie Ihre Zugangsdaten vor dem Zugriff Dritter! Die Verwendung von markenrechtlich geschützten Worten und Internetadressen als Benutzer:innenname sind nicht erlaubt.",
+            "li5": "Das Team der Prater Galerie wird sich bemühen, den Dienst möglichst unterbrechungsfrei zum Abruf anzubieten. Auch bei aller Sorgfalt können Ausfallzeiten nicht ausgeschlossen werden, in denen die Webserver aufgrund von technischen oder sonstigen Problemen, die nicht im Einflussbereich der Prater Galerie liegen (Verschulden Dritter, höhere Gewalt, Angriffe gegen die Infrastruktur durch Hacker etc.), über das Internet nicht abrufbar ist. Der/Die Nutzer:in erkennt an, dass eine 100%ige Verfügbarkeit der Website technisch nicht zu realisieren ist.",
+            "li6": "Das Team der Prater Galerie behält sich das Recht vor, Inhalt und Struktur der Plattform sowie die dazugehörigen Benutzer:innenoberflächen zu ändern und zu erweitern, wenn hierdurch die Zweckerfüllung des mit dem/der Nutzer:in geschlossenen Vertrags nicht oder nur unerheblich beeinträchtigt wird."
+          }
+        },
+        "obligations": {
+          "title": "§ 2 Nutzungsbestimmungen: Pflichten als Webseiten-Nutzer:in",
+          "content": {
+            "li1": "Als Nutzer:in verpflichten Sie sich, dass Sie keine Beiträge veröffentlichen werden, die gegen diese Regeln, die guten Sitten oder sonst gegen geltendes deutsches Recht verstoßen. Es ist Ihnen insbesondere untersagt:",
+            "sublist": {
+              "li1": "diskriminierende, beleidigende oder unwahre Inhalte zu veröffentlichen;",
+              "li2": "gesetzlich, insbesondere durch das Urheber- und Markenrecht, geschützte Inhalte ohne Berechtigung zu verwenden;",
+              "li3": "Ihr Thema mehrfach im Online-Archiv einzustellen;",
+              "li4": "Texte und Bilder Dritter ohne Zustimmung des Urhebers/der Urheberin im Online-Archiv zu veröffentlichen;",
+              "li5": "Werbung zu betreiben. Dies gilt auch für sog. Schleichwerbung wie etwa das Verlinken der eigenen Webseite innerhalb von Beiträgen."
+            },
+            "li2": "Als Nutzer:in verpflichten Sie sich, vor der Veröffentlichung Ihrer Beiträge zu überprüfen, ob diese Angaben enthalten, die Sie nicht veröffentlichen möchten. Ihre Beiträge können in Suchmaschinen erfasst und damit weltweit zugreifbar werden. Ein Anspruch auf Löschung oder Korrektur solcher Suchmaschineneinträge gegenüber dem Team der Prater Galerie ist ausgeschlossen.",
+            "li3": "Beim Verstoß, insbesondere gegen die zuvor genannten Regeln § 2 Abs. 1 und 2, werden Ihre Inhalte nicht vom Team der Prater Galerie veröffentlicht. Wir informieren Sie über den Verstoß und laden Sie ein, Ihren Beitrag den Regeln entsprechend zu überarbeiten.",
+            "li4": "Wenn Dritte oder andere Nutzer:innen die Prater Galerie wegen möglicher Rechtsverstöße belangen, die a) durch Ihre eingestellten Inhalte oder b) durch Ihre Nutzung der Dienste entstehen, müssen Sie die Prater Galerie von allen Ansprüchen, einschließlich Schadensersatz, freistellen.",
+            "p1": "Sie tragen außerdem die Kosten, die der Prater Galerie dadurch entstehen. Dazu gehören insbesondere die Kosten für eine notwendige Rechtsverteidigung. Die Prater Galerie darf hierfür einen angemessenen Vorschuss von Ihnen verlangen. Zudem müssen Sie die Prater Galerie mit Informationen und Unterlagen zur Rechtsverteidigung unterstützen. Alle weitergehenden Rechte und Schadensersatzansprüche der Prater Galerie bleiben bestehen. Diese Pflichten entfallen, wenn Sie die mögliche Rechtsverletzung nicht zu verantworten haben."
+          }
+        },
+        "rightsTransfer": {
+          "title": "§ 3 Übertragung von Nutzungsrechten",
+          "content": {
+            "p1": "Das Urheberrecht für Ihre Beiträge bleibt, soweit diese urheberrechtlich geschützt sind, grundsätzlich bei Ihnen als Nutzer:in.",
+            "p2": "Mit der Einstellung eines Beitrags räumen Sie der Prater Galerie jedoch das Recht ein, diesen dauerhaft auf ihren Webseiten vorzuhalten, in die Datenbank der Prater Galerie zu übernehmen, zu speichern und zum Abruf bereitzuhalten. Zudem darf die Prater Galerie Ihre Beiträge für nicht-kommerzielle und wissenschaftliche Zwecke sowie zur Pressenutzung bereitstellen.",
+            "p3": "Weiterhin gestatten Sie der Prater Galerie die Nutzung Ihrer Beiträge für digitale und analoge Öffentlichkeitsarbeit, z. B. auf ihren Webseiten, in sozialen Netzwerken, Newslettern sowie in Printmedien.",
+            "p4": "Falls Sie als Künstler:in oder Fotograf:in bei VG Bild-Kunst gemeldet sind, stellen Sie uns bitte formlos per E-Mail an info{'@'}bildkunst.de von den Kosten für die Nutzung Ihrer Bilder im digitalen Archiv Vom Prater aus frei.",
+            "p5": "Die Prater Galerie behält sich zudem das Recht vor, Beiträge zu löschen, ggf. zu bearbeiten oder zu verschieben."
+          }
+        },
+        "liability": {
+          "title": "§ 4 Haftungsbeschränkung",
+          "content": {
+            "p1": "Die Prater Galerie übernimmt keinerlei Gewähr für die im digitalen Archiv Vom Prater aus eingestellten Inhalte, insbesondere nicht für deren Richtigkeit und Vollständigkeit."
+          }
+        },
+        "duration": {
+          "title": "§ 5 Laufzeit",
+          "content": {
+            "li1": "Diese Nutzungsbedingungen gelten für die Dauer des Bestehens des digitalen Archivs der Prater Galerie. Wird die Webseite aktualisiert oder neu aufgesetzt, bemüht sich die Prater Galerie um Transfer aller Daten auf die neue Webseite.",
+            "li2": "Wenn der/die Nutzer:in wünscht, dass seine/ihre öffentlichen Beiträge gelöscht werden, möge er/sie dies dem Team der Prater Galerie per Mail an vomprateraus{'@'}pratergalerie.de mitteilen. Die Prater Galerie unternimmt im Folgenden die Löschung der Beiträge."
+          }
+        }
+      }
+    },
     "prater": {
       "title": "Zur Geschichte des Berliner Praters",
       "intro": {
