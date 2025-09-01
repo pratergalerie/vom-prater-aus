@@ -309,7 +309,8 @@
             },
             "li2": "As a user, you undertake to check before publishing your posts whether they contain information that you do not wish to publish. Your posts may be retrieved in search engines and thus become accessible across the globe. There is no claim for deletion or correction of such search engine entries against the Prater Galerie team.",
             "li3": "In case of violation, especially of the aforementioned rules § 2 para. 1 and 2, your content will not be published by the Prater Galerie team. We will inform you of the violation and invite you to revise your post in accordance with the rules.",
-            "li4": "If third parties or other users sue the Prater Galerie for potential legal violations arising from a) your posted content or b) your use of the services, you must indemnify the Prater Galerie against all claims, including damages. You shall also bear the costs incurred by the Prater Galerie as a result. This especially includes the costs of any necessary legal defence. The Prater Galerie may demand a reasonable advance payment from you for this purpose. Furthermore, you must support the Prater Galerie with information and documents for legal defence. All further rights and claims for damages of the Prater Galerie shall remain unaffected. These obligations do not apply if you are not responsible for the potential infringement."
+            "li4": "If third parties or other users sue the Prater Galerie for potential legal violations arising from a) your posted content or b) your use of the services, you must indemnify the Prater Galerie against all claims, including damages.",
+            "p1": "You shall also bear the costs incurred by the Prater Galerie as a result. This especially includes the costs of any necessary legal defence. The Prater Galerie may demand a reasonable advance payment from you for this purpose. Furthermore, you must support the Prater Galerie with information and documents for legal defence. All further rights and claims for damages of the Prater Galerie shall remain unaffected. These obligations do not apply if you are not responsible for the potential infringement."
           }
         },
         "rightsTransfer": {
@@ -331,7 +332,7 @@
         "duration": {
           "title": "§ 5 Duration",
           "content": {
-            "list1": "These terms of use shall apply for the duration of the existence of the Prater Galerie digital archive. If the website is updated or relaunched, the Prater Galerie shall endeavour to transfer all data to the new website.",
+            "li1": "These terms of use shall apply for the duration of the existence of the Prater Galerie digital archive. If the website is updated or relaunched, the Prater Galerie shall endeavour to transfer all data to the new website.",
             "li2": "If the user wishes his or her post to be deleted, he or she shall notify the Prater Galerie team via e-mail at vomprateraus{'@'}pratergalerie.de. The Prater Galerie will then delete the posts."
           }
         }
