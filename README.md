@@ -71,10 +71,14 @@ A bilingual (English/German) storytelling platform dedicated to the [Berliner Pr
    # Start all services (Supabase + Nuxt app)
    docker-compose --profile dev up -d
 
-   # Or start only Supabase services
+   # IMPORTANT: If you have installed a new npm package,
+   # you need to rebuild the Nuxt app image
+   docker-compose --profile dev up --build -d
+
+   # Alternatively, you can start only the Supabase services
    docker-compose up -d kong auth rest db storage studio
 
-   # Then start Nuxt app separately
+   # And then start the Nuxt app locally
    cd nuxt-app
    npm install
    npm run dev
