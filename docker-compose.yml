@@ -5,8 +5,7 @@ services:
       context: ./nuxt-app
       dockerfile: Dockerfile.dev
     volumes:
-      - ./nuxt-app:/app
-      - nuxt-node-modules:/app/node_modules
+      - ./nuxt-app/app:/workspace/app
     profiles:
       - dev
     ports:
@@ -15,7 +14,7 @@ services:
     environment:
       - NUXT_PUBLIC_SUPABASE_URL=${SUPABASE_URL}
       - NUXT_PUBLIC_SUPABASE_KEY=${ANON_KEY}
-      - STYLELINT_CSS_VARIABLES_PATH=/app/app/assets/css/variables.css
+      - STYLELINT_CSS_VARIABLES_PATH=/workspace/app/assets/css/variables.css
     networks:
       - frontend-network
     depends_on:
