@@ -1,10 +1,10 @@
-ARG NODE_VERSION=20.14.0
+ARG NODE_VERSION=22.19.0
 
 # Create build stage
 FROM node:${NODE_VERSION}-slim AS build
 
 # Set the working directory inside the container
-WORKDIR /app
+WORKDIR /workspace
 
 # Define build-time environment variables
 ARG NUXT_PUBLIC_SUPABASE_URL
@@ -28,7 +28,7 @@ RUN npm run build
 FROM node:${NODE_VERSION}-slim
 
 # Set the working directory inside the container
-WORKDIR /app
+WORKDIR /workspace
 
 # Copy only the necessary files from the build stage
 COPY --from=build /app/.output ./
