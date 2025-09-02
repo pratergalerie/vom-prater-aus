@@ -42,12 +42,16 @@
           class="embla__slide"
         >
           <div class="slide">
-            <NuxtImg
+            <NuxtLink
               v-if="slide.img"
-              class="image"
-              :src="slide.img.src"
-              :alt="slide.img.alt"
-            />
+              :to="slide.link.href"
+            >
+              <NuxtImg
+                class="image"
+                :src="slide.img.src"
+                :alt="slide.img.alt"
+              />
+            </NuxtLink>
 
             <div class="content">
               <span
