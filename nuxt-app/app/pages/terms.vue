@@ -1,15 +1,15 @@
 <script setup lang="ts">
-const { t } = useI18n()
+  const { t } = useI18n()
 
-useHead({
-  title: t('pages.terms.title'),
-  meta: [
-    {
-      name: 'description',
-      content: 'Terms of use for the Vom Prater Aus digital archive',
-    },
-  ],
-})
+  useHead({
+    title: t('pages.terms.title'),
+    meta: [
+      {
+        name: 'description',
+        content: 'Terms of use for the Vom Prater Aus digital archive',
+      },
+    ],
+  })
 </script>
 
 <template>
@@ -45,13 +45,34 @@ useHead({
         <div class="content">
           <p>{{ t('pages.terms.sections.obligations.content.p1') }}</p>
           <ol>
-            <li>{{ t('pages.terms.sections.obligations.content.li1') }}
+            <li>
+              {{ t('pages.terms.sections.obligations.content.li1') }}
               <ul>
-                <li>{{ t('pages.terms.sections.obligations.content.sublist.li1') }}</li>
-                <li>{{ t('pages.terms.sections.obligations.content.sublist.li2') }}</li>
-                <li>{{ t('pages.terms.sections.obligations.content.sublist.li3') }}</li>
-                <li>{{ t('pages.terms.sections.obligations.content.sublist.li4') }}</li>
-                <li>{{ t('pages.terms.sections.obligations.content.sublist.li5') }}</li>
+                <li>
+                  {{
+                    t('pages.terms.sections.obligations.content.sublist.li1')
+                  }}
+                </li>
+                <li>
+                  {{
+                    t('pages.terms.sections.obligations.content.sublist.li2')
+                  }}
+                </li>
+                <li>
+                  {{
+                    t('pages.terms.sections.obligations.content.sublist.li3')
+                  }}
+                </li>
+                <li>
+                  {{
+                    t('pages.terms.sections.obligations.content.sublist.li4')
+                  }}
+                </li>
+                <li>
+                  {{
+                    t('pages.terms.sections.obligations.content.sublist.li5')
+                  }}
+                </li>
               </ul>
             </li>
             <li>{{ t('pages.terms.sections.obligations.content.li2') }}</li>
@@ -68,7 +89,15 @@ useHead({
           <p>{{ t('pages.terms.sections.rightsTransfer.content.p1') }}</p>
           <p>{{ t('pages.terms.sections.rightsTransfer.content.p2') }}</p>
           <p>{{ t('pages.terms.sections.rightsTransfer.content.p3') }}</p>
-          <p>{{ t('pages.terms.sections.rightsTransfer.content.p4') }}</p>
+          <i18n-t
+            keypath="pages.terms.sections.rightsTransfer.content.p4"
+            tag="p"
+          >
+            <a
+              :href="`mailto:${t('pages.terms.sections.rightsTransfer.content.email')}`"
+              >{{ $t('pages.terms.sections.rightsTransfer.content.email') }}</a
+            >
+          </i18n-t>
           <p>{{ t('pages.terms.sections.rightsTransfer.content.p5') }}</p>
         </div>
       </section>
@@ -85,7 +114,15 @@ useHead({
         <div class="content">
           <ol>
             <li>{{ t('pages.terms.sections.duration.content.li1') }}</li>
-            <li>{{ t('pages.terms.sections.duration.content.li2') }}</li>
+            <i18n-t
+              keypath="pages.terms.sections.duration.content.li2"
+              tag="li"
+            >
+              <a
+                :href="`mailto:${t('pages.terms.sections.duration.content.email')}`"
+                >{{ $t('pages.terms.sections.duration.content.email') }}</a
+              >
+            </i18n-t>
           </ol>
         </div>
       </section>
@@ -94,51 +131,56 @@ useHead({
 </template>
 
 <style scoped>
-article {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-l-xl);
-}
+  article {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-l-xl);
+  }
 
-section {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-m-l);
-}
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m-l);
+  }
 
-.intro {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-s-m);
-}
+  a {
+    font-family: var(--font-text);
+  }
 
-.publishing-note {
-  font-weight: bold;
-  color: var(--color-primary-dark);
-}
+  .intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s-m);
+  }
 
-.terms-sections {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-l-xl);
-}
+  .publishing-note {
+    font-weight: bold;
+    color: var(--color-primary-dark);
+  }
 
-.term-section {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-s);
-}
+  .terms-sections {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-l-xl);
+  }
 
-.content {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-s);
-}
+  .term-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+  }
 
-ol, ul {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-xs);
-  padding-left: 2ch;
-}
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+  }
+
+  ol,
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding-left: 2ch;
+  }
 </style>

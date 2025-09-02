@@ -238,17 +238,20 @@
       "sections": {
         "responsible": {
           "title": "1. RESPONSIBLE BODY WITH REGARD TO DATA PROTECTION LAW",
-          "content": "Bezirksamt Pankow von Berlin\nAmt für Weiterbildung und Kultur\nMatthias Zarbock\nDanziger Straße 101\n10405 Berlin\nTel.: (030) 90295-3837\nE-Mail: Matthias.Zarbock{'@'}ba-pankow.berlin.de"
+          "content": "Bezirksamt Pankow von Berlin\nAmt für Weiterbildung und Kultur\nMatthias Zarbock\nDanziger Straße 101\n10405 Berlin\nTel.: (030) 90295-3837\nE-Mail: {0}",
+          "email": "Matthias.Zarbock{'@'}ba-pankow.berlin.de"
         },
         "contact": {
           "title": "2. CONTACT INFORMATION OF THE DATA PROTECTION OFFICER",
-          "content": "Matthias Zarbock\nDanziger Street 101\n10405 Berlin\nPhone: (030) 90295-3837\nE-Mail: Matthias.Zarbock{'@'}ba-pankow.berlin.de"
+          "content": "Matthias Zarbock\nDanziger Street 101\n10405 Berlin\nPhone: (030) 90295-3837\nE-Mail: {0}",
+          "email": "Matthias.Zarbock{'@'}ba-pankow.berlin.de"
         },
         "purposes": {
           "title": "3. PURPOSES AND LEGAL BASES OF DATA PROCESSING",
           "consent": "Consent (Art. 6 para. 1 lit. a) GDPR): The processing of e-mail addresses, user names and post content is based on the express consent of the users. This consent should be documented in writing as proof.",
           "contractual": "Fulfillment of contractual obligations (Art. 6 para. 1 lit. b) GDPR): The storage and management of user data is necessary to fulfill our contractual obligations, in particular the provision of the platform and the possibility for users to publish and manage their contributions.",
-          "legitimateInterests": "Legitimate interests (Art. 6 para. 1 lit. f) GDPR): We store certain data to maintain the integrity of the platform and for the process of content moderation. For example, moderators must be able to delete inappropriate content. In addition, users should be able to request the deletion of their post after it has been published. For this purpose, an e-mail address has been set up to which authors can send their deletion requests: vomprateraus{'@'}pratergalerie.de."
+          "legitimateInterests": "Legitimate interests (Art. 6 para. 1 lit. f) GDPR): We store certain data to maintain the integrity of the platform and for the process of content moderation. For example, moderators must be able to delete inappropriate content. In addition, users should be able to request the deletion of their post after it has been published. For this purpose, an e-mail address has been set up to which authors can send their deletion requests: {0}.",
+          "email": "vomprateraus{'@'}pratergalerie.de"
         },
         "dataCategories": {
           "title": "4. CATEGORIES OF PERSONAL DATA",
@@ -319,7 +322,8 @@
             "p1": "The copyright for your posts, insofar as they are protected by copyright, remains with you as the user.",
             "p2": "However, by contributing a post, you grant the Prater Galerie the right to keep it on its websites permanently, to log it in the Prater Galerie database, to save it and to make it available for retrieval. Furthermore, the Prater Galerie may make your posts available for non-commercial and scientific purposes as well as for use by the press.",
             "p3": "Moreover, you allow the Prater Galerie to use your posts for digital and analogue public relations work, e.g. on its websites, in social networks, newsletters and in print media.",
-            "p4": "If you are registered as an artist or photographer with VG Bild-Kunst, please send an informal e-mail to info{'@'}bildkunst.de in which you exempt us from the costs of using your images in the digital archive Vom Prater aus.",
+            "p4": "If you are registered as an artist or photographer with VG Bild-Kunst, please send an informal e-mail to {0} in which you exempt us from the costs of using your images in the digital archive Vom Prater aus.",
+            "email": "info{'@'}bildkunst.de",
             "p5": "The Prater Galerie also reserves the right to delete, edit or rearrange posts."
           }
         },
@@ -333,7 +337,8 @@
           "title": "§ 5 Duration",
           "content": {
             "li1": "These terms of use shall apply for the duration of the existence of the Prater Galerie digital archive. If the website is updated or relaunched, the Prater Galerie shall endeavour to transfer all data to the new website.",
-            "li2": "If the user wishes his or her post to be deleted, he or she shall notify the Prater Galerie team via e-mail at vomprateraus{'@'}pratergalerie.de. The Prater Galerie will then delete the posts."
+            "li2": "If the user wishes his or her post to be deleted, he or she shall notify the Prater Galerie team via e-mail at {0}. The Prater Galerie will then delete the posts.",
+            "email": "vomprateraus{'@'}pratergalerie.de"
           }
         }
       }

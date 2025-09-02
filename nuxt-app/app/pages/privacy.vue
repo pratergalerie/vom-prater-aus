@@ -24,16 +24,29 @@
     <div class="sections">
       <section>
         <h2>{{ t('pages.privacy.sections.responsible.title') }}</h2>
-        <address class="contact-info">
-          {{ t('pages.privacy.sections.responsible.content') }}
-        </address>
+        <i18n-t
+          keypath="pages.privacy.sections.responsible.content"
+          tag="address"
+          class="contact-info"
+        >
+          <a
+            :href="`mailto:${t('pages.privacy.sections.responsible.email')}`"
+            >{{ $t('pages.privacy.sections.responsible.email') }}</a
+          >
+        </i18n-t>
       </section>
 
       <section>
         <h2>{{ t('pages.privacy.sections.contact.title') }}</h2>
-        <address class="contact-info">
-          {{ t('pages.privacy.sections.contact.content') }}
-        </address>
+        <i18n-t
+          keypath="pages.privacy.sections.contact.content"
+          tag="address"
+          class="contact-info"
+        >
+          <a :href="`mailto:${t('pages.privacy.sections.contact.email')}`">{{
+            $t('pages.privacy.sections.contact.email')
+          }}</a>
+        </i18n-t>
       </section>
 
       <section>
@@ -43,9 +56,14 @@
             <strong>{{ t('pages.privacy.sections.purposes.consent') }}</strong>
           </p>
           <p>{{ t('pages.privacy.sections.purposes.contractual') }}</p>
-          <p>
-            {{ t('pages.privacy.sections.purposes.legitimateInterests') }}
-          </p>
+          <i18n-t
+            keypath="pages.privacy.sections.purposes.legitimateInterests"
+            tag="p"
+          >
+            <a :href="`mailto:${t('pages.privacy.sections.purposes.email')}`">{{
+              $t('pages.privacy.sections.purposes.email')
+            }}</a>
+          </i18n-t>
         </div>
       </section>
 
@@ -97,6 +115,10 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-s);
+  }
+
+  a {
+    font-family: var(--font-text);
   }
 
   section {

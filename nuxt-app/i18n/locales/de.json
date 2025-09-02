@@ -238,17 +238,20 @@
       "sections": {
         "responsible": {
           "title": "1. VERANTWORTLICHE STELLE IM SINNE DES DATENSCHUTZRECHTS",
-          "content": "Bezirksamt Pankow von Berlin\nAmt für Weiterbildung und Kultur\nMatthias Zarbock\nDanziger Straße 101\n10405 Berlin\nTel.: (030) 90295-3837\nE-Mail: Matthias.Zarbock{'@'}ba-pankow.berlin.de"
+          "content": "Bezirksamt Pankow von Berlin\nAmt für Weiterbildung und Kultur\nMatthias Zarbock\nDanziger Straße 101\n10405 Berlin\nTel.: (030) 90295-3837\nE-Mail: {0}",
+          "email": "Matthias.Zarbock{'@'}ba-pankow.berlin.de"
         },
         "contact": {
           "title": "2. KONTAKTDATEN DES DATENSCHUTZBEAUFTRAGTEN",
-          "content": "Matthias Zarbock\nDanziger Straße 101\n10405 Berlin\nTel.: (030) 90295-3837\nE-Mail: Matthias.Zarbock{'@'}ba-pankow.berlin.de"
+          "content": "Matthias Zarbock\nDanziger Straße 101\n10405 Berlin\nTel.: (030) 90295-3837\nE-Mail: {0}",
+          "email": "Matthias.Zarbock{'@'}ba-pankow.berlin.de"
         },
         "purposes": {
           "title": "3. ZWECKE UND RECHTSGRUNDLAGEN DER VERARBEITUNG",
           "consent": "Einwilligung (Art. 6 Abs. 1 lit. a) DSGVO): Die Verarbeitung der E-Mail-Adressen, Benutzer:innennamen und Beitragsinhalte basiert auf der ausdrücklichen Einwilligung der Nutzer:innen. Diese Einwilligung sollte zum Nachweis schriftlich dokumentiert werden.",
           "contractual": "Erfüllung vertraglicher Pflichten (Art. 6 Abs. 1 lit. b) DSGVO): Die Speicherung und Verwaltung der Nutzer:innendaten ist notwendig, um unsere vertraglichen Verpflichtungen zu erfüllen, insbesondere die Bereitstellung der Plattform und die Möglichkeit für die Nutzer:innen, ihre Beiträge zu veröffentlichen und zu verwalten.",
-          "legitimateInterests": "Berechtigte Interessen (Art. 6 Abs. 1 lit. f) DSGVO): Wir speichern bestimmte Daten zur Wahrung der Integrität der Plattform und für den Moderationsprozess. Moderator:innen müssen z.B. in der Lage sein, unangemessene Inhalte zu löschen. Außerdem sollen Nutzer:innen die Möglichkeit haben, nach der Veröffentlichung ihres Beitrags dessen Löschung zu beantragen. Hierfür ist die E-Mail-Adresse vomprateraus{'@'}pratergalerie.de eingerichtet worden, an die Autor:innen ihre Löschanfragen richten können."
+          "legitimateInterests": "Berechtigte Interessen (Art. 6 Abs. 1 lit. f) DSGVO): Wir speichern bestimmte Daten zur Wahrung der Integrität der Plattform und für den Moderationsprozess. Moderator:innen müssen z.B. in der Lage sein, unangemessene Inhalte zu löschen. Außerdem sollen Nutzer:innen die Möglichkeit haben, nach der Veröffentlichung ihres Beitrags dessen Löschung zu beantragen. Hierfür ist die E-Mail-Adresse {0} eingerichtet worden, an die Autor:innen ihre Löschanfragen richten können.",
+          "email": "vomprateraus{'@'}pratergalerie.de"
         },
         "dataCategories": {
           "title": "4. KATEGORIEN PERSONENBEZOGENER DATEN",
@@ -319,7 +322,8 @@
             "p1": "Das Urheberrecht für Ihre Beiträge bleibt, soweit diese urheberrechtlich geschützt sind, grundsätzlich bei Ihnen als Nutzer:in.",
             "p2": "Mit der Einstellung eines Beitrags räumen Sie der Prater Galerie jedoch das Recht ein, diesen dauerhaft auf ihren Webseiten vorzuhalten, in die Datenbank der Prater Galerie zu übernehmen, zu speichern und zum Abruf bereitzuhalten. Zudem darf die Prater Galerie Ihre Beiträge für nicht-kommerzielle und wissenschaftliche Zwecke sowie zur Pressenutzung bereitstellen.",
             "p3": "Weiterhin gestatten Sie der Prater Galerie die Nutzung Ihrer Beiträge für digitale und analoge Öffentlichkeitsarbeit, z. B. auf ihren Webseiten, in sozialen Netzwerken, Newslettern sowie in Printmedien.",
-            "p4": "Falls Sie als Künstler:in oder Fotograf:in bei VG Bild-Kunst gemeldet sind, stellen Sie uns bitte formlos per E-Mail an info{'@'}bildkunst.de von den Kosten für die Nutzung Ihrer Bilder im digitalen Archiv Vom Prater aus frei.",
+            "p4": "Falls Sie als Künstler:in oder Fotograf:in bei VG Bild-Kunst gemeldet sind, stellen Sie uns bitte formlos per E-Mail an {0} von den Kosten für die Nutzung Ihrer Bilder im digitalen Archiv Vom Prater aus frei.",
+            "email": "info{'@'}bildkunst.de",
             "p5": "Die Prater Galerie behält sich zudem das Recht vor, Beiträge zu löschen, ggf. zu bearbeiten oder zu verschieben."
           }
         },
@@ -333,7 +337,8 @@
           "title": "§ 5 Laufzeit",
           "content": {
             "li1": "Diese Nutzungsbedingungen gelten für die Dauer des Bestehens des digitalen Archivs der Prater Galerie. Wird die Webseite aktualisiert oder neu aufgesetzt, bemüht sich die Prater Galerie um Transfer aller Daten auf die neue Webseite.",
-            "li2": "Wenn der/die Nutzer:in wünscht, dass seine/ihre öffentlichen Beiträge gelöscht werden, möge er/sie dies dem Team der Prater Galerie per Mail an vomprateraus{'@'}pratergalerie.de mitteilen. Die Prater Galerie unternimmt im Folgenden die Löschung der Beiträge."
+            "li2": "Wenn der/die Nutzer:in wünscht, dass seine/ihre öffentlichen Beiträge gelöscht werden, möge er/sie dies dem Team der Prater Galerie per Mail an {0} mitteilen. Die Prater Galerie unternimmt im Folgenden die Löschung der Beiträge.",
+            "email": "vomprateraus{'@'}pratergalerie.de"
           }
         }
       }
