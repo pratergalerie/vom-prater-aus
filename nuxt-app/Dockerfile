@@ -31,7 +31,7 @@ FROM node:${NODE_VERSION}-slim
 WORKDIR /workspace
 
 # Copy only the necessary files from the build stage
-COPY --from=build /app/.output ./
+COPY --from=build /workspace/.output ./
 
 # Define environment variables
 ENV HOST=0.0.0.0
