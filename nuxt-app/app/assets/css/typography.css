@@ -47,6 +47,11 @@ a {
   color: var(--color-link);
   text-underline-offset: 0.25rem;
   text-decoration: underline;
+
+  &:hover,
+  &:focus {
+    color: var(--color-mustard);
+  }
 }
 
 button {
@@ -82,4 +87,9 @@ button {
     -4.5px -6.5px 7.5px
       color-mix(in srgb, var(--color-highlight) 40%, transparent),
     -2px 4px 2px color-mix(in srgb, var(--color-highlight) 20%, transparent);
+
+  &:hover,
+  &:focus {
+    color: var(--color-brown);
+  }
 }

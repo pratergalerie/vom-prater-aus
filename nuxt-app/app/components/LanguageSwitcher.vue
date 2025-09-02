@@ -36,12 +36,7 @@
     color: var(--color-beige);
 
     a {
-      padding: 0 0.5rem;
-      font-family: var(--font-link);
-      font-size: 1rem;
-      line-height: 1.5rem;
-      color: var(--color-beige);
-      text-align: right;
+      font-size: var(--step-0);
       text-transform: uppercase;
       text-decoration: none;
       cursor: pointer;

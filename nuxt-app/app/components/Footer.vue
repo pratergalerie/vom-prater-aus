@@ -107,7 +107,7 @@
     ul {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: var(--space-2xs);
       padding: 0;
       margin: 0;
       font-size: var(--step-0);
@@ -115,7 +115,9 @@
     }
 
     a {
-      color: var(--color-beige);
+      /* stylelint-disable-next-line */
+      font-size: var(--step--1);
+      text-decoration: none;
     }
   }
 

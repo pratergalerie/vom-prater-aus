@@ -60,9 +60,10 @@
               <div class="link-year">
                 <NuxtLink
                   v-if="slide"
+                  class="highlight"
                   :to="slide.link.href"
                 >
-                  <span class="title highlight">{{ slide.link.text }}</span>
+                  {{ slide.link.text }}
                 </NuxtLink>
 
                 <span class="year">{{ slide.year }}</span>
@@ -180,10 +181,11 @@
     flex-direction: column;
     align-items: flex-end;
     text-align: right;
-  }
 
-  a {
-    font-size: 1rem;
+    & a {
+      font-size: var(--step-1);
+      text-decoration: none;
+    }
   }
 
   .year {

@@ -359,7 +359,7 @@
   ul {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--space-xs);
     padding: 0;
     margin: 0;
     list-style: none;
@@ -373,6 +373,10 @@
       opacity: 0;
       transform: translateX(-20px);
       animation: none;
+
+      a {
+        text-decoration: none;
+      }
 
       &.slide-out {
         animation: none;
