@@ -18,7 +18,7 @@ RUN mkdir -p /tmp/nitro-storage && chmod 777 /tmp/nitro-storage
 # Ensure Sharp is installed correctly
 # To avoid "Something went wrong installing the "sharp" module. Cannot find module." errors
 RUN rm -rf node_modules/sharp
-RUN npm install --platform=linuxmusl --arch=arm64v8 sharp
+RUN npm install --cpu=arm64 --os=linux --libc=musl sharp
 
 # Expose the development port
 EXPOSE 3000
