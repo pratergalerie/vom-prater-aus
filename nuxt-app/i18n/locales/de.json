@@ -86,10 +86,10 @@
     },
     "create": {
       "form": {
-        "title": "Schreib deine Prater-Geschichte",
+        "title": "Welche Erinnerung verbindest du mit dem Berliner Prater?",
         "steps": {
           "authorInfo": {
-            "text": "Erstmal ein paar Infos von dir. Der Autorenname wird zusammen mit deiner Geschichte veröffentlicht, und muss nicht dein echter Name sein. Deine E-Mail wird nicht veröffentlicht. Weitere Informationen findest du in der Datenschutzerklärung.",
+            "text": "Zunächst benötigen wir deinen/einen Namen, der zusammen mit deiner Erinnerung veröffentlicht wird. Zudem brauchen wir deine E-Mail-Adresse, um mit dir zu kommunizieren. Sie wird nicht publiziert und nicht weitergegeben. Weitere Informationen findest du in der Datenschutzerklärung.",
             "inputs": {
               "authorName": {
                 "label": "Name",
@@ -106,11 +106,15 @@
               "termsOfUse": "Nutzungsbedingungen",
               "privacyPolicy": "Datenschutzerklärung",
               "moderationCheckbox": "Ich stimme den {moderationConditions} zu.",
-              "moderationConditions": "Moderationbedingungen"
+              "moderationConditions": "Moderationbedingungen",
+              "modal": {
+                "p1": "Dein/Der Name erscheint zusammen mit deinem Beitrag, die E-Mail-Adresse wird nicht veröffentlicht.",
+                "p2": "Die E-Mail-Adresse wird benötigt, um dir ein Passwort zu schicken, sodass nur du deine Erinnerung jederzeit öffnen und bearbeiten kannst. Informationen zur Moderation und Veröffentlichung deines Beitrags stellen wir auch per E-Mail zur Verfügung."
+              }
             }
           },
           "storyInfo": {
-            "text": "Jetzt die ersten Details deiner Geschichte. Keine Sorge, du kannst sie später ändern, wenn du deine Meinung änderst.",
+            "text": "Jetzt zu den ersten Angaben deiner Erinnerung. Keine Sorge, du kannst sie später ändern, wenn dir etwas Neues einfällt.",
             "inputs": {
               "title": {
                 "label": "Titel",

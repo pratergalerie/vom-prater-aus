@@ -86,10 +86,10 @@
     },
     "create": {
       "form": {
-        "title": "Write your Prater story",
+        "title": "What memory do you associate with the Berlin Prater?",
         "steps": {
           "authorInfo": {
-            "text": "First of all, a few details about you. The author name will be published together with your story, and does not have to be your real name. Your e-mail address will not be published. Further information can be found in the privacy policy.",
+            "text": "First of all, we need your/a name that will be published together with your memory. Furthermore we need your e-mail address to communicate with you. It will not be published or shared. Further information can be found in the data privacy policy.",
             "inputs": {
               "authorName": {
                 "label": "Name",
@@ -106,11 +106,15 @@
               "termsOfUse": "Terms of Use",
               "privacyPolicy": "Privacy Policy",
               "moderationCheckbox": "I agree to the {moderationConditions}.",
-              "moderationConditions": "moderation conditions"
+              "moderationConditions": "moderation conditions",
+              "modal": {
+                "p1": "Your/The name appears alongside your post, but your email address will not be published.",
+                "p2": "The email address is required to send you a password, ensuring that only you can access and edit your memory at any time. Information about the moderation and publication of your post will also be provided via email."
+              }
             }
           },
           "storyInfo": {
-            "text": "Now the first details of your story. Don't worry, you can change it later if you change your mind.",
+            "text": "Now the first details of your memory. Don’t worry, you can change it later if you change your mind.",
             "inputs": {
               "title": {
                 "label": "Title",
@@ -142,8 +146,8 @@
           "button": "All memories"
         },
         "prater": {
-          "title": "About the history of the Berlin Prater",
           "imageAlt": "MISSING",
+          "title": "About the history of the Berlin Prater",
           "text": "Opened in 1837 as a garden tavern just outside the city gates, the Berlin Prater has always attracted those seeking relaxation and adventure in nature. Entertainment was offered in the Prater hall and beer garden, but it was also a place of political agitation and discussion.\nAs the city grew and changed, the Prater remained a central meeting point for the neighborhood, where people gathered to eat, drink, debate, dance, and celebrate together. Today, the Prater is under municipal management. After the renovation is completed, the Volksbühne and independent theater groups will perform in the main hall, while the Prater Galerie for contemporary art will occupy a side wing.",
           "button": "Discover the history"
         },

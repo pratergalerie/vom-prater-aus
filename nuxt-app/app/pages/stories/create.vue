@@ -281,6 +281,7 @@
 
   function openInfoModal() {
     // TODO: implement modal logic
+    // Use paragraphs 'pages.create.info.modal.p1' & 'pages.create.info.modal.p2'
   }
 
   const getInputType = (type: InputType): 'text' | 'email' | 'password' => {
