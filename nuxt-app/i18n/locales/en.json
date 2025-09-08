@@ -2,21 +2,22 @@
   "components": {
     "cookieConsentBanner": {},
     "footer": {
-      "text": "This project was conceived and produced by the Prater Gallery, part of the Art and Culture Department of the Office for Continuing Education and Culture of the Pankow district of Berlin and a member of the Arbeitsgemeinschaft der Städtischen Galerien Berlin (Association of Berlin City Galleries).",
+      "text": "“Vom Prater aus“ was conceptualized and implemented by the Prater Galerie. The municipal Prater Galerie is an organisation of the Berlin-Pankow District Council.",
       "title": "Vom Prater Aus"
     },
     "menu": {
       "logo": {},
       "nav": {
         "about": "About the project",
+        "accessibility": "Declaration on Accessibility",
+        "admin-dashboard": "Admin Dashboard",
         "index": "Main page",
         "legal": "Legal notice",
-        "prater": "About Berliner Prater",
+        "prater": "About the Berlin Prater",
         "privacy": "Privacy policy",
-        "terms": "Terms of use",
-        "stories-create": "Create a story",
-        "stories": "Discover stories",
-        "admin-dashboard": "Admin Dashboard"
+        "stories": "Discover memories",
+        "stories-create": "Write your memory",
+        "terms": "Terms of use"
       }
     },
     "storiesSearchDialog": {

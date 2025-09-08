@@ -26,6 +26,7 @@ export const useMenu = () => {
     'stories',
     'stories-create',
     'about',
+    'accessibility',
     'privacy',
     'terms',
   ]
@@ -47,6 +48,7 @@ export const useMenu = () => {
     'stories-list',
     'stories-create',
     'about',
+    'accessibility',
     'privacy',
     'terms',
     'admin-dashboard',

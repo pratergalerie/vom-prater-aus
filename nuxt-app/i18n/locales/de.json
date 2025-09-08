@@ -2,21 +2,22 @@
   "components": {
     "cookieConsentBanner": {},
     "footer": {
-      "text": "Dieses Projekt wurde von der Prater Galerie, Teil der Abteilung Kunst und Kultur im Amt für Weiterbildung und Kultur des Bezirks Pankow von Berlin und Mitglied der Arbeitsgemeinschaft der Städtischen Galerien Berlin, konzipiert und produziert.",
+      "text": "„Vom Prater aus“ wurde vom Team der Prater Galerie konzipiert und umgesetzt. Die kommunale Prater Galerie ist eine Einrichtung des Bezirksamtes Berlin-Pankow",
       "title": "Vom Prater Aus"
     },
     "menu": {
       "logo": {},
       "nav": {
         "about": "Über das Projekt",
-        "index": "Hauptseite",
+        "accessibility": "Erklärung zur Barrierefreiheit",
+        "admin-dashboard": "Admin Dashboard",
+        "index": "Startseite",
         "legal": "Impressum",
-        "prater": "Über Berliner Prater",
+        "prater": "Über den Berliner Prater",
         "privacy": "Datenschutzerklärung",
-        "terms": "Nutzungsbedingungen",
-        "stories": "Geschichten entdecken",
-        "stories-create": "Geschichte erstellen",
-        "admin-dashboard": "Admin Dashboard"
+        "stories": "Erinnerungen entdecken",
+        "stories-create": "Schreibe deine Erinnerung",
+        "terms": "Nutzungsbedingungen"
       }
     },
     "storiesSearchDialog": {
