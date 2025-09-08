@@ -174,28 +174,28 @@
         "modals": {
           "deletePage": {
             "title": "Seite löschen",
-            "description": "Möchtest du diese Seite wirklich löschen?",
+            "description": "Bist du sicher, dass du diese Seite löschen möchtest? Das kann nicht rückgängig gemacht werden.",
             "confirm": "Löschen",
             "cancel": "Abbrechen",
             "processing": "Seite wird gelöscht..."
           },
           "deleteStory": {
             "title": "Geschichte löschen",
-            "description": "Möchtest du diese Geschichte wirklich löschen?",
+            "description": "Bist du sicher, dass du deine Geschichte löschen möchtest? Das kann nicht rückgängig gemacht werden.",
             "confirm": "Löschen",
             "cancel": "Abbrechen",
             "processing": "Geschichte wird gelöscht..."
           },
           "submitStory": {
-            "title": "Geschichte einreichen",
-            "description": "Möchtest du deine Geschichte wirklich einreichen? Diese Aktion kann nicht rückgängig gemacht werden. Nach dem Einreichen wird deine Geschichte zur Moderation gesendet und nach Genehmigung veröffentlicht. Du erhältst eine E-Mail-Benachrichtigung, sobald die Moderation abgeschlossen ist. Nach dem Einreichen kannst du deine Geschichte nicht mehr bearbeiten.",
+            "title": "Deine Erinnerung einreichen",
+            "description": "Deine Erinnerung wird nun zur Moderation eingereicht. Nach unserer Freigabe wird sie veröffentlicht. Du erhältst eine E-Mail, sobald der Moderationsprozess abgeschlossen ist. Bitte informiere dich über die Moderationsregeln und darüber, was mit deinen Daten passiert.",
             "confirm": "Einreichen",
             "cancel": "Abbrechen",
             "processing": "Geschichte wird eingereicht..."
           },
           "exitEditor": {
             "title": "Editor verlassen",
-            "description": "Möchtest du wirklich den Geschichten-Editor verlassen? Alle nicht gespeicherten Änderungen gehen verloren.",
+            "description": "Bist du sicher, dass du deinen Erinnerungs-Editor verlassen möchtest? Alle nicht gespeicherten Daten gehen verloren.",
             "confirm": "Verlassen",
             "cancel": "Abbrechen"
           },
@@ -231,9 +231,21 @@
         "contactUs": "das Vom Prater Aus-Team kontaktieren"
       },
       "submitted": {
-        "title": "Geschichte eingereicht",
-        "text": "Wir freuen uns, dass du deine Geschichte eingereicht hast. Deine Geschichte wird nun von unserem Team moderiert. Du erhältst eine E-Mail-Benachrichtigung, sobald die Moderation abgeschlossen ist. Nach dem Einreichen kannst du deine Geschichte nicht mehr bearbeiten.",
-        "button": "Zur Geschichte"
+        "title": "Deine Erinnerung wurde eingereicht.",
+        "text": "Wir freuen uns darauf, deine Erinnerung über den Berliner Prater zu lesen! Du bekommst eine E-Mail von uns, sobald der Moderationsprozess abgeschlossen ist. Von nun an ist deine Erinnerung nicht mehr zur Bearbeitung freigegeben.",
+        "button": "Alle Erinnerungen",
+        "info": {
+          "title": "Hast du noch Fragen?",
+          "links": {
+            "a1": "Schau dir an, wie der Moderationsprozess funktioniert.",
+            "a2": "Schick’ uns eine E-Mail."
+          }
+        }
+      },
+      "deleted": {
+        "title": "Deine Erinnerung wurde gelöscht.",
+        "text": "Wir freuen uns darauf, eine neue Erinnerung von dir zu erhalten.",
+        "button": "Zurück"
       }
     },
     "privacy": {
