@@ -22,7 +22,7 @@ const PASSWORD_OUTPUT_FILE =
 // Initialize Supabase client
 const supabase = createClient(
   process.env.SUPABASE_URL || "http://kong:8000",
-  process.env.SUPABASE_SERVICE_ROLE_KEY
+  process.env.SUPABASE_SERVICE_ROLE_KEY,
 );
 
 // Function to read JSON file
@@ -65,8 +65,8 @@ BEGIN
     .map(
       (locale) =>
         `      (${escapeSqlString(locale.code)}, ${escapeSqlString(
-          locale.name
-        )})`
+          locale.name,
+        )})`,
     )
     .join(",\n");
 
@@ -108,7 +108,7 @@ BEGIN
   IF NOT EXISTS (SELECT 1 FROM sections LIMIT 1) THEN
     -- Insert sections for home page
     INSERT INTO sections (page_id, type, name, "order")
-    SELECT 
+    SELECT
       p.id,
       type,
       name,
@@ -121,8 +121,8 @@ BEGIN
     .map(
       (section) =>
         `        (${escapeSqlString(section.type)}, ${escapeSqlString(
-          section.name
-        )}, ${section.order})`
+          section.name,
+        )}, ${section.order})`,
     )
     .join(",\n");
 
@@ -143,16 +143,16 @@ BEGIN
   IF NOT EXISTS (SELECT 1 FROM section_content LIMIT 1) THEN
     -- Insert content for home page sections
     INSERT INTO section_content (
-      section_id, 
-      locale_id, 
-      title, 
-      text, 
-      button_label, 
-      button_link, 
-      image_src, 
+      section_id,
+      locale_id,
+      title,
+      text,
+      button_label,
+      button_link,
+      image_src,
       image_alt
     )
-    SELECT 
+    SELECT
       s.id,
       l.id,
       CASE\n`;
@@ -162,10 +162,10 @@ BEGIN
     .map(
       (content) =>
         `        WHEN s.name = ${escapeSqlString(
-          content.section_name
+          content.section_name,
         )} AND l.code = ${escapeSqlString(
-          content.locale_code
-        )} THEN ${escapeSqlString(content.title)}`
+          content.locale_code,
+        )} THEN ${escapeSqlString(content.title)}`,
     )
     .join("\n");
 
@@ -177,10 +177,10 @@ BEGIN
     .map(
       (content) =>
         `        WHEN s.name = ${escapeSqlString(
-          content.section_name
+          content.section_name,
         )} AND l.code = ${escapeSqlString(
-          content.locale_code
-        )} THEN ${formatArrayForSql(content.text)}`
+          content.locale_code,
+        )} THEN ${formatArrayForSql(content.text)}`,
     )
     .join("\n");
 
@@ -192,10 +192,10 @@ BEGIN
     .map(
       (content) =>
         `        WHEN s.name = ${escapeSqlString(
-          content.section_name
+          content.section_name,
         )} AND l.code = ${escapeSqlString(
-          content.locale_code
-        )} THEN ${escapeSqlString(content.button_label)}`
+          content.locale_code,
+        )} THEN ${escapeSqlString(content.button_label)}`,
     )
     .join("\n");
 
@@ -209,10 +209,10 @@ BEGIN
   const buttonLinkCases = uniqueSections
     .map((sectionName) => {
       const content = sectionContent.find(
-        (c) => c.section_name === sectionName
+        (c) => c.section_name === sectionName,
       );
       return `        WHEN s.name = ${escapeSqlString(
-        sectionName
+        sectionName,
       )} THEN ${escapeSqlString(content.button_link)}`;
     })
     .join("\n");
@@ -224,10 +224,10 @@ BEGIN
   const imageSrcCases = uniqueSections
     .map((sectionName) => {
       const content = sectionContent.find(
-        (c) => c.section_name === sectionName
+        (c) => c.section_name === sectionName,
       );
       return `        WHEN s.name = ${escapeSqlString(
-        sectionName
+        sectionName,
       )} THEN ${escapeSqlString(content.image_src)}`;
     })
     .join("\n");
@@ -240,22 +240,22 @@ BEGIN
     .map(
       (content) =>
         `        WHEN s.name = ${escapeSqlString(
-          content.section_name
+          content.section_name,
         )} AND l.code = ${escapeSqlString(
-          content.locale_code
-        )} THEN ${escapeSqlString(content.image_alt)}`
+          content.locale_code,
+        )} THEN ${escapeSqlString(content.image_alt)}`,
     )
     .join("\n");
 
   sql += imageAltCases;
-  sql += `\n      END\n    FROM 
+  sql += `\n      END\n    FROM
       sections s
-    CROSS JOIN 
+    CROSS JOIN
       locales l
-    WHERE 
+    WHERE
       s.name IN (${uniqueSections
-      .map((name) => escapeSqlString(name))
-      .join(", ")})
+        .map((name) => escapeSqlString(name))
+        .join(", ")})
     ON CONFLICT (section_id, locale_id) DO NOTHING;
   END IF;
 END $$;\n`;
@@ -277,8 +277,8 @@ BEGIN
     .map(
       (author) =>
         `      (${escapeSqlString(author.name)}, ${escapeSqlString(
-          author.email
-        )})`
+          author.email,
+        )})`,
     )
     .join(",\n");
 
@@ -303,10 +303,10 @@ BEGIN
   IF NOT EXISTS (SELECT 1 FROM keywords LIMIT 1) THEN
     -- Insert English keywords
     INSERT INTO keywords (word, locale_id)
-    SELECT 
+    SELECT
       word,
       l.id
-    FROM 
+    FROM
       (VALUES\n`;
 
   // Generate values for English keywords
@@ -318,13 +318,13 @@ BEGIN
   sql += enValues;
   sql += `\n      ) AS k(word, code)
     JOIN locales l ON l.code = k.code;
-      
+
     -- Insert German keywords
     INSERT INTO keywords (word, locale_id)
-    SELECT 
+    SELECT
       word,
       l.id
-    FROM 
+    FROM
       (VALUES\n`;
 
   // Generate values for German keywords
@@ -393,22 +393,22 @@ BEGIN
   IF NOT EXISTS (SELECT 1 FROM stories LIMIT 1) THEN
     -- Insert stories
     INSERT INTO stories (title, slug, author_id, locale_id, year, status, featured_image, featured, quote, password)
-    SELECT 
+    SELECT
       s.title,
       s.slug,
       a.id,
       l.id,
       s.year,
       s.status,
-      CASE 
-        WHEN s.featured_image IS NOT NULL 
-        THEN 'http://localhost:8000/storage/v1/object/public/stories-storage/' || s.featured_image
+      CASE
+        WHEN s.featured_image IS NOT NULL
+        THEN s.featured_image
         ELSE NULL
       END,
       s.featured,
       s.quote,
       s.password
-    FROM 
+    FROM
       (VALUES\n`;
 
   // Generate values for stories
@@ -419,7 +419,7 @@ BEGIN
         story.title &&
         story.slug &&
         story.author_email &&
-        story.locale_code
+        story.locale_code,
     )
     .map((story) => {
       // Find the first image from story pages to use as featured_image
@@ -441,13 +441,14 @@ BEGIN
       passwordMap[story.slug] = plainPassword;
 
       return `        (${escapeSqlString(story.title)}, ${escapeSqlString(
-        story.slug
+        story.slug,
       )}, ${escapeSqlString(story.author_email)}, ${escapeSqlString(
-        story.locale_code
+        story.locale_code,
       )}, ${story.year || 0}, ${escapeSqlString(
-        story.status || "draft"
-      )}, ${escapeSqlString(featuredImage)}, ${story.featured ? "TRUE" : "FALSE"
-        }, ${escapeSqlString(quote)}, ${escapeSqlString(hash)})`;
+        story.status || "draft",
+      )}, ${escapeSqlString(featuredImage)}, ${
+        story.featured ? "TRUE" : "FALSE"
+      }, ${escapeSqlString(quote)}, ${escapeSqlString(hash)})`;
     })
     .join(",\n");
 
@@ -458,17 +459,17 @@ BEGIN
 
     -- Insert story pages
     INSERT INTO story_pages (story_id, layout, text, image, page_order)
-    SELECT 
+    SELECT
       s.id,
       p.layout,
       p.text,
-      CASE 
-        WHEN p.image IS NOT NULL 
-        THEN 'http://localhost:8000/storage/v1/object/public/stories-storage/' || p.image
+      CASE
+        WHEN p.image IS NOT NULL
+        THEN p.image
         ELSE NULL
       END,
       p.page_order
-    FROM 
+    FROM
       stories s
     CROSS JOIN (
       VALUES\n`;
@@ -481,10 +482,10 @@ BEGIN
         if (page && page.layout && page.text) {
           pageValues.push(
             `        (${escapeSqlString(story.title)}, ${escapeSqlString(
-              page.layout
+              page.layout,
             )}, ${escapeSqlString(page.text)}, ${escapeSqlString(
-              page.image || "NULL"
-            )}, ${page.page_order || 0})`
+              page.image || "NULL",
+            )}, ${page.page_order || 0})`,
           );
         }
       });
@@ -497,10 +498,10 @@ BEGIN
 
     -- Insert story-keyword relationships
     INSERT INTO stories_keywords (story_id, keyword_id)
-    SELECT 
+    SELECT
       s.id,
       k.id
-    FROM 
+    FROM
       stories s
     CROSS JOIN (
       VALUES\n`;
@@ -513,8 +514,8 @@ BEGIN
         if (keyword) {
           keywordValues.push(
             `        (${escapeSqlString(story.title)}, ${escapeSqlString(
-              keyword
-            )}, ${escapeSqlString(story.locale_code)})`
+              keyword,
+            )}, ${escapeSqlString(story.locale_code)})`,
           );
         }
       });
@@ -536,7 +537,7 @@ END $$;\n\n`;
 async function createAdminUser() {
   if (!process.env.ADMIN_EMAIL || !process.env.ADMIN_PASSWORD) {
     console.error(
-      "Error: ADMIN_EMAIL and ADMIN_PASSWORD environment variables must be set"
+      "Error: ADMIN_EMAIL and ADMIN_PASSWORD environment variables must be set",
     );
     process.exit(1);
   }
@@ -580,7 +581,7 @@ async function createAdminUser() {
         process.exit(1);
       }
       console.log(
-        `Waiting ${retryDelay / 1000} seconds before next attempt...`
+        `Waiting ${retryDelay / 1000} seconds before next attempt...`,
       );
       await new Promise((resolve) => setTimeout(resolve, retryDelay));
     }
@@ -638,7 +639,7 @@ function generateSqlFile() {
       .join("\n");
     fs.writeFileSync(PASSWORD_OUTPUT_FILE, passwordLines);
     console.log(
-      `Passwords file generated successfully at ${PASSWORD_OUTPUT_FILE}`
+      `Passwords file generated successfully at ${PASSWORD_OUTPUT_FILE}`,
     );
   } catch (error) {
     console.error("Error generating SQL file:", error);
