@@ -79,10 +79,9 @@
 
     <!-- Prater Section -->
     <section>
-      <NuxtImg
-        src="imgs/berliner-prater.jpg"
+      <NuxtPicture
+        src="imgs/anfaenge-prater.jpg"
         :alt="t('pages.home.sections.prater.imageAlt')"
-        :modifiers="{ grayscale: true }"
       />
       <div class="section-text">
         <h2>{{ t('pages.home.sections.prater.title') }}</h2>
@@ -99,10 +98,9 @@
 
     <!-- Create Section -->
     <section>
-      <NuxtImg
-        src="imgs/create-story.jpg"
+      <NuxtPicture
+        src="imgs/kreiskulturhaus-1.jpg"
         :alt="t('pages.home.sections.create.imageAlt')"
-        :modifiers="{ grayscale: true }"
       />
       <div class="section-text">
         <h2>{{ t('pages.home.sections.create.title') }}</h2>
@@ -141,7 +139,8 @@
     &:nth-child(even) {
       align-items: flex-end;
 
-      & img {
+      & picture {
+        width: 100%;
         max-width: 70%;
       }
 

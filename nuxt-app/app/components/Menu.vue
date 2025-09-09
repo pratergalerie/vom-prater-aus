@@ -12,8 +12,8 @@
   })
 
   function chooseRandomMenuImage() {
-    const randomImage = Math.floor(Math.random() * 10) + 1
-    illustrationImage.value = `/imgs/prater/prater${randomImage}.jpg`
+    const randomImage = Math.floor(Math.random() * 4) + 1
+    illustrationImage.value = `/imgs/menu/image-${randomImage}.jpg`
   }
 
   const windowSize = useWindowSize()
@@ -200,10 +200,13 @@
             : 'clip-path 0.3s ease',
         }"
       >
-        <NuxtImg
+        <NuxtPicture
           :src="illustrationImage"
-          alt="Berliner Prater"
+          alt=""
           :modifiers="{ grayscale: true }"
+          :img-attrs="{
+            style: 'display: block; height: 100%;',
+          }"
         />
       </div>
       <menu
@@ -284,9 +287,9 @@
       opacity 0.3s ease,
       clip-path 0.3s ease;
 
-    img {
+    picture {
+      display: block;
       height: 100%;
-      object-fit: cover;
       mix-blend-mode: multiply;
     }
 
