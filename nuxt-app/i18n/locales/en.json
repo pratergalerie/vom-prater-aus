@@ -3,7 +3,11 @@
     "cookieConsentBanner": {},
     "footer": {
       "text": "“Vom Prater aus“ was conceptualized and implemented by the Prater Galerie. The municipal Prater Galerie is an organisation of the Berlin-Pankow District Council.",
-      "title": "Vom Prater Aus"
+      "title": "Vom Prater Aus",
+      "contact": {
+        "text": "Contact: {0}",
+        "email": "vomprateraus{'@'}pratergalerie.de"
+      }
     },
     "menu": {
       "logo": {},
