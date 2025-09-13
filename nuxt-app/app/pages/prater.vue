@@ -17,12 +17,26 @@
     <section>
       <div class="intro">
         <h1>{{ t('pages.prater.title') }}</h1>
-        <p>
-          {{ t('pages.prater.intro.description.p1') }}
-        </p>
-        <p>
-          {{ t('pages.prater.intro.description.p2') }}
-        </p>
+        <i18n-t
+          keypath="pages.prater.intro.description.p1.text"
+          tag="p"
+        >
+          <a
+            target="_blank"
+            :href="t('pages.prater.intro.description.p1.link.url')"
+            >{{ $t('pages.prater.intro.description.p1.link.text') }}</a
+          >
+        </i18n-t>
+        <i18n-t
+          keypath="pages.prater.intro.description.p2.text"
+          tag="p"
+        >
+          <a
+            target="_blank"
+            :href="t('pages.prater.intro.description.p2.link.url')"
+            >{{ $t('pages.prater.intro.description.p2.link.text') }}</a
+          >
+        </i18n-t>
       </div>
 
       <div class="timeline">
@@ -219,6 +233,16 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-s-m);
+
+    a {
+      font-family: var(--font-text);
+      text-decoration: none;
+
+      &:hover,
+      &:focus {
+        text-decoration: underline;
+      }
+    }
   }
 
   .timeline {

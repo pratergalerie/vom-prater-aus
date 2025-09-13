@@ -368,8 +368,20 @@
       "title": "About the history of the Berlin Prater",
       "intro": {
         "description": {
-          "p1": "We have put together a summary of the most important historical milestones of the Berlin Prater. These brief texts are based on the publication \"The Berlin Prater – A Berlin pleasure garden from the 1830s to today\" by historian Johanna Niedbalski – the most comprehensive account of the Prater's history to date.",
-          "p2": "If you would like to learn more, we recommend not only our publications but also the German-language audio walk \"SPEKTAKEL zwischen KAFFEEKÜCHE und KLASSENKAMPF\" by the artist Caroline Böttcher, which takes you on an acoustic journey through the history of the Berlin Prater."
+          "p1": {
+            "text": "We have put together a summary of the most important historical milestones of the Berlin Prater. These brief texts are based on the publication {0} by historian Johanna Niedbalski – the most comprehensive account of the Prater's history to date.",
+            "link": {
+              "text": "\"The Berlin Prater – A Berlin pleasure garden from the 1830s to today\"",
+              "url": "https://pratergalerie.de/de/publications/berliner-prater/"
+            }
+          },
+          "p2": {
+            "text": "If you would like to learn more, we recommend not only our publications but also the German-language audio walk {0} by the artist Caroline Böttcher, which takes you on an acoustic journey through the history of the Berlin Prater.",
+            "link": {
+              "text": "\"SPEKTAKEL zwischen KAFFEEKÜCHE und KLASSENKAMPF\"",
+              "url": "https://pratergalerie.de/de/prater-galerie/event/spektakel-zwischen-kaffeekueche-und-klassenkampf/"
+            }
+          }
         }
       },
       "history": {

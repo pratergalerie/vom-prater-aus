@@ -368,8 +368,20 @@
       "title": "Zur Geschichte des Berliner Praters",
       "intro": {
         "description": {
-          "p1": "Hier findet ihr die wichtigsten historischen Stationen des Berliner Praters zusammengefasst. Die vorliegenden Kurztexte basieren auf der Publikation \"Berliner Prater – Ein Berliner Vergnügungsgarten von den 1830er Jahren bis heute\" der Historikerin Johanna Niedbalski – der bislang ausführlichsten Darstellung der Geschichte des Berliner Praters.",
-          "p2": "Wenn ihr mehr über die Geschichte erfahren möchtet, empfehlen wir euch neben unseren Publikationen auch den Audiowalk \"SPEKTAKEL zwischen KAFFEEKÜCHE und KLASSENKAMPF\" der Künstlerin Caroline Böttcher, mit dem ihr euch auf eine akustische Zeitreise durch den Berliner Prater begeben könnt."
+          "p1": {
+            "text": "Hier findet ihr die wichtigsten historischen Stationen des Berliner Praters zusammengefasst. Die vorliegenden Kurztexte basieren auf der Publikation {0} der Historikerin Johanna Niedbalski – der bislang ausführlichsten Darstellung der Geschichte des Berliner Praters.",
+            "link": {
+              "text": "\"Berliner Prater – Ein Berliner Vergnügungsgarten von den 1830er Jahren bis heute\"",
+              "url": "https://pratergalerie.de/de/publications/berliner-prater/"
+            }
+          },
+          "p2": {
+            "text": "Wenn ihr mehr über die Geschichte erfahren möchtet, empfehlen wir euch neben unseren Publikationen auch den Audiowalk {0} der Künstlerin Caroline Böttcher, mit dem ihr euch auf eine akustische Zeitreise durch den Berliner Prater begeben könnt.",
+            "link": {
+              "text": "\"SPEKTAKEL zwischen KAFFEEKÜCHE und KLASSENKAMPF\"",
+              "url": "https://pratergalerie.de/de/prater-galerie/event/spektakel-zwischen-kaffeekueche-und-klassenkampf/"
+            }
+          }
         }
       },
       "history": {
