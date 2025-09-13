@@ -81,9 +81,6 @@
     transition: all 0.3s ease;
 
     @media screen and (prefers-reduced-motion: reduce) {
-      position: relative;
-      cursor: pointer;
-      user-select: none;
       transition: none;
     }
 
@@ -105,10 +102,6 @@
     transition: all 0.3s ease;
 
     @media screen and (prefers-reduced-motion: reduce) {
-      position: relative;
-      width: 70px;
-      height: 35px;
-      background: transparent;
       transition: none;
     }
   }
@@ -130,15 +123,6 @@
     transition: all 0.3s ease;
 
     @media screen and (prefers-reduced-motion: reduce) {
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-      height: 32px;
-      background: transparent;
       transition: none;
     }
 
@@ -187,26 +171,7 @@
       }
 
       @media screen and (prefers-reduced-motion: reduce) {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 12px;
-        height: 12px;
-        color: var(--color-grey);
-        opacity: 0;
         transition: none;
-
-        &.toggle-icon-left {
-          grid-column: 1;
-        }
-
-        &.toggle-icon-right {
-          grid-column: 2;
-        }
-
-        &.toggle-icon-visible {
-          opacity: 0.5;
-        }
       }
     }
   }

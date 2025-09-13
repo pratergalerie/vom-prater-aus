@@ -379,34 +379,10 @@
       </TresCanvas>
     </div>
 
-    <div class="actions-container">
-      <div class="actions-controls">
-        <BaseButton
-          icon="mdi:search"
-          type="primary"
-          variant="icon"
-          @click="showSearchDialog = true"
-        />
-        <div class="view-mode-switcher-container">
-          <StoriesViewSwitcher
-            v-model:mode="viewMode"
-            list-icon="mdi:view-list"
-            explorer-icon="mdi:view-grid"
-            :list-label="$t('components.storiesViewSwitcher.list')"
-            :explorer-label="$t('components.storiesViewSwitcher.explorer')"
-          />
-          <div class="current-mode-label">
-            <span>
-              {{
-                viewMode === 'explorer'
-                  ? $t('pages.stories.index.viewMode.explorer')
-                  : $t('pages.stories.index.viewMode.list')
-              }}
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
+    <StoriesActions
+      v-model:view-mode="viewMode"
+      v-model:show-search-dialog="showSearchDialog"
+    />
 
     <!-- Search Dialog -->
     <StoriesSearchDialog
@@ -436,49 +412,6 @@
     font-size: 2.5rem;
   }
 
-  .actions-container {
-    position: sticky;
-    bottom: 0;
-    left: 0;
-    z-index: 100;
-    width: 100%;
-  }
-
-  .gradient-halftone {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    z-index: -1;
-    width: 100%;
-    height: 100%;
-  }
-
-  .actions-controls {
-    box-sizing: border-box;
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    justify-content: flex-start;
-    padding: var(--space-s) 0;
-  }
-
-  .view-mode-switcher-container {
-    display: flex;
-    gap: 1rem;
-  }
-
-  .current-mode-label {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 40px;
-    font-family: var(--font-button);
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--color-black);
-    text-transform: uppercase;
-  }
 
   .loading,
   .error,
@@ -524,19 +457,6 @@
       font-size: 2rem;
     }
 
-    .actions-container {
-      justify-content: center;
-      width: 100%;
-    }
-
-    .view-mode-switcher-container {
-      gap: 0.5rem;
-      align-items: center;
-    }
-
-    .current-mode-label {
-      font-size: 12px;
-    }
 
     .stories-grid {
       grid-template-columns: 1fr;
