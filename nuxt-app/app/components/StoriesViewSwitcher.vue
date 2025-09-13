@@ -80,11 +80,6 @@
     background-size: 100% 100%;
     transition: all 0.3s ease;
 
-    &:focus,
-    &:hover {
-      scale: 1.05;
-    }
-
     @media screen and (prefers-reduced-motion: reduce) {
       position: relative;
       cursor: pointer;

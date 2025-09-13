@@ -327,38 +327,6 @@
   >
     <div class="page-header">
       <h1 class="page-title">{{ $t('pages.stories.index.title') }}</h1>
-      <div class="actions-container">
-        <div class="actions-controls">
-          <BaseButton
-            icon="mdi:search"
-            type="primary"
-            variant="icon"
-            @click="showSearchDialog = true"
-          />
-          <div class="view-mode-switcher-container">
-            <StoriesViewSwitcher
-              v-model:mode="viewMode"
-              list-icon="mdi:view-list"
-              explorer-icon="mdi:view-grid"
-              :list-label="$t('components.storiesViewSwitcher.list')"
-              :explorer-label="$t('components.storiesViewSwitcher.explorer')"
-            />
-            <div class="current-mode-label">
-              <span>
-                {{
-                  viewMode === 'explorer'
-                    ? $t('pages.stories.index.viewMode.explorer')
-                    : $t('pages.stories.index.viewMode.list')
-                }}
-              </span>
-            </div>
-          </div>
-        </div>
-        <GradientHalftone
-          direction="bottom"
-          class="gradient-halftone"
-        />
-      </div>
     </div>
 
     <!-- Loading state -->
@@ -411,6 +379,35 @@
       </TresCanvas>
     </div>
 
+    <div class="actions-container">
+      <div class="actions-controls">
+        <BaseButton
+          icon="mdi:search"
+          type="primary"
+          variant="icon"
+          @click="showSearchDialog = true"
+        />
+        <div class="view-mode-switcher-container">
+          <StoriesViewSwitcher
+            v-model:mode="viewMode"
+            list-icon="mdi:view-list"
+            explorer-icon="mdi:view-grid"
+            :list-label="$t('components.storiesViewSwitcher.list')"
+            :explorer-label="$t('components.storiesViewSwitcher.explorer')"
+          />
+          <div class="current-mode-label">
+            <span>
+              {{
+                viewMode === 'explorer'
+                  ? $t('pages.stories.index.viewMode.explorer')
+                  : $t('pages.stories.index.viewMode.list')
+              }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Search Dialog -->
     <StoriesSearchDialog
       v-model:is-open="showSearchDialog"
@@ -423,7 +420,6 @@
 <style scoped>
   .page-container {
     position: relative;
-    min-height: 100vh;
     container-type: inline-size;
     container-name: main-container;
   }
@@ -433,7 +429,6 @@
     gap: 2rem;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 2rem;
   }
 
   .page-title {
@@ -442,13 +437,11 @@
   }
 
   .actions-container {
-    position: fixed;
-    right: 50%;
+    position: sticky;
     bottom: 0;
+    left: 0;
     z-index: 100;
     width: 100%;
-    height: 80px;
-    transform: translateX(50%);
   }
 
   .gradient-halftone {
@@ -466,19 +459,7 @@
     gap: 1rem;
     align-items: center;
     justify-content: flex-start;
-    width: 100%;
-    max-width: var(--max-width);
-    height: 100%;
-    padding: 0 var(--padding-desktop);
-    margin: 0 auto;
-
-    @media (max-width: 768px) {
-      padding: 0 var(--padding-mobile);
-    }
-
-    @media (max-width: 1024px) {
-      padding: 0 var(--padding-tablet);
-    }
+    padding: var(--space-s) 0;
   }
 
   .view-mode-switcher-container {
@@ -515,7 +496,6 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 4rem 2rem;
-    margin-bottom: 10rem;
 
     &.masonry {
       /* Make left column items have a Y offset */
