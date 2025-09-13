@@ -51,6 +51,8 @@
     bottom: 0;
     left: 0;
     z-index: 100;
+    display: flex;
+    justify-content: right;
     padding: var(--space-s) 0;
   }
 
