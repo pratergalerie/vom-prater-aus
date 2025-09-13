@@ -1,22 +1,10 @@
 <script setup lang="ts">
   const { footerRoutes } = useMenu()
-
-  const footerRef = ref<HTMLElement | null>(null)
-
-  const footerHeight = computed(() => {
-    if (!footerRef.value) return 'auto'
-    const heightPx = `${useElementSize(footerRef).height.value + 100}px`
-    return heightPx
-  })
-
-  watch(footerHeight, (newHeight) => {
-    document.documentElement.style.cssText = `--footer-height: ${newHeight}`
-  })
 </script>
 
 <template>
   <div class="footer-wrapper">
-    <footer ref="footerRef">
+    <footer>
       <div class="title-and-nav">
         <h2>{{ $t('components.footer.title') }}</h2>
         <nav>

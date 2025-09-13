@@ -22,7 +22,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    height: calc(100vh - var(--header-height) - var(--footer-height));
+    height: calc(100vh - var(--header-height));
     padding-top: 50px;
     container-name: page-container;
     container-type: inline-size;
