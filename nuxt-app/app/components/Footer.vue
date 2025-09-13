@@ -19,6 +19,15 @@
         </nav>
       </div>
       <div class="logos-and-text">
+        <i18n-t
+          keypath="components.footer.contact.text"
+          tag="p"
+          class="contact-email"
+        >
+          <a :href="`mailto:${$t('components.footer.contact.email')}`">{{
+            $t('components.footer.contact.email')
+          }}</a>
+        </i18n-t>
         <p>
           {{ $t('components.footer.text') }}
         </p>
@@ -114,6 +123,19 @@
     /* stylelint-disable-next-line */
     font-size: var(--step--1);
     color: var(--color-beige);
+  }
+
+  .contact-email {
+    a {
+      font-family: var(--font-text);
+      color: var(--color-beige);
+      text-decoration: none;
+
+      &:hover,
+      &:focus {
+        text-decoration: underline;
+      }
+    }
   }
 
   .logos {
