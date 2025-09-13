@@ -1,16 +1,16 @@
 <script lang="ts" setup>
-interface Props {
-  viewMode: 'list' | 'explorer'
-  showSearchDialog: boolean
-}
+  interface Props {
+    viewMode: 'list' | 'explorer'
+    showSearchDialog: boolean
+  }
 
-interface Emits {
-  (e: 'update:viewMode', value: 'list' | 'explorer'): void
-  (e: 'update:showSearchDialog', value: boolean): void
-}
+  interface Emits {
+    (e: 'update:viewMode', value: 'list' | 'explorer'): void
+    (e: 'update:showSearchDialog', value: boolean): void
+  }
 
-defineProps<Props>()
-defineEmits<Emits>()
+  defineProps<Props>()
+  defineEmits<Emits>()
 </script>
 
 <template>
@@ -46,54 +46,74 @@ defineEmits<Emits>()
 </template>
 
 <style scoped>
-.actions-container {
-  position: sticky;
-  bottom: 0;
-  left: 0;
-  z-index: 100;
-  width: 100%;
-}
-
-.actions-controls {
-  box-sizing: border-box;
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  justify-content: flex-start;
-  padding: var(--space-s) 0;
-}
-
-.view-mode-switcher-container {
-  display: flex;
-  gap: 1rem;
-}
-
-.current-mode-label {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 40px;
-  font-family: var(--font-button);
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--color-black);
-  text-transform: uppercase;
-}
-
-@media (max-width: 768px) {
   .actions-container {
-    justify-content: center;
-    width: 100%;
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    padding: var(--space-s) 0;
+  }
+
+  .actions-controls {
+    box-sizing: border-box;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: flex-start;
+    width: max-content;
+    padding: var(--space-xs);
+    background: var(--color-white);
+    clip-path: polygon(
+      0% 10%,
+      12.22% 5.3%,
+      21.5% 10.87%,
+      53.76% 8.25%,
+      98.35% 0%,
+      98.64% 76.25%,
+      97.26% 89.26%,
+      88.2% 82.2%,
+      83.73% 91.73%,
+      70.85% 94.85%,
+      61.69% 78.69%,
+      53.76% 93.76%,
+      26.98% 92.98%,
+      1.26% 89.26%,
+      0% 73.2%,
+      0% 100%
+    );
   }
 
   .view-mode-switcher-container {
-    gap: 0.5rem;
-    align-items: center;
+    display: flex;
+    gap: 1rem;
   }
 
   .current-mode-label {
-    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 40px;
+    font-family: var(--font-button);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-black);
+    text-transform: uppercase;
   }
-}
+
+  @media (max-width: 768px) {
+    .actions-container {
+      justify-content: center;
+      width: 100%;
+    }
+
+    .view-mode-switcher-container {
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .current-mode-label {
+      font-size: 12px;
+    }
+  }
 </style>

@@ -321,10 +321,7 @@
 </script>
 
 <template>
-  <div
-    ref="containerRef"
-    class="page-container"
-  >
+  <div ref="containerRef">
     <div class="page-header">
       <h1 class="page-title">{{ $t('pages.stories.index.title') }}</h1>
     </div>
@@ -394,12 +391,6 @@
 </template>
 
 <style scoped>
-  .page-container {
-    position: relative;
-    container-type: inline-size;
-    container-name: main-container;
-  }
-
   .page-header {
     display: flex;
     gap: 2rem;
@@ -411,7 +402,6 @@
     margin: 0;
     font-size: 2.5rem;
   }
-
 
   .loading,
   .error,
@@ -443,28 +433,5 @@
     width: 100%;
     height: calc(100vh - 200px);
     mix-blend-mode: multiply;
-  }
-
-  @media (max-width: 768px) {
-    .page-header {
-      flex-direction: column;
-      gap: 1rem;
-      align-items: flex-start;
-      margin-bottom: 1.5rem;
-    }
-
-    .page-title {
-      font-size: 2rem;
-    }
-
-
-    .stories-grid {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-
-    .explorer-container {
-      height: calc(100vh - 250px);
-    }
   }
 </style>
