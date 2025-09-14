@@ -288,12 +288,10 @@
 
     a {
       font-family: var(--font-text);
-      text-decoration: none;
 
       &:hover,
       &:focus {
         color: var(--color-brown);
-        text-decoration: underline;
       }
     }
   }

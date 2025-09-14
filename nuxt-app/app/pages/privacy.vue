@@ -119,6 +119,11 @@
 
   a {
     font-family: var(--font-text);
+
+    &:hover,
+    &:focus {
+      color: var(--color-brown);
+    }
   }
 
   section {

@@ -114,7 +114,6 @@
     a {
       /* stylelint-disable-next-line */
       font-size: var(--step--1);
-      text-decoration: none;
     }
   }
 
@@ -128,13 +127,6 @@
   .contact-email {
     a {
       font-family: var(--font-text);
-      color: var(--color-beige);
-      text-decoration: none;
-
-      &:hover,
-      &:focus {
-        text-decoration: underline;
-      }
     }
   }
 

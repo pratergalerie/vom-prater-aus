@@ -45,8 +45,7 @@ a {
   font-family: var(--font-link);
   font-weight: 400;
   color: var(--color-link);
-  text-underline-offset: 0.25rem;
-  text-decoration: underline;
+  text-decoration: none;
 
   &:hover,
   &:focus {
