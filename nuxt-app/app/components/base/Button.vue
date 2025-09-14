@@ -218,7 +218,7 @@
   }
 
   button {
-    z-index: 1000;
+    z-index: 900;
     display: grid;
     width: 100%;
     max-width: 400px;
