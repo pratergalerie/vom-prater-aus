@@ -31,12 +31,10 @@
     display: flex;
     gap: 1rem;
     align-items: center;
-    justify-content: flex-end;
-    width: 100%;
     color: var(--color-beige);
 
     a {
-      font-size: var(--step-0);
+      font-size: inherit;
       text-transform: uppercase;
       text-decoration: none;
       cursor: pointer;

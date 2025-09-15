@@ -16,6 +16,13 @@
               <NuxtLink :to="route.path">{{ route.title }}</NuxtLink>
             </li>
           </ul>
+          <Divider
+            type="horizontal"
+            color="var(--color-beige)"
+            width="40%"
+            margin="var(--space-xs) 0"
+          />
+          <LanguageSwitcher />
         </nav>
       </div>
       <div class="logos-and-text">
@@ -101,19 +108,20 @@
   }
 
   nav {
+    /* stylelint-disable-next-line */
+    font-size: var(--step--1);
+
     ul {
       display: flex;
       flex-direction: column;
       gap: var(--space-2xs);
       padding: 0;
       margin: 0;
-      font-size: var(--step-0);
       list-style-type: none;
     }
 
     a {
-      /* stylelint-disable-next-line */
-      font-size: var(--step--1);
+      font-size: inherit;
     }
   }
 

@@ -240,7 +240,7 @@
               color="var(--color-beige)"
               width="40%"
               class="divider"
-              margin="20px 0"
+              margin="var(--space-xs) 0"
               :style="{
                 '--animation-delay': dividerDelay,
               }"
