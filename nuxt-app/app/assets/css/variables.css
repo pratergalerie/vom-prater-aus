@@ -110,7 +110,7 @@
   /* *------------------------------ Layout --------------------------------* */
 
   --header-height: 90px;
-  --max-width: 1000px;
+  --max-width: 1300px;
 
   @media (min-width: 768px) {
     --header-height: 120px;
