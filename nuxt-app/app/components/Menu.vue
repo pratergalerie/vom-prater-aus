@@ -265,7 +265,7 @@
   .menu-container {
     position: fixed;
     top: 0;
-    z-index: 1000;
+    z-index: 900;
     display: grid;
     grid-template-rows: 40% 10% 1fr;
     width: 100%;

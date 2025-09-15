@@ -13,7 +13,7 @@
   .header-wrapper {
     position: sticky;
     top: 0;
-    z-index: 200;
+    z-index: 1000;
     display: flex;
     justify-content: center;
     width: 100%;
