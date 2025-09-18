@@ -3,7 +3,7 @@
     "cookieConsentBanner": {},
     "footer": {
       "text": "“Vom Prater aus“ was conceptualized and implemented by the Prater Galerie. The municipal Prater Galerie is an organisation of the Berlin-Pankow District Council.",
-      "title": "Vom Prater Aus",
+      "title": "Vom Prater aus",
       "contact": {
         "text": "Contact: {0}",
         "email": "vomprateraus{'@'}pratergalerie.de"
@@ -79,7 +79,7 @@
   "pages": {
     "about": {
       "title": "About the Project",
-      "description": "\"Vom Prater Aus\" is an archival project by Prater Galerie and Prater Digital that makes the lived history of the Berlin Prater before its temporary closure in 2017, accessible to all. The aim is to create a diverse, multi-perspective portrait of this unique historical icon. Contemporary witnesses are warmly invited to upload both written pieces and images to contribute to a growing and vibrant repository of knowledge. \"Vom Prater Aus\" is continuously expanding and curated by our team.",
+      "description": "\"Vom Prater aus\" is an archival project by Prater Galerie and Prater Digital that makes the lived history of the Berlin Prater before its temporary closure in 2017, accessible to all. The aim is to create a diverse, multi-perspective portrait of this unique historical icon. Contemporary witnesses are warmly invited to upload both written pieces and images to contribute to a growing and vibrant repository of knowledge. \"Vom Prater Aus\" is continuously expanding and curated by our team.",
       "acknowledgment": "Special thanks go to the developer Mateus Knelsen, who made a significant contribution to the realisation of the project.",
       "credits": {
         "idea": "Idea:",
