@@ -3,7 +3,7 @@
     "cookieConsentBanner": {},
     "footer": {
       "text": "„Vom Prater aus“ wurde vom Team der Prater Galerie konzipiert und umgesetzt. Die kommunale Prater Galerie ist eine Einrichtung des Bezirksamtes Berlin-Pankow.",
-      "title": "Vom Prater Aus",
+      "title": "Vom Prater aus",
       "contact": {
         "text": "Kontakt: {0}",
         "email": "vomprateraus{'@'}pratergalerie.de"
@@ -79,7 +79,7 @@
   "pages": {
     "about": {
       "title": "Über das Projekt",
-      "description": "\"Vom Prater Aus\" ist ein Archivprojekt der Prater Galerie und Prater Digital, das individuelle Erinnerungen an den Berliner Prater vor seiner vorläufigen Schließung im Jahr 2017 zugänglich macht. Sein Ziel ist es, ein vielfältiges, multiperspektivisches Bild dieses einzigartigen historischen Ortes zu zeichnen. Zeitzeug:innen sind herzlich eingeladen, sowohl Bilder als auch Texte hochzuladen und so zu einem wachsenden und lebendigen Wissensspeicher beizutragen. \"Vom Prater Aus\" wird kontinuierlich erweitert und von unserem Team betreut.",
+      "description": "\"Vom Prater aus\" ist ein Archivprojekt der Prater Galerie und Prater Digital, das individuelle Erinnerungen an den Berliner Prater vor seiner vorläufigen Schließung im Jahr 2017 zugänglich macht. Sein Ziel ist es, ein vielfältiges, multiperspektivisches Bild dieses einzigartigen historischen Ortes zu zeichnen. Zeitzeug:innen sind herzlich eingeladen, sowohl Bilder als auch Texte hochzuladen und so zu einem wachsenden und lebendigen Wissensspeicher beizutragen. \"Vom Prater Aus\" wird kontinuierlich erweitert und von unserem Team betreut.",
       "acknowledgment": "Ein besonderer Dank gilt dem Entwickler Mateus Knelsen, der einen entscheidenden Beitrag zur Realisierung des Projektes geleistet hat.",
       "credits": {
         "idea": "Idee:",
@@ -97,10 +97,10 @@
             "inputs": {
               "authorName": {
                 "label": "Name",
-                "placeholder": "Dein Autorenname"
+                "placeholder": "Dein Autor:innenname"
               },
               "email": {
-                "label": "Email",
+                "label": "E-Mail",
                 "placeholder": "Deine E-Mail-Adresse"
               }
             },
@@ -110,7 +110,7 @@
               "termsOfUse": "Nutzungsbedingungen",
               "privacyPolicy": "Datenschutzerklärung",
               "moderationCheckbox": "Ich stimme den {moderationConditions} zu.",
-              "moderationConditions": "Moderationbedingungen",
+              "moderationConditions": "Moderationsbedingungen",
               "modal": {
                 "p1": "Dein/Der Name erscheint zusammen mit deinem Beitrag, die E-Mail-Adresse wird nicht veröffentlicht.",
                 "p2": "Die E-Mail-Adresse wird benötigt, um dir ein Passwort zu schicken, sodass nur du deine Erinnerung jederzeit öffnen und bearbeiten kannst. Informationen zur Moderation und Veröffentlichung deines Beitrags stellen wir auch per E-Mail zur Verfügung."
@@ -206,7 +206,7 @@
           "details": {
             "title": "Geschichte-Details",
             "storyTitle": "Titel der Geschichte",
-            "authorName": "Name des Autors",
+            "authorName": "Name der Autorin/des Autors",
             "storyYear": "Jahr der Geschichte",
             "confirm": "Speichern",
             "cancel": "Abbrechen"
@@ -228,7 +228,7 @@
         "submit": "Entsperren und bearbeiten",
         "text": {
           "p1": "Du möchtest die folgende Geschichte bearbeiten:",
-          "p2": "Diese Geschichte kann nur von ihrem Autor bearbeitet werden. Um die Bearbeitung zu entsperren, bitte das Passwort eingeben, das an die E-Mail-Adresse des Autors gesendet wurde.",
+          "p2": "Diese Geschichte kann nur von ihrer Autorin/ihrem Autor bearbeitet werden. Um die Bearbeitung zu entsperren, gib bitte das Passwort ein, das an die E-Mail-Adresse der Autorin/des Autors gesendet wurde.",
           "p3": "Wenn du das Passwort verloren hast, bitte {contactUs}.",
           "p4": "Um das Passwort erneut zu erhalten, musst du es über die gleiche E-Mail-Adresse anfordern, die beim Erstellen der Geschichte verwendet wurde."
         },
