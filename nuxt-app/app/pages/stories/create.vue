@@ -279,11 +279,6 @@
     }
   }
 
-  function openInfoModal() {
-    // TODO: implement modal logic
-    // Use paragraphs 'pages.create.info.modal.p1' & 'pages.create.info.modal.p2'
-  }
-
   const getInputType = (type: InputType): 'text' | 'email' | 'password' => {
     return type as 'text' | 'email' | 'password'
   }
@@ -326,18 +321,6 @@
       <template v-if="currentStep">
         <p>{{ currentStep.text }}</p>
         <template v-if="currentStep.info">
-          <button
-            class="info-button"
-            @click="openInfoModal"
-          >
-            <Icon
-              name="mdi:information-outline"
-              size="20px"
-              mode="css"
-              class="info-icon"
-            />
-            <span>{{ currentStep.info.link }}</span>
-          </button>
           <div class="terms-privacy-check">
             <BaseCheckbox
               id="checkbox"

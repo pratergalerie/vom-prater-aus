@@ -105,7 +105,6 @@
               }
             },
             "info": {
-              "link": "Warum brauchen wir diese Informationen?",
               "checkbox": "Ich stimme den {termsOfUse} und der {privacyPolicy} zu.",
               "termsOfUse": "Nutzungsbedingungen",
               "privacyPolicy": "Datenschutzerklärung",
