@@ -29,7 +29,7 @@
       />
       <img
         v-if="modelValue"
-        src="/svgs/inputs/check.png"
+        src="/svgs/inputs/check.svg"
         alt="checked"
         class="foreground"
       />
@@ -83,7 +83,7 @@
       height: 20px;
 
       /* stylelint-disable-next-line no-descending-specificity */
-      img {
+      svg {
         width: 100%;
         height: 100%;
       }
@@ -99,7 +99,7 @@
 
       .foreground {
         z-index: -1;
-        transform: translate(5px, -5px);
+        transform: translate(6px, -2px);
       }
     }
 
