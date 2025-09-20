@@ -80,6 +80,9 @@
       steps: [
         {
           text: t('pages.create.form.steps.authorInfo.text'),
+          showNext: true,
+          showBack: false,
+          showCreate: false,
           info: {
             link: t('pages.create.form.steps.authorInfo.info.link'),
             checkbox: t('pages.create.form.steps.authorInfo.info.checkbox'),
@@ -109,6 +112,9 @@
         },
         {
           text: t('pages.create.form.steps.storyInfo.text'),
+          showNext: false,
+          showBack: true,
+          showCreate: true,
           inputs: [
             {
               key: 'title',
@@ -138,29 +144,6 @@
               ),
             } as StoryFormInput,
           ],
-        },
-      ],
-      buttons: [
-        {
-          label: t('pages.create.form.buttons.next'),
-          icon: 'mdi:arrow-right',
-          callback: nextStep,
-          checkStepToRender: () => step.value < form.value.steps.length - 1,
-          disabled: isFormDisabled.value,
-        },
-        {
-          label: t('pages.create.form.buttons.back'),
-          icon: 'mdi:arrow-left',
-          callback: previousStep,
-          checkStepToRender: () => step.value > 0,
-          disabled: false,
-        },
-        {
-          label: t('pages.create.form.buttons.create'),
-          icon: 'mdi:creation',
-          callback: createStory,
-          checkStepToRender: () => step.value === form.value.steps.length - 1,
-          disabled: isFormDisabled.value,
         },
       ],
     }
@@ -318,76 +301,83 @@
       <template v-if="currentStep">
         <p>{{ currentStep.text }}</p>
         <template v-if="currentStep.info">
-          <div class="terms-privacy-check">
-            <BaseCheckbox
-              id="checkbox"
-              v-model="termsAccepted"
-            />
-            <i18n-t
-              scope="global"
-              keypath="pages.create.form.steps.authorInfo.info.checkbox"
-              tag="span"
-            >
-              <template #termsOfUse>
-                <NuxtLink
-                  class="dark"
-                  to="/terms"
-                  >{{
-                    $t('pages.create.form.steps.authorInfo.info.termsOfUse')
-                  }}</NuxtLink
-                >
-              </template>
-              <template #privacyPolicy>
-                <NuxtLink
-                  class="dark"
-                  to="/privacy"
-                  >{{
-                    $t('pages.create.form.steps.authorInfo.info.privacyPolicy')
-                  }}</NuxtLink
-                >
-              </template>
-            </i18n-t>
-          </div>
-          <div class="moderation-check">
-            <BaseCheckbox
-              id="checkbox"
-              v-model="moderationAccepted"
-            />
-            <i18n-t
-              scope="global"
-              keypath="pages.create.form.steps.authorInfo.info.moderationCheckbox"
-              tag="span"
-            >
-              <template #moderation>
-                <NuxtLink
-                  t
-                  class="dark"
-                  o="/terms"
-                  >{{
-                    $t(
-                      'pages.create.form.steps.authorInfo.info.moderationConditions'
-                    )
-                  }}</NuxtLink
-                >
-              </template>
-              <template #moderationConditions>
-                <NuxtLink
-                  class="dark"
-                  to="/privacy"
-                  >{{
-                    $t(
-                      'pages.create.form.steps.authorInfo.info.moderationConditions'
-                    )
-                  }}</NuxtLink
-                >
-              </template>
-            </i18n-t>
+          <div class="checks">
+            <div class="terms-privacy-check">
+              <BaseCheckbox
+                id="checkbox"
+                v-model="termsAccepted"
+              />
+              <i18n-t
+                scope="global"
+                keypath="pages.create.form.steps.authorInfo.info.checkbox"
+                tag="span"
+              >
+                <template #termsOfUse>
+                  <NuxtLink
+                    class="dark"
+                    to="/terms"
+                    >{{
+                      $t('pages.create.form.steps.authorInfo.info.termsOfUse')
+                    }}</NuxtLink
+                  >
+                </template>
+                <template #privacyPolicy>
+                  <NuxtLink
+                    class="dark"
+                    to="/privacy"
+                    >{{
+                      $t(
+                        'pages.create.form.steps.authorInfo.info.privacyPolicy'
+                      )
+                    }}</NuxtLink
+                  >
+                </template>
+              </i18n-t>
+            </div>
+            <div class="moderation-check">
+              <BaseCheckbox
+                id="checkbox"
+                v-model="moderationAccepted"
+              />
+              <i18n-t
+                scope="global"
+                keypath="pages.create.form.steps.authorInfo.info.moderationCheckbox"
+                tag="span"
+              >
+                <template #moderation>
+                  <NuxtLink
+                    t
+                    class="dark"
+                    o="/terms"
+                    >{{
+                      $t(
+                        'pages.create.form.steps.authorInfo.info.moderationConditions'
+                      )
+                    }}</NuxtLink
+                  >
+                </template>
+                <template #moderationConditions>
+                  <NuxtLink
+                    class="dark"
+                    to="/privacy"
+                    >{{
+                      $t(
+                        'pages.create.form.steps.authorInfo.info.moderationConditions'
+                      )
+                    }}</NuxtLink
+                  >
+                </template>
+              </i18n-t>
+            </div>
           </div>
         </template>
       </template>
-      <div class="input-wrapper">
+      <div
+        v-if="currentStep?.inputs"
+        class="inputs"
+      >
         <template
-          v-for="(input, index) in currentStep?.inputs"
+          v-for="(input, index) in currentStep.inputs"
           :key="index"
         >
           <BaseInput
@@ -406,9 +396,14 @@
             @update:error="(error) => handleValidationError(input.key, error)"
           />
         </template>
-        <div class="select-wrapper">
+        <div
+          v-if="
+            currentStep.inputs.some((input) => input.type === inputTypes.SELECT)
+          "
+          class="selects"
+        >
           <template
-            v-for="(input, index) in currentStep?.inputs"
+            v-for="(input, index) in currentStep.inputs"
             :key="index"
           >
             <BaseSelect
@@ -425,28 +420,35 @@
           </template>
         </div>
       </div>
-      <div class="step-buttons-wrapper">
-        <div
-          v-for="(button, index) in form.buttons"
-          :key="index"
-          class="button-wrapper"
-          :class="{
-            next: index < form.buttons.length - 1,
-            back: index === 1,
-            create: index === form.buttons.length - 1,
-          }"
-        >
-          <BaseButton
-            v-if="button.checkStepToRender()"
-            type="secondary"
-            variant="label-icon"
-            :icon="button.icon"
-            :label="button.label"
-            class="step-button"
-            :disabled="button.disabled || isCreating"
-            @click.prevent="button.callback"
-          />
-        </div>
+      <div class="buttons">
+        <BaseButton
+          v-if="currentStep?.showBack"
+          type="secondary"
+          variant="label-icon"
+          icon="mdi:arrow-left"
+          :label="t('pages.create.form.buttons.back')"
+          :disabled="false || isCreating"
+          @click.prevent="previousStep"
+        />
+        <BaseButton
+          v-if="currentStep?.showNext"
+          type="secondary"
+          variant="label-icon"
+          icon="mdi:arrow-right"
+          style="margin-left: auto"
+          :label="t('pages.create.form.buttons.next')"
+          :disabled="isFormDisabled || isCreating"
+          @click.prevent="nextStep"
+        />
+        <BaseButton
+          v-if="currentStep?.showCreate"
+          type="secondary"
+          variant="label-icon"
+          icon="mdi:creation"
+          :label="t('pages.create.form.buttons.create')"
+          :disabled="isFormDisabled || isCreating"
+          @click.prevent="createStory"
+        />
       </div>
     </form>
     <div
@@ -468,46 +470,23 @@
   form {
     display: flex;
     flex-direction: column;
-    gap: var(--space-s);
-    width: 80ch;
+    gap: var(--space-m);
+    max-width: 80ch;
   }
 
   a {
     font-family: var(--font-text);
   }
 
-  .step-buttons-wrapper {
-    display: grid;
-    grid-template-areas: 'left right';
-    grid-template-columns: 1fr 1fr;
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
     gap: var(--space-s);
-    align-items: center;
     justify-content: space-between;
     width: 100%;
-  }
 
-  .button-wrapper {
-    width: 100%;
-
-    &.next {
-      grid-area: right;
-    }
-
-    &.back {
-      grid-area: left;
-    }
-
-    &.create {
-      grid-area: right;
-    }
-  }
-
-  .step-button {
-    width: 100%;
-    height: 40px;
-
-    &:deep(.button-label-icon) {
-      font-size: 1rem;
+    & button {
+      flex: 1 1 250px;
     }
   }
 
@@ -526,20 +505,24 @@
     }
   }
 
-  .input-wrapper {
+  .checks {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+  }
+
+  .inputs {
     display: flex;
     flex-direction: column;
     gap: var(--space-s);
   }
 
-  .select-wrapper {
+  .selects {
     display: flex;
     gap: 1rem;
-    width: 100%;
   }
 
   .select-input {
-    width: 100%;
     max-width: 200px;
   }
 
