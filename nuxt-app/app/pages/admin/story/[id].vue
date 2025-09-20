@@ -3,11 +3,11 @@
   import { transformStoryData } from '~/utils/story'
 
   useHead({
-    title: 'Vom Prater Aus - Story Moderation',
+    title: 'Vom Prater aus - Story Moderation',
     meta: [
       {
         name: 'description',
-        content: 'Vom Prater Aus - Story Moderation',
+        content: 'Vom Prater aus - Story Moderation',
       },
     ],
   })

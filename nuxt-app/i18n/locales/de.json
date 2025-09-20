@@ -79,7 +79,7 @@
   "pages": {
     "about": {
       "title": "Über das Projekt",
-      "description": "\"Vom Prater aus\" ist ein Archivprojekt der Prater Galerie und Prater Digital, das individuelle Erinnerungen an den Berliner Prater vor seiner vorläufigen Schließung im Jahr 2017 zugänglich macht. Sein Ziel ist es, ein vielfältiges, multiperspektivisches Bild dieses einzigartigen historischen Ortes zu zeichnen. Zeitzeug:innen sind herzlich eingeladen, sowohl Bilder als auch Texte hochzuladen und so zu einem wachsenden und lebendigen Wissensspeicher beizutragen. \"Vom Prater Aus\" wird kontinuierlich erweitert und von unserem Team betreut.",
+      "description": "\"Vom Prater aus\" ist ein Archivprojekt der Prater Galerie und Prater Digital, das individuelle Erinnerungen an den Berliner Prater vor seiner vorläufigen Schließung im Jahr 2017 zugänglich macht. Sein Ziel ist es, ein vielfältiges, multiperspektivisches Bild dieses einzigartigen historischen Ortes zu zeichnen. Zeitzeug:innen sind herzlich eingeladen, sowohl Bilder als auch Texte hochzuladen und so zu einem wachsenden und lebendigen Wissensspeicher beizutragen. \"Vom Prater aus\" wird kontinuierlich erweitert und von unserem Team betreut.",
       "acknowledgment": "Ein besonderer Dank gilt dem Entwickler Mateus Knelsen, der einen entscheidenden Beitrag zur Realisierung des Projektes geleistet hat.",
       "credits": {
         "idea": "Idee:",
@@ -232,7 +232,7 @@
           "p3": "Wenn du das Passwort verloren hast, bitte {contactUs}.",
           "p4": "Um das Passwort erneut zu erhalten, musst du es über die gleiche E-Mail-Adresse anfordern, die beim Erstellen der Geschichte verwendet wurde."
         },
-        "contactUs": "das Vom Prater Aus-Team kontaktieren"
+        "contactUs": "das Vom Prater aus-Team kontaktieren"
       },
       "submitted": {
         "title": "Deine Erinnerung wurde eingereicht.",

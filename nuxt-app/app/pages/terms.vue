@@ -6,7 +6,7 @@
     meta: [
       {
         name: 'description',
-        content: 'Terms of use for the Vom Prater Aus digital archive',
+        content: 'Terms of use for the Vom Prater aus digital archive',
       },
     ],
   })

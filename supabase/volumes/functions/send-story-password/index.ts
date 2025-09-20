@@ -72,13 +72,13 @@ serve(async (req) => {
 <p>Falls du Fragen hast, kontaktiere uns unter <a href="mailto:vomprateraus@pratergalerie.de">vomprateraus@pratergalerie.de</a>.</p>
 
 <p>Viele Grüße,<br>
-Vom Prater Aus Team</p>
+Vom Prater aus Team</p>
 
 <p>______________________</p>
 
 <h3>Hello,</h3>
 
-<p>Thank you for submitting your story to Vom Prater Aus!</p>
+<p>Thank you for submitting your story to Vom Prater aus!</p>
 
 <p>You can edit your story at any time using the following link and password:</p>
 
@@ -92,7 +92,7 @@ Vom Prater Aus Team</p>
 <p>If you have any questions, please contact us at <a href="mailto:vomprateraus@pratergalerie.de">vomprateraus@pratergalerie.de</a>.</p>
 
 <p>Best regards,<br>
-Vom Prater Aus Team</p>
+Vom Prater aus Team</p>
 </body></html>
 `,
   };

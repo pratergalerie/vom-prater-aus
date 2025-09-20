@@ -1,4 +1,4 @@
-# Vom Prater Aus
+# Vom Prater aus
 
 A bilingual (English/German) storytelling platform dedicated to the [Berliner Prater](<https://de.wikipedia.org/wiki/Prater_(Berlin)>), one of Berlin's most iconic cultural and historical landmarks. This project allows users to create, share, and explore stories about the historic Berliner Prater through an interactive web application.
 

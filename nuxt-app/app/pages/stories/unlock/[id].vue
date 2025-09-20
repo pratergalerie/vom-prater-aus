@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   useHead({
-    title: 'Vom Prater Aus - Unlock story',
+    title: 'Vom Prater aus - Unlock story',
     meta: [
       {
         name: 'description',

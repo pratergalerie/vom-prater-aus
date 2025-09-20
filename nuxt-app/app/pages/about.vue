@@ -6,7 +6,7 @@
     meta: [
       {
         name: 'description',
-        content: 'About the Vom Prater Aus archive project',
+        content: 'About the Vom Prater aus archive project',
       },
     ],
   })

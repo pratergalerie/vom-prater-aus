@@ -9,7 +9,7 @@
 
   // SEO
   useHead({
-    title: 'Stories - Vom Prater Aus',
+    title: 'Stories - Vom Prater aus',
     meta: [
       {
         name: 'description',

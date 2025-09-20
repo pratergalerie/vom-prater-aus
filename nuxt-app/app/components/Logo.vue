@@ -7,7 +7,7 @@
   >
     <NuxtImg
       src="logos/vom-prater-aus.svg"
-      alt="Vom Prater Aus logo"
+      alt="Vom Prater aus logo"
       class="logo-image"
     />
   </NuxtLink>

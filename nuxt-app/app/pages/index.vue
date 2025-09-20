@@ -2,7 +2,7 @@
   const { t } = useI18n()
 
   useHead({
-    title: 'Vom Prater Aus',
+    title: 'Vom Prater aus',
 
     meta: [
       {

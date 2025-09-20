@@ -2,7 +2,7 @@
   import type { PageLayout } from '~/types/frontend'
 
   useHead({
-    title: 'Vom Prater Aus - Write your own story',
+    title: 'Vom Prater aus - Write your own story',
     meta: [
       {
         name: 'description',

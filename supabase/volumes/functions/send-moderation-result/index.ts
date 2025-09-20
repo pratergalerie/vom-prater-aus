@@ -68,10 +68,10 @@ serve(async (req) => {
 
 <p>Du kannst deine Geschichte hier lesen: <a href="${storyLink}">${storyLink}</a></p>
 
-<p>Vielen Dank für deinen Beitrag zu Vom Prater Aus.</p>
+<p>Vielen Dank für deinen Beitrag zu Vom Prater aus.</p>
 
 <p>Viele Grüße,<br>
-Vom Prater Aus Team</p>
+Vom Prater aus Team</p>
 
 <p>______________________</p>
 
@@ -81,10 +81,10 @@ Vom Prater Aus Team</p>
 
 <p>You can read your story here: <a href="${storyLink}">${storyLink}</a></p>
 
-<p>Thank you for contributing to Vom Prater Aus.</p>
+<p>Thank you for contributing to Vom Prater aus.</p>
 
 <p>Best regards,<br>
-Vom Prater Aus Team</p>
+Vom Prater aus Team</p>
 </body></html>`
       : `<html><body><h3>Hallo,</h3>
 
@@ -95,7 +95,7 @@ Vom Prater Aus Team</p>
 <p>Wir ermutigen dich, eine neue Geschichte einzureichen, die besser zu unserem Projekt passt.</p>
 
 <p>Viele Grüße,<br>
-Vom Prater Aus Team</p>
+Vom Prater aus Team</p>
 
 <p>______________________</p>
 
@@ -108,7 +108,7 @@ Vom Prater Aus Team</p>
 <p>We encourage you to submit a new story that better aligns with our project.</p>
 
 <p>Best regards,<br>
-Vom Prater Aus Team</p>
+Vom Prater aus Team</p>
 </body></html>`;
 
   try {
