@@ -173,18 +173,16 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 5px;
     width: 100%;
     height: 100%;
   }
 
   input {
-    box-sizing: border-box;
     width: 100%;
-    height: 100%;
-    padding: 10px;
+    padding: 0.5rem;
     font-family: var(--font-link);
-    font-size: 1rem;
+    /* stylelint-disable-next-line */
+    font-size: var(--step---1);
     outline: none;
     background: transparent;
     border: none;

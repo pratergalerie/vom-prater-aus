@@ -312,10 +312,7 @@
 </script>
 
 <template>
-  <div
-    ref="containerRef"
-    class="page-container"
-  >
+  <section>
     <h1>{{ $t('pages.create.form.title') }}</h1>
     <form>
       <template v-if="currentStep">
@@ -458,50 +455,35 @@
     >
       {{ error }}
     </div>
-  </div>
+  </section>
 </template>
 
 <style scoped>
-  .page-container {
-    box-sizing: border-box;
+  section {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    width: 100%;
-    height: calc(100dvh - var(--header-height) - 50px);
-    padding-top: 50px;
-    container-name: form-container;
-    container-type: inline-size;
-  }
-
-  h1 {
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-    line-height: 1.8rem;
+    gap: var(--space-m-l);
   }
 
   form {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--space-s);
+    width: 80ch;
+  }
+
+  a {
+    font-family: var(--font-text);
   }
 
   .step-buttons-wrapper {
     display: grid;
     grid-template-areas: 'left right';
     grid-template-columns: 1fr 1fr;
-    gap: 50px;
+    gap: var(--space-s);
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    height: 40px;
-    margin-top: 1rem;
-
-    @container (max-width: 500px) {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
   }
 
   .button-wrapper {
@@ -529,32 +511,11 @@
     }
   }
 
-  .info-button {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    width: fit-content;
-    padding: 0;
-    font-family: var(--font-button);
-    color: var(--color-black);
-    text-align: left;
-    text-decoration: underline;
-    cursor: pointer;
-    background: none;
-    border: none;
-
-    .info-icon {
-      padding: 0;
-    }
-  }
-
   .terms-privacy-check,
   .moderation-check {
     display: flex;
-    gap: 0.5rem;
+    gap: var(--space-3xs);
     align-items: center;
-    height: 30px;
-    font-size: 0.8rem;
 
     &:deep(label) {
       flex: 0;
@@ -568,22 +529,13 @@
   .input-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--space-s);
   }
 
   .select-wrapper {
     display: flex;
     gap: 1rem;
     width: 100%;
-    margin-bottom: 1rem;
-
-    @container (max-width: 500px) {
-      gap: var(--padding-tablet);
-    }
-
-    @container (max-width: 768px) {
-      gap: var(--padding-desktop);
-    }
   }
 
   .select-input {
@@ -592,7 +544,6 @@
   }
 
   .error-message {
-    margin-top: 1rem;
     color: var(--color-red);
     text-align: center;
   }

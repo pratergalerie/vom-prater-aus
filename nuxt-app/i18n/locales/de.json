@@ -93,7 +93,7 @@
         "title": "Welche Erinnerung verbindest du mit dem Berliner Prater?",
         "steps": {
           "authorInfo": {
-            "text": "Zunächst benötigen wir deinen/einen Namen, der zusammen mit deiner Erinnerung veröffentlicht wird. Zudem brauchen wir deine E-Mail-Adresse, um mit dir zu kommunizieren. Sie wird nicht publiziert und nicht weitergegeben. Weitere Informationen findest du in der Datenschutzerklärung.",
+            "text": "Zunächst benötigen wir deinen/einen Namen, der zusammen mit deiner Erinnerung veröffentlicht wird. Zudem brauchen wir deine E-Mail-Adresse, um mit dir zu kommunizieren. Sie wird nicht publiziert und nicht weitergegeben. Weitere Informationen findest du in der Nutzungsbedingungen und der Datenschutzerklärung.",
             "inputs": {
               "authorName": {
                 "label": "Name",

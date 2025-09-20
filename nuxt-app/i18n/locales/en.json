@@ -93,7 +93,7 @@
         "title": "What memory do you associate with the Berlin Prater?",
         "steps": {
           "authorInfo": {
-            "text": "First of all, we need your/a name that will be published together with your memory. Furthermore we need your e-mail address to communicate with you. It will not be published or shared. Further information can be found in the data privacy policy.",
+            "text": "First of all, we need your/a name that will be published together with your memory. Furthermore we need your e-mail address to communicate with you. It will not be published or shared. Further information can be found in the terms of use and the data privacy policy.",
             "inputs": {
               "authorName": {
                 "label": "Name",
