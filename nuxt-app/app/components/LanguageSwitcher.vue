@@ -12,16 +12,24 @@
     aria-label="Language switcher"
   >
     <a
-      v-for="locale in locales"
-      :key="locale.code"
       href="#"
       :class="{
-        active: locale.code === currentLocale,
-        highlight: locale.code === currentLocale,
+        active: 'de' === currentLocale,
+        highlight: 'de' === currentLocale,
       }"
-      @click.prevent.stop="setLocale(locale.code)"
+      @click.prevent.stop="setLocale('de')"
     >
-      {{ locale.code }}
+      DE
+    </a>
+    <a
+      href="#"
+      :class="{
+        active: 'en' === currentLocale,
+        highlight: 'en' === currentLocale,
+      }"
+      @click.prevent.stop="setLocale('en')"
+    >
+      EN
     </a>
   </div>
 </template>
