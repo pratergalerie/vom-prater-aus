@@ -162,7 +162,8 @@
 
   .error-message {
     margin-top: 0.25rem;
-    font-size: 0.8rem;
+    /* stylelint-disable-next-line */
+    font-size: var(--step--1);
     color: var(--color-red);
   }
 
