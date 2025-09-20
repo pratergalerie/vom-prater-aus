@@ -188,6 +188,7 @@
 
     & a {
       font-size: var(--step-1);
+      color: var(--color-brown);
       text-decoration: none;
     }
   }

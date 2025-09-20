@@ -94,6 +94,7 @@
             tag="p"
           >
             <a
+              class="dark"
               :href="`mailto:${t('pages.terms.sections.rightsTransfer.content.email')}`"
               >{{ $t('pages.terms.sections.rightsTransfer.content.email') }}</a
             >
@@ -119,6 +120,7 @@
               tag="li"
             >
               <a
+                class="dark"
                 :href="`mailto:${t('pages.terms.sections.duration.content.email')}`"
                 >{{ $t('pages.terms.sections.duration.content.email') }}</a
               >

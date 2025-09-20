@@ -18,6 +18,8 @@
   --color-text-light: var(--color-grey);
   --color-text-highlight: var(--color-mustard);
   --color-heading: var(--color-black);
+  --color-link: var(--color-beige);
+  --color-link-hover: var(--color-mustard);
 
   --color-grey-light: rgb(100 100 100 / 30%);
 

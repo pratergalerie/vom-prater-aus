@@ -49,7 +49,20 @@ a {
 
   &:hover,
   &:focus {
-    color: var(--color-mustard);
+    color: var(--color-link-hover);
+  }
+}
+
+a.dark {
+  font-family: var(--font-link);
+  font-weight: 400;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+
+  &:hover,
+  &:focus {
+    color: var(--color-brown);
   }
 }
 

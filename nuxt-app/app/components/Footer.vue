@@ -135,6 +135,8 @@
   .contact-email {
     a {
       font-family: var(--font-text);
+      text-decoration: underline;
+      text-underline-offset: 0.5em;
     }
   }
 

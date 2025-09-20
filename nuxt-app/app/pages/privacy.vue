@@ -30,6 +30,7 @@
           class="contact-info"
         >
           <a
+            class="dark"
             :href="`mailto:${t('pages.privacy.sections.responsible.email')}`"
             >{{ $t('pages.privacy.sections.responsible.email') }}</a
           >
@@ -43,9 +44,11 @@
           tag="address"
           class="contact-info"
         >
-          <a :href="`mailto:${t('pages.privacy.sections.contact.email')}`">{{
-            $t('pages.privacy.sections.contact.email')
-          }}</a>
+          <a
+            class="dark"
+            :href="`mailto:${t('pages.privacy.sections.contact.email')}`"
+            >{{ $t('pages.privacy.sections.contact.email') }}</a
+          >
         </i18n-t>
       </section>
 
@@ -60,9 +63,11 @@
             keypath="pages.privacy.sections.purposes.legitimateInterests"
             tag="p"
           >
-            <a :href="`mailto:${t('pages.privacy.sections.purposes.email')}`">{{
-              $t('pages.privacy.sections.purposes.email')
-            }}</a>
+            <a
+              class="dark"
+              :href="`mailto:${t('pages.privacy.sections.purposes.email')}`"
+              >{{ $t('pages.privacy.sections.purposes.email') }}</a
+            >
           </i18n-t>
         </div>
       </section>
@@ -119,11 +124,6 @@
 
   a {
     font-family: var(--font-text);
-
-    &:hover,
-    &:focus {
-      color: var(--color-brown);
-    }
   }
 
   section {

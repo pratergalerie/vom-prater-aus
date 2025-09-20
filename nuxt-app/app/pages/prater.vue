@@ -21,6 +21,7 @@
         tag="p"
       >
         <a
+          class="dark"
           target="_blank"
           :href="t('pages.prater.intro.description.p1.link.url')"
           >{{ $t('pages.prater.intro.description.p1.link.text') }}</a
@@ -31,6 +32,7 @@
         tag="p"
       >
         <a
+          class="dark"
           target="_blank"
           :href="t('pages.prater.intro.description.p2.link.url')"
           >{{ $t('pages.prater.intro.description.p2.link.text') }}</a

@@ -349,14 +349,22 @@
               tag="span"
             >
               <template #termsOfUse>
-                <NuxtLink to="/terms">{{
-                  $t('pages.create.form.steps.authorInfo.info.termsOfUse')
-                }}</NuxtLink>
+                <NuxtLink
+                  class="dark"
+                  to="/terms"
+                  >{{
+                    $t('pages.create.form.steps.authorInfo.info.termsOfUse')
+                  }}</NuxtLink
+                >
               </template>
               <template #privacyPolicy>
-                <NuxtLink to="/privacy">{{
-                  $t('pages.create.form.steps.authorInfo.info.privacyPolicy')
-                }}</NuxtLink>
+                <NuxtLink
+                  class="dark"
+                  to="/privacy"
+                  >{{
+                    $t('pages.create.form.steps.authorInfo.info.privacyPolicy')
+                  }}</NuxtLink
+                >
               </template>
             </i18n-t>
           </div>
@@ -371,18 +379,27 @@
               tag="span"
             >
               <template #moderation>
-                <NuxtLink to="/terms">{{
-                  $t(
-                    'pages.create.form.steps.authorInfo.info.moderationConditions'
-                  )
-                }}</NuxtLink>
+                <NuxtLink
+                  t
+                  class="dark"
+                  o="/terms"
+                  >{{
+                    $t(
+                      'pages.create.form.steps.authorInfo.info.moderationConditions'
+                    )
+                  }}</NuxtLink
+                >
               </template>
               <template #moderationConditions>
-                <NuxtLink to="/privacy">{{
-                  $t(
-                    'pages.create.form.steps.authorInfo.info.moderationConditions'
-                  )
-                }}</NuxtLink>
+                <NuxtLink
+                  class="dark"
+                  to="/privacy"
+                  >{{
+                    $t(
+                      'pages.create.form.steps.authorInfo.info.moderationConditions'
+                    )
+                  }}</NuxtLink
+                >
               </template>
             </i18n-t>
           </div>
