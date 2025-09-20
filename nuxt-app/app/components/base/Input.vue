@@ -59,10 +59,8 @@
 </script>
 
 <template>
-  <div>
-    <label :for="id">
-      {{ label }}
-    </label>
+  <label :for="id">
+    <span v-if="label">{{ label }}</span>
 
     <div class="input-wrapper">
       <input
@@ -87,7 +85,7 @@
       <div class="text-input foreground" />
       <div class="text-input background" />
     </div>
-  </div>
+  </label>
 </template>
 
 <style scoped>

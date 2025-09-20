@@ -47,10 +47,8 @@
 </script>
 
 <template>
-  <div>
-    <label :for="id">
-      {{ label }}
-    </label>
+  <label :for="id">
+    <span v-if="label">{{ label }}</span>
 
     <div class="select-wrapper">
       <select
@@ -88,7 +86,7 @@
       <div class="select-shape foreground" />
       <div class="select-shape background" />
     </div>
-  </div>
+  </label>
 </template>
 
 <style scoped>
