@@ -146,19 +146,19 @@
         "stories": {
           "title": "Ein Ort voller Erinnerungen",
           "text": "Entdecke Erinnerungen der Besucher:innen über ihre persönlichen Erlebnisse an einem der beliebtesten und kulturell reichsten Orte Berlins.",
-          "button": "Alle Erinnerungen"
+          "button": "Erinnerungen entdecken"
         },
         "prater": {
           "imageAlt": "MISSING",
           "title": "Zur Geschichte des Berliner Praters",
           "text": "1837 vor den Toren der Stadt als Gartenlokal eröffnet, lockte der Berliner Prater seit jeher Erholungssuchende und Erlebnisfreudige ins Grüne. Im Pratersaalbau und im Biergarten wurde Unterhaltung angeboten, es war aber auch ein Ort der politischen Agitation und Diskussion.\nMit der wachsenden und sich verändernden Stadt blieb der Prater zentraler Treffpunkt für die Nachbarschaft, an dem gemeinsam gegessen, getrunken, diskutiert, getanzt und gefeiert wurde. Heute befindet sich der Prater in kommunaler Trägerschaft. Nach Abschluss der Sanierungsarbeiten werden die Volksbühne und die freien Theatergruppen den Hauptsaal bespielen, die Prater Galerie für zeitgenössische Kunst bezieht einen Seitenflügel.",
-          "button": "Entdecke die Geschichte"
+          "button": "Über den Berliner Prater"
         },
         "create": {
           "title": "Erzähle deine Prater Erinnerung",
           "imageAlt": "MISSING",
           "text": "Es gibt nicht DIE eine Geschichte des Praters. Sie setzt sich aus vielen Geschichten zusammen – aus euren Erinnerungen und Bildern. Teilt sie mit uns!",
-          "button": "Erstelle deine Erinnerung"
+          "button": "Schreibe deine Erinnerung"
         }
       }
     },
