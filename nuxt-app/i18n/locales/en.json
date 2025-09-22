@@ -146,19 +146,19 @@
         "stories": {
           "title": "A place full of memories",
           "text": "Discover visitors' memories about their personal experiences at one of Berlin's most popular and culturally rich locations.",
-          "button": "All memories"
+          "button": "Discover memories"
         },
         "prater": {
           "imageAlt": "MISSING",
           "title": "About the history of the Berlin Prater",
           "text": "Opened in 1837 as a garden tavern just outside the city gates, the Berlin Prater has always attracted those seeking relaxation and adventure in nature. Entertainment was offered in the Prater hall and beer garden, but it was also a place of political agitation and discussion.\nAs the city grew and changed, the Prater remained a central meeting point for the neighborhood, where people gathered to eat, drink, debate, dance, and celebrate together. Today, the Prater is under municipal management. After the renovation is completed, the Volksbühne and independent theater groups will perform in the main hall, while the Prater Galerie for contemporary art will occupy a side wing.",
-          "button": "Discover the history"
+          "button": "About the Berlin Prater"
         },
         "create": {
           "title": "Tell your Prater memory",
           "imageAlt": "MISSING",
           "text": "There is no ONE single history of the Prater. It is made up of many stories – of your memories and images. Share them with us!",
-          "button": "Create your memory"
+          "button": "Write your memory"
         }
       }
     },
