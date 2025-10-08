@@ -1,0 +1,44 @@
+{
+  "collectionName": "components_story_components_pages",
+  "info": {
+    "displayName": "Page",
+    "icon": "file"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "text",
+      "required": true
+    },
+    "image": {
+      "type": "media",
+      "conditions": {
+        "visible": {
+          "!=": [
+            {
+              "var": "layout"
+            },
+            "text"
+          ]
+        }
+      },
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "layout": {
+      "type": "enumeration",
+      "required": true,
+      "default": "image-text",
+      "enum": [
+        "text",
+        "image-text",
+        "text-image"
+      ]
+    }
+  },
+  "config": {}
+}

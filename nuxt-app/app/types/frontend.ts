@@ -1,5 +1,3 @@
-import type { Database } from '~/types/supabase'
-
 // Frontend types
 export type PageLayout =
   | 'image-over-text'
@@ -63,5 +61,4 @@ export interface PageSectionContent {
   imageAlt: string | null
   buttonLabel: string | null
   buttonLink: string | null
-  additionalContent: Database['public']['Tables']['section_content']['Row']['additional_content']
 }

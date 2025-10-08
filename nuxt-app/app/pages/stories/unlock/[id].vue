@@ -11,69 +11,17 @@
 
   const route = useRoute()
   const router = useRouter()
-  const api = useAPI()
 
   const storyId = route.params.id as string
   const password = ref('')
   const passwordError = ref('')
   const isLoading = ref(false)
 
-  const { locale } = useI18n()
-
-  // Get story details for display
-  const { data: story } = await api.getStoryById(storyId)
-
-  // Store the token in session storage
-  function storeToken(token: string) {
-    if (import.meta.client) {
-      sessionStorage.setItem(`story_token_${storyId}`, token)
-    }
-  }
-
-  async function handlePasswordSubmit() {
-    if (!storyId || !password.value) return
-
-    isLoading.value = true
-    passwordError.value = ''
-
-    try {
-      const { token } = await api.verifyStoryPassword(storyId, password.value)
-      storeToken(token)
-
-      // Redirect back to the edit page
-      await router.push(`/stories/edit/${storyId}`)
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        passwordError.value =
-          error.message ||
-          'An error occurred while verifying the password, please try again.'
-      } else {
-        passwordError.value =
-          'An error occurred while verifying the password, please try again.'
-      }
-      password.value = ''
-    } finally {
-      isLoading.value = false
-    }
-  }
-
   function handleValidationError(field: string, error: string | null) {
     if (error) {
       passwordError.value = error
     }
   }
-
-  const emailSubject = computed(() => {
-    return locale.value === 'de'
-      ? `Passwort vergessen für ${story.value?.title}`
-      : `Password forgotten for ${story.value?.title}`
-  })
-
-  const emailBody = computed(() => {
-    return locale.value === 'de'
-      ? `Hallo, ich bin der Autor der Geschichte "${story.value?.title}" und habe das Passwort leider verloren. Wäre es möglich, das Passwort wieder an die E-Mail-Adresse "${story.value?.author.email}" zu senden? Vielen Dank! Viele Grüße, ${story.value?.author.name}`
-      : `Hello, I am the author of the story "${story.value?.title}" and have unfortunately lost the password. Would it be possible to send the password again to the email address "${story.value?.author.email}"? Thank you! Best regards, ${story.value?.author.name}`
-  })
 </script>
 
 <template>

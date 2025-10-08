@@ -4,7 +4,6 @@
   import type { Texture } from 'three'
   import { TextureLoader } from 'three'
 
-  const api = useAPI()
   const stories = ref<Story[]>([])
 
   // SEO
@@ -17,38 +16,6 @@
       },
     ],
   })
-
-  // Fetch approved stories
-  const { data, error, status } = await api.getStories()
-  if (data.value) {
-    stories.value = data.value.map((story) => ({
-      id: story.id,
-      title: story.title,
-      slug: story.slug,
-      author: {
-        id: story.author.id,
-        name: story.author.name,
-        email: story.author.email,
-      },
-      year: story.year,
-      keywords: story.keywords.map((k) => ({
-        id: k.keyword.id,
-        word: k.keyword.word,
-      })),
-      pages: [], // Initialize empty pages array since we don't need it in the list view
-      createdAt: new Date(story.created_at || new Date()),
-      modifiedAt: story.modified_at ? new Date(story.modified_at) : null,
-      locale: story.locale.code as 'en' | 'de',
-      status: story.status as Story['status'],
-      featured: story.featured || false,
-      featuredImage: story.featured_image,
-      quote: story.quote,
-    }))
-  }
-
-  if (error.value) {
-    console.error('Error fetching stories:', error.value)
-  }
 
   // Use a ref that starts as false and only updates on client side
   const isMasonry = ref(false)
@@ -327,31 +294,31 @@
     </div>
 
     <!-- Loading state -->
-    <div
+    <!-- <div
       v-if="status === 'pending'"
       class="loading"
     >
       {{ $t('pages.stories.index.loading') }}
-    </div>
+    </div> -->
 
     <!-- Error state -->
-    <div
+    <!-- <div
       v-else-if="error"
       class="error"
     >
       {{ $t('pages.stories.index.error') }}
-    </div>
+    </div> -->
 
     <!-- No stories state -->
-    <div
+    <!-- <div
       v-else-if="stories.length === 0"
       class="no-stories"
     >
       {{ $t('pages.stories.index.noStories') }}
-    </div>
+    </div> -->
 
     <!-- List view -->
-    <div
+    <!-- <div
       v-else-if="viewMode === 'list'"
       ref="containerRef"
       class="stories-grid"
@@ -364,17 +331,17 @@
         class="rellax"
         :data-rellax-speed="storyCardSpeeds[story.id] || 0"
       />
-    </div>
+    </div> -->
 
     <!-- Explorer view -->
-    <div
+    <!-- <div
       v-else
       class="explorer-container"
     >
       <TresCanvas window-size>
         <StoriesExplorer :story-elements="storyElements" />
       </TresCanvas>
-    </div>
+    </div> -->
 
     <StoriesActions
       v-model:view-mode="viewMode"

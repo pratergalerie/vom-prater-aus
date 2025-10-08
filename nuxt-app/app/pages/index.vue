@@ -11,46 +11,27 @@
       },
     ],
   })
+  // const { locale } = useI18n()
 
-  const { getFeaturedStories } = useAPI()
-  const { locale } = useI18n()
-
-  const { data: featuredStories, error: featuredStoriesError } =
-    await getFeaturedStories()
-
-  const { getPage } = useAPI()
-
-  const { data: homepageContent, error: homepageContentError } = await getPage(
-    'home',
-    locale.value
-  )
-
-  if (featuredStoriesError.value || homepageContentError.value) {
-    console.error(
-      'Error fetching data:',
-      featuredStoriesError.value || homepageContentError.value
-    )
-  }
-
-  const storiesSlides = computed(() => {
-    if (!featuredStories.value) return []
-    return featuredStories?.value.map((story) => ({
-      img: story.featured_image
-        ? {
-            src: story.featured_image,
-            alt: story.title,
-          }
-        : null,
-      title: story.title,
-      link: {
-        text: story.title,
-        href: `/stories/${story.slug}`,
-      },
-      year: story.year.toString(),
-      quote: story.quote || '',
-      author: story.author.name || '',
-    }))
-  })
+  // const storiesSlides = computed(() => {
+  //   if (!featuredStories.value) return []
+  //   return featuredStories?.value.map((story) => ({
+  //     img: story.featured_image
+  //       ? {
+  //           src: story.featured_image,
+  //           alt: story.title,
+  //         }
+  //       : null,
+  //     title: story.title,
+  //     link: {
+  //       text: story.title,
+  //       href: `/stories/${story.slug}`,
+  //     },
+  //     year: story.year.toString(),
+  //     quote: story.quote || '',
+  //     author: story.author.name || '',
+  //   }))
+  // })
 </script>
 
 <template>
@@ -58,11 +39,11 @@
     <!-- Stories Section -->
     <section>
       <ClientOnly>
-        <StoriesCarousel
+        <!-- <StoriesCarousel
           :slides="storiesSlides"
           class="stories-carousel rellax"
           data-rellax-speed="-0.5"
-        />
+        /> -->
       </ClientOnly>
       <div class="section-text">
         <h2>{{ t('pages.home.sections.stories.title') }}</h2>

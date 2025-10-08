@@ -1,0 +1,118 @@
+{
+  "kind": "collectionType",
+  "collectionName": "stories",
+  "info": {
+    "singularName": "story",
+    "pluralName": "stories",
+    "displayName": "Story"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "uuid": {
+      "type": "customField",
+      "private": true,
+      "customField": "plugin::strapi-advanced-uuid.uuid",
+      "required": true,
+      "options": {
+        "disable-regenerate": true
+      }
+    },
+    "authorName": {
+      "type": "string",
+      "required": true
+    },
+    "authorEmail": {
+      "type": "email",
+      "private": true,
+      "required": false
+    },
+    "language": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "de",
+        "en"
+      ]
+    },
+    "year": {
+      "type": "integer",
+      "required": true,
+      "min": 1831,
+      "max": 2017
+    },
+    "featured": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "keywords": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::keyword.keyword",
+      "mappedBy": "stories"
+    },
+    "pages": {
+      "type": "component",
+      "component": "story-components.page",
+      "repeatable": true,
+      "required": true,
+      "min": 1,
+      "max": 6
+    },
+    "reviewState": {
+      "type": "enumeration",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "lifecycleState"
+            },
+            "submitted"
+          ]
+        }
+      },
+      "required": true,
+      "default": "pending",
+      "enum": [
+        "pending",
+        "rejected",
+        "accepted"
+      ]
+    },
+    "rejectionReason": {
+      "type": "text",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "lifecycleState"
+            },
+            "submitted"
+          ]
+        }
+      }
+    },
+    "lifecycleState": {
+      "type": "enumeration",
+      "required": true,
+      "default": "created",
+      "enum": [
+        "created",
+        "pending",
+        "submitted"
+      ]
+    }
+  }
+}

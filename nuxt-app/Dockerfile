@@ -6,12 +6,6 @@ FROM node:${NODE_VERSION}-slim AS build
 # Set the working directory inside the container
 WORKDIR /workspace
 
-# Define build-time environment variables
-ARG NUXT_PUBLIC_SUPABASE_URL
-ARG NUXT_PUBLIC_SUPABASE_KEY
-ENV NUXT_PUBLIC_SUPABASE_URL=${NUXT_PUBLIC_SUPABASE_URL}
-ENV NUXT_PUBLIC_SUPABASE_KEY=${NUXT_PUBLIC_SUPABASE_KEY}
-
 # Copy package files first for better caching
 COPY package*.json ./
 

@@ -1,22 +1,12 @@
 <script lang="ts" setup>
-  import type { Story } from '~/types/frontend'
-  import { transformStoryData } from '~/utils/story'
+  // const route = useRoute()
 
-  const route = useRoute()
-  const api = useAPI()
-
-  const storySlug = route.params.slug as string
-  const story = ref<Story>()
-
-  // Fetch story data by slug
-  const { data: storyData, status, error } = await api.getStoryBySlug(storySlug)
-  if (storyData.value) {
-    story.value = transformStoryData(storyData.value)
-  }
+  // const storySlug = route.params.slug as string
+  // const story = ref<Story>()
 </script>
 
 <template>
-  <div v-if="status === 'pending'">
+  <!-- <div v-if="status === 'pending'">
     <div class="loading-container">
       <div class="loading-spinner" />
     </div>
@@ -31,7 +21,8 @@
     :story="story"
     :show-close-button="true"
     @close="$router.back()"
-  />
+  /> -->
+  <div></div>
 </template>
 
 <style scoped>

@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-  import type { PageLayout, Story } from '~/types/frontend'
-
   definePageMeta({
     middleware: ['story-auth'],
   })
@@ -14,8 +12,8 @@
   const snackbarOpen = ref(false)
   const snackbarMessage = ref('')
   const saving = ref(false)
-  const { addPage, deletePage, setStory, loadStory, setCurrentPageIndex } =
-    useStoryStore()
+
+  const { deletePage, loadStory, setCurrentPageIndex } = useStoryStore()
   const { story, currentPageIndex } = storeToRefs(useStoryStore())
 
   // Ensure currentPageIndex is properly initialized
@@ -36,55 +34,6 @@
   const storyId = useRoute().params.id as string
   await loadStory(storyId)
 
-  if (!story.value) {
-    // Get the story token from session storage
-    const storyToken = sessionStorage.getItem(`story_token_${storyId}`)
-
-    // If story doesn't exist, fetch from backend
-    const { data: storyData } = await useAPI().getStoryById(storyId, {
-      token: storyToken,
-    })
-    if (storyData.value) {
-      // Convert storyData to Story format
-      const convertedStory: Story = {
-        id: storyData.value.id,
-        title: storyData.value.title,
-        slug: storyData.value.slug,
-        author: {
-          id: storyData.value.author.id,
-          name: storyData.value.author.name,
-          email: storyData.value.author.email,
-        },
-        modifiedAt: storyData.value.modified_at
-          ? new Date(storyData.value.modified_at)
-          : null,
-        year: storyData.value.year,
-        keywords: [],
-        pages:
-          storyData.value.pages?.map((page) => ({
-            id: page.id,
-            layout: page.layout as PageLayout,
-            text: page.text,
-            image: page.image,
-            createdAt: new Date(page.created_at || new Date()),
-            modifiedAt: new Date(page.modified_at || new Date()),
-            pageOrder: page.page_order,
-          })) || [],
-        createdAt: new Date(storyData.value.created_at || new Date()),
-        locale: storyData.value.locale.code as 'en' | 'de',
-        status: storyData.value.status as
-          | 'draft'
-          | 'submitted'
-          | 'approved'
-          | 'rejected',
-        featured: storyData.value.featured || false,
-        featuredImage: storyData.value.featured_image,
-        quote: storyData.value.quote,
-      }
-      setStory(convertedStory)
-    }
-  }
-
   function handleDeleteStory() {
     // TODO: Implement delete story
     const router = useRouter()
@@ -94,32 +43,11 @@
   async function handleAddPage() {
     if (!story.value) return
 
-    const date = new Date()
     try {
-      // Create the page on the server first
-      const newPage = await useAPI().createPage({
-        story_id: story.value.id,
-        layout: 'image-over-text',
-        text: null,
-        image: null,
-        page_order: story.value.pages.length + 1,
-        created_at: date.toISOString(),
-        modified_at: null,
+      // TODO: Implement add logic
+      await new Promise((resolve, reject) => {
+        reject()
       })
-
-      // Update local state with the server-created page
-      addPage({
-        id: newPage.id,
-        layout: newPage.layout as PageLayout,
-        text: newPage.text,
-        image: newPage.image,
-        createdAt: newPage.created_at ? new Date(newPage.created_at) : date,
-        modifiedAt: newPage.modified_at
-          ? new Date(newPage.modified_at)
-          : undefined,
-        pageOrder: newPage.page_order,
-      })
-      setCurrentPageIndex(currentPageIndex.value + 1)
     } catch (error) {
       console.error('Error creating new page:', error)
       // Show error notification
@@ -141,13 +69,10 @@
     }
 
     try {
-      // Delete the page from the server first
-      await useAPI().deleteStoryPage(story.value.id, currentPage.id)
-
-      // If successful, update local state
-      deletePage(currentPageIndex.value)
-      setCurrentPageIndex(currentPageIndex.value - 1)
-      deletePageConfirmationModalOpen.value = false
+      // TODO: Implement deletion logic
+      await new Promise((resolve, reject) => {
+        reject()
+      })
     } catch (error) {
       console.error('Error deleting page:', error)
       // Show error notification
@@ -163,41 +88,10 @@
 
     saving.value = true
     try {
-      // Update story details
-      const storyData = {
-        title: story.value.title,
-        author_id: story.value.author.id || undefined,
-        year: story.value.year,
-      }
-
-      // Update story in Supabase
-      await useAPI().updateStory(story.value.id, storyData)
-
-      // Update each page
-      for (const [index, page] of story.value.pages.entries()) {
-        if (page.id) {
-          // Update existing page
-          await useAPI().updateStoryPage(story.value.id, page.id, {
-            layout: page.layout,
-            text: page.text,
-            image: page.image,
-            page_order: index + 1,
-            modified_at: new Date().toISOString(),
-          })
-        } else {
-          // Create new page
-          await useAPI().createPage({
-            story_id: story.value.id,
-            layout: page.layout,
-            text: page.text,
-            image: page.image,
-            page_order: index + 1,
-            created_at: new Date().toISOString(),
-            modified_at: new Date().toISOString(),
-          })
-        }
-      }
-
+      // TODO: Implement save logic
+      await new Promise((resolve, reject) => {
+        reject()
+      })
       // Show success notification
       snackbarOpen.value = true
       snackbarMessage.value = t('pages.stories.edit.snackbar.saveSuccess')
@@ -220,11 +114,7 @@
 
       if (!story.value) return
 
-      // Update story status to submitted
-      await useAPI().updateStory(story.value.id, {
-        status: 'submitted',
-        modified_at: new Date().toISOString(),
-      })
+      // TODO: Update story status to submitted
 
       // Navigate to submitted page
       const router = useRouter()

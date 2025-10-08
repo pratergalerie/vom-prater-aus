@@ -9,7 +9,6 @@
     (e: 'filter', filteredStories: Story[]): void
   }>()
 
-  const api = useAPI()
   const isOpen = defineModel<boolean>('is-open', { default: false })
 
   // Search and filter state (current input values)
@@ -21,10 +20,6 @@
   const appliedSearchQuery = ref('')
   const appliedKeywords = ref<string[]>([])
   const appliedYearRange = ref<[number, number]>([1980, 2024])
-
-  // Keywords data
-  const { data: keywordsData } = await api.getKeywords()
-  const keywords = computed(() => keywordsData.value || [])
 
   // Get year range from stories
   const storyYears = computed(() => {
@@ -78,14 +73,14 @@
     })
   })
 
-  function handleKeywordToggle(keyword: string) {
-    const index = selectedKeywords.value.indexOf(keyword)
-    if (index > -1) {
-      selectedKeywords.value.splice(index, 1)
-    } else {
-      selectedKeywords.value.push(keyword)
-    }
-  }
+  // function handleKeywordToggle(keyword: string) {
+  //   const index = selectedKeywords.value.indexOf(keyword)
+  //   if (index > -1) {
+  //     selectedKeywords.value.splice(index, 1)
+  //   } else {
+  //     selectedKeywords.value.push(keyword)
+  //   }
+  // }
 
   function handleApplyFilters() {
     // Apply the current input values to the applied filter state
@@ -119,8 +114,8 @@
   <BaseDialog
     v-model:is-open="isOpen"
     :title="$t('components.storiesSearchDialog.title')"
-    :width="500"
     class="search-dialog"
+    :width="500"
   >
     <div class="search-dialog-content">
       <!-- Search Input -->
@@ -140,14 +135,14 @@
           {{ $t('components.storiesSearchDialog.popularKeywords') }}
         </h3>
         <div class="keywords-list">
-          <BaseKeyword
+          <!-- <BaseKeyword
             v-for="keyword in keywords"
             :id="keyword.id"
             :key="keyword.id"
             :keyword="keyword.word"
             :selected="selectedKeywords.includes(keyword.word)"
             @click="handleKeywordToggle(keyword.word)"
-          />
+          /> -->
         </div>
       </div>
 

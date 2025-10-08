@@ -1,0 +1,6 @@
+{
+  "name": "strapi-provider-email-mailpit",
+  "version": "1.0.0",
+  "main": "index.js",
+  "packageManager": "pnpm@10.17.1"
+}

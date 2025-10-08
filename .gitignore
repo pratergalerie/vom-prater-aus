@@ -13,22 +13,6 @@ nginx/ssl/*
 
 # Ignore dummy data
 initial-data/*
-supabase/scripts/initial-story-passwords.txt
-
-# Supabase volumes
-/supabase/volumes/db/data/
-/supabase/volumes/storage/*
-!/supabase/volumes/storage/.gitkeep
-
-# Logs
-/supabase/volumes/logs/*
-!/supabase/volumes/logs/.gitkeep
-
-/supabase/scripts/initial_data.sql
-
-# Keep function code
-!/supabase/volumes/functions/*
-/supabase/volumes/functions/.DS_Store
 
 # Database backups
 /backups/

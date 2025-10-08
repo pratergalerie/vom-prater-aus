@@ -35,8 +35,6 @@
     "Sometype",
     "sortcolumn",
     "sortorder",
-    "supabase",
-    "SUPABASE",
     "svgs",
     "tresjs",
     "usename",
@@ -44,7 +42,6 @@
     "wght"
   ],
   "cSpell.ignorePaths": [
-    "/supabase",
     ".env.*",
     "docker-compose.yml",
     "/nginx",

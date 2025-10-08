@@ -63,7 +63,6 @@ export default defineNuxtConfig({
     'nuxt-rellax',
     '@tresjs/nuxt',
     '@hypernym/nuxt-anime',
-    '@nuxtjs/supabase',
   ],
 
   image: {
@@ -110,16 +109,5 @@ export default defineNuxtConfig({
     ],
   },
 
-  // Set SSR to false for pages below /stories/edit/[id]
-  routeRules: {
-    // Admin dashboard renders only on client-side
-    '/admin/**': { ssr: false },
-    '/stories/edit/**': { ssr: false },
-  },
-
-  supabase: {
-    redirect: false,
-    url: process.env.NUXT_PUBLIC_SUPABASE_URL,
-    key: process.env.NUXT_PUBLIC_SUPABASE_KEY,
-  },
+  routeRules: {},
 })

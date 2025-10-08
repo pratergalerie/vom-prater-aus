@@ -1,53 +1,11 @@
 <script lang="ts" setup>
-  import type { Database } from '~/types/supabase'
-
-  // Use the Story type from the API composable instead of the database type
-  type Story = Omit<
-    Database['public']['Tables']['stories']['Row'],
-    'author_id' | 'locale_id'
-  > & {
-    author: Database['public']['Tables']['authors']['Row']
-    pages: Database['public']['Tables']['story_pages']['Row'][]
-    locale: Pick<
-      Database['public']['Tables']['locales']['Row'],
-      'id' | 'code' | 'name'
-    >
-    keywords: {
-      keyword: {
-        id: string
-        word: string
-      }
-    }[]
-  }
-  type Author = Database['public']['Tables']['authors']['Row']
-
-  const api = useAPI()
-  const stories = ref<Story[]>([])
-  const authors = ref<Record<string, Author>>({})
-
-  // Fetch stories
-  const { data: storiesData } = await api.getStories()
-  if (storiesData.value) {
-    stories.value = storiesData.value
-
-    // Fetch authors for all stories
-    const authorIds = [
-      ...new Set(stories.value.map((story) => story.author.id)),
-    ]
-    const authorPromises = authorIds.map((id) => api.getAuthor(id))
-    const authorResults = await Promise.all(authorPromises)
-
-    authorResults.forEach((result) => {
-      if (result.data.value) {
-        authors.value[result.data.value.id] = result.data.value
-      }
-    })
-  }
+  // import type { Story } from '~/types/frontend'
+  // const stories = ref<Story[]>([])
 </script>
 
 <template>
   <div class="stories-list">
-    <div
+    <!-- <div
       v-for="story in stories"
       :key="story.id"
       class="story-card"
@@ -76,7 +34,7 @@
           <p class="year">{{ story.year }}</p>
         </div>
       </NuxtLink>
-    </div>
+    </div> -->
   </div>
 </template>
 

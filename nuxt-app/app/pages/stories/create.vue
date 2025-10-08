@@ -1,6 +1,4 @@
 <script setup lang="ts">
-  import type { PageLayout } from '~/types/frontend'
-
   useHead({
     title: 'Vom Prater aus - Write your own story',
     meta: [
@@ -201,59 +199,9 @@
     error.value = null
 
     try {
-      // Create author first
-      const createdAuthor = await useAPI().createAuthor({
-        name: storyFormData.value.authorName,
-        email: storyFormData.value.email,
+      await new Promise((resolve, reject) => {
+        reject()
       })
-
-      if (!createdAuthor) {
-        throw new Error('Failed to create author')
-      }
-
-      // Create story with the author ID
-      const storyData = await useAPI().createStoryWithLocale(
-        {
-          author_id: createdAuthor.id,
-          created_at: new Date().toISOString(),
-          modified_at: null,
-          title: storyFormData.value.title,
-          year: storyFormData.value.year,
-          slug: storyFormData.value.title.toLowerCase().replace(/\s+/g, '-'),
-          status: 'draft',
-          featured: false,
-          quote: '',
-          featured_image: '',
-        },
-        storyFormData.value.locale
-      )
-
-      if (!storyData?.id) {
-        throw new Error('Failed to create story: No ID returned')
-      }
-
-      // Create the first page for the story
-      const pageData = await useAPI().createPage({
-        story_id: storyData.id,
-        layout: 'image-over-text' as PageLayout,
-        text: '',
-        image: null,
-        page_order: 1,
-        created_at: new Date().toISOString(),
-      })
-
-      if (!pageData?.id) {
-        throw new Error('Failed to create story page: No ID returned')
-      }
-
-      // Generate and store token for immediate access
-      const { token } = await useAPI().verifyStoryPassword(storyData.id, null)
-      if (import.meta.client) {
-        sessionStorage.setItem(`story_token_${storyData.id}`, token)
-      }
-
-      const router = useRouter()
-      await router.push(`/stories/edit/${storyData.id}`)
     } catch (err) {
       console.error('Error in createStory:', err)
       error.value = 'Failed to create story. Please try again.'
