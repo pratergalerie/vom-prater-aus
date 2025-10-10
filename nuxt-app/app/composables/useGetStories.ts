@@ -11,6 +11,7 @@ export const useGetStories = async ({ featured }: { featured: boolean }) => {
       find<Strapi5ResponseData<Story>>('stories', {
         fields: [
           'authorName',
+          'documentId',
           'featured',
           'language',
           'quote',

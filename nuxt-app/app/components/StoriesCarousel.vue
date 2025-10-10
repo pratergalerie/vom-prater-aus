@@ -16,7 +16,7 @@
   const { strapiUrl } = useRuntimeConfig().public
 
   const slides = slidesData
-    .map<Slide | undefined>((story) => {
+    .map<(Slide & { id: string }) | undefined>((story) => {
       // Check if featured story has any images
       const storyWithImage = story.pages.find((story) => story.image !== null)
       const hasImage = storyWithImage !== undefined
@@ -26,6 +26,7 @@
       }
 
       return {
+        id: story.documentId,
         img: {
           src: `${strapiUrl}${storyWithImage.image.url}`,
           alt: storyWithImage.image.alternativeText,
@@ -57,8 +58,8 @@
     >
       <div class="embla__container">
         <div
-          v-for="(slide, index) in slides"
-          :key="index"
+          v-for="slide in slides"
+          :key="slide.id"
           class="embla__slide"
         >
           <StoriesCarouselSlide
