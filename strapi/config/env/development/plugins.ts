@@ -3,7 +3,7 @@ export default ({ env }) => ({
     config: {
       provider: "strapi-provider-email-mailpit",
       providerOptions: {
-        baseUrl: "http://localhost:8025",
+        baseUrl: "http://mailpit:8025",
       },
       settings: {
         defaultFrom: "vomprateraus@pratergalerie.de",
