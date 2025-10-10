@@ -6,15 +6,20 @@ services:
       dockerfile: Dockerfile.dev
     volumes:
       - ./nuxt-app/app:/workspace/app
+      - ./nuxt-app/server:/workspace/server
     profiles:
       - dev
     ports:
       - 3000:3000
       - 24678:24678 # HMR
     environment:
+      - NODE_ENV=development
+      - NUXT_STRAPI_TOKEN=${STRAPI_TOKEN}
+      - NUXT_STRAPI_URL=${STRAPI_URL}
+      - NUXT_PUBLIC_STRAPI_URL=${STRAPI_PUBLIC_URL}
       - STYLELINT_CSS_VARIABLES_PATH=/workspace/app/assets/css/variables.css
     networks:
-      - frontend-network
+      - app-network
     depends_on:
       - strapi-dev
       - strapiDB
@@ -28,14 +33,18 @@ services:
       - prod
     ports:
       - 3000:3000
+    environment:
+      - NUXT_STRAPI_TOKEN=${STRAPI_TOKEN}
+      - NUXT_STRAPI_URL=${STRAPI_URL}
+      - NUXT_PUBLIC_STRAPI_URL=${STRAPI_PUBLIC_URL}
     networks:
-      - frontend-network
+      - app-network
     depends_on:
       - strapi-prod
       - strapiDB
 
   strapi-dev:
-    container_name: strapi-dev
+    container_name: strapi
     build:
       context: ./strapi
       dockerfile: Dockerfile.dev
@@ -44,6 +53,7 @@ services:
     image: strapi:latest
     restart: unless-stopped
     environment:
+      NODE_ENV: development
       DATABASE_HOST: strapiDB
       DATABASE_NAME: ${DATABASE_NAME}
       DATABASE_USERNAME: ${DATABASE_USERNAME}
@@ -51,23 +61,22 @@ services:
       JWT_SECRET: ${JWT_SECRET}
       ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
-      NODE_ENV: ${NODE_ENV}
     volumes:
       - ./strapi/config:/opt/app/config
       - ./strapi/src:/opt/app/src
       - ./strapi/package.json:/opt/package.json
       - ./strapi/package-lock.json:/opt/app/package-lock.json
-      - ./.env:/opt/app/.env
+      - ./strapi/.env:/opt/app/.env
       - ./strapi/public/uploads:/opt/app/public/uploads
     ports:
       - "1337:1337"
     networks:
-      - backend-network
+      - app-network
     depends_on:
       - strapiDB
 
   strapi-prod:
-    container_name: strapi-prod
+    container_name: strapi
     build:
       context: ./strapi
       dockerfile: Dockerfile
@@ -76,6 +85,7 @@ services:
     image: strapi:latest
     restart: unless-stopped
     environment:
+      NODE_ENV: production
       DATABASE_HOST: strapiDB
       DATABASE_NAME: ${DATABASE_NAME}
       DATABASE_USERNAME: ${DATABASE_USERNAME}
@@ -83,13 +93,12 @@ services:
       JWT_SECRET: ${JWT_SECRET}
       ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
-      NODE_ENV: ${NODE_ENV}
     volumes:
       - ./strapi/public/uploads:/opt/app/public/uploads
     ports:
       - "1337:1337"
     networks:
-      - backend-network
+      - app-network
     depends_on:
       - strapiDB
 
@@ -108,7 +117,7 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - backend-network
+      - app-network
 
   nginx:
     image: nginx:alpine
@@ -126,7 +135,7 @@ services:
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
     networks:
-      - frontend-network
+      - app-network
     depends_on:
       - nuxt-app-prod
       - strapi-prod
@@ -160,12 +169,10 @@ services:
       MP_SMTP_AUTH_ACCEPT_ANY: 1
       MP_SMTP_AUTH_ALLOW_INSECURE: 1
     networks:
-      - backend-network
+      - app-network
 
 networks:
-  frontend-network:
-    driver: bridge
-  backend-network:
+  app-network:
     driver: bridge
 
 volumes:

@@ -11,40 +11,17 @@
       },
     ],
   })
-  // const { locale } = useI18n()
 
-  // const storiesSlides = computed(() => {
-  //   if (!featuredStories.value) return []
-  //   return featuredStories?.value.map((story) => ({
-  //     img: story.featured_image
-  //       ? {
-  //           src: story.featured_image,
-  //           alt: story.title,
-  //         }
-  //       : null,
-  //     title: story.title,
-  //     link: {
-  //       text: story.title,
-  //       href: `/stories/${story.slug}`,
-  //     },
-  //     year: story.year.toString(),
-  //     quote: story.quote || '',
-  //     author: story.author.name || '',
-  //   }))
-  // })
+  const { data } = await useGetStories({
+    featured: true,
+  })
 </script>
 
 <template>
   <div class="layout-container">
     <!-- Stories Section -->
     <section>
-      <ClientOnly>
-        <!-- <StoriesCarousel
-          :slides="storiesSlides"
-          class="stories-carousel rellax"
-          data-rellax-speed="-0.5"
-        /> -->
-      </ClientOnly>
+      <StoriesCarousel :data="data" />
       <div class="section-text">
         <h2>{{ t('pages.home.sections.stories.title') }}</h2>
         <p>{{ t('pages.home.sections.stories.text') }}</p>

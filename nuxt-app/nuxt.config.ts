@@ -63,6 +63,7 @@ export default defineNuxtConfig({
     'nuxt-rellax',
     '@tresjs/nuxt',
     '@hypernym/nuxt-anime',
+    '@nuxtjs/strapi',
   ],
 
   image: {
@@ -110,4 +111,17 @@ export default defineNuxtConfig({
   },
 
   routeRules: {},
+
+  runtimeConfig: {
+    strapiToken: '',
+    strapiUrl: '',
+    public: {
+      strapiUrl: '',
+    },
+  },
+
+  strapi: {
+    url: process.env.NUXT_STRAPI_URL || 'http://localhost:1337',
+    token: process.env.NUXT_STRAPI_TOKEN || undefined,
+  },
 })
