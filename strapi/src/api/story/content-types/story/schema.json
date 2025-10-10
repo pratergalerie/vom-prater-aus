@@ -52,6 +52,10 @@
       "min": 1831,
       "max": 2017
     },
+    "quote": {
+      "type": "string",
+      "required": true
+    },
     "featured": {
       "type": "boolean",
       "required": true,
