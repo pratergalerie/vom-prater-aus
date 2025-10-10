@@ -54,7 +54,7 @@
     },
     "quote": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "featured": {
       "type": "boolean",

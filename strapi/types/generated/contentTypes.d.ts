@@ -499,7 +499,7 @@ export interface ApiStoryStory extends Struct.CollectionTypeSchema {
         number
       >;
     publishedAt: Schema.Attribute.DateTime;
-    quote: Schema.Attribute.String & Schema.Attribute.Required;
+    quote: Schema.Attribute.String;
     rejectionReason: Schema.Attribute.Text;
     reviewState: Schema.Attribute.Enumeration<
       ['pending', 'rejected', 'accepted']
