@@ -77,6 +77,7 @@
     },
     "reviewState": {
       "type": "enumeration",
+      "private": true,
       "conditions": {
         "visible": {
           "==": [
@@ -97,6 +98,7 @@
     },
     "rejectionReason": {
       "type": "text",
+      "private": true,
       "conditions": {
         "visible": {
           "==": [
@@ -110,6 +112,7 @@
     },
     "lifecycleState": {
       "type": "enumeration",
+      "private": true,
       "required": true,
       "default": "created",
       "enum": [

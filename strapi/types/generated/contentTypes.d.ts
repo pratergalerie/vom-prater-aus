@@ -485,6 +485,7 @@ export interface ApiStoryStory extends Struct.CollectionTypeSchema {
       ['created', 'pending', 'submitted']
     > &
       Schema.Attribute.Required &
+      Schema.Attribute.Private &
       Schema.Attribute.DefaultTo<'created'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::story.story'> &
@@ -500,11 +501,12 @@ export interface ApiStoryStory extends Struct.CollectionTypeSchema {
       >;
     publishedAt: Schema.Attribute.DateTime;
     quote: Schema.Attribute.String;
-    rejectionReason: Schema.Attribute.Text;
+    rejectionReason: Schema.Attribute.Text & Schema.Attribute.Private;
     reviewState: Schema.Attribute.Enumeration<
       ['pending', 'rejected', 'accepted']
     > &
       Schema.Attribute.Required &
+      Schema.Attribute.Private &
       Schema.Attribute.DefaultTo<'pending'>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
