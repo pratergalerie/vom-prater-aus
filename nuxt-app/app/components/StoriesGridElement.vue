@@ -2,6 +2,7 @@
   type Keyword = {
     id: string
     name: string
+    selected: boolean
   }
 
   // Create discriminated union type
@@ -62,6 +63,7 @@
             :id="keyword.id"
             :key="keyword.id"
             :name="keyword.name"
+            :selected="keyword.selected"
             @click="onKeywordClick"
           />
         </div>

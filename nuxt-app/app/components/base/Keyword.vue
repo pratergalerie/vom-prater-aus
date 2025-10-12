@@ -15,7 +15,7 @@
   }>()
 
   function handleClick() {
-    emit('click', props.name, props.selected)
+    emit('click', props.name, !props.selected)
   }
 
   const buttonRef = useTemplateRef('buttonRef')
@@ -60,19 +60,7 @@
     }
 
     @media screen and (prefers-reduced-motion: reduce) {
-      padding: 0.25rem 0.75rem;
-      font-family: var(--font-button);
-      font-size: 0.8rem;
-      color: var(--color-text);
-      cursor: pointer;
-      border: none;
-      border-radius: 1rem;
       transition: none;
-
-      &:hover,
-      &:focus {
-        --color-highlight: var(--color-mustard);
-      }
     }
 
     &.selected {

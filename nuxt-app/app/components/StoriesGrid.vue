@@ -5,10 +5,14 @@
   const selectedKeywords = ref<string[]>([])
   provide('selectedKeywords', selectedKeywords)
 
-  const handleKeywordClick = async (name: string) => {
-    selectedKeywords.value.push(name)
-
-    console.log(selectedKeywords.value)
+  const handleKeywordClick = async (name: string, selected: boolean) => {
+    if (selected) {
+      selectedKeywords.value.push(name)
+    } else {
+      selectedKeywords.value = selectedKeywords.value.filter(
+        (keyword) => keyword !== name
+      )
+    }
   }
 
   const {
@@ -19,33 +23,36 @@
 
   const { strapiUrl } = useRuntimeConfig().public
 
-  const stories = storiesData.map<ListElement & { id: string }>((story) => {
-    // Check if featured story has any images
-    const storyWithImage = story.pages.find((story) => story.image !== null)
-    const hasImage = storyWithImage !== undefined
-    const image = hasImage
-      ? {
-          src: `${strapiUrl}${storyWithImage?.image.url}`,
-          alt: storyWithImage?.image.alternativeText ?? '',
-        }
-      : undefined
+  const stories = computed(() =>
+    storiesData.value.map<ListElement & { id: string }>((story) => {
+      // Check if featured story has any images
+      const storyWithImage = story.pages.find((story) => story.image !== null)
+      const hasImage = storyWithImage !== undefined
+      const image = hasImage
+        ? {
+            src: `${strapiUrl}${storyWithImage?.image.url}`,
+            alt: storyWithImage?.image.alternativeText ?? '',
+          }
+        : undefined
 
-    const keywords = story.keywords.map((keyword) => ({
-      name: keyword.name,
-      id: keyword.documentId,
-    }))
+      const keywords = story.keywords.map((keyword) => ({
+        name: keyword.name,
+        id: keyword.documentId,
+        selected: selectedKeywords.value.includes(keyword.name),
+      }))
 
-    return {
-      id: story.documentId,
-      img: image,
-      title: story.title,
-      link: `/stories/${story.slug}`,
-      year: story.year.toString(),
-      author: story.authorName,
-      keywords: keywords,
-      onKeywordClick: handleKeywordClick,
-    }
-  })
+      return {
+        id: story.documentId,
+        img: image,
+        title: story.title,
+        link: `/stories/${story.slug}`,
+        year: story.year.toString(),
+        author: story.authorName,
+        keywords: keywords,
+        onKeywordClick: handleKeywordClick,
+      }
+    })
+  )
 </script>
 
 <template>

@@ -11,15 +11,23 @@ export const useGetStories = async (options?: Options) => {
   const { find } = useStrapi()
   const { locale } = useI18n()
 
-  const featuredFilter = featured ? { featured: { $eq: featured } } : {}
-  const keywordsFilter = keywords
-    ? { keywords: { name: { $in: keywords } } }
-    : {}
+  const key = computed(() => {
+    const keywordsPart = keywords?.value?.length
+      ? `-keywords-${keywords.value.join(',')}`
+      : ''
+    const featuredPart = featured ? '-featured' : ''
+    return `stories${keywordsPart}${featuredPart}`
+  })
 
   const { data, pending, error, status } = await useAsyncData(
-    'allStories',
-    () =>
-      find<Strapi5ResponseData<Story>>('stories', {
+    key,
+    () => {
+      const featuredFilter = featured ? { featured: { $eq: featured } } : {}
+      const keywordsFilter = keywords
+        ? { keywords: { name: { $in: keywords.value } } }
+        : {}
+
+      return find<Strapi5ResponseData<Story>>('stories', {
         fields: [
           'authorName',
           'documentId',
@@ -41,14 +49,17 @@ export const useGetStories = async (options?: Options) => {
           pages: { populate: 'image' },
           keywords: { fields: ['name', 'documentId'] },
         },
-      }),
+      })
+    },
     {
       watch: keywords ? [keywords] : [],
-      default: () => ({
-        data: [],
-      }),
     }
   )
 
-  return { data: data?.value?.data, pending, error, status }
+  return {
+    data: computed(() => data.value?.data ?? []),
+    pending,
+    error,
+    status,
+  }
 }
