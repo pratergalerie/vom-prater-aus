@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   const props = withDefaults(
     defineProps<{
-      keyword: string
+      name: string
       id: string
       selected?: boolean
     }>(),
@@ -11,11 +11,11 @@
   )
 
   const emit = defineEmits<{
-    (e: 'click', id: string): void
+    (e: 'click', id: string, selected: boolean): void
   }>()
 
   function handleClick() {
-    emit('click', props.id)
+    emit('click', props.name, props.selected)
   }
 
   const buttonRef = useTemplateRef('buttonRef')
@@ -38,7 +38,7 @@
     :class="{ selected: selected }"
     @click="handleClick"
   >
-    <span class="keyword-text">{{ keyword }}</span>
+    <span class="keyword-text">{{ name }}</span>
   </button>
 </template>
 

@@ -1,58 +1,68 @@
 <script lang="ts" setup>
-  import type { Story } from '~/types/frontend'
-
-  defineProps<{
-    story: Story
-  }>()
-
-  function handleKeywordClick(id: string) {
-    console.log(id)
+  type Keyword = {
+    id: string
+    name: string
   }
+
+  // Create discriminated union type
+  export type ListElement = {
+    title: string
+    img?: { src: string; alt: string }
+    link: string
+    year: string
+    author: string
+    quote?: string
+    keywords: Keyword[]
+    onKeywordClick: (name: string, selected: boolean) => void
+  }
+
+  const { title, author, img, link, year, keywords } =
+    defineProps<ListElement>()
 </script>
 
 <template>
   <div class="story-card">
     <div class="story-card-inner">
       <div class="story-media">
-        <template v-if="story.featuredImage">
-          <NuxtLink :to="`/stories/${story.slug}`">
+        <template v-if="img">
+          <NuxtLink :to="link">
             <NuxtImg
-              :src="story.featuredImage"
-              :alt="story.title"
+              :src="img.src"
+              :alt="img.alt"
               class="story-image"
             />
           </NuxtLink>
         </template>
-        <template v-else-if="story.quote">
+        <template v-else-if="quote">
           <div class="story-quote">
-            <p>{{ story.quote }}</p>
+            <p>{{ quote }}</p>
           </div>
         </template>
       </div>
       <div class="story-info">
-        <NuxtLink :to="`/stories/${story.slug}`">
-          <h2 class="story-title">{{ story.title }}</h2>
+        <NuxtLink :to="link">
+          <h2 class="story-title">{{ title }}</h2>
         </NuxtLink>
         <div class="story-meta">
           <p class="story-author">
             Von
-            <span class="story-author-name">{{ story.author.name }}</span>
+            <span class="story-author-name">{{ author }}</span>
           </p>
           <div class="story-year">
             <Icon name="mdi:calendar" />
-            <span>{{ story.year }}</span>
+            <span>{{ year }}</span>
           </div>
         </div>
         <div
-          v-if="story.keywords.length"
+          v-if="keywords.length"
           class="story-keywords"
         >
           <BaseKeyword
-            v-for="keyword in story.keywords"
+            v-for="keyword in keywords"
             :id="keyword.id"
             :key="keyword.id"
-            :keyword="keyword.word"
-            @click="handleKeywordClick"
+            :name="keyword.name"
+            @click="onKeywordClick"
           />
         </div>
       </div>
@@ -71,12 +81,7 @@
       filter 0.2s ease-in-out,
       transform 0.2s ease-in-out;
 
-    @media screen and (prefers-reduced-motion: reduce) {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      mix-blend-mode: multiply;
-      filter: grayscale(100%);
+    @media (prefers-reduced-motion: reduce) {
       transition: none;
     }
   }
@@ -86,21 +91,8 @@
     transition: transform 0.2s ease-in-out;
     will-change: transform;
 
-    @media screen and (prefers-reduced-motion: reduce) {
-      background: var(--color-background);
+    @media (prefers-reduced-motion: reduce) {
       transition: none;
-      will-change: auto;
-
-      &:hover,
-      &:focus {
-        .story-card-inner {
-          transform: none;
-        }
-
-        .story-image {
-          filter: grayscale(0%);
-        }
-      }
     }
   }
 
@@ -112,13 +104,11 @@
   .story-card:hover,
   .story-card:focus {
     .story-card-inner {
-      transform: translateY(-0.2rem);
+      transform: translateY(-3%);
     }
 
     .story-image {
       filter: grayscale(0%);
-
-      /* Scale up the image */
       transform: scale(1.05);
     }
   }

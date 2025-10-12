@@ -113,15 +113,15 @@ export default defineNuxtConfig({
   routeRules: {},
 
   runtimeConfig: {
-    strapiToken: '',
     strapiUrl: '',
     public: {
+      strapiToken: '',
       strapiUrl: '',
     },
   },
 
   strapi: {
     url: process.env.NUXT_STRAPI_URL || 'http://localhost:1337',
-    token: process.env.NUXT_STRAPI_TOKEN || undefined,
+    token: process.env.NUXT_PUBLIC_STRAPI_TOKEN || undefined,
   },
 })

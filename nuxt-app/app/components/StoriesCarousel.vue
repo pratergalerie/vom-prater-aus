@@ -2,18 +2,14 @@
   import emblaCarouselVue from 'embla-carousel-vue'
   import type { EmblaOptionsType } from 'embla-carousel'
   import Autoplay from 'embla-carousel-autoplay'
-  import type { Story } from '~~/types/strapi'
-  import type { Strapi5ResponseMany } from '@nuxtjs/strapi'
   import type { Slide } from './StoriesCarouselSlide.vue'
   import StoriesCarouselSlide from './StoriesCarouselSlide.vue'
 
-  type Props = {
-    data?: Strapi5ResponseMany<Story>
-  }
-
-  const props = defineProps<Props>()
-  const slidesData = props.data?.data ?? []
   const { strapiUrl } = useRuntimeConfig().public
+
+  const { data: slidesData } = await useGetStories({
+    featured: true,
+  })
 
   const slides = slidesData
     .map<(Slide & { id: string }) | undefined>((story) => {
@@ -29,7 +25,7 @@
         id: story.documentId,
         img: {
           src: `${strapiUrl}${storyWithImage.image.url}`,
-          alt: storyWithImage.image.alternativeText,
+          alt: storyWithImage.image.alternativeText ?? '',
         },
         title: story.title,
         link: `/stories/${story.slug}`,

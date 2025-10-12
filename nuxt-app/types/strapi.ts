@@ -1,5 +1,5 @@
 export type StrapiImage = {
-  alternativeText: string
+  alternativeText?: string
   caption: string
   createdAt: string
   documentId: string

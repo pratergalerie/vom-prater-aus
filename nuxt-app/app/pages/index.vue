@@ -1,6 +1,4 @@
 <script setup lang="ts">
-  const { t } = useI18n()
-
   useHead({
     title: 'Vom Prater aus',
 
@@ -11,26 +9,22 @@
       },
     ],
   })
-
-  const { data } = await useGetStories({
-    featured: true,
-  })
 </script>
 
 <template>
   <div class="layout-container">
     <!-- Stories Section -->
     <section>
-      <StoriesCarousel :data="data" />
+      <StoriesCarousel />
       <div class="section-text">
-        <h2>{{ t('pages.home.sections.stories.title') }}</h2>
-        <p>{{ t('pages.home.sections.stories.text') }}</p>
+        <h2>{{ $t('pages.home.sections.stories.title') }}</h2>
+        <p>{{ $t('pages.home.sections.stories.text') }}</p>
       </div>
       <BaseButton
         class="button"
         type="primary"
         variant="label"
-        :label="t('pages.home.sections.stories.button')"
+        :label="$t('pages.home.sections.stories.button')"
         href="/stories"
       />
     </section>
@@ -39,17 +33,17 @@
     <section>
       <NuxtPicture
         src="imgs/anfaenge-prater.jpg"
-        :alt="t('pages.home.sections.prater.imageAlt')"
+        :alt="$t('pages.home.sections.prater.imageAlt')"
       />
       <div class="section-text">
-        <h2>{{ t('pages.home.sections.prater.title') }}</h2>
-        <p>{{ t('pages.home.sections.prater.text') }}</p>
+        <h2>{{ $t('pages.home.sections.prater.title') }}</h2>
+        <p>{{ $t('pages.home.sections.prater.text') }}</p>
       </div>
       <BaseButton
         class="button"
         type="primary"
         variant="label"
-        :label="t('pages.home.sections.prater.button')"
+        :label="$t('pages.home.sections.prater.button')"
         href="/prater"
       />
     </section>
@@ -58,17 +52,17 @@
     <section>
       <NuxtPicture
         src="imgs/kreiskulturhaus-1.jpg"
-        :alt="t('pages.home.sections.create.imageAlt')"
+        :alt="$t('pages.home.sections.create.imageAlt')"
       />
       <div class="section-text">
-        <h2>{{ t('pages.home.sections.create.title') }}</h2>
-        <p>{{ t('pages.home.sections.create.text') }}</p>
+        <h2>{{ $t('pages.home.sections.create.title') }}</h2>
+        <p>{{ $t('pages.home.sections.create.text') }}</p>
       </div>
       <BaseButton
         class="button"
         type="primary"
         variant="label"
-        :label="t('pages.home.sections.create.button')"
+        :label="$t('pages.home.sections.create.button')"
         href="/stories/create"
       />
     </section>
