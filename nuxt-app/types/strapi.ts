@@ -1,5 +1,5 @@
 export type StrapiImage = {
-  alternativeText?: string
+  alternativeText: string | null
   caption: string
   createdAt: string
   documentId: string
@@ -28,9 +28,9 @@ export type LifecycleState = 'created' | 'pending' | 'submitted'
 export type ReviewState = 'pending' | 'rejected' | 'accepted'
 
 export type Page = {
-  text: string
+  text: string | null
   layout: 'text' | 'image-text' | 'text-image'
-  image: StrapiImage
+  image: StrapiImage | null
 }
 
 export type Keyword = {
@@ -51,10 +51,10 @@ export type Story = {
   featured: boolean
   reviewState: LifecycleState
   authorName: string
-  authorEmail?: string
+  authorEmail: string | null
   createdAt: string
   updatedAt: string
   publishedAt: string
   pages: Page[]
-  quote?: string
+  quote: string | null
 }

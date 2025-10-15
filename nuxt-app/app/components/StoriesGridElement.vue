@@ -5,15 +5,15 @@
     selected: boolean
   }
 
-  // Create discriminated union type
   export type ListElement = {
+    variant: 'image' | 'text'
     title: string
-    img?: { src: string; alt: string }
     link: string
     year: string
     author: string
-    quote?: string
     keywords: Keyword[]
+    img: { src: string; alt: string } | null
+    text: string | null
     onKeywordClick: (name: string, selected: boolean) => void
   }
 
@@ -22,156 +22,144 @@
 </script>
 
 <template>
-  <div class="story-card">
-    <div class="story-card-inner">
-      <div class="story-media">
-        <template v-if="img">
-          <NuxtLink :to="link">
-            <NuxtImg
-              :src="img.src"
-              :alt="img.alt"
-              class="story-image"
-            />
-          </NuxtLink>
-        </template>
-        <template v-else-if="quote">
-          <div class="story-quote">
-            <p>{{ quote }}</p>
-          </div>
-        </template>
-      </div>
-      <div class="story-info">
+  <div class="card">
+    <div class="media">
+      <template v-if="img">
         <NuxtLink :to="link">
-          <h2 class="story-title">{{ title }}</h2>
-        </NuxtLink>
-        <div class="story-meta">
-          <p class="story-author">
-            Von
-            <span class="story-author-name">{{ author }}</span>
-          </p>
-          <div class="story-year">
-            <Icon name="mdi:calendar" />
-            <span>{{ year }}</span>
-          </div>
-        </div>
-        <div
-          v-if="keywords.length"
-          class="story-keywords"
-        >
-          <BaseKeyword
-            v-for="keyword in keywords"
-            :id="keyword.id"
-            :key="keyword.id"
-            :name="keyword.name"
-            :selected="keyword.selected"
-            @click="onKeywordClick"
+          <NuxtImg
+            :src="img.src"
+            :alt="img.alt"
+            class="image"
           />
+        </NuxtLink>
+      </template>
+      <template v-else-if="text">
+        <p class="text">{{ text }}</p>
+      </template>
+    </div>
+    <div class="info">
+      <NuxtLink :to="link">
+        <h2 class="title">{{ title }}</h2>
+      </NuxtLink>
+      <div class="meta">
+        <p class="author">
+          Von
+          <span class="author-name">{{ author }}</span>
+        </p>
+        <div class="year">
+          <Icon name="mdi:calendar" />
+          <span>{{ year }}</span>
         </div>
+      </div>
+      <div
+        v-if="keywords.length"
+        class="keywords"
+      >
+        <BaseKeyword
+          v-for="keyword in keywords"
+          :id="keyword.id"
+          :key="keyword.id"
+          :name="keyword.name"
+          :selected="keyword.selected"
+          @click="onKeywordClick"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-  .story-image {
-    width: 100%;
+  .image {
     height: 100%;
     object-fit: cover;
     mix-blend-mode: multiply;
     filter: grayscale(100%);
-    transition:
-      filter 0.2s ease-in-out,
-      transform 0.2s ease-in-out;
+    transition: filter 0.2s ease-in-out;
 
     @media (prefers-reduced-motion: reduce) {
       transition: none;
     }
   }
 
-  .story-card {
-    background: var(--color-background);
-    transition: transform 0.2s ease-in-out;
-    will-change: transform;
-
-    @media (prefers-reduced-motion: reduce) {
-      transition: none;
-    }
-  }
-
-  .story-card-inner {
-    background: var(--color-background);
-    transition: transform 0.2s ease-in-out;
-  }
-
-  .story-card:hover,
-  .story-card:focus {
-    .story-card-inner {
-      transform: translateY(-3%);
-    }
-
-    .story-image {
-      filter: grayscale(0%);
-      transform: scale(1.05);
-    }
-  }
-
-  .story-media {
-    position: relative;
-    aspect-ratio: 16/9;
-    overflow: hidden;
-  }
-
-  .story-quote {
+  .text {
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
-    padding: 2rem;
+    padding: var(--space-xs);
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-style: italic;
-    color: var(--color-white);
-    text-align: center;
-    background: var(--color-primary);
+    white-space: wrap;
+    background: var(--color-white);
+    transition: transform 0.2s ease-in-out;
   }
 
-  .story-info {
+  .card {
+    background: var(--color-background);
+    transition: transform 0.2s ease-in-out;
+
+    &:hover,
+    &:focus {
+      transform: translateY(-1%) scale(1.02);
+
+      .text,
+      .image {
+        filter: grayscale(0%);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  .media {
+    position: relative;
+    height: 300px;
+    cursor: pointer;
+  }
+
+  .info {
     display: flex;
     flex-direction: column;
-    gap: 0.7rem;
-    padding: 1.5rem;
+    gap: var(--space-s);
+    padding: var(--space-s);
+    padding-bottom: 0;
   }
 
-  .story-title {
-    font-size: 1.5rem;
-    line-height: 1.8rem;
+  .title {
+    font-size: var(--step-1);
     color: var(--color-text);
   }
 
-  .story-author {
-    font-size: 0.9rem;
+  .author {
+    /* stylelint-disable-next-line */
+    font-size: var(--step--1);
     color: var(--color-text-light);
 
-    .story-author-name {
+    .author-name {
       font-style: italic;
     }
   }
 
-  .story-year {
+  .year {
     display: flex;
-    gap: 0.5rem;
+    gap: var(--space-3xs);
     align-items: center;
   }
 
-  .story-meta {
+  .meta {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 0.9rem;
     color: var(--color-text-light);
   }
 
-  .story-keywords {
+  .keywords {
     display: flex;
     flex-wrap: wrap;
-    gap: 1.5rem;
+    gap: var(--space-2xs);
   }
 </style>

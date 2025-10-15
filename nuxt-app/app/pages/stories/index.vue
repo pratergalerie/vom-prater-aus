@@ -12,8 +12,8 @@
 
 <template>
   <div>
-    <div class="page-header">
-      <h1 class="page-title">{{ $t('pages.stories.index.title') }}</h1>
+    <div>
+      <h1>{{ $t('pages.stories.index.title') }}</h1>
       <StoriesGrid />
 
       <!-- <StoriesActions
@@ -30,16 +30,4 @@
   </div>
 </template>
 
-<style scoped>
-  .page-header {
-    display: flex;
-    gap: 2rem;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .page-title {
-    margin: 0;
-    font-size: 2.5rem;
-  }
-</style>
+<style scoped></style>

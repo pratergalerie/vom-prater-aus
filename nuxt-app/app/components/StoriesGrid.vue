@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+  import type { StrapiImage } from '~~/types/strapi'
   import type { ListElement } from './StoriesGridElement.vue'
   import StoriesGridElement from './StoriesGridElement.vue'
 
@@ -24,34 +25,62 @@
   const { strapiUrl } = useRuntimeConfig().public
 
   const stories = computed(() =>
-    storiesData.value.map<ListElement & { id: string }>((story) => {
-      // Check if featured story has any images
-      const storyWithImage = story.pages.find((story) => story.image !== null)
-      const hasImage = storyWithImage !== undefined
-      const image = hasImage
-        ? {
-            src: `${strapiUrl}${storyWithImage?.image.url}`,
-            alt: storyWithImage?.image.alternativeText ?? '',
+    storiesData.value
+      .map<(ListElement & { id: string }) | undefined>((story) => {
+        // Check if featured story has any images
+        const firstPageWithImage = story.pages.find(
+          (page) => page.image !== null
+        )
+        const keywords = story.keywords.map((keyword) => ({
+          name: keyword.name,
+          id: keyword.documentId,
+          selected: selectedKeywords.value.includes(keyword.name),
+        }))
+
+        if (firstPageWithImage !== undefined) {
+          return {
+            variant: 'image',
+            id: story.documentId,
+            img: {
+              src: `${strapiUrl}${(firstPageWithImage.image as StrapiImage).url}`,
+              alt:
+                (firstPageWithImage.image as StrapiImage).alternativeText ?? '',
+            },
+            text: null,
+            title: story.title,
+            link: `/stories/${story.slug}`,
+            year: story.year.toString(),
+            author: story.authorName,
+            keywords: keywords,
+            onKeywordClick: handleKeywordClick,
           }
-        : undefined
+        }
 
-      const keywords = story.keywords.map((keyword) => ({
-        name: keyword.name,
-        id: keyword.documentId,
-        selected: selectedKeywords.value.includes(keyword.name),
-      }))
+        const firstPageWithText = story.pages.find((page) => page.text !== null)
 
-      return {
-        id: story.documentId,
-        img: image,
-        title: story.title,
-        link: `/stories/${story.slug}`,
-        year: story.year.toString(),
-        author: story.authorName,
-        keywords: keywords,
-        onKeywordClick: handleKeywordClick,
-      }
-    })
+        if (firstPageWithText !== undefined) {
+          const previewText =
+            firstPageWithText?.text
+              ?.match(/^.*?[.!?](?=\s|$)/)?.[0]
+              .replace(/[.!?]+$/, '...') ?? ''
+
+          return {
+            variant: 'text',
+            id: story.documentId,
+            img: null,
+            text: previewText,
+            title: story.title,
+            link: `/stories/${story.slug}`,
+            year: story.year.toString(),
+            author: story.authorName,
+            keywords: keywords,
+            onKeywordClick: handleKeywordClick,
+          }
+        }
+
+        return undefined
+      })
+      .filter((story) => story !== undefined)
   )
 </script>
 
@@ -74,14 +103,14 @@
     {{ $t('pages.stories.index.noStories') }}
   </p>
 
-  <div
-    v-for="story in stories"
-    :key="story.id"
-    class="stories-grid"
-  >
+  <div class="stories-grid">
     <StoriesGridElement
+      v-for="story in stories"
+      :key="story.id"
+      :variant="story.variant"
       :title="story.title"
       :img="story.img"
+      :text="story.text"
       :link="story.link"
       :year="story.year"
       :author="story.author"
@@ -95,11 +124,12 @@
   .stories-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 4rem 2rem;
+    gap: var(--space-l);
+    padding-top: var(--space-l);
 
     /* Make left column items have a Y offset */
     & div:nth-child(2n + 1) {
-      margin-top: 2rem;
+      margin-top: var(--space-l);
     }
   }
 
