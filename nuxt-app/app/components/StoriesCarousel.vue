@@ -4,6 +4,7 @@
   import Autoplay from 'embla-carousel-autoplay'
   import type { Slide } from './StoriesCarouselSlide.vue'
   import StoriesCarouselSlide from './StoriesCarouselSlide.vue'
+  import type { StrapiImage } from '~~/types/strapi'
 
   const { strapiUrl } = useRuntimeConfig().public
 
@@ -11,7 +12,7 @@
     featured: true,
   })
 
-  const slides = slidesData
+  const slides = slidesData.value
     .map<(Slide & { id: string }) | undefined>((story) => {
       // Check if featured story has any images
       const storyWithImage = story.pages.find((story) => story.image !== null)
@@ -24,8 +25,8 @@
       return {
         id: story.documentId,
         img: {
-          src: `${strapiUrl}${storyWithImage.image.url}`,
-          alt: storyWithImage.image.alternativeText ?? '',
+          src: `${strapiUrl}${(storyWithImage.image as StrapiImage).url}`,
+          alt: (storyWithImage.image as StrapiImage).alternativeText ?? '',
         },
         title: story.title,
         link: `/stories/${story.slug}`,

@@ -4,7 +4,7 @@
     img: { src: string; alt: string }
     link: string
     year: string
-    quote?: string
+    quote: string | null
     author: string
   }
 
