@@ -11,7 +11,7 @@ export interface StoryComponentsPage extends Struct.ComponentSchema {
     layout: Schema.Attribute.Enumeration<['text', 'image-text', 'text-image']> &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'image-text'>;
-    text: Schema.Attribute.Text & Schema.Attribute.Required;
+    text: Schema.Attribute.Text;
   };
 }
 

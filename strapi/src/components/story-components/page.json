@@ -8,7 +8,7 @@
   "attributes": {
     "text": {
       "type": "text",
-      "required": true
+      "required": false
     },
     "image": {
       "type": "media",
