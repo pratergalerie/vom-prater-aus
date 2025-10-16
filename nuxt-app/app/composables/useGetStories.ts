@@ -9,7 +9,7 @@ type Options = {
 export const useGetStories = async (options?: Options) => {
   const { featured, keywords } = options ?? {}
   const { find } = useStrapi()
-  const { locale } = useI18n()
+  // const { locale } = useI18n()
 
   const key = computed(() => {
     const keywordsPart = keywords?.value?.length
@@ -42,7 +42,7 @@ export const useGetStories = async (options?: Options) => {
         filters: {
           ...keywordsFilter,
           ...featuredFilter,
-          language: { $eq: locale.value },
+          // language: { $eq: locale.value },
         },
         sort: ['createdAt:asc'],
         populate: {
