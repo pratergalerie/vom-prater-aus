@@ -29,7 +29,6 @@ export type ReviewState = 'pending' | 'rejected' | 'accepted'
 
 export type Page = {
   text: string | null
-  layout: 'text' | 'image-text' | 'text-image'
   image: StrapiImage | null
 }
 

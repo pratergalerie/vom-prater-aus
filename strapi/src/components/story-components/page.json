@@ -12,31 +12,11 @@
     },
     "image": {
       "type": "media",
-      "conditions": {
-        "visible": {
-          "!=": [
-            {
-              "var": "layout"
-            },
-            "text"
-          ]
-        }
-      },
       "multiple": false,
       "required": false,
       "allowedTypes": [
         "images",
         "files"
-      ]
-    },
-    "layout": {
-      "type": "enumeration",
-      "required": true,
-      "default": "image-text",
-      "enum": [
-        "text",
-        "image-text",
-        "text-image"
       ]
     }
   },
