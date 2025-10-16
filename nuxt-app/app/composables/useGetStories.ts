@@ -46,7 +46,7 @@ export const useGetStories = async (options?: Options) => {
         },
         sort: ['createdAt:asc'],
         populate: {
-          pages: { populate: 'image' },
+          pages: { populate: '*' },
           keywords: { fields: ['name', 'documentId'] },
         },
       })
