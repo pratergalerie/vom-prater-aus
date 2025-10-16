@@ -46,9 +46,10 @@
   .keyword {
     --color-highlight: var(--color-grey-light);
 
-    padding: 0.25rem 0.75rem;
+    padding: var(--space-3xs) var(--space-2xs);
     font-family: var(--font-button);
-    font-size: 0.8rem;
+    /* stylelint-disable-next-line */
+    font-size: var(--step--1);
     color: var(--color-text);
     cursor: pointer;
     border: none;
