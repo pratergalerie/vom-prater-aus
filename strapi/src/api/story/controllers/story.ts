@@ -8,6 +8,9 @@ export default factories.createCoreController(
 
       const entity = await strapi.db.query("api::story.story").findOne({
         where: { slug },
+        populate: {
+          pages: { populate: ["image"] },
+        },
       });
 
       const sanitizedEntity = await this.sanitizeOutput(entity, ctx);
