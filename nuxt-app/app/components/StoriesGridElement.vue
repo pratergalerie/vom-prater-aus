@@ -34,7 +34,9 @@
         </NuxtLink>
       </template>
       <template v-else-if="text">
-        <p class="text">{{ text }}</p>
+        <NuxtLink :to="link">
+          <p class="text">{{ text }}</p>
+        </NuxtLink>
       </template>
     </div>
     <div class="info">
