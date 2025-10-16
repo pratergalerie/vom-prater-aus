@@ -103,7 +103,10 @@
     {{ $t('pages.stories.index.noStories') }}
   </p>
 
-  <div class="stories-grid">
+  <div
+    v-else
+    class="stories-grid"
+  >
     <StoriesGridElement
       v-for="story in stories"
       :key="story.id"
