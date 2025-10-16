@@ -1,7 +1,18 @@
-/**
- * story controller
- */
+import { factories } from "@strapi/strapi";
 
-import { factories } from '@strapi/strapi'
+export default factories.createCoreController(
+  "api::story.story",
+  ({ strapi }) => ({
+    async findOne(ctx) {
+      const { id: slug } = ctx.params;
 
-export default factories.createCoreController('api::story.story');
+      const entity = await strapi.db.query("api::story.story").findOne({
+        where: { slug },
+      });
+
+      const sanitizedEntity = await this.sanitizeOutput(entity, ctx);
+
+      return this.transformResponse(sanitizedEntity);
+    },
+  })
+);
