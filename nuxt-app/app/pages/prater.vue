@@ -280,7 +280,7 @@
   section {
     display: flex;
     flex-direction: column;
-    gap: var(--space-xl);
+    gap: var(--space-3xl);
   }
 
   .intro {
@@ -301,7 +301,7 @@
   .timeline {
     display: flex;
     flex-direction: column;
-    gap: var(--space-xl-2xl);
+    gap: var(--space-3xl);
   }
 
   article {
