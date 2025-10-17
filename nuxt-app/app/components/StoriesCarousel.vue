@@ -15,18 +15,19 @@
   const slides = slidesData.value
     .map<(Slide & { id: string }) | undefined>((story) => {
       // Check if featured story has any images
-      const storyWithImage = story.pages.find((story) => story.image !== null)
-      const hasImage = storyWithImage !== undefined
-
-      if (!hasImage) {
+      const firstSectionWithImage = story.sections.find(
+        (section) => section.image !== null
+      )
+      if (firstSectionWithImage === undefined) {
         return undefined
       }
 
       return {
         id: story.documentId,
         img: {
-          src: `${strapiUrl}${(storyWithImage.image as StrapiImage).url}`,
-          alt: (storyWithImage.image as StrapiImage).alternativeText ?? '',
+          src: `${strapiUrl}${(firstSectionWithImage.image as StrapiImage).url}`,
+          alt:
+            (firstSectionWithImage.image as StrapiImage).alternativeText ?? '',
         },
         title: story.title,
         link: `/stories/${story.slug}`,

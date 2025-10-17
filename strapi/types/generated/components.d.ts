@@ -3,7 +3,7 @@ import type { Schema, Struct } from '@strapi/strapi';
 export interface StoryComponentsPage extends Struct.ComponentSchema {
   collectionName: 'components_story_components_pages';
   info: {
-    displayName: 'Page';
+    displayName: 'Section';
     icon: 'file';
   };
   attributes: {

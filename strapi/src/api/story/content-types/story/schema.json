@@ -67,7 +67,7 @@
       "target": "api::keyword.keyword",
       "mappedBy": "stories"
     },
-    "pages": {
+    "sections": {
       "type": "component",
       "component": "story-components.page",
       "repeatable": true,

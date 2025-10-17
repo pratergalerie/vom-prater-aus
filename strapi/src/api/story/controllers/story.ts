@@ -9,7 +9,7 @@ export default factories.createCoreController(
       const entity = await strapi.db.query("api::story.story").findOne({
         where: { slug },
         populate: {
-          pages: { populate: ["image"] },
+          sections: { populate: ["image"] },
         },
       });
 

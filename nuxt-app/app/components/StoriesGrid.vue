@@ -28,8 +28,8 @@
     storiesData.value
       .map<(ListElement & { id: string }) | undefined>((story) => {
         // Check if featured story has any images
-        const firstPageWithImage = story.pages.find(
-          (page) => page.image !== null
+        const firstSectionWithImage = story.sections.find(
+          (section) => section.image !== null
         )
         const keywords = story.keywords.map((keyword) => ({
           name: keyword.name,
@@ -37,14 +37,15 @@
           selected: selectedKeywords.value.includes(keyword.name),
         }))
 
-        if (firstPageWithImage !== undefined) {
+        if (firstSectionWithImage !== undefined) {
           return {
             variant: 'image',
             id: story.documentId,
             img: {
-              src: `${strapiUrl}${(firstPageWithImage.image as StrapiImage).url}`,
+              src: `${strapiUrl}${(firstSectionWithImage.image as StrapiImage).url}`,
               alt:
-                (firstPageWithImage.image as StrapiImage).alternativeText ?? '',
+                (firstSectionWithImage.image as StrapiImage).alternativeText ??
+                '',
             },
             text: null,
             title: story.title,
@@ -56,11 +57,13 @@
           }
         }
 
-        const firstPageWithText = story.pages.find((page) => page.text !== null)
+        const firstSectionWithText = story.sections.find(
+          (section) => section.text !== null
+        )
 
-        if (firstPageWithText !== undefined) {
+        if (firstSectionWithText !== undefined) {
           const previewText =
-            firstPageWithText?.text
+            firstSectionWithText?.text
               ?.match(/^.*?[.!?](?=\s|$)/)?.[0]
               .replace(/[.!?]+$/, '...') ?? ''
 
@@ -134,9 +137,5 @@
     & div:nth-child(2n + 1) {
       margin-top: var(--space-l);
     }
-  }
-
-  .error {
-    color: var(--color-error);
   }
 </style>

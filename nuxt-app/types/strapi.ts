@@ -27,7 +27,7 @@ export type LifecycleState = 'created' | 'pending' | 'submitted'
 
 export type ReviewState = 'pending' | 'rejected' | 'accepted'
 
-export type Page = {
+export type Section = {
   text: string | null
   image: StrapiImage | null
 }
@@ -54,6 +54,6 @@ export type Story = {
   createdAt: string
   updatedAt: string
   publishedAt: string
-  pages: Page[]
+  sections: Section[]
   quote: string | null
 }
