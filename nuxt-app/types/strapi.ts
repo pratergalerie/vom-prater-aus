@@ -23,10 +23,6 @@ export type StrapiImage = {
 
 export type Language = 'de' | 'en'
 
-export type LifecycleState = 'created' | 'pending' | 'submitted'
-
-export type ReviewState = 'pending' | 'rejected' | 'accepted'
-
 export type Section = {
   text: string | null
   image: StrapiImage | null
@@ -48,7 +44,6 @@ export type Story = {
   year: number
   keywords: Keyword[]
   featured: boolean
-  reviewState: LifecycleState
   authorName: string
   authorEmail: string | null
   createdAt: string
