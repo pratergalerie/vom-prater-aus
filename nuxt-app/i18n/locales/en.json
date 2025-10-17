@@ -173,6 +173,12 @@
           "explorer": "Explorer View"
         }
       },
+      "story": {
+        "loading": "Loading story...",
+        "error": "Error loading story",
+        "unavailable": "Story is unavailable at the moment.",
+        "memoryBy": "Erinnerung von"
+      },
       "edit": {
         "modals": {
           "deletePage": {

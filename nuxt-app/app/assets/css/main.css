@@ -31,3 +31,7 @@ img {
   width: 100%;
   object-fit: cover;
 }
+
+.error {
+  color: var(--color-error);
+}

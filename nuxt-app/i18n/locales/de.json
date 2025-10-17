@@ -173,6 +173,12 @@
           "explorer": "Entdecken-Ansicht"
         }
       },
+      "story": {
+        "loading": "Geschichte wird geladen...",
+        "error": "Fehler beim Laden der Geschichte",
+        "unavailable": "Derzeit ist die Geschichte nicht verfügbar.",
+        "memoryBy": "Erinnerung von"
+      },
       "edit": {
         "modals": {
           "deletePage": {
