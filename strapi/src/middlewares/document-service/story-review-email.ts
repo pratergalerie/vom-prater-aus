@@ -29,12 +29,11 @@ export const storyReviewEmailMiddleware = () => {
         slug,
         language,
       } = context.params.data;
-      const hasEmail = authorEmail !== undefined;
 
       const url = env("PUBLIC_URL", "");
       const link = `${url}/stories/${slug}`;
 
-      if (reviewStatePrev === "pending" && hasEmail) {
+      if (reviewStatePrev === "pending" && authorEmail) {
         switch (reviewStateNext) {
           case "rejected":
             try {

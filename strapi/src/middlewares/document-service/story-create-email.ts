@@ -5,9 +5,9 @@ export const storyCreateEmailMiddleware = () => {
   return async (context, next) => {
     if (context.uid === "api::story.story" && context.action === "create") {
       const isCreatedByUser = context.params.populate?.createdBy === undefined;
+      const { authorEmail, title, uuid, language } = context.params.data;
 
-      if (isCreatedByUser) {
-        const { authorEmail, title, uuid, language } = context.params.data;
+      if (isCreatedByUser && authorEmail) {
         const url = env("PUBLIC_URL", "https://localhost:3000");
         const link = `${url}/draft-stories/${uuid}`;
 

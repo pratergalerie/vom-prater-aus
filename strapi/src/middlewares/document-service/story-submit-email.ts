@@ -21,18 +21,17 @@ export const storySubmitEmailMiddleware = () => {
         authorEmail,
         language,
       } = context.params.data;
-      const hasEmail = authorEmail !== undefined;
 
       if (
         lifecyclePrev === "pending" &&
         lifecycleNext === "submitted" &&
-        hasEmail
+        authorEmail
       ) {
         try {
           await strapi.plugins.email.services.email.sendTemplatedEmail(
             { to: authorEmail },
             language === "de" ? submittedTemplateDe : submittedTemplateEn,
-            {},
+            {}
           );
         } catch (error) {
           throw new errors.ApplicationError(`Email sending failed: ${error}`);
