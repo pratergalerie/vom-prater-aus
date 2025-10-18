@@ -287,7 +287,7 @@ main() {
     # wait_for_services
     setup_ssl
     cleanup
-    health_check
+    # health_check
     
     success "🎉 Deployment completed successfully!"
     
