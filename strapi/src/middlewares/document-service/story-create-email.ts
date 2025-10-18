@@ -1,4 +1,4 @@
-import { errors } from "@strapi/utils";
+import { env, errors } from "@strapi/utils";
 import { createdTemplateDe, createdTemplateEn } from "./email-templates";
 
 export const storyCreateEmailMiddleware = () => {
@@ -8,12 +8,14 @@ export const storyCreateEmailMiddleware = () => {
 
       if (isCreatedByUser) {
         const { authorEmail, title, uuid, language } = context.params.data;
+        const url = env("PUBLIC_URL", "https://localhost:3000");
+        const link = `${url}/draft-stories/${uuid}`;
 
         try {
           await strapi.plugins.email.services.email.sendTemplatedEmail(
             { to: authorEmail },
             language === "de" ? createdTemplateDe : createdTemplateEn,
-            { story: { title, link: uuid } },
+            { story: { title, link } }
           );
         } catch (error) {
           throw new errors.ApplicationError(`Email sending failed: ${error}`);

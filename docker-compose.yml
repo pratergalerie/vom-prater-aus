@@ -54,6 +54,7 @@ services:
     restart: unless-stopped
     environment:
       NODE_ENV: development
+      PUBLIC_URL: ${PUBLIC_URL}
       DATABASE_HOST: strapiDB
       DATABASE_NAME: ${DATABASE_NAME}
       DATABASE_USERNAME: ${DATABASE_USERNAME}
@@ -86,6 +87,7 @@ services:
     restart: unless-stopped
     environment:
       NODE_ENV: production
+      PUBLIC_URL: ${PUBLIC_URL}
       DATABASE_HOST: strapiDB
       DATABASE_NAME: ${DATABASE_NAME}
       DATABASE_USERNAME: ${DATABASE_USERNAME}

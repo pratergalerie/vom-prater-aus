@@ -1,4 +1,4 @@
-import { errors } from "@strapi/utils";
+import { env, errors } from "@strapi/utils";
 import {
   acceptedTemplateDe,
   acceptedTemplateEn,
@@ -31,6 +31,9 @@ export const storyReviewEmailMiddleware = () => {
       } = context.params.data;
       const hasEmail = authorEmail !== undefined;
 
+      const url = env("PUBLIC_URL", "");
+      const link = `${url}/stories/${slug}`;
+
       if (reviewStatePrev === "pending" && hasEmail) {
         switch (reviewStateNext) {
           case "rejected":
@@ -38,11 +41,11 @@ export const storyReviewEmailMiddleware = () => {
               await strapi.plugins.email.services.email.sendTemplatedEmail(
                 { to: authorEmail },
                 language === "de" ? rejectedTemplateDe : rejectedTemplateEn,
-                { story: { title, link: slug }, reason: rejectionReason },
+                { story: { title, link }, reason: rejectionReason }
               );
             } catch (error) {
               throw new errors.ApplicationError(
-                `Email sending failed: ${error}`,
+                `Email sending failed: ${error}`
               );
             }
             break;
@@ -51,11 +54,11 @@ export const storyReviewEmailMiddleware = () => {
               await strapi.plugins.email.services.email.sendTemplatedEmail(
                 { to: authorEmail },
                 language === "de" ? acceptedTemplateDe : acceptedTemplateEn,
-                { story: { title, link: slug } },
+                { story: { title, link } }
               );
             } catch (error) {
               throw new errors.ApplicationError(
-                `Email sending failed: ${error}`,
+                `Email sending failed: ${error}`
               );
             }
             break;
