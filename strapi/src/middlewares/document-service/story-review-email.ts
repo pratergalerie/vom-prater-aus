@@ -27,15 +27,16 @@ export const storyReviewEmailMiddleware = () => {
         rejectionReason,
         title,
         slug,
+        uuid,
         language,
       } = context.params.data;
-
       const url = env("PUBLIC_URL", "");
-      const link = `${url}/stories/${slug}`;
 
       if (reviewStatePrev === "pending" && authorEmail) {
         switch (reviewStateNext) {
           case "rejected":
+            const link = `${url}/draft-stories/${uuid}`;
+
             try {
               await strapi.plugins.email.services.email.sendTemplatedEmail(
                 { to: authorEmail },
@@ -49,6 +50,8 @@ export const storyReviewEmailMiddleware = () => {
             }
             break;
           case "accepted": {
+            const link = `${url}/stories/${slug}`;
+
             try {
               await strapi.plugins.email.services.email.sendTemplatedEmail(
                 { to: authorEmail },

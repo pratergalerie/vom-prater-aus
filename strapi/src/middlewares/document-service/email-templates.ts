@@ -83,7 +83,7 @@ export const rejectedTemplateDe: EmailTemplate = {
 
   <p><%= reason %></p>
 
-  <p>Aber gib nicht auf! Deine Geschichte kann jetzt wieder über den Link bearbeitet werden, den du per E-Mail erhalten hast.</p>
+  <p>Aber gib nicht auf! Deine Geschichte kann jetzt wieder über diesen Link bearbeitet werden: <a href="<%= story.link %>"><%= story.title %></a>.</p>
 
   <p>Viele Grüße,<br>
   Dein Vom Prater aus-Team</p>
@@ -102,7 +102,7 @@ export const rejectedTemplateEn: EmailTemplate = {
 
   <p><%= reason %></p>
 
-  <p>But don’t give up! You can now edit your story again using the link you received by email.</p>
+  <p>But don’t give up! You can now edit your story again here: <a href="<%= story.link %>"><%= story.title %></a>.</p>
 
   <p>We’re looking forward to your next story!</p>
 
