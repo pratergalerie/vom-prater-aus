@@ -151,9 +151,9 @@ services:
     networks:
       - app-network
     depends_on:
-      - nuxt-app-prod:
+      nuxt-app-prod:
         condition: service_started
-      - strapi-prod:
+      strapi-prod:
         condition: service_healthy
 
   certbot:
