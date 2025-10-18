@@ -157,7 +157,7 @@ start_application() {
     mkdir -p nginx/www/.well-known/acme-challenge
     
     # Start the application
-    docker compose -f docker-compose.yml --profile prod up -d
+    docker compose -f docker-compose.yml --profile prod up --build -d
     
     success "Application started"
 }
