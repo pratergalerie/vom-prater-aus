@@ -18,6 +18,7 @@ export const useMenu = () => {
     'stories-id',
     'stories-slug',
     'stories-submitted',
+    'draft-stories-uuid',
   ]
   const menuOrder = [
     'index',
@@ -40,6 +41,7 @@ export const useMenu = () => {
     'stories-id',
     'stories-slug',
     'stories-submitted',
+    'draft-stories-uuid',
   ]
 
   const footerOrder = [
