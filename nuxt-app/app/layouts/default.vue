@@ -26,12 +26,15 @@
 <style scoped>
   .layout-wrapper {
     position: relative;
+    display: grid;
+    grid-template-rows: max-content 1fr max-content;
     min-height: 100vh;
     overflow: clip;
   }
 
   main {
     box-sizing: border-box;
+    width: 100%;
     max-width: var(--max-width);
     padding: var(--space-2xl-3xl) var(--space-s-m);
     padding-top: var(--space-s-m);
