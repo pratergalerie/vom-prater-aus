@@ -101,6 +101,20 @@ services:
       - app-network
     depends_on:
       - strapiDB
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "--no-verbose",
+          "--tries=1",
+          "--spider",
+          "http://localhost:1337/_health",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
 
   strapiDB:
     container_name: strapiDB
@@ -137,8 +151,10 @@ services:
     networks:
       - app-network
     depends_on:
-      - nuxt-app-prod
-      - strapi-prod
+      - nuxt-app-prod:
+        condition: service_started
+      - strapi-prod:
+        condition: service_healthy
 
   certbot:
     image: certbot/certbot
