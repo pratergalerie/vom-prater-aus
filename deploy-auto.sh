@@ -145,6 +145,9 @@ pull_images() {
     success "Latest images pulled"
 }
 
+# Build latest strapi image
+
+
 # Start application
 start_application() {
     log "Starting application..."
@@ -281,7 +284,7 @@ main() {
     stop_containers
     pull_images
     start_application
-    wait_for_services
+    # wait_for_services
     setup_ssl
     cleanup
     health_check
