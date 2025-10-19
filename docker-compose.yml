@@ -86,6 +86,7 @@ services:
     environment:
       NODE_ENV: production
       PUBLIC_URL: ${PUBLIC_URL}
+      STRAPI_PUBLIC_URL: ${STRAPI_PUBLIC_URL}
       DATABASE_HOST: strapiDB
       DATABASE_NAME: ${DATABASE_NAME}
       DATABASE_USERNAME: ${DATABASE_USERNAME}
