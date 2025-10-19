@@ -95,6 +95,8 @@ services:
       ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
     volumes:
+      - ./strapi/config:/opt/app/config
+      - ./strapi/src:/opt/app/src
       - ./strapi/.env:/opt/app/.env
       - ./strapi/public/uploads:/opt/app/public/uploads
     ports:
