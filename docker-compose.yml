@@ -44,7 +44,7 @@ services:
       - strapiDB
 
   strapi-dev:
-    container_name: strapi
+    container_name: strapi-dev
     build:
       context: ./strapi
       dockerfile: Dockerfile.dev
@@ -76,7 +76,7 @@ services:
       - strapiDB
 
   strapi-prod:
-    container_name: strapi
+    container_name: strapi-prod
     build:
       context: ./strapi
       dockerfile: Dockerfile
