@@ -6,7 +6,7 @@
   import StoriesCarouselSlide from './StoriesCarouselSlide.vue'
   import type { StrapiImage } from '~~/types/strapi'
 
-  const { strapiUrl } = useRuntimeConfig().public
+  const { url: strapiUrl } = useRuntimeConfig().public.strapi
 
   const { data: slidesData } = await useGetStories({
     featured: true,

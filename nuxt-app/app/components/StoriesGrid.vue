@@ -22,7 +22,7 @@
     error,
   } = await useGetStories({ keywords: selectedKeywords })
 
-  const { strapiUrl } = useRuntimeConfig().public
+  const { url: strapiUrl } = useRuntimeConfig().public.strapi
 
   const stories = computed(() =>
     storiesData.value

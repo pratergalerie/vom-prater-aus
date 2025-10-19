@@ -16,6 +16,7 @@ services:
       - NODE_ENV=development
       - NUXT_STRAPI_URL=${STRAPI_URL}
       - NUXT_PUBLIC_STRAPI_URL=${STRAPI_PUBLIC_URL}
+      - NUXT_STRAPI_TOKEN=${STRAPI_TOKEN}
       - NUXT_PUBLIC_STRAPI_TOKEN=${STRAPI_TOKEN}
       - STYLELINT_CSS_VARIABLES_PATH=/workspace/app/assets/css/variables.css
     networks:
@@ -36,6 +37,7 @@ services:
     environment:
       - NUXT_STRAPI_URL=${STRAPI_URL}
       - NUXT_PUBLIC_STRAPI_URL=${STRAPI_PUBLIC_URL}
+      - NUXT_STRAPI_TOKEN=${STRAPI_TOKEN}
       - NUXT_PUBLIC_STRAPI_TOKEN=${STRAPI_TOKEN}
     networks:
       - app-network

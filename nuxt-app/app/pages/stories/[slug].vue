@@ -2,7 +2,7 @@
   import { useGetStory } from '~/composables/useGetStory'
 
   const route = useRoute()
-  const { strapiUrl } = useRuntimeConfig().public
+  const { url: strapiUrl } = useRuntimeConfig().public.strapi
 
   const slug = route.params.slug as string
   const { data: storyData, status, error } = await useGetStory(slug)
