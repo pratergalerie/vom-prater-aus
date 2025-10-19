@@ -5,4 +5,7 @@ export default ({ env }) => ({
     keys: env.array("APP_KEYS"),
   },
   url: env("STRAPI_PUBLIC_URL", ""),
+  proxy: {
+    koa: true, // This tells Koa to trust X-Forwarded-Proto headers
+  },
 });
