@@ -57,6 +57,7 @@
     display: flex;
     gap: var(--space-2xs);
     align-items: center;
+    width: max-content;
   }
 
   .checkbox {
