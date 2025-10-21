@@ -54,10 +54,33 @@
   const validationSchema = toTypedSchema(
     z.object({
       termsPrivacy: z.literal(true, {
-        message: 'pages.create.form.inputs.termsPrivacy.errors.required',
+        errorMap: (error) => {
+          switch (error.code) {
+            case 'invalid_literal': {
+              return {
+                message:
+                  'pages.create.form.inputs.termsPrivacy.errors.required',
+              }
+            }
+            default: {
+              return { message: '' }
+            }
+          }
+        },
       }),
       moderation: z.literal(true, {
-        message: 'pages.create.form.inputs.moderation.errors.required',
+        errorMap: (error) => {
+          switch (error.code) {
+            case 'invalid_literal': {
+              return {
+                message: 'pages.create.form.inputs.moderation.errors.required',
+              }
+            }
+            default: {
+              return { message: '' }
+            }
+          }
+        },
       }),
       authorName: z
         .string({
