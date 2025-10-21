@@ -36,6 +36,7 @@ export default defineNuxtConfig({
   },
 
   css: ['@/assets/css/main.css'],
+
   modules: [
     '@pinia/nuxt',
     [
@@ -64,6 +65,7 @@ export default defineNuxtConfig({
     '@tresjs/nuxt',
     '@hypernym/nuxt-anime',
     '@nuxtjs/strapi',
+    '@vee-validate/nuxt',
   ],
 
   image: {

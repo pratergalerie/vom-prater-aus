@@ -1,3 +1,5 @@
+import type { LanguageCode } from '~/pages/stories/create.vue'
+
 export type StrapiImage = {
   alternativeText: string | null
   caption: string
@@ -21,9 +23,8 @@ export type StrapiImage = {
   width: number
 }
 
-export type Language = 'de' | 'en'
-
 export type Section = {
+  documentId: string
   text: string | null
   image: StrapiImage | null
 }
@@ -40,7 +41,7 @@ export type Story = {
   title: string
   slug: string
   uuid: string
-  language: Language
+  language: LanguageCode
   year: number
   keywords: Keyword[]
   featured: boolean

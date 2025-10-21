@@ -1,410 +1,256 @@
 <script setup lang="ts">
-  useHead({
-    title: 'Vom Prater aus - Write your own story',
-    meta: [
-      {
-        name: 'description',
-        content: 'Create your own Berliner Prater story',
-      },
-    ],
-  })
-
-  const inputTypes = {
-    TEXT: 'text',
-    EMAIL: 'email',
-    PASSWORD: 'password',
-    SELECT: 'select',
-  } as const
-
-  type InputType = 'text' | 'email' | 'password' | 'select'
-
-  const step = ref(0)
-  function nextStep() {
-    step.value++
-  }
-  function previousStep() {
-    step.value--
-  }
-
-  const { t } = useI18n({ useScope: 'global' })
-
-  type StoryFormData = {
-    authorName: string
-    email: string
-    title: string
-    year: number
-    locale: 'en' | 'de'
-  }
-
-  type StoryFormInput = {
-    key: keyof StoryFormData
-    type: InputType
-    label: string
-    placeholder: string
-    validationKey: keyof typeof validationRules
-  }
-
-  const storyFormData = ref<StoryFormData>({
-    authorName: '',
-    email: '',
-    title: '',
-    year: new Date().getFullYear(),
-    locale: 'de',
-  })
-
-  const termsAccepted = ref(false)
-  const moderationAccepted = ref(false)
-  const isCreating = ref(false)
-  const error = ref<string | null>(null)
-
-  const formErrors = ref({
-    authorName: '',
-    email: '',
-    title: '',
-    year: '',
-    locale: '',
-  })
-
-  function handleValidationError(
-    field: keyof typeof formErrors.value,
-    error: string | null
-  ) {
-    formErrors.value[field] = error || ''
-  }
-
-  const form = computed(() => {
-    return {
-      title: t('pages.create.form.title'),
-      steps: [
-        {
-          text: t('pages.create.form.steps.authorInfo.text'),
-          showNext: true,
-          showBack: false,
-          showCreate: false,
-          info: {
-            link: t('pages.create.form.steps.authorInfo.info.link'),
-            checkbox: t('pages.create.form.steps.authorInfo.info.checkbox'),
-          },
-          inputs: [
-            {
-              key: 'authorName',
-              type: inputTypes.TEXT,
-              label: t(
-                'pages.create.form.steps.authorInfo.inputs.authorName.label'
-              ),
-              placeholder: t(
-                'pages.create.form.steps.authorInfo.inputs.authorName.placeholder'
-              ),
-              validationKey: 'authorName',
-            } as StoryFormInput,
-            {
-              key: 'email',
-              type: inputTypes.EMAIL,
-              label: t('pages.create.form.steps.authorInfo.inputs.email.label'),
-              placeholder: t(
-                'pages.create.form.steps.authorInfo.inputs.email.placeholder'
-              ),
-              validationKey: 'email',
-            } as StoryFormInput,
-          ],
-        },
-        {
-          text: t('pages.create.form.steps.storyInfo.text'),
-          showNext: false,
-          showBack: true,
-          showCreate: true,
-          inputs: [
-            {
-              key: 'title',
-              type: inputTypes.TEXT,
-              label: t('pages.create.form.steps.storyInfo.inputs.title.label'),
-              placeholder: t(
-                'pages.create.form.steps.storyInfo.inputs.title.placeholder'
-              ),
-              validationKey: 'title',
-            } as StoryFormInput,
-            {
-              key: 'year',
-              type: inputTypes.SELECT,
-              label: t('pages.create.form.steps.storyInfo.inputs.year.label'),
-              placeholder: t(
-                'pages.create.form.steps.storyInfo.inputs.year.placeholder'
-              ),
-            } as StoryFormInput,
-            {
-              key: 'locale',
-              type: inputTypes.SELECT,
-              label: t(
-                'pages.create.form.steps.storyInfo.inputs.language.label'
-              ),
-              placeholder: t(
-                'pages.create.form.steps.storyInfo.inputs.language.placeholder'
-              ),
-            } as StoryFormInput,
-          ],
-        },
-      ],
-    }
-  })
-
-  const isFormDisabled = computed(() => {
-    const authorName = storyFormData.value.authorName?.trim() || ''
-    const email = storyFormData.value.email?.trim() || ''
-    const title = storyFormData.value.title?.trim() || ''
-    const termsChecked = termsAccepted.value
-    const moderationChecked = moderationAccepted.value
-    const authorNameError = formErrors.value.authorName
-    const emailError = formErrors.value.email
-    const titleError = formErrors.value.title
-
-    if (!form.value || !form.value?.steps) {
-      return true
-    }
-
-    if (step.value === 0) {
-      const conditions = {
-        authorNameEmpty: !authorName,
-        emailEmpty: !email,
-        termsNotChecked: !termsChecked,
-        moderationNotChecked: !moderationChecked,
-        hasAuthorNameError: !!authorNameError,
-        hasEmailError: !!emailError,
-      }
-
-      const isDisabled = Object.values(conditions).some(
-        (condition) => condition
-      )
-      return isDisabled
-    }
-
-    if (step.value === 1) {
-      const conditions = {
-        titleEmpty: !title,
-        hasTitleError: !!titleError,
-      }
-
-      const isDisabled = Object.values(conditions).some(
-        (condition) => condition
-      )
-      return isDisabled
-    }
-
-    return true
-  })
-
-  const currentStep = computed(() => form.value.steps[step.value])
-
-  async function createStory() {
-    isCreating.value = true
-    error.value = null
-
-    try {
-      await new Promise((resolve, reject) => {
-        reject()
-      })
-    } catch (err) {
-      console.error('Error in createStory:', err)
-      error.value = 'Failed to create story. Please try again.'
-    } finally {
-      isCreating.value = false
-    }
-  }
-
-  const getInputType = (type: InputType): 'text' | 'email' | 'password' => {
-    return type as 'text' | 'email' | 'password'
-  }
-
-  const getTextInputValue = (key: 'authorName' | 'email' | 'title'): string => {
-    return storyFormData.value[key]
-  }
-
-  const setInputValue = (key: keyof StoryFormData, value: string | number) => {
-    if (key === 'year') {
-      storyFormData.value[key] = Number(value)
-    } else if (key === 'locale') {
-      storyFormData.value[key] = value as 'en' | 'de'
-    } else {
-      storyFormData.value[key] = String(value)
-    }
-  }
+  import { useForm } from 'vee-validate'
+  import { toTypedSchema } from '@vee-validate/zod'
+  import * as z from 'zod'
 
   const localeOptions = [
-    { label: 'English', value: 'en' },
-    { label: 'Deutsch', value: 'de' },
-  ]
+    'sq', // Albanian
+    'hy', // Armenian
+    'az', // Azerbaijani
+    'eu', // Basque
+    'be', // Belarusian
+    'bs', // Bosnian
+    'bg', // Bulgarian
+    'ca', // Catalan
+    'hr', // Croatian
+    'cs', // Czech
+    'da', // Danish
+    'de', // Deutsch (German)
+    'nl', // Dutch
+    'en', // English
+    'et', // Estonian
+    'fi', // Finnish
+    'fr', // French
+    'ka', // Georgian
+    'el', // Greek
+    'hu', // Hungarian
+    'is', // Icelandic
+    'ga', // Irish (Gaeilge)
+    'it', // Italian
+    'kk', // Kazakh
+    'ku', // Kurdish
+    'lv', // Latvian
+    'lt', // Lithuanian
+    'lb', // Luxembourgish
+    'mk', // Macedonian
+    'mt', // Maltese
+    'no', // Norwegian
+    'pl', // Polish
+    'pt', // Portuguese
+    'ro', // Romanian
+    'ru', // Russian
+    'sr', // Serbian
+    'sk', // Slovak
+    'sl', // Slovenian
+    'es', // Spanish
+    'sv', // Swedish
+    'tr', // Turkish
+    'uk', // Ukrainian
+    'cy', // Welsh (Cymraeg)
+  ] as const
 
-  const yearOptions = computed(() => {
-    const currentYear = new Date().getFullYear()
-    return Array.from({ length: 200 }, (_, i) => ({
-      label: (currentYear - i).toString(),
-      value: currentYear - i,
-    }))
+  export type LanguageCode = (typeof localeOptions)[number]
+
+  const validationSchema = toTypedSchema(
+    z.object({
+      termsPrivacy: z.literal(true, {
+        message: 'pages.create.form.inputs.termsPrivacy.errors.required',
+      }),
+      moderation: z.literal(true, {
+        message: 'pages.create.form.inputs.moderation.errors.required',
+      }),
+      authorName: z
+        .string({
+          message: 'pages.create.form.inputs.authorName.errors.required',
+        })
+        .nonempty({
+          message: 'pages.create.form.inputs.authorName.errors.required',
+        }),
+      authorEmail: z
+        .string({
+          message: 'pages.create.form.inputs.authorEmail.errors.required',
+        })
+        .nonempty({
+          message: 'pages.create.form.inputs.authorEmail.errors.required',
+        })
+        .email({
+          message: 'pages.create.form.inputs.authorEmail.errors.invalid',
+        }),
+      storyTitle: z
+        .string({
+          message: 'pages.create.form.inputs.storyTitle.errors.required',
+        })
+        .nonempty({
+          message: 'pages.create.form.inputs.storyTitle.errors.required',
+        }),
+      storyYear: z.coerce
+        .number({
+          message: 'pages.create.form.inputs.storyYear.errors.required',
+        })
+        .int({
+          message: 'pages.create.form.inputs.storyYear.errors.invalid',
+        })
+        .min(1831, {
+          message: 'pages.create.form.inputs.storyYear.errors.minMax',
+        })
+        .max(2017, {
+          message: 'pages.create.form.inputs.storyYear.errors.minMax',
+        }),
+      storyLanguage: z
+        .string({
+          message: 'pages.create.form.inputs.storyLanguage.errors.required',
+        })
+        .nonempty({
+          message: 'pages.create.form.inputs.storyLanguage.errors.required',
+        }),
+    })
+  )
+
+  const { handleSubmit } = useForm({
+    validationSchema,
+    initialValues: {
+      storyLanguage: '',
+    },
+  })
+
+  const onSubmit = handleSubmit((values) => {
+    alert(JSON.stringify(values, null, 2))
   })
 </script>
 
 <template>
   <section>
-    <h1>{{ $t('pages.create.form.title') }}</h1>
-    <form>
-      <template v-if="currentStep">
-        <p>{{ currentStep.text }}</p>
-        <template v-if="currentStep.info">
-          <div class="checks">
-            <div class="terms-privacy-check">
-              <BaseCheckbox
-                id="checkbox"
-                v-model="termsAccepted"
-              />
-              <i18n-t
-                scope="global"
-                keypath="pages.create.form.steps.authorInfo.info.checkbox"
-                tag="span"
-              >
-                <template #termsOfUse>
-                  <NuxtLink
-                    class="dark"
-                    to="/terms"
-                    >{{
-                      $t('pages.create.form.steps.authorInfo.info.termsOfUse')
-                    }}</NuxtLink
-                  >
-                </template>
-                <template #privacyPolicy>
-                  <NuxtLink
-                    class="dark"
-                    to="/privacy"
-                    >{{
-                      $t(
-                        'pages.create.form.steps.authorInfo.info.privacyPolicy'
-                      )
-                    }}</NuxtLink
-                  >
-                </template>
-              </i18n-t>
-            </div>
-            <div class="moderation-check">
-              <BaseCheckbox
-                id="checkbox"
-                v-model="moderationAccepted"
-              />
-              <i18n-t
-                scope="global"
-                keypath="pages.create.form.steps.authorInfo.info.moderationCheckbox"
-                tag="span"
-              >
-                <template #moderation>
-                  <NuxtLink
-                    t
-                    class="dark"
-                    o="/terms"
-                    >{{
-                      $t(
-                        'pages.create.form.steps.authorInfo.info.moderationConditions'
-                      )
-                    }}</NuxtLink
-                  >
-                </template>
-                <template #moderationConditions>
-                  <NuxtLink
-                    class="dark"
-                    to="/privacy"
-                    >{{
-                      $t(
-                        'pages.create.form.steps.authorInfo.info.moderationConditions'
-                      )
-                    }}</NuxtLink
-                  >
-                </template>
-              </i18n-t>
-            </div>
-          </div>
-        </template>
-      </template>
-      <div
-        v-if="currentStep?.inputs"
-        class="inputs"
-      >
-        <template
-          v-for="(input, index) in currentStep.inputs"
-          :key="index"
-        >
-          <BaseInput
-            v-if="
-              input.type === inputTypes.TEXT || input.type === inputTypes.EMAIL
-            "
-            :id="input.key"
-            :model-value="
-              getTextInputValue(input.key as 'authorName' | 'email' | 'title')
-            "
-            :type="getInputType(input.type)"
-            :label="input.label"
-            :placeholder="input.placeholder"
-            :validation-key="input.validationKey"
-            @update:model-value="setInputValue(input.key, $event)"
-            @update:error="(error) => handleValidationError(input.key, error)"
-          />
-        </template>
-        <div
-          v-if="
-            currentStep.inputs.some((input) => input.type === inputTypes.SELECT)
-          "
-          class="selects"
-        >
-          <template
-            v-for="(input, index) in currentStep.inputs"
-            :key="index"
-          >
-            <BaseSelect
-              v-if="input.type === inputTypes.SELECT"
-              :id="input.key"
-              v-model="storyFormData[input.key]"
-              :label="input.label"
-              :placeholder="input.placeholder"
-              :validation-key="input.validationKey"
-              :options="input.key === 'year' ? yearOptions : localeOptions"
-              class="select-input"
-              @update:error="(error) => handleValidationError(input.key, error)"
-            />
+    <h1>{{ $t('pages.create.title') }}</h1>
+    <p>{{ $t('pages.create.description') }}</p>
+
+    <form @submit="onSubmit">
+      <div class="checkboxes">
+        <!-- Terms & Privacy -->
+        <BaseCheckbox name="termsPrivacy">
+          <template #label>
+            <i18n-t
+              keypath="pages.create.form.inputs.termsPrivacy.label.content"
+              tag="span"
+            >
+              <template #termsOfUse>
+                <NuxtLink
+                  class="dark"
+                  to="/terms"
+                  :style="{ fontFamily: 'var(--font-text)' }"
+                  >{{
+                    $t('pages.create.form.inputs.termsPrivacy.label.termsOfUse')
+                  }}</NuxtLink
+                >
+              </template>
+
+              <template #privacyPolicy>
+                <NuxtLink
+                  class="dark"
+                  to="/privacy"
+                  :style="{ fontFamily: 'var(--font-text)' }"
+                  >{{
+                    $t(
+                      'pages.create.form.inputs.termsPrivacy.label.privacyPolicy'
+                    )
+                  }}</NuxtLink
+                >
+              </template>
+            </i18n-t>
           </template>
+        </BaseCheckbox>
+
+        <!-- Moderation  -->
+        <BaseCheckbox name="moderation">
+          <template #label>
+            <i18n-t
+              keypath="pages.create.form.inputs.moderation.label.content"
+              tag="span"
+            >
+              <template #moderationConditions>
+                <!-- TODO: Add model-->
+                <NuxtLink
+                  class="dark"
+                  to="/"
+                  :style="{ fontFamily: 'var(--font-text)' }"
+                  >{{
+                    $t(
+                      'pages.create.form.inputs.moderation.label.moderationConditions'
+                    )
+                  }}</NuxtLink
+                >
+              </template>
+            </i18n-t>
+          </template>
+        </BaseCheckbox>
+      </div>
+
+      <!-- Author Name + Email  -->
+      <div class="name-email">
+        <BaseInput
+          name="authorName"
+          type="text"
+          :required="true"
+          :label="$t('pages.create.form.inputs.authorName.label')"
+          :placeholder="$t('pages.create.form.inputs.authorName.placeholder')"
+        />
+        <BaseInput
+          name="authorEmail"
+          type="email"
+          :required="true"
+          :label="$t('pages.create.form.inputs.authorEmail.label')"
+          :placeholder="$t('pages.create.form.inputs.authorEmail.placeholder')"
+        />
+      </div>
+
+      <div class="story">
+        <!-- Story Title -->
+        <BaseInput
+          name="storyTitle"
+          type="text"
+          :required="true"
+          :label="$t('pages.create.form.inputs.storyTitle.label')"
+          :placeholder="$t('pages.create.form.inputs.storyTitle.placeholder')"
+        />
+
+        <!-- Story Year + Language -->
+        <div class="year-language">
+          <BaseInput
+            name="storyYear"
+            type="number"
+            :required="true"
+            :label="$t('pages.create.form.inputs.storyYear.label')"
+            :placeholder="$t('pages.create.form.inputs.storyYear.placeholder')"
+          />
+          <BaseSelect
+            name="storyLanguage"
+            type="text"
+            :required="true"
+            :label="$t('pages.create.form.inputs.storyLanguage.label')"
+            :placeholder="
+              $t('pages.create.form.inputs.storyLanguage.placeholder')
+            "
+          >
+            <template #options>
+              <option
+                v-for="locale in localeOptions"
+                :key="locale"
+                :value="locale"
+              >
+                {{ $t(`languages.${locale}`) }}
+              </option>
+            </template>
+          </BaseSelect>
         </div>
       </div>
-      <div class="buttons">
-        <BaseButton
-          v-if="currentStep?.showBack"
-          type="secondary"
-          variant="label-icon"
-          icon="mdi:arrow-left"
-          :label="t('pages.create.form.buttons.back')"
-          :disabled="false || isCreating"
-          @click.prevent="previousStep"
-        />
-        <BaseButton
-          v-if="currentStep?.showNext"
-          type="secondary"
-          variant="label-icon"
-          icon="mdi:arrow-right"
-          style="margin-left: auto"
-          :label="t('pages.create.form.buttons.next')"
-          :disabled="isFormDisabled || isCreating"
-          @click.prevent="nextStep"
-        />
-        <BaseButton
-          v-if="currentStep?.showCreate"
-          type="secondary"
-          variant="label-icon"
-          icon="mdi:creation"
-          :label="t('pages.create.form.buttons.create')"
-          :disabled="isFormDisabled || isCreating"
-          @click.prevent="createStory"
-        />
-      </div>
+
+      <BaseButton
+        type="secondary"
+        variant="label-icon"
+        icon="mdi:creation"
+        class="button"
+        :label="$t('pages.create.form.inputs.submitButton')"
+      />
     </form>
-    <div
-      v-if="error"
-      class="error-message"
-    >
-      {{ error }}
-    </div>
   </section>
 </template>
 
@@ -412,70 +258,40 @@
   section {
     display: flex;
     flex-direction: column;
-    gap: var(--space-m-l);
+    gap: var(--space-l);
   }
 
   form {
     display: flex;
     flex-direction: column;
-    gap: var(--space-m);
-    max-width: 80ch;
-  }
-
-  a {
-    font-family: var(--font-text);
-  }
-
-  .buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-s);
-    justify-content: space-between;
-    width: 100%;
+    gap: var(--space-l);
 
     & button {
-      flex: 1 1 250px;
+      align-self: end;
     }
   }
 
-  .terms-privacy-check,
-  .moderation-check {
-    display: flex;
-    gap: var(--space-3xs);
-    align-items: center;
-
-    &:deep(label) {
-      flex: 0;
-    }
-
-    a {
-      margin: 0 0.2rem;
-    }
-  }
-
-  .checks {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2xs);
-  }
-
-  .inputs {
+  .checkboxes {
     display: flex;
     flex-direction: column;
     gap: var(--space-s);
   }
 
-  .selects {
+  .name-email {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(435px, 1fr));
+    gap: var(--space-s);
+  }
+
+  .story {
     display: flex;
-    gap: 1rem;
+    flex-direction: column;
+    gap: var(--space-s);
   }
 
-  .select-input {
-    max-width: 200px;
-  }
-
-  .error-message {
-    color: var(--color-red);
-    text-align: center;
+  .year-language {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(435px, 1fr));
+    gap: var(--space-s);
   }
 </style>

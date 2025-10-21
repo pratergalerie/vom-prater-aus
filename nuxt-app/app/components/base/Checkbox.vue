@@ -1,120 +1,87 @@
 <script lang="ts" setup>
-  defineProps<{
-    id: string
-    label?: string
-    disabled?: boolean
+  import { useField } from 'vee-validate'
+
+  const props = defineProps<{
+    name: string
+    required?: boolean
   }>()
 
-  const modelValue = defineModel<boolean>({
-    default: false,
-  })
+  const { value, errorMessage } = useField(() => props.name)
 </script>
 
 <template>
-  <label
-    :for="id"
-    :class="{ disabled }"
-  >
-    <input
-      :id="id"
-      v-model="modelValue"
-      type="checkbox"
-      :disabled="disabled"
-    />
-    <div class="svg-layer checkbox">
-      <img
-        src="/svgs/inputs/checkbox.svg"
-        alt="checkbox"
-        class="background"
+  <div class="wrapper">
+    <label :for="name">
+      <input
+        :id="name"
+        v-model="value"
+        class="visually-hidden"
+        :name="name"
+        type="checkbox"
       />
-      <img
-        v-if="modelValue"
-        src="/svgs/inputs/check.svg"
-        alt="checked"
-        class="foreground"
-      />
-    </div>
-    <span v-if="label">{{ label }}</span>
-  </label>
+      <div class="checkbox">
+        <img
+          src="/svgs/inputs/checkbox.svg"
+          alt=""
+          class="background"
+        />
+        <img
+          v-if="value"
+          src="/svgs/inputs/check.svg"
+          alt=""
+          class="foreground"
+        />
+      </div>
+
+      <slot name="label"></slot>
+    </label>
+
+    <span
+      v-if="errorMessage"
+      class="error error-message"
+    >
+      {{ $t(errorMessage) }}
+    </span>
+  </div>
 </template>
 
 <style scoped>
-  label {
-    position: relative;
+  .wrapper {
     display: flex;
-    gap: 5px;
-    height: 1rem;
-
-    &.disabled {
-      cursor: not-allowed;
-      opacity: 0.5;
-
-      & .svg-layer img {
-        filter: grayscale(100%);
-      }
-    }
+    flex-direction: column;
+    gap: var(--space-2xs);
+    width: 100%;
   }
 
-  input {
-    z-index: 1;
-    box-sizing: border-box;
-    width: 1rem;
-    height: 1rem;
-    padding: 10px;
-    font-family: var(--font-link);
-    cursor: pointer;
-    outline: none;
-    background: transparent;
-    border: none;
-    opacity: 0;
+  label {
+    display: flex;
+    gap: var(--space-2xs);
+    align-items: center;
   }
 
-  .svg-layer {
-    position: absolute;
+  .checkbox {
+    display: grid;
+    grid-template-areas: 'stack';
+    width: 20px;
+    height: 20px;
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100% 100%;
 
-    &.checkbox {
-      top: 0;
-      left: 0;
-      display: grid;
-      width: 20px;
-      height: 20px;
-
-      /* stylelint-disable-next-line no-descending-specificity */
-      svg {
-        width: 100%;
-        height: 100%;
-      }
-
-      .background,
-      .foreground {
-        grid-area: 1/1;
-      }
-
-      .background {
-        z-index: -2;
-      }
-
-      .foreground {
-        z-index: -1;
-        transform: translate(6px, -2px);
-      }
-    }
-
-    &.foreground {
+    & .foreground {
       z-index: -1;
+      grid-area: stack;
+      transform: translate(6px, -2px);
     }
 
-    &.background {
+    & .background {
       z-index: -2;
-      transform: translate(-5px, 5px);
+      grid-area: stack;
     }
   }
 
-  span {
-    font-family: var(--font-link);
-    font-size: 0.8rem;
+  .error-message {
+    /* stylelint-disable-next-line */
+    font-size: var(--step--1);
   }
 </style>

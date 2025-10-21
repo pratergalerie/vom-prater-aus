@@ -1,92 +1,52 @@
 <script setup lang="ts">
-  type Option = {
-    label: string
-    value: string | number
-  }
+  import { useField } from 'vee-validate'
 
   const props = defineProps<{
-    id: string
-    label?: string
-    placeholder?: string
-    validationKey?: keyof typeof validationRules
-    options: Option[]
-    modelValue?: string | number
+    name: string
+    label: string
+    placeholder: string
+    required: boolean
   }>()
 
-  const value = defineModel<string | number>()
-
-  const error = ref<string | null>(null)
-
-  const emit = defineEmits<{
-    (e: 'update:error', value: string | null): void
-  }>()
-
-  function handleChange(event: Event) {
-    const select = event.target as HTMLSelectElement
-    const selectedValue = select.value
-    value.value = selectedValue
-
-    if (props.validationKey) {
-      error.value = validateField(
-        selectedValue,
-        validationRules[props.validationKey]
-      )
-      emit('update:error', error.value)
-    }
-  }
-
-  watch(value, (newValue) => {
-    if (props.validationKey) {
-      error.value = validateField(
-        newValue?.toString() || '',
-        validationRules[props.validationKey]
-      )
-      emit('update:error', error.value)
-    }
-  })
+  const { value, errorMessage } = useField(() => props.name)
 </script>
 
 <template>
-  <label :for="id">
-    <span v-if="label">{{ label }}</span>
+  <div>
+    <label :for="name">
+      {{ label }}{{ required ? '*' : '' }}
 
-    <div class="select-wrapper">
-      <select
-        :id="id"
-        :value="value"
-        :class="{ error }"
-        :aria-invalid="!!error"
-        :aria-describedby="error ? `${id}-error` : undefined"
-        @change="handleChange"
-      >
-        <option
-          v-if="placeholder"
-          value=""
-          disabled
-          selected
+      <div class="select-wrapper">
+        <select
+          :id="name"
+          v-model="value"
+          :name="name"
+          :class="{ errorMessage }"
+          :style="{
+            color: value === '' ? 'var(--color-grey)' : undefined,
+            fontSize: value === '' ? 'var(--step--1)' : undefined,
+          }"
         >
-          {{ placeholder }}
-        </option>
-        <option
-          v-for="option in options"
-          :key="option.value"
-          :value="option.value"
-        >
-          {{ option.label }}
-        </option>
-      </select>
-      <div
-        v-if="error"
-        :id="`${id}-error`"
-        class="error-message"
-        role="alert"
-      >
-        {{ error }}
+          <option
+            value=""
+            disabled
+          >
+            {{ placeholder }}
+          </option>
+          <slot name="options"></slot>
+        </select>
+        <div class="select-shape foreground" />
+        <div class="select-shape background" />
       </div>
-      <div class="select-shape foreground" />
-      <div class="select-shape background" />
+    </label>
+
+    <div
+      v-if="errorMessage"
+      class="error error-message"
+    >
+      {{ $t(errorMessage) }}
     </div>
-  </label>
+  </div>
 </template>
 
 <style scoped>
@@ -165,20 +125,16 @@
   }
 
   .error-message {
-    margin-top: 0.25rem;
-    font-size: 0.8rem;
-    color: var(--color-red);
-  }
-
-  select.error {
-    color: var(--color-red);
+    padding: var(--space-2xs) 0;
+    /* stylelint-disable-next-line */
+    font-size: var(--step--1);
   }
 
   /* Custom dropdown arrow */
   .select-wrapper::after {
     position: absolute;
     top: 50%;
-    right: 15px;
+    right: 20px;
     z-index: 4;
     width: 0;
     height: 0;
@@ -188,10 +144,5 @@
     border-right: 5px solid transparent;
     border-left: 5px solid transparent;
     transform: translateY(-50%);
-  }
-
-  select:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
   }
 </style>

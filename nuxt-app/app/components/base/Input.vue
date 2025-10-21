@@ -1,94 +1,68 @@
 <script lang="ts" setup>
+  import { useField } from 'vee-validate'
+
   type InputType = 'text' | 'email' | 'password' | 'number'
 
   const props = defineProps<{
-    id: string
+    name: string
     type: InputType
-    label?: string
-    placeholder?: string
-    validationKey?: keyof typeof validationRules
+    label: string
+    placeholder: string
+    required: boolean
   }>()
 
-  const value = defineModel({
-    type: String,
-    default: '',
-  })
-
-  const error = ref<string | null>(null)
-
-  const emit = defineEmits<{
-    (e: 'update:error', value: string | null): void
-  }>()
-
-  function handleInput(event: Event) {
-    const input = event.target as HTMLInputElement
-    if (!props.validationKey) return
-
-    const rules = validationRules[props.validationKey]
-    let sanitizedValue = sanitizeInput(input.value, rules.allowedChars)
-
-    // Explicitly remove spaces for email fields
-    if (props.type === 'email') {
-      sanitizedValue = sanitizedValue.replace(/\s+/g, '')
-    }
-
-    if (sanitizedValue !== input.value) {
-      input.value = sanitizedValue
-      value.value = sanitizedValue
-    }
-
-    error.value = validateField(sanitizedValue, rules)
-    emit('update:error', error.value)
-  }
-
-  function handleKeyDown(event: KeyboardEvent) {
-    if (props.type === 'email' && event.key === ' ') {
-      event.preventDefault()
-    }
-  }
-
-  watch(value, (newValue) => {
-    if (props.validationKey) {
-      error.value = validateField(
-        newValue,
-        validationRules[props.validationKey]
-      )
-      emit('update:error', error.value)
-    }
-  })
+  const { value, errorMessage } = useField(() => props.name)
 </script>
 
 <template>
-  <label :for="id">
-    <span v-if="label">{{ label }}</span>
+  <div class="wrapper">
+    <label :for="name">
+      {{ label }}{{ required ? '*' : '' }}
 
-    <div class="input-wrapper">
-      <input
-        :id="id"
-        v-model="value"
-        :type="type"
-        :placeholder="placeholder"
-        :class="{ error: error }"
-        :aria-invalid="!!error"
-        :aria-describedby="error ? `${id}-error` : undefined"
-        @input="handleInput"
-        @keydown="handleKeyDown"
-      />
-      <div
-        v-if="error"
-        :id="`${id}-error`"
-        class="error-message"
-        role="alert"
-      >
-        {{ error }}
+      <div class="input-wrapper">
+        <input
+          v-if="type !== 'number'"
+          :id="name"
+          v-model="value"
+          :name="name"
+          :type="type"
+          :placeholder="placeholder"
+          :class="{ error: errorMessage }"
+        />
+        <input
+          v-else
+          :id="name"
+          v-model="value"
+          inputmode="numeric"
+          :name="name"
+          type="text"
+          :placeholder="placeholder"
+          :class="{ error: errorMessage }"
+          pattern="[0-9]*"
+        />
+
+        <div class="text-input foreground" />
+        <div class="text-input background" />
       </div>
-      <div class="text-input foreground" />
-      <div class="text-input background" />
-    </div>
-  </label>
+    </label>
+
+    <span
+      v-if="errorMessage"
+      class="error error-message"
+    >
+      {{ $t(errorMessage) }}
+    </span>
+  </div>
 </template>
 
 <style scoped>
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+    width: 100%;
+  }
+
   .input-wrapper {
     position: relative;
     display: grid;
@@ -105,6 +79,12 @@
     outline: none;
     background: unset;
     border: none;
+
+    &::placeholder {
+      /* stylelint-disable-next-line */
+      font-size: var(--step--1);
+      color: var(--color-grey);
+    }
   }
 
   .foreground {
@@ -159,13 +139,7 @@
   }
 
   .error-message {
-    margin-top: 0.25rem;
     /* stylelint-disable-next-line */
     font-size: var(--step--1);
-    color: var(--color-red);
-  }
-
-  input.error {
-    color: var(--color-red);
   }
 </style>
