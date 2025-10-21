@@ -500,7 +500,6 @@ export interface ApiStoryStory extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private &
       Schema.Attribute.DefaultTo<'pending'>;
     sections: Schema.Attribute.Component<'story-components.page', true> &
-      Schema.Attribute.Required &
       Schema.Attribute.SetMinMax<
         {
           max: 6;

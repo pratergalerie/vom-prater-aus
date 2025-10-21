@@ -71,7 +71,7 @@
       "type": "component",
       "component": "story-components.page",
       "repeatable": true,
-      "required": true,
+      "required": false,
       "min": 1,
       "max": 6
     },
