@@ -120,8 +120,8 @@
             }
           },
           "authorEmail": {
-            "label": "E-Mail",
-            "description": "Sie wird benötigt, um dir einen Link zur deiner Erinnerung zu schicken, sodass du deine Erinnerung jederzeit öffnen und bearbeiten kannst. Sie wird nicht publiziert und nicht weitergegeben.",
+            "label": "E-Mail-Adresse",
+            "description": "Diese brauchen wir, um dir einen Link zu deiner Erinnerung zu schicken, damit du sie jederzeit öffnen und bearbeiten kannst. Wir schicken dir auch Infos zur Moderation und Veröffentlichung deines Beitrags per E-Mail. Deine E-Mail-Adresse wird nicht auf der Website angezeigt.",
             "placeholder": "Gib deine E-Mail-Adresse ein",
             "errors": {
               "required": "Dieses Feld ist erforderlich.",

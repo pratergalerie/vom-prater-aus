@@ -122,7 +122,7 @@
           },
           "authorEmail": {
             "label": "Email",
-            "description": "It is required to send you a link to your post so that you can open and edit it at any time. We will also send you information about the moderation and publication of your post by email. It will not be published or shared.",
+            "description": "We need this to send you a link to your memory so that you can open and edit it at any time. We will also send you information about the moderation and publication of your post by email. Your email address will not be displayed on the website.",
             "placeholder": "Enter your email address",
             "errors": {
               "required": "This field is required.",
