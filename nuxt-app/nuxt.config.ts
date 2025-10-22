@@ -47,7 +47,7 @@ export default defineNuxtConfig({
             wght: '400',
           },
           'Crimson Pro': {
-            wght: '200',
+            wght: ['200', '600'],
             ital: '200',
           },
         },

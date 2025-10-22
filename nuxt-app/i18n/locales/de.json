@@ -90,7 +90,6 @@
     },
     "create": {
       "title": "Welche Erinnerung verbindest du mit dem Berliner Prater?",
-      "description": "Zunächst benötigen wir deinen/einen Namen, der zusammen mit deiner Erinnerung veröffentlicht wird. Zudem brauchen wir deine E-Mail-Adresse, um mit dir zu kommunizieren. Sie wird nicht publiziert und nicht weitergegeben. Weitere Informationen findest du in der Nutzungsbedingungen und der Datenschutzerklärung.",
       "form": {
         "inputs": {
           "termsPrivacy": {
@@ -114,14 +113,16 @@
           },
           "authorName": {
             "label": "Name",
-            "placeholder": "Dein Autor:innenname",
+            "description": "Dieser wird zusammen mit deiner Geschichte angezeigt. Du kannst auch gerne ein Pseudonym verwenden.",
+            "placeholder": "Gib einen Namen ein",
             "errors": {
               "required": "Dieses Feld ist erforderlich."
             }
           },
           "authorEmail": {
             "label": "E-Mail",
-            "placeholder": "Deine E-Mail-Adresse",
+            "description": "Sie wird benötigt, um dir einen Link zur deiner Erinnerung zu schicken, sodass du deine Erinnerung jederzeit öffnen und bearbeiten kannst. Sie wird nicht publiziert und nicht weitergegeben.",
+            "placeholder": "Gib deine E-Mail-Adresse ein",
             "errors": {
               "required": "Dieses Feld ist erforderlich.",
               "invalid": "Muss eine gültige E-Mail-Adresse sein."
@@ -129,23 +130,26 @@
           },
           "storyTitle": {
             "label": "Titel",
-            "placeholder": "Meine Prater-Geschichte",
+            "placeholder": "Gib den Titel deiner Geschichte ein",
             "errors": {
               "required": "Dieses Feld ist erforderlich."
             }
           },
           "storyYear": {
             "label": "Jahr",
-            "placeholder": "Wann fand diese Geschichte statt?",
+            "description": "Deine Geschichte muss zwischen 1830 und 2018 passiert sein.",
+            "placeholder": "Gib das Jahr deiner Geschichte ein",
             "errors": {
               "required": "Dieses Feld ist erforderlich.",
               "invalid": "Muss eine gültige Jahreszahl sein.",
-              "minMax": "Muss zwischen 1830 und 2018 passiert sein."
+              "min": "Muss nach 1830 passiert sein.",
+              "max": "Muss vor 2018 passiert sein."
             }
           },
           "storyLanguage": {
             "label": "Sprache",
-            "placeholder": "In welcher Sprache schreibst du deine Geschichte?",
+            "description": "In welcher Sprache schreibst du deine Geschichte?",
+            "placeholder": "Wähle eine Sprache",
             "errors": {
               "required": "Dieses Feld ist erforderlich."
             }

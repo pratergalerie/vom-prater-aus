@@ -4,6 +4,7 @@
   const props = defineProps<{
     name: string
     label: string
+    description?: string
     placeholder: string
     required: boolean
   }>()
@@ -14,7 +15,10 @@
 <template>
   <div>
     <label :for="name">
-      {{ label }}{{ required ? '*' : '' }}
+      <div class="label-description">
+        <span>{{ label }}{{ required ? '*' : '' }}</span>
+        <p v-if="description">{{ description }}</p>
+      </div>
 
       <div class="select-wrapper">
         <select
@@ -50,10 +54,26 @@
 </template>
 
 <style scoped>
+  .label-description {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+
+    & span {
+      font-weight: 600;
+    }
+  }
+
   .select-wrapper {
     position: relative;
     display: grid;
     grid-template: 'stack' 1fr / 1fr;
+  }
+
+  label {
+    display: grid;
+    flex-direction: column;
+    gap: var(--space-2xs);
   }
 
   select {

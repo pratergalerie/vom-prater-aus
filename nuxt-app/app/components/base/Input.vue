@@ -7,6 +7,7 @@
     name: string
     type: InputType
     label: string
+    description?: string
     placeholder: string
     required: boolean
   }>()
@@ -17,7 +18,10 @@
 <template>
   <div class="wrapper">
     <label :for="name">
-      {{ label }}{{ required ? '*' : '' }}
+      <div class="label-description">
+        <span>{{ label }}{{ required ? '*' : '' }}</span>
+        <p v-if="description">{{ description }}</p>
+      </div>
 
       <div class="input-wrapper">
         <input
@@ -63,10 +67,26 @@
     width: 100%;
   }
 
+  .label-description {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+
+    & span {
+      font-weight: 600;
+    }
+  }
+
   .input-wrapper {
     position: relative;
     display: grid;
     grid-template: 'stack' 1fr / 1fr;
+  }
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
   }
 
   input {

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import slugify from '@sindresorhus/slugify'
+  import { v4 as uuidv4 } from 'uuid'
   import { useForm } from 'vee-validate'
   import { toTypedSchema } from '@vee-validate/zod'
   import * as z from 'zod'
@@ -114,10 +116,10 @@
           message: 'pages.create.form.inputs.storyYear.errors.invalid',
         })
         .min(1831, {
-          message: 'pages.create.form.inputs.storyYear.errors.minMax',
+          message: 'pages.create.form.inputs.storyYear.errors.min',
         })
         .max(2017, {
-          message: 'pages.create.form.inputs.storyYear.errors.minMax',
+          message: 'pages.create.form.inputs.storyYear.errors.max',
         }),
       storyLanguage: z
         .string({
@@ -136,17 +138,98 @@
     },
   })
 
-  const onSubmit = handleSubmit((values) => {
-    alert(JSON.stringify(values, null, 2))
+  const { post, pending, error } = useCreateStory()
+
+  const onSubmit = handleSubmit(async (values) => {
+    //   const {
+    //     storyTitle: title,
+    //     authorName,
+    //     authorEmail,
+    //     storyLanguage,
+    //     storyYear: year,
+    //   } = values
+    //   const response = await post({
+    //     title,
+    //     authorName,
+    //     authorEmail,
+    //     slug: slugify(title),
+    //     uuid: uuidv4(),
+    //     language: storyLanguage as LanguageCode,
+    //     year,
+    //   })
+    //   if (response?.uuid) {
+    //     await navigateTo({ path: `/draft-stories/${response.uuid}` })
+    //   }
   })
 </script>
 
 <template>
   <section>
     <h1>{{ $t('pages.create.title') }}</h1>
-    <p>{{ $t('pages.create.description') }}</p>
 
     <form @submit="onSubmit">
+      <!-- Author Email -->
+      <BaseInput
+        name="authorEmail"
+        type="email"
+        :required="true"
+        :label="$t('pages.create.form.inputs.authorEmail.label')"
+        :description="$t('pages.create.form.inputs.authorEmail.description')"
+        :placeholder="$t('pages.create.form.inputs.authorEmail.placeholder')"
+      />
+
+      <!-- Author Name -->
+      <BaseInput
+        name="authorName"
+        type="text"
+        :required="true"
+        :label="$t('pages.create.form.inputs.authorName.label')"
+        :description="$t('pages.create.form.inputs.authorName.description')"
+        :placeholder="$t('pages.create.form.inputs.authorName.placeholder')"
+      />
+
+      <!-- Story Title -->
+      <BaseInput
+        name="storyTitle"
+        type="text"
+        :required="true"
+        :label="$t('pages.create.form.inputs.storyTitle.label')"
+        :placeholder="$t('pages.create.form.inputs.storyTitle.placeholder')"
+      />
+
+      <!-- Story Year + Language -->
+      <div class="year-language">
+        <BaseInput
+          name="storyYear"
+          type="number"
+          :required="true"
+          :label="$t('pages.create.form.inputs.storyYear.label')"
+          :description="$t('pages.create.form.inputs.storyYear.description')"
+          :placeholder="$t('pages.create.form.inputs.storyYear.placeholder')"
+        />
+        <BaseSelect
+          name="storyLanguage"
+          :required="true"
+          :label="$t('pages.create.form.inputs.storyLanguage.label')"
+          :description="
+            $t('pages.create.form.inputs.storyLanguage.description')
+          "
+          :placeholder="
+            $t('pages.create.form.inputs.storyLanguage.placeholder')
+          "
+        >
+          <template #options>
+            <option
+              v-for="locale in localeOptions"
+              :key="locale"
+              :value="locale"
+            >
+              {{ $t(`languages.${locale}`) }}
+            </option>
+          </template>
+        </BaseSelect>
+      </div>
+
       <div class="checkboxes">
         <!-- Terms & Privacy -->
         <BaseCheckbox name="termsPrivacy">
@@ -207,72 +290,16 @@
         </BaseCheckbox>
       </div>
 
-      <!-- Author Name + Email  -->
-      <div class="name-email">
-        <BaseInput
-          name="authorName"
-          type="text"
-          :required="true"
-          :label="$t('pages.create.form.inputs.authorName.label')"
-          :placeholder="$t('pages.create.form.inputs.authorName.placeholder')"
-        />
-        <BaseInput
-          name="authorEmail"
-          type="email"
-          :required="true"
-          :label="$t('pages.create.form.inputs.authorEmail.label')"
-          :placeholder="$t('pages.create.form.inputs.authorEmail.placeholder')"
-        />
-      </div>
-
-      <div class="story">
-        <!-- Story Title -->
-        <BaseInput
-          name="storyTitle"
-          type="text"
-          :required="true"
-          :label="$t('pages.create.form.inputs.storyTitle.label')"
-          :placeholder="$t('pages.create.form.inputs.storyTitle.placeholder')"
-        />
-
-        <!-- Story Year + Language -->
-        <div class="year-language">
-          <BaseInput
-            name="storyYear"
-            type="number"
-            :required="true"
-            :label="$t('pages.create.form.inputs.storyYear.label')"
-            :placeholder="$t('pages.create.form.inputs.storyYear.placeholder')"
-          />
-          <BaseSelect
-            name="storyLanguage"
-            type="text"
-            :required="true"
-            :label="$t('pages.create.form.inputs.storyLanguage.label')"
-            :placeholder="
-              $t('pages.create.form.inputs.storyLanguage.placeholder')
-            "
-          >
-            <template #options>
-              <option
-                v-for="locale in localeOptions"
-                :key="locale"
-                :value="locale"
-              >
-                {{ $t(`languages.${locale}`) }}
-              </option>
-            </template>
-          </BaseSelect>
-        </div>
-      </div>
-
       <BaseButton
         type="secondary"
         variant="label-icon"
         icon="mdi:creation"
         class="button"
+        :disabled="pending"
         :label="$t('pages.create.form.inputs.submitButton')"
       />
+
+      {{ error ? 'Error' : '' }}
     </form>
   </section>
 </template>
@@ -295,26 +322,19 @@
   }
 
   .checkboxes {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-s);
-  }
-
-  .name-email {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(435px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, max-content));
     gap: var(--space-s);
-  }
-
-  .story {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-s);
+    justify-content: space-between;
   }
 
   .year-language {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(435px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: var(--space-s);
+
+    & > * {
+      flex: 1 1 300px;
+    }
   }
 </style>

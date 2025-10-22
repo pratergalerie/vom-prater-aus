@@ -90,7 +90,7 @@
     },
     "create": {
       "title": "What memory do you associate with the Berlin Prater?",
-      "description": "First of all, we need your/a name that will be published together with your memory. Furthermore we need your e-mail address to communicate with you. It will not be published or shared. Further information can be found in the terms of use and the data privacy policy.",
+      "description": " For more information, please see the Terms of Use and Privacy Policy.",
       "form": {
         "inputs": {
           "termsPrivacy": {
@@ -114,13 +114,15 @@
           },
           "authorName": {
             "label": "Name",
-            "placeholder": "Enter your author name",
+            "description": "This will appear alongside your story. You are also welcome to use a pseudonym.",
+            "placeholder": "Enter a name",
             "errors": {
               "required": "This field is required."
             }
           },
           "authorEmail": {
             "label": "Email",
+            "description": "It is required to send you a link to your post so that you can open and edit it at any time. We will also send you information about the moderation and publication of your post by email. It will not be published or shared.",
             "placeholder": "Enter your email address",
             "errors": {
               "required": "This field is required.",
@@ -136,16 +138,19 @@
           },
           "storyYear": {
             "label": "Year",
-            "placeholder": "When did this story take place?",
+            "description": "Your story must have taken place between 1830 and 2018.",
+            "placeholder": "Enter the year of your story",
             "errors": {
               "required": "This field is required.",
               "invalid": "Must be a valid year.",
-              "minMax": "Must have happened between 1830 and 2018."
+              "min": "Must have happened after 1830.",
+              "max": "Must have happened before 2018."
             }
           },
           "storyLanguage": {
             "label": "Language",
-            "placeholder": "In which language do you write your story?",
+            "description": "In which language do you write your story?",
+            "placeholder": "Choose a language",
             "errors": {
               "required": "This field is required."
             }
