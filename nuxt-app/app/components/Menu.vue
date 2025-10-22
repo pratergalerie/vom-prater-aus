@@ -269,7 +269,7 @@
     display: grid;
     grid-template-rows: 40% 10% 1fr;
     width: 100%;
-    height: 100%;
+    height: 100svh;
     pointer-events: none;
     container-name: menu-container;
     container-type: size;
