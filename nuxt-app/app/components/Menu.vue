@@ -338,7 +338,7 @@
     width: 100%;
     max-width: var(--max-width);
     min-height: 50svh;
-    padding: var(--space-3xl) var(--space-s-m);
+    padding: var(--space-l-xl) var(--space-s-m);
     margin: 0 auto;
   }
 
