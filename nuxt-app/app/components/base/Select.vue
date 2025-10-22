@@ -28,7 +28,6 @@
           :class="{ errorMessage }"
           :style="{
             color: value === '' ? 'var(--color-grey)' : undefined,
-            fontSize: value === '' ? 'var(--step--1)' : undefined,
           }"
         >
           <option
@@ -83,8 +82,7 @@
     padding: var(--space-s);
     padding-right: 35px;
     font-family: var(--font-link);
-    /* stylelint-disable-next-line */
-    font-size: var(--step---1);
+    font-size: var(--step-0);
     color: var(--color-black);
     appearance: none;
     cursor: pointer;
