@@ -63,8 +63,8 @@
     display: grid;
     flex-shrink: 0;
     grid-template-areas: 'stack';
-    width: 20px;
-    height: 20px;
+    width: 26px;
+    height: 26px;
     margin-top: 0.5ch;
     background-repeat: no-repeat;
     background-position: center;
