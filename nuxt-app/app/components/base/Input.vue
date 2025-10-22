@@ -92,10 +92,10 @@
   input {
     z-index: 3;
     grid-area: stack;
-    padding: var(--space-xs);
+    padding: var(--space-s);
     font-family: var(--font-link);
     /* stylelint-disable-next-line */
-    font-size: var(--step---1);
+    font-size: var(--step--1);
     outline: none;
     background: unset;
     border: none;

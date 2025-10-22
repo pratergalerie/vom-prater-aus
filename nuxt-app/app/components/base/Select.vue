@@ -80,7 +80,7 @@
     z-index: 3;
     grid-area: stack;
     width: 100%;
-    padding: var(--space-xs);
+    padding: var(--space-s);
     padding-right: 35px;
     font-family: var(--font-link);
     /* stylelint-disable-next-line */
