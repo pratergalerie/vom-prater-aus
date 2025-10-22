@@ -54,17 +54,18 @@
   }
 
   label {
-    display: flex;
+    display: grid;
+    grid-template-columns: max-content 1fr;
     gap: var(--space-2xs);
-    align-items: center;
-    width: max-content;
   }
 
   .checkbox {
     display: grid;
+    flex-shrink: 0;
     grid-template-areas: 'stack';
     width: 20px;
     height: 20px;
+    margin-top: 0.5ch;
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100% 100%;
