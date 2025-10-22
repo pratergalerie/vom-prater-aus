@@ -118,8 +118,7 @@
     );
 
     &::placeholder {
-      /* stylelint-disable-next-line */
-      font-size: var(--step--1);
+      font-size: var(--step-0);
       color: var(--color-grey);
     }
   }
