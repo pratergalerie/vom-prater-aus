@@ -307,7 +307,6 @@
     align-self: flex-end;
     justify-content: flex-end;
     width: 100%;
-    height: 60svh;
     padding: 0;
     margin: 0;
     pointer-events: all;
@@ -332,12 +331,14 @@
   }
 
   nav {
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 100%;
     max-width: var(--max-width);
-    padding: var(--space-l-xl);
+    min-height: 50svh;
+    padding: var(--space-3xl) var(--space-s-m);
     margin: 0 auto;
   }
 
