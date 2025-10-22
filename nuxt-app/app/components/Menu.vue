@@ -267,18 +267,18 @@
     top: 0;
     z-index: 900;
     display: grid;
-    grid-template-rows: 40% 10% 1fr;
+    grid-template: 'stack' 1fr / 1fr;
     width: 100%;
     height: 100svh;
     pointer-events: none;
-    container-name: menu-container;
-    container-type: size;
-    contain: size layout style;
   }
 
   .illustration {
-    grid-row: 1 / 3;
-    grid-column: 1;
+    z-index: 1;
+    grid-area: stack;
+    align-self: flex-start;
+    width: 100%;
+    height: 60svh;
     background-color: var(--color-mustard);
     mask: v-bind(illustrationMask);
     mask-size: 100% auto;
@@ -301,14 +301,14 @@
   menu {
     --animation-time: 0.2s;
 
+    z-index: 2;
     display: flex;
-    flex-direction: column;
-    grid-row: 2 / 4;
-    grid-column: 1;
-    gap: 0;
-    align-items: center;
-    justify-content: center;
-    padding: 0 var(--padding-mobile);
+    grid-area: stack;
+    align-self: flex-end;
+    justify-content: flex-end;
+    width: 100%;
+    height: 60svh;
+    padding: 0;
     margin: 0;
     pointer-events: all;
     outline: none;
@@ -329,19 +329,6 @@
       mix-blend-mode: multiply;
       opacity: 1;
     }
-
-    @container menu-container (min-width: 500px) {
-      padding: 0 var(--padding-tablet);
-    }
-
-    @container menu-container (min-width: var(--max-width)) {
-      padding: 0 var(--padding-desktop);
-    }
-
-    @container menu-container (max-height: 750px) {
-      justify-content: flex-start;
-      padding-top: 50px;
-    }
   }
 
   nav {
@@ -350,13 +337,8 @@
     justify-content: center;
     width: 100%;
     max-width: var(--max-width);
-    height: fit-content;
-    padding: 0;
-    margin: 0;
-
-    @container (min-width: 1000px) {
-      max-width: var(--max-width);
-    }
+    padding: var(--space-l-xl);
+    margin: 0 auto;
   }
 
   ul {
@@ -455,8 +437,6 @@
   .lang-switcher-wrapper {
     display: flex;
     justify-content: flex-end;
-    width: 100%;
-    max-width: var(--max-width);
     margin: 0;
     opacity: 0;
     transform: translateX(20px);
@@ -505,8 +485,6 @@
   .divider-container {
     display: flex;
     justify-content: flex-end;
-    width: 100%;
-    max-width: var(--max-width);
   }
 
   .menu-closing {
