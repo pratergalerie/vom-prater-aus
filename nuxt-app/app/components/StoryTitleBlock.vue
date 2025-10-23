@@ -2,7 +2,7 @@
   defineProps<{
     title: string
     authorName: string
-    year: string
+    year: number
   }>()
 </script>
 
