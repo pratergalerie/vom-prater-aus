@@ -2,14 +2,8 @@
 
 <template>
   <div class="hero">
-    <slot
-      class="image"
-      name="image"
-    ></slot>
-    <slot
-      class="title-block"
-      name="titleBlock"
-    ></slot>
+    <slot name="image"></slot>
+    <slot name="titleBlock"></slot>
   </div>
 </template>
 
@@ -18,13 +12,13 @@
     display: grid;
     width: 100%;
 
-    & .image {
+    & > :nth-child(1) {
       grid-row: 1 / 7;
       grid-column: 1 / 1;
       height: 600px;
     }
 
-    & .title-block {
+    & > :nth-child(2) {
       position: relative;
       grid-row: 6 / 8;
       grid-column: 1 / 1;
