@@ -26,7 +26,8 @@
       "customField": "plugin::strapi-advanced-uuid.uuid",
       "required": true,
       "options": {
-        "disable-regenerate": true
+        "disable-regenerate": false,
+        "disable-auto-fill": true
       }
     },
     "authorName": {

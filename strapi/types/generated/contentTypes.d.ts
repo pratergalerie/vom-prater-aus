@@ -515,7 +515,8 @@ export interface ApiStoryStory extends Struct.CollectionTypeSchema {
     uuid: Schema.Attribute.UID<
       undefined,
       {
-        'disable-regenerate': true;
+        'disable-auto-fill': true;
+        'disable-regenerate': false;
       }
     > &
       Schema.Attribute.Required &
@@ -523,7 +524,8 @@ export interface ApiStoryStory extends Struct.CollectionTypeSchema {
       Schema.Attribute.CustomField<
         'plugin::strapi-advanced-uuid.uuid',
         {
-          'disable-regenerate': true;
+          'disable-auto-fill': true;
+          'disable-regenerate': false;
         }
       >;
     year: Schema.Attribute.Integer &
