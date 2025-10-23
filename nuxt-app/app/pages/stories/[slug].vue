@@ -41,25 +41,27 @@
       v-else
       :key="index"
     >
-      <!-- Title -->
-      <div
+      <StoryHeroLayout
         v-if="index === 0"
-        class="hero"
         :style="{ placeItems: section.image === null ? 'center' : undefined }"
       >
-        <NuxtImg
-          v-if="section.image !== null"
-          :src="`${strapiUrl}${section.image.url}`"
-          :alt="section.image.alternativeText ?? ''"
-          class="image"
-        />
+        <template #image>
+          <NuxtImg
+            v-if="section.image !== null"
+            :src="`${strapiUrl}${section.image.url}`"
+            :alt="section.image.alternativeText ?? ''"
+            class="image"
+          />
+        </template>
 
-        <StoryTitleBlock
-          :title="storyData.title"
-          :author-name="storyData.authorName"
-          :year="storyData.year"
-        />
-      </div>
+        <template #titleBlock>
+          <StoryTitleBlock
+            :title="storyData.title"
+            :author-name="storyData.authorName"
+            :year="storyData.year"
+          />
+        </template>
+      </StoryHeroLayout>
 
       <!-- Text -->
       <p
@@ -107,17 +109,6 @@
     align-items: center;
     justify-content: center;
     margin-block-end: var(--space-2xl);
-  }
-
-  .hero {
-    display: grid;
-    width: 100%;
-
-    & img {
-      grid-row: 1 / 7;
-      grid-column: 1 / 1;
-      height: 600px;
-    }
   }
 
   .text {
