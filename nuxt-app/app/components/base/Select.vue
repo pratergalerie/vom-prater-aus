@@ -1,13 +1,16 @@
 <script setup lang="ts">
   import { useField } from 'vee-validate'
 
-  const props = defineProps<{
-    name: string
-    label: string
-    description?: string
-    placeholder: string
-    required: boolean
-  }>()
+  const props = withDefaults(
+    defineProps<{
+      name: string
+      label: string
+      description?: string
+      placeholder: string
+      required: boolean
+    }>(),
+    { description: undefined }
+  )
 
   const { value, errorMessage } = useField(() => props.name)
 </script>

@@ -3,14 +3,17 @@
 
   type InputType = 'text' | 'email' | 'password' | 'number'
 
-  const props = defineProps<{
-    name: string
-    type: InputType
-    label: string
-    description?: string
-    placeholder: string
-    required: boolean
-  }>()
+  const props = withDefaults(
+    defineProps<{
+      name: string
+      type: InputType
+      label: string
+      description?: string
+      placeholder: string
+      required?: boolean
+    }>(),
+    { description: undefined, required: false }
+  )
 
   const { value, errorMessage } = useField(() => props.name)
 </script>

@@ -18,8 +18,8 @@
     <div class="actions-controls">
       <BaseButton
         icon="mdi:search"
-        type="primary"
-        variant="icon"
+        variant="primary"
+        layout="icon"
         @click="$emit('update:showSearchDialog', true)"
       />
       <div class="view-mode-switcher-container">

@@ -22,8 +22,8 @@
       </div>
       <BaseButton
         class="button"
-        type="primary"
-        variant="label"
+        variant="primary"
+        layout="label"
         :label="$t('pages.home.sections.stories.button')"
         href="/stories"
       />
@@ -41,8 +41,8 @@
       </div>
       <BaseButton
         class="button"
-        type="primary"
-        variant="label"
+        variant="primary"
+        layout="label"
         :label="$t('pages.home.sections.prater.button')"
         href="/prater"
       />
@@ -60,8 +60,8 @@
       </div>
       <BaseButton
         class="button"
-        type="primary"
-        variant="label"
+        variant="primary"
+        layout="label"
         :label="$t('pages.home.sections.create.button')"
         href="/stories/create"
       />

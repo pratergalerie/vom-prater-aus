@@ -176,16 +176,16 @@
 
         <div class="actions">
           <BaseButton
-            type="secondary"
-            variant="label-icon"
+            variant="secondary"
+            layout="label-icon"
             :label="$t('components.storiesSearchDialog.clearFilters')"
             icon="mdi:refresh"
             class="clear-filters-button"
             @click="handleClearFilters"
           />
           <BaseButton
-            type="primary"
-            variant="label-icon"
+            variant="primary"
+            layout="label-icon"
             :label="$t('components.storiesSearchDialog.applyFilters')"
             icon="mdi:filter"
             class="apply-filters-button"

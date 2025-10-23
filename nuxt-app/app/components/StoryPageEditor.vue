@@ -571,8 +571,8 @@
         </BaseDialog>
 
         <BaseButton
-          variant="icon"
-          type="secondary"
+          layout="icon"
+          variant="secondary"
           :icon="action.icon"
           class="action-button"
           @click="action.action"

@@ -118,8 +118,8 @@
     <div class="bottom-controls">
       <BaseButton
         v-if="showCloseButton"
-        type="secondary"
-        variant="icon"
+        variant="secondary"
+        layout="icon"
         icon="mdi-arrow-left"
         class="close-button"
         @click="emit('close')"

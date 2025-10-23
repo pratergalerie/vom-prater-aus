@@ -1,6 +1,5 @@
 <script setup lang="ts">
   import slugify from '@sindresorhus/slugify'
-  import { v4 as uuidv4 } from 'uuid'
   import { useForm } from 'vee-validate'
   import { toTypedSchema } from '@vee-validate/zod'
   import * as z from 'zod'
@@ -133,33 +132,33 @@
 
   const { handleSubmit } = useForm({
     validationSchema,
-    initialValues: {
-      storyLanguage: '',
-    },
+    initialValues: { storyLanguage: '' },
   })
 
   const { post, pending, error } = useCreateStory()
 
   const onSubmit = handleSubmit(async (values) => {
-    //   const {
-    //     storyTitle: title,
-    //     authorName,
-    //     authorEmail,
-    //     storyLanguage,
-    //     storyYear: year,
-    //   } = values
-    //   const response = await post({
-    //     title,
-    //     authorName,
-    //     authorEmail,
-    //     slug: slugify(title),
-    //     uuid: uuidv4(),
-    //     language: storyLanguage as LanguageCode,
-    //     year,
-    //   })
-    //   if (response?.uuid) {
-    //     await navigateTo({ path: `/draft-stories/${response.uuid}` })
-    //   }
+    const {
+      storyTitle: title,
+      authorName,
+      authorEmail,
+      storyLanguage,
+      storyYear: year,
+    } = values
+
+    const response = await post({
+      title,
+      authorName,
+      authorEmail,
+      slug: slugify(title),
+      language: storyLanguage as LanguageCode,
+      year,
+    })
+
+    if (response.type === 'ok') {
+      const { uuid } = response.data
+      await navigateTo({ path: `/draft-stories/${uuid}` })
+    }
   })
 </script>
 
@@ -290,16 +289,20 @@
         </BaseCheckbox>
       </div>
 
-      <BaseButton
-        type="secondary"
-        variant="label-icon"
-        icon="mdi:creation"
-        class="button"
-        :disabled="pending"
-        :label="$t('pages.create.form.inputs.submitButton')"
-      />
-
-      {{ error ? 'Error' : '' }}
+      <div class="status-button">
+        <!-- Status -->
+        <p class="error">{{ error ? $t('pages.create.form.error') : '' }}</p>
+        <!-- Submit Button -->
+        <BaseButton
+          type="submit"
+          variant="secondary"
+          layout="label-icon"
+          icon="mdi:creation"
+          class="button"
+          :disabled="pending"
+          :label="$t('pages.create.form.inputs.submitButton')"
+        />
+      </div>
     </form>
   </section>
 </template>
@@ -315,10 +318,6 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-l);
-
-    & button {
-      align-self: end;
-    }
   }
 
   .checkboxes {
@@ -332,6 +331,18 @@
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-s);
+    align-items: center;
+
+    & > * {
+      flex: 1 1 300px;
+    }
+  }
+
+  .status-button {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-s);
+    align-items: center;
 
     & > * {
       flex: 1 1 300px;

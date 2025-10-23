@@ -23,24 +23,27 @@ export type StrapiImage = {
   width: number
 }
 
+type LifecycleState = 'created' | 'pending' | 'submitted'
+
 export type Section = {
-  documentId: string
+  documentId?: string
   text: string | null
   image: StrapiImage | null
 }
 
 export type Keyword = {
-  documentId: string
+  documentId?: string
   name: string
   createdAt: string
   updatedAt: string
 }
 
 export type Story = {
-  documentId: string
+  documentId?: string
   title: string
   slug: string
   uuid: string
+  lifecycleState: LifecycleState
   language: LanguageCode
   year: number
   keywords: Keyword[]

@@ -7,8 +7,8 @@
     <h1>{{ t('pages.stories.submitted.title') }}</h1>
     <p>{{ t('pages.stories.submitted.text') }}</p>
     <BaseButton
-      type="primary"
-      variant="label-icon"
+      variant="primary"
+      layout="label-icon"
       :href="`/stories/explorer`"
       class="button"
       :label="t('pages.stories.submitted.button')"

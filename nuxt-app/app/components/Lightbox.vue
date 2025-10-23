@@ -222,16 +222,16 @@
         </div>
       </button>
       <BaseButton
-        type="secondary"
-        variant="icon"
+        variant="secondary"
+        layout="icon"
         icon="mdi:close"
         class="close-button"
         @click.stop="handleClose"
       />
       <BaseButton
         v-if="scale > 1"
-        type="secondary"
-        variant="icon"
+        variant="secondary"
+        layout="icon"
         icon="mdi:image-filter-center-focus"
         class="reset-button"
         @click.stop="resetZoom"

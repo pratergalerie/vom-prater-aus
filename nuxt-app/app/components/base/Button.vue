@@ -2,17 +2,26 @@
   import { svgPaths as baseButtonSvgPaths } from '~/assets/svgs/paths/baseButton'
   import { svgPaths as iconButtonSvgPaths } from '~/assets/svgs/paths/iconButton'
 
-  const props = defineProps<{
-    type: 'primary' | 'secondary'
-    variant: 'label' | 'icon' | 'label-icon'
-    label?: string
-    icon?: string
-    href?: string | null
-    disabled?: boolean
-  }>()
+  const props = withDefaults(
+    defineProps<{
+      type?: 'submit' | 'button'
+      variant: 'primary' | 'secondary'
+      layout: 'label' | 'icon' | 'label-icon'
+      label?: string
+      icon?: string
+      href?: string | null
+      disabled?: boolean
+    }>(),
+    {
+      type: 'button',
+      label: undefined,
+      icon: undefined,
+      href: undefined,
+    }
+  )
 
   const svgPaths = computed(() => {
-    return props.variant === 'icon' ? iconButtonSvgPaths : baseButtonSvgPaths
+    return props.layout === 'icon' ? iconButtonSvgPaths : baseButtonSvgPaths
   })
 
   // function generateRandomSVGPath(): string {
@@ -62,18 +71,18 @@
   const svgPath = svgPaths.value[0]
 
   const textureSrc = computed(() => {
-    return props.type === 'primary'
+    return props.variant === 'primary'
       ? '/imgs/textures/halftone-texture-white.webp'
       : '/imgs/textures/halftone-texture-black.webp'
   })
 
   const dropShadow = computed(() => {
-    if (props.variant === 'icon') {
-      return props.type === 'primary'
+    if (props.layout === 'icon') {
+      return props.variant === 'primary'
         ? `drop-shadow(-2px 2px 0 var(--color-black))`
         : `drop-shadow(-2px 2px 0 var(--color-white)) drop-shadow(-1px 1px 0 var(--color-black))`
     } else
-      return props.type === 'primary'
+      return props.variant === 'primary'
         ? `drop-shadow(-4px 4px 0 var(--color-black))`
         : `drop-shadow(-4px 4px 0 var(--color-white)) drop-shadow(-2px 2px 0 var(--color-black)`
   })
@@ -83,10 +92,11 @@
 
 <template>
   <button
+    :type="type"
     :class="{
-      primary: type === 'primary',
-      secondary: type === 'secondary',
-      icon: variant === 'icon',
+      primary: variant === 'primary',
+      secondary: variant === 'secondary',
+      icon: layout === 'icon',
       disabled: disabled,
     }"
   >
@@ -97,16 +107,16 @@
         class="button-link"
       />
       <span
-        v-if="variant === 'label'"
+        v-if="layout === 'label'"
         class="button-label"
-        :class="{ secondary: type === 'secondary' }"
+        :class="{ secondary: variant === 'secondary' }"
       >
         {{ label }}
       </span>
       <span
-        v-if="variant === 'label-icon'"
+        v-if="layout === 'label-icon'"
         class="button-label-icon"
-        :class="{ secondary: type === 'secondary' }"
+        :class="{ secondary: variant === 'secondary' }"
       >
         <span>{{ label }}</span>
         <span v-if="icon">
@@ -118,9 +128,9 @@
         </span>
       </span>
       <div
-        v-if="variant === 'icon' && icon"
+        v-if="layout === 'icon' && icon"
         class="button-icon"
-        :style="{ color: type === 'primary' ? 'black' : 'white' }"
+        :style="{ color: variant === 'primary' ? 'black' : 'white' }"
       >
         <Icon
           :name="icon"
@@ -134,10 +144,10 @@
         <svg
           class="button-shape"
           :class="{
-            primary: type === 'primary',
-            secondary: type === 'secondary',
+            primary: variant === 'primary',
+            secondary: variant === 'secondary',
           }"
-          :viewBox="variant === 'icon' ? '0 0 40 40' : '0 0 349 60'"
+          :viewBox="layout === 'icon' ? '0 0 40 40' : '0 0 349 60'"
           fill="none"
           preserveAspectRatio="none"
         >
@@ -174,7 +184,7 @@
           </filter>
           <clipPath
             :id="
-              variant === 'icon'
+              layout === 'icon'
                 ? `icon-button-clip-path-${randomId}`
                 : `base-button-clip-path-${randomId}`
             "
@@ -184,13 +194,15 @@
           <rect
             :d="svgPath"
             :fill="
-              type === 'primary' ? 'var(--color-white)' : 'var(--color-black)'
+              variant === 'primary'
+                ? 'var(--color-white)'
+                : 'var(--color-black)'
             "
             :filter="`url(#button-vignette-${randomId})`"
             width="100%"
             height="100%"
             :clip-path="
-              variant === 'icon'
+              layout === 'icon'
                 ? `url(#icon-button-clip-path-${randomId})`
                 : `url(#base-button-clip-path-${randomId})`
             "
