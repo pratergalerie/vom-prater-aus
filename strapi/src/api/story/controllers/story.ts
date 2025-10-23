@@ -56,5 +56,33 @@ export default factories.createCoreController(
 
       return this.transformResponse(sanitizedEntity);
     },
+
+    async updateDraft(ctx) {
+      await this.validateQuery(ctx);
+
+      const { uuid } = ctx.params;
+
+      try {
+        UuidSchema.parse(uuid);
+      } catch (_) {
+        return ctx.badRequest("What? is in the wrong format");
+      }
+
+      const { documentId } = await strapi
+        .documents("api::story.story")
+        .findFirst({
+          status: "draft",
+          filters: { uuid },
+        });
+
+      const entity = await strapi.documents("api::story.story").update({
+        documentId: documentId,
+        data: ctx.request.body,
+      });
+
+      const sanitizedEntity = await this.sanitizeOutput(entity, ctx);
+
+      return this.transformResponse(sanitizedEntity);
+    },
   })
 );
