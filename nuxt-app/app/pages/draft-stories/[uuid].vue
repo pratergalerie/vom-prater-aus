@@ -95,26 +95,29 @@
         />
       </section>
 
-      <div class="actions">
-        <div class="submit">
-          <BaseButton
-            type="submit"
-            :disabled="pending"
-            :variant="isSubmitStoryChecked ? 'secondary' : 'primary'"
-            layout="label-icon"
-            class="button"
-            :label="
-              isSubmitStoryChecked
-                ? $t('pages.edit.actions.submit')
-                : $t('pages.edit.actions.save')
-            "
-          />
-          <BaseCheckbox name="submitStory">
-            <template #label>
-              <p>{{ $t('pages.edit.actions.submitCheckbox') }}</p>
-            </template>
-          </BaseCheckbox>
+      <div class="actions-wrapper">
+        <div class="actions">
+          <div class="submit">
+            <BaseButton
+              type="submit"
+              :disabled="pending"
+              :variant="isSubmitStoryChecked ? 'secondary' : 'primary'"
+              layout="label-icon"
+              class="button"
+              :label="
+                isSubmitStoryChecked
+                  ? $t('pages.edit.actions.submit')
+                  : $t('pages.edit.actions.save')
+              "
+            />
+            <BaseCheckbox name="submitStory">
+              <template #label>
+                <p>{{ $t('pages.edit.actions.submitCheckbox') }}</p>
+              </template>
+            </BaseCheckbox>
+          </div>
         </div>
+        <div class="background"></div>
       </div>
     </form>
   </div>
@@ -134,24 +137,77 @@
     margin-block-end: var(--space-2xl);
   }
 
-  .actions {
+  .actions-wrapper {
     position: sticky;
     bottom: 0;
     z-index: 1000;
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-    max-width: var(--max-width);
-    padding: var(--space-s);
-    padding-bottom: var(--space-xs);
-    background-color: var(--color-beige);
+    display: grid;
+    grid-template: 'stack' 1fr / 1fr;
 
-    & .submit {
+    & .actions {
+      z-index: 3;
+      box-sizing: border-box;
       display: flex;
-      flex-direction: column;
-      gap: var(--space-xs);
-      align-items: center;
-      width: max-content;
+      justify-content: flex-end;
+      width: 100%;
+      max-width: var(--max-width);
+      padding: var(--space-l);
+      background-color: var(--color-beige);
+      clip-path: polygon(
+        0% 10%,
+        12.22% 5.3%,
+        21.5% 10.87%,
+        53.76% 8.25%,
+        98.35% 0%,
+        98.64% 76.25%,
+        97.26% 89.26%,
+        88.2% 82.2%,
+        83.73% 91.73%,
+        70.85% 94.85%,
+        61.69% 78.69%,
+        53.76% 93.76%,
+        26.98% 92.98%,
+        1.26% 89.26%,
+        0% 73.2%,
+        0% 100%
+      );
+
+      & .submit {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+        align-items: center;
+        width: max-content;
+      }
+    }
+
+    & .background {
+      position: absolute;
+      top: 2px;
+      z-index: 1;
+      grid-area: stack;
+      width: 100%;
+      height: 100%;
+      background-color: var(--color-grey-light);
+      clip-path: polygon(
+        0% 10%,
+        12.22% 5.3%,
+        21.5% 10.87%,
+        53.76% 8.25%,
+        98.35% 0%,
+        98.64% 76.25%,
+        97.26% 89.26%,
+        88.2% 82.2%,
+        83.73% 91.73%,
+        70.85% 94.85%,
+        61.69% 78.69%,
+        53.76% 93.76%,
+        26.98% 92.98%,
+        1.26% 89.26%,
+        0% 73.2%,
+        0% 100%
+      );
+      transform: scaleX(1.01) scaleY(1.06);
     }
   }
 </style>
