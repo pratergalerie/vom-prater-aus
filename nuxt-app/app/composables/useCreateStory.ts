@@ -17,6 +17,7 @@ type CreateStory = Omit<
   | 'sections'
   | 'quote'
   | 'uuid'
+  | 'lifecycleState'
 >
 
 export const useCreateStory = () => {

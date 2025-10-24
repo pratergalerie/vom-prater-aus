@@ -17,7 +17,7 @@ export const useMenu = () => {
     'stories-edit-id',
     'stories-id',
     'stories-slug',
-    'stories-submitted',
+    'draft-stories-submitted',
     'draft-stories-uuid',
   ]
   const menuOrder = [
@@ -40,7 +40,7 @@ export const useMenu = () => {
     'stories-edit-id',
     'stories-id',
     'stories-slug',
-    'stories-submitted',
+    'draft-stories-submitted',
     'draft-stories-uuid',
   ]
 

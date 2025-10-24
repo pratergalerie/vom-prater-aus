@@ -34,9 +34,13 @@
       })
       // Story is submitted
     } else {
-      await update({
+      const response = await update({
         lifecycleState: 'submitted',
       })
+
+      if (response.type === 'ok') {
+        await navigateTo({ path: `/draft-stories/submitted` })
+      }
     }
   })
 </script>
