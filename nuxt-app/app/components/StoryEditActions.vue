@@ -11,7 +11,7 @@
 
 <style scoped>
   .wrapper {
-    position: sticky;
+    position: relative;
     bottom: 0;
     z-index: 1000;
     display: grid;

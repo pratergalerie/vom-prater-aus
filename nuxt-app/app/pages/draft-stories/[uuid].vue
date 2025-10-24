@@ -95,7 +95,7 @@
         />
       </section>
 
-      <StoryEditActions>
+      <StoryEditActions :style="{ position: 'sticky' }">
         <div class="submit">
           <BaseButton
             type="submit"
