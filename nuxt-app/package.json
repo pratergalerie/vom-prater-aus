@@ -31,6 +31,7 @@
     "localforage": "^1.10.0",
     "nuxt": "^3.17.3",
     "pinia": "^3.0.2",
+    "strapi-provider-email-brevo": "^1.0.4",
     "temporal-polyfill": "^0.3.0",
     "three": "^0.176.0",
     "uuid": "^13.0.0",
