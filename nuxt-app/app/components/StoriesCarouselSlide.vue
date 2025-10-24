@@ -68,7 +68,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
   .slide {
     display: grid;
     grid-template-rows: 1fr 80%;

@@ -1,11 +1,14 @@
 import type { Strapi5ResponseData } from '@nuxtjs/strapi'
-import type { Story } from '~~/types/strapi'
+import type { Story, LifecycleState } from '~~/types/strapi'
 
 type StrapiResponse = { data: Strapi5ResponseData<Story> }
 
 type Result<T> = { type: 'error'; error: Error } | { type: 'ok'; data: T }
 
-type UpdateStory = Partial<Pick<Story, 'sections' | 'lifecycleState'>>
+type UpdateStory = {
+  sections: { text: string | null; image: number | null }[]
+  lifecyleState?: LifecycleState
+}
 
 export const useUpdateDraftStory = (uuid: string) => {
   const client = useStrapiClient()

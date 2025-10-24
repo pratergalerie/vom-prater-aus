@@ -1,8 +1,8 @@
 <script lang="ts" setup>
   import { useGetStory } from '~/composables/useGetStory'
+  import { getStrapiImageUrl } from '~/utils/strapi'
 
   const route = useRoute()
-  const { url: strapiUrl } = useRuntimeConfig().public.strapi
 
   const slug = route.params.slug as string
   const { data: storyData, status, error } = await useGetStory(slug)
@@ -48,7 +48,7 @@
         <template #image>
           <NuxtImg
             v-if="section.image !== null"
-            :src="`${strapiUrl}${section.image.url}`"
+            :src="getStrapiImageUrl(section.image.url)"
             :alt="section.image.alternativeText ?? ''"
             class="image"
           />
@@ -70,7 +70,7 @@
       >
         <NuxtImg
           v-if="section.image !== null && index > 0"
-          :src="`${strapiUrl}${section.image.url}`"
+          :src="getStrapiImageUrl(section.image.url)"
           :alt="section.image.alternativeText ?? ''"
           :style="{
             float: index % 2 ? 'left' : 'right',

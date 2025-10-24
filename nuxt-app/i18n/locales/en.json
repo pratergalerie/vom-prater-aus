@@ -163,18 +163,18 @@
     "edit": {
       "form": {
         "coverImage": {
-          "label": "Upload your cover image here. (optional)",
-          "upload": "Upload image",
-          "remove": "Remove image"
+          "label": "Upload your cover image here. (optional)"
         },
         "bodyText": {
           "label": "Your memory"
         }
       },
       "actions": {
+        "uploadImage": "Upload image",
+        "removeImage": "Remove image",
         "submitCheckbox": "Ready to submit your story?",
-        "save": "Save",
-        "submit": "Submit"
+        "saveStory": "Save",
+        "submitStory": "Submit"
       },
       "modals": {
         "deletePage": {

@@ -3,15 +3,22 @@
   import { useGetDraftStory } from '~/composables/useGetDraftStory'
   import { useForm } from 'vee-validate'
   import { useUpdateDraftStory } from '~/composables/useUpdateDraftStory'
+  import { useUploadImage } from '~/composables/useUploadImage'
+  import { getStrapiImageUrl } from '~/utils/strapi'
 
   const route = useRoute()
   const uuid = route.params.uuid as string
 
-  const { update, pending } = useUpdateDraftStory(uuid)
-
+  const { update, pending: pendingUpdate } = useUpdateDraftStory(uuid)
+  const { upload, pending: pendingUpload } = useUploadImage()
   const { data: storyData, status, error } = await useGetDraftStory(uuid)
+  const isPending = computed(() => pendingUpload || pendingUpdate)
 
-  const { values, handleSubmit } = useForm({
+  const { values, handleSubmit } = useForm<{
+    bodyText: string | null
+    submitStory: boolean
+    coverImage: File | null
+  }>({
     initialValues: {
       bodyText: storyData?.value?.sections[0]?.text ?? '',
       submitStory: false,
@@ -21,26 +28,30 @@
   const isSubmitStoryChecked = computed(() => values.submitStory)
 
   const onSubmit = handleSubmit(async (values) => {
-    // Story is saved
-    if (!values.submitStory) {
-      const { coverImage, bodyText } = values
-      await update({
-        sections: [
-          {
-            text: bodyText,
-            image: coverImage,
-          },
-        ],
-      })
-      // Story is submitted
-    } else {
-      const response = await update({
-        lifecycleState: 'submitted',
-      })
+    const { coverImage, bodyText } = values
+    const isSubmitting = values.submitStory
+    let coverImageId
+
+    if (coverImage) {
+      const response = await upload(coverImage) // Then update the entry
 
       if (response.type === 'ok') {
-        await navigateTo({ path: `/draft-stories/submitted` })
+        coverImageId = response.data?.id
       }
+    }
+
+    const response = await update({
+      sections: [
+        {
+          text: bodyText,
+          image: coverImageId ?? null,
+        },
+      ],
+      ...(isSubmitting && { lifecycleState: 'submitted' }),
+    })
+
+    if (isSubmitting && response.type === 'ok') {
+      await navigateTo({ path: `/draft-stories/submitted` })
     }
   })
 </script>
@@ -69,6 +80,10 @@
           <template #image>
             <ImageUploadArea
               name="coverImage"
+              :image-url="
+                storyData.sections[0]?.image &&
+                getStrapiImageUrl(storyData.sections[0]?.image?.url)
+              "
               :label="$t('pages.edit.form.coverImage.label')"
             />
           </template>
@@ -93,14 +108,14 @@
           <div class="submit">
             <BaseButton
               type="submit"
-              :disabled="pending"
+              :disabled="isPending.value"
               :variant="isSubmitStoryChecked ? 'secondary' : 'primary'"
               layout="label-icon"
               class="button"
               :label="
                 isSubmitStoryChecked
-                  ? $t('pages.edit.actions.submit')
-                  : $t('pages.edit.actions.save')
+                  ? $t('pages.edit.actions.submitStory')
+                  : $t('pages.edit.actions.saveStory')
               "
             />
             <BaseCheckbox name="submitStory">

@@ -2,6 +2,7 @@
   import type { StrapiImage } from '~~/types/strapi'
   import type { ListElement } from './StoriesGridElement.vue'
   import StoriesGridElement from './StoriesGridElement.vue'
+  import { getStrapiImageUrl } from '~/utils/strapi'
 
   const selectedKeywords = ref<string[]>([])
   provide('selectedKeywords', selectedKeywords)
@@ -22,8 +23,6 @@
     error,
   } = await useGetStories({ keywords: selectedKeywords })
 
-  const { url: strapiUrl } = useRuntimeConfig().public.strapi
-
   const stories = computed(() =>
     storiesData.value
       .map<(ListElement & { id: string }) | undefined>((story) => {
@@ -42,7 +41,9 @@
             variant: 'image',
             id: story.documentId,
             img: {
-              src: `${strapiUrl}${(firstSectionWithImage.image as StrapiImage).url}`,
+              src: getStrapiImageUrl(
+                (firstSectionWithImage.image as StrapiImage).url
+              ),
               alt:
                 (firstSectionWithImage.image as StrapiImage).alternativeText ??
                 '',

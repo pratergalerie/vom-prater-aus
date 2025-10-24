@@ -162,18 +162,18 @@
     "edit": {
       "form": {
         "coverImage": {
-          "label": "Lade hier dein Titlebild hoch. (optional)",
-          "upload": "Bild hochladen",
-          "remove": "Bild entfernen"
+          "label": "Lade hier dein Titlebild hoch. (optional)"
         },
         "bodyText": {
           "label": "Deine Erinnerung"
         }
       },
       "actions": {
+        "uploadImage": "Bild hochladen",
+        "removeImage": "Bild entfernen",
         "submitCheckbox": "Möchtest du deine Geschichte einreichen?",
-        "save": "Speichern",
-        "submit": "Einreichen"
+        "saveStory": "Speichern",
+        "submitStory": "Einreichen"
       },
       "modals": {
         "deletePage": {

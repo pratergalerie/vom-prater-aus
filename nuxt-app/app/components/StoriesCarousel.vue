@@ -5,8 +5,7 @@
   import type { Slide } from './StoriesCarouselSlide.vue'
   import StoriesCarouselSlide from './StoriesCarouselSlide.vue'
   import type { StrapiImage } from '~~/types/strapi'
-
-  const { url: strapiUrl } = useRuntimeConfig().public.strapi
+  import { getStrapiImageUrl } from '~/utils/strapi'
 
   const { data: slidesData } = await useGetStories({
     featured: true,
@@ -25,7 +24,9 @@
       return {
         id: story.documentId,
         img: {
-          src: `${strapiUrl}${(firstSectionWithImage.image as StrapiImage).url}`,
+          src: getStrapiImageUrl(
+            (firstSectionWithImage.image as StrapiImage).url
+          ),
           alt:
             (firstSectionWithImage.image as StrapiImage).alternativeText ?? '',
         },

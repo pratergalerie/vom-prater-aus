@@ -23,7 +23,7 @@ export type StrapiImage = {
   width: number
 }
 
-type LifecycleState = 'created' | 'pending' | 'submitted'
+export type LifecycleState = 'created' | 'pending' | 'submitted'
 
 export type Section = {
   documentId?: string

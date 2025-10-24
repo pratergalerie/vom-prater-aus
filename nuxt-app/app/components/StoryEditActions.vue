@@ -25,7 +25,8 @@
       justify-content: flex-end;
       width: 100%;
       max-width: var(--max-width);
-      padding: var(--space-l);
+      padding: var(--space-m) var(--space-l);
+      padding-bottom: var(--space-l);
       background-color: var(--color-beige);
       clip-path: polygon(
         0% 10%,
@@ -38,7 +39,7 @@
         88.2% 82.2%,
         83.73% 91.73%,
         70.85% 94.85%,
-        61.69% 78.69%,
+        63.69% 88.69%,
         53.76% 93.76%,
         26.98% 92.98%,
         1.26% 89.26%,
@@ -66,7 +67,7 @@
         88.2% 82.2%,
         83.73% 91.73%,
         70.85% 94.85%,
-        61.69% 78.69%,
+        63.69% 88.69%,
         53.76% 93.76%,
         26.98% 92.98%,
         1.26% 89.26%,

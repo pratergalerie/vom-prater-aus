@@ -6,8 +6,12 @@
       name: string
       label: string
       required?: boolean
+      imageUrl?: string
     }>(),
-    { required: false }
+    {
+      required: false,
+      imageUrl: '',
+    }
   )
 
   const { value, errorMessage, handleBlur, resetField } = useField(
@@ -17,6 +21,7 @@
   const fileInput = ref<HTMLInputElement | null>(null)
   const isDragOver = ref(false)
   const isFileUploaded = computed(() => value.value)
+  const imageUrl = ref<string | null>(props.imageUrl)
 
   const triggerFileInput = () => {
     resetField()
@@ -25,6 +30,7 @@
 
   const fileUpload = (file: File) => {
     value.value = file
+    imageUrl.value = URL.createObjectURL(file)
   }
 
   const handleDragOver = (event: DragEvent) => {
@@ -51,6 +57,7 @@
 
   const handleFileRemove = () => {
     resetField()
+    imageUrl.value = null
   }
 
   const handleFileChange = (event: Event) => {
@@ -77,6 +84,11 @@
     @drop="handleDrop"
     @dragleave="handleDragLeave"
   >
+    <NuxtImg
+      v-if="imageUrl"
+      :src="imageUrl"
+      alt=""
+    />
     <input
       v-bind="$attrs"
       :id="name"
@@ -89,30 +101,78 @@
       @blur="handleBlur"
     />
 
-    <p>{{ label }}</p>
-    {{ (value as File | undefined)?.name }}
+    <div class="info-wrapper">
+      <div class="info">
+        <p v-if="!imageUrl && !isFileUploaded">{{ label }}</p>
 
-    <BaseButton
-      variant="primary"
-      layout="label-icon"
-      class="button"
-      :label="isFileUploaded ? 'Remove Image' : 'Upload Image'"
-      @click.stop="isFileUploaded ? handleFileRemove() : triggerFileInput()"
-    />
+        <BaseButton
+          variant="primary"
+          layout="label"
+          class="button"
+          :label="
+            imageUrl || isFileUploaded
+              ? $t('pages.edit.actions.removeImage')
+              : $t('pages.edit.actions.uploadImage')
+          "
+          @click.stop="
+            imageUrl || isFileUploaded ? handleFileRemove() : triggerFileInput()
+          "
+        />
+      </div>
+    </div>
   </label>
 </template>
 
 <style scoped>
   label {
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-s);
-    align-items: center;
-    justify-content: center;
-    padding: var(--space-l);
-    font-weight: 600;
-    text-align: center;
+    display: grid;
+    grid-template: 'stack' 1fr / 1fr;
+    place-content: center;
     background-color: var(--color-white);
+
+    & img {
+      z-index: 2;
+      grid-area: stack;
+      height: 600px;
+      opacity: 0.5;
+    }
+
+    & .info-wrapper {
+      z-index: 3;
+      display: flex;
+      flex-flow: wrap;
+      flex-direction: column;
+      grid-area: stack;
+      place-content: center;
+
+      & .info {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-s);
+        min-width: 20%;
+        padding: var(--space-l);
+        font-weight: 600;
+        text-align: center;
+        background-color: var(--color-white);
+        clip-path: polygon(
+          0% 10%,
+          12.22% 5.3%,
+          21.5% 10.87%,
+          53.76% 8.25%,
+          98.35% 0%,
+          98.64% 76.25%,
+          97.26% 89.26%,
+          88.2% 82.2%,
+          83.73% 91.73%,
+          70.85% 94.85%,
+          63.69% 88.69%,
+          53.76% 93.76%,
+          26.98% 92.98%,
+          1.26% 89.26%,
+          0% 73.2%,
+          0% 100%
+        );
+      }
+    }
   }
 </style>

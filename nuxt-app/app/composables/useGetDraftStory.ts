@@ -10,14 +10,18 @@ export const useGetDraftStory = async (uuid: string) => {
     return `draft-story-${uuid}`
   })
 
-  const { data, pending, error, status } = await useAsyncData(key, () => {
-    return client<StrapiResponse>(`/draft-stories/${uuid}`)
-  })
+  const { data, pending, error, status, refresh } = await useAsyncData(
+    key,
+    () => {
+      return client<StrapiResponse>(`/draft-stories/${uuid}`)
+    }
+  )
 
   return {
     data: computed(() => data.value?.data),
     pending,
     error,
     status,
+    refresh,
   }
 }
