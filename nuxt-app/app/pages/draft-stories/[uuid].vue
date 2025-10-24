@@ -89,25 +89,27 @@
       </section>
 
       <StoryEditActions :style="{ position: 'sticky' }">
-        <div class="submit">
-          <BaseButton
-            type="submit"
-            :disabled="pending"
-            :variant="isSubmitStoryChecked ? 'secondary' : 'primary'"
-            layout="label-icon"
-            class="button"
-            :label="
-              isSubmitStoryChecked
-                ? $t('pages.edit.actions.submit')
-                : $t('pages.edit.actions.save')
-            "
-          />
-          <BaseCheckbox name="submitStory">
-            <template #label>
-              <p>{{ $t('pages.edit.actions.submitCheckbox') }}</p>
-            </template>
-          </BaseCheckbox>
-        </div>
+        <template #actions>
+          <div class="submit">
+            <BaseButton
+              type="submit"
+              :disabled="pending"
+              :variant="isSubmitStoryChecked ? 'secondary' : 'primary'"
+              layout="label-icon"
+              class="button"
+              :label="
+                isSubmitStoryChecked
+                  ? $t('pages.edit.actions.submit')
+                  : $t('pages.edit.actions.save')
+              "
+            />
+            <BaseCheckbox name="submitStory">
+              <template #label>
+                <p>{{ $t('pages.edit.actions.submitCheckbox') }}</p>
+              </template>
+            </BaseCheckbox>
+          </div>
+        </template>
       </StoryEditActions>
     </form>
   </div>
@@ -134,14 +136,14 @@
       align-items: center;
       justify-content: center;
       margin-block-end: var(--space-2xl);
-
-      & .submit {
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-xs);
-        align-items: center;
-        width: max-content;
-      }
     }
+  }
+
+  .submit {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    align-items: center;
+    width: max-content;
   }
 </style>

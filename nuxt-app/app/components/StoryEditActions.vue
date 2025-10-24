@@ -3,7 +3,7 @@
 <template>
   <div class="wrapper">
     <div class="actions">
-      <slot></slot>
+      <slot name="actions"></slot>
     </div>
     <div class="background"></div>
   </div>
@@ -21,6 +21,7 @@
       z-index: 3;
       box-sizing: border-box;
       display: flex;
+      align-items: center;
       justify-content: flex-end;
       width: 100%;
       max-width: var(--max-width);
