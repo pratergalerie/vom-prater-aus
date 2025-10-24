@@ -42,30 +42,19 @@
 </script>
 <template>
   <div class="wrapper">
-    <div
+    <p
       v-if="status === 'pending'"
-      class="status-container"
+      class="status"
     >
-      <p>{{ $t('pages.stories.story.loading') }}</p>
-    </div>
+      {{ $t('pages.stories.story.loading') }}
+    </p>
 
-    <!-- Error state -->
-    <div
-      v-else-if="error"
-      class="status-container error"
+    <p
+      v-else-if="!storyData || error"
+      class="status error"
     >
-      <p>{{ $t('pages.stories.story.error') }}</p>
-    </div>
-
-    <!-- No stories state -->
-    <div
-      v-else-if="storyData === undefined"
-      class="status-container"
-    >
-      <p>
-        {{ $t('pages.stories.story.unavailable"') }}
-      </p>
-    </div>
+      {{ $t('pages.stories.story.error') }}
+    </p>
 
     <form
       v-else
@@ -123,22 +112,32 @@
 <style scoped>
   .wrapper {
     position: relative;
-  }
+    height: 100%;
 
-  section {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2xl);
-    align-items: center;
-    justify-content: center;
-    margin-block-end: var(--space-2xl);
-  }
+    & .status {
+      display: flex;
+      flex-wrap: wrap;
+      place-content: center;
+      height: 100%;
+      font-size: var(--step-1);
+      font-weight: 600;
+    }
 
-  .submit {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
-    align-items: center;
-    width: max-content;
+    & section {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2xl);
+      align-items: center;
+      justify-content: center;
+      margin-block-end: var(--space-2xl);
+
+      & .submit {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+        align-items: center;
+        width: max-content;
+      }
+    }
   }
 </style>

@@ -252,8 +252,7 @@
       },
       "story": {
         "loading": "Loading story...",
-        "error": "Error loading story",
-        "unavailable": "Story is unavailable at the moment.",
+        "error": "Story is unavailable at the moment.",
         "memoryBy": "Erinnerung von"
       },
       "submitted": {

@@ -46,7 +46,10 @@ export default factories.createCoreController(
 
       const entity = await strapi.documents("api::story.story").findFirst({
         status: "draft",
-        filters: { uuid },
+        filters: {
+          uuid,
+          lifecycleState: { $notContains: "submitted" },
+        },
         populate: {
           sections: { populate: ["image"] },
         },
@@ -72,7 +75,10 @@ export default factories.createCoreController(
         .documents("api::story.story")
         .findFirst({
           status: "draft",
-          filters: { uuid },
+          filters: {
+            uuid,
+            lifecycleState: { $notContains: "submitted" },
+          },
         });
 
       const entity = await strapi.documents("api::story.story").update({

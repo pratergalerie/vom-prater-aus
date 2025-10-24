@@ -251,8 +251,7 @@
       },
       "story": {
         "loading": "Geschichte wird geladen...",
-        "error": "Fehler beim Laden der Geschichte",
-        "unavailable": "Derzeit ist die Geschichte nicht verfügbar.",
+        "error": "Derzeit ist die Geschichte nicht verfügbar.",
         "memoryBy": "Erinnerung von"
       },
       "submitted": {

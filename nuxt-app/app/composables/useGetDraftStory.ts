@@ -1,6 +1,8 @@
 import type { Strapi5ResponseData } from '@nuxtjs/strapi'
 import type { Story } from '~~/types/strapi'
 
+type StrapiResponse = { data: Strapi5ResponseData<Story> }
+
 export const useGetDraftStory = async (uuid: string) => {
   const client = useStrapiClient()
 
@@ -9,9 +11,7 @@ export const useGetDraftStory = async (uuid: string) => {
   })
 
   const { data, pending, error, status } = await useAsyncData(key, () => {
-    return client<{ data: Strapi5ResponseData<Story> }>(
-      `/draft-stories/${uuid}`
-    )
+    return client<StrapiResponse>(`/draft-stories/${uuid}`)
   })
 
   return {
