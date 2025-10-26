@@ -18,6 +18,15 @@
         "images",
         "files"
       ]
+    },
+    "type": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "image",
+        "image-text",
+        "text"
+      ]
     }
   },
   "config": {}

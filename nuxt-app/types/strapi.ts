@@ -25,10 +25,13 @@ export type StrapiImage = {
 
 export type LifecycleState = 'created' | 'pending' | 'submitted'
 
+type SectionType = 'image' | 'image-text' | 'text'
+
 export type Section = {
   documentId?: string
   text: string | null
   image: StrapiImage | null
+  type: SectionType
 }
 
 export type Keyword = {

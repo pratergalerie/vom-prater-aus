@@ -9,6 +9,8 @@ export interface StoryComponentsPage extends Struct.ComponentSchema {
   attributes: {
     image: Schema.Attribute.Media<'images' | 'files'>;
     text: Schema.Attribute.Text;
+    type: Schema.Attribute.Enumeration<['image', 'image-text', 'text']> &
+      Schema.Attribute.Required;
   };
 }
 
