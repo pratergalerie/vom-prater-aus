@@ -2,9 +2,33 @@
   import ImageUploadArea from '~/components/ImageUploadArea.vue'
   import { useGetDraftStory } from '~/composables/useGetDraftStory'
   import { useForm } from 'vee-validate'
+  import { toTypedSchema } from '@vee-validate/zod'
   import { useUpdateDraftStory } from '~/composables/useUpdateDraftStory'
   import { useUploadImage } from '~/composables/useUploadImage'
   import { getStrapiImageUrl } from '~/utils/strapi'
+  import * as z from 'zod'
+
+  const validationSchema = toTypedSchema(
+    z
+      .object({
+        coverImage: z.instanceof(File).optional(),
+        coverImageId: z.number().optional().nullable(),
+        bodyText: z.string(),
+      })
+      .refine(
+        (data) => {
+          return (
+            data.coverImage ||
+            Boolean(data.bodyText.length) ||
+            data.coverImageId
+          )
+        },
+        {
+          message: 'pages.edit.form.errors.atLeast',
+          path: [''], // applies error to the root level
+        }
+      )
+  )
 
   const route = useRoute()
   const uuid = route.params.uuid as string
@@ -17,12 +41,13 @@
   const { text: bodyText, image: coverImage } =
     storyData?.value?.sections[0] ?? {}
 
-  const { values, handleSubmit } = useForm<{
+  const { values, handleSubmit, errors } = useForm<{
     bodyText: string | null
     submitStory: boolean
     coverImage: File | null
     coverImageId: number | null
   }>({
+    validationSchema,
     initialValues: {
       bodyText: bodyText,
       submitStory: false,
@@ -65,7 +90,7 @@
   )
 </script>
 <template>
-  <div class="wrapper">
+  <div>
     <p
       v-if="status === 'pending'"
       class="status"
@@ -108,30 +133,38 @@
 
         <BaseTextarea
           name="bodyText"
-          :label="$t('pages.edit.form.bodyText.label')"
+          :label="`1. ${$t('pages.edit.form.bodyText.label')}`"
         />
       </section>
 
       <StoryEditActions :style="{ position: 'sticky' }">
         <template #actions>
           <div class="submit">
-            <BaseButton
-              type="submit"
-              :disabled="isPending.value"
-              :variant="isSubmitStoryChecked ? 'secondary' : 'primary'"
-              layout="label-icon"
-              class="button"
-              :label="
-                isSubmitStoryChecked
-                  ? $t('pages.edit.actions.submitStory')
-                  : $t('pages.edit.actions.saveStory')
-              "
-            />
-            <BaseCheckbox name="submitStory">
-              <template #label>
-                <p>{{ $t('pages.edit.actions.submitCheckbox') }}</p>
-              </template>
-            </BaseCheckbox>
+            <div class="button-checkbox">
+              <BaseCheckbox name="submitStory">
+                <template #label>
+                  <p>{{ $t('pages.edit.actions.submitCheckbox') }}</p>
+                </template>
+              </BaseCheckbox>
+              <BaseButton
+                type="submit"
+                :disabled="isPending.value"
+                :variant="isSubmitStoryChecked ? 'secondary' : 'primary'"
+                layout="label-icon"
+                class="button"
+                :label="
+                  isSubmitStoryChecked
+                    ? $t('pages.edit.actions.submitStory')
+                    : $t('pages.edit.actions.saveStory')
+                "
+              />
+            </div>
+            <p
+              v-if="errors['']"
+              class="error"
+            >
+              {{ $t(errors['']) }}
+            </p>
           </div>
         </template>
       </StoryEditActions>
@@ -140,34 +173,34 @@
 </template>
 
 <style scoped>
-  .wrapper {
-    position: relative;
+  .status {
+    display: flex;
+    flex-wrap: wrap;
+    place-content: center;
     height: 100%;
+    font-size: var(--step-1);
+    font-weight: 600;
+  }
 
-    & .status {
-      display: flex;
-      flex-wrap: wrap;
-      place-content: center;
-      height: 100%;
-      font-size: var(--step-1);
-      font-weight: 600;
-    }
-
-    & section {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-2xl);
-      align-items: center;
-      justify-content: center;
-      margin-block-end: var(--space-2xl);
-    }
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xl);
+    align-items: center;
+    justify-content: center;
+    margin-block-end: var(--space-2xl);
   }
 
   .submit {
     display: flex;
     flex-direction: column;
     gap: var(--space-xs);
+    align-items: flex-end;
+  }
+
+  .button-checkbox {
+    display: flex;
+    gap: var(--space-s);
     align-items: center;
-    width: max-content;
   }
 </style>

@@ -162,16 +162,19 @@
     "edit": {
       "form": {
         "coverImage": {
-          "label": "Lade hier dein Titlebild hoch. (optional)"
+          "label": "Lade hier dein Titlebild hoch."
         },
         "bodyText": {
-          "label": "Deine Erinnerung"
+          "label": "Absatz"
+        },
+        "errors": {
+          "atLeast": "Du musst entweder einen ersten Absatz oder ein Titelbild eintragen."
         }
       },
       "actions": {
         "uploadImage": "Bild hochladen",
         "removeImage": "Bild entfernen",
-        "submitCheckbox": "Möchtest du deine Geschichte einreichen?",
+        "submitCheckbox": "Geschichte einreichen?",
         "saveStory": "Speichern",
         "submitStory": "Einreichen"
       },

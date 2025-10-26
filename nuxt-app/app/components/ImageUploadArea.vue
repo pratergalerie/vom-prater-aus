@@ -120,7 +120,10 @@
 
     <div class="info-wrapper">
       <div class="info">
-        <p v-if="!imageUrl && !isFileUploaded">{{ label }}</p>
+        <p v-if="!imageUrl && !isFileUploaded">
+          {{ label }}<span v-if="!required">(optional)</span>
+          <span v-if="required">*</span>
+        </p>
 
         <BaseButton
           variant="primary"

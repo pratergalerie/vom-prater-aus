@@ -50,12 +50,11 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-2xs);
-    width: 100%;
+    width: fit-content;
   }
 
   label {
-    display: grid;
-    grid-template-columns: max-content 1fr;
+    display: flex;
     gap: var(--space-2xs);
   }
 

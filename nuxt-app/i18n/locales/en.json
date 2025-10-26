@@ -163,16 +163,19 @@
     "edit": {
       "form": {
         "coverImage": {
-          "label": "Upload your cover image here. (optional)"
+          "label": "Upload your cover image here."
         },
         "bodyText": {
-          "label": "Your memory"
+          "label": "Paragraph"
+        },
+        "errors": {
+          "atLeast": "You must enter either a first paragraph or a cover image."
         }
       },
       "actions": {
         "uploadImage": "Upload image",
         "removeImage": "Remove image",
-        "submitCheckbox": "Ready to submit your story?",
+        "submitCheckbox": "Submit story?",
         "saveStory": "Save",
         "submitStory": "Submit"
       },
