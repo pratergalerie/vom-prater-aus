@@ -44,6 +44,7 @@
     padding: var(--space-m);
     font-size: var(--step-0);
     resize: vertical;
+    border: unset;
   }
 
   .error-message {
