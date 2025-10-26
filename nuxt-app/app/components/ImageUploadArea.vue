@@ -121,8 +121,7 @@
     <div class="info-wrapper">
       <div class="info">
         <p v-if="!imageUrl && !isFileUploaded">
-          {{ label }}<span v-if="!required"> (optional)</span>
-          <span v-if="required">*</span>
+          <span>{{ label }}{{ required ? '*' : '' }}</span>
         </p>
 
         <BaseButton
@@ -148,6 +147,8 @@
     display: grid;
     grid-template: 'stack' 1fr / 1fr;
     place-content: center;
+    width: 100%;
+    aspect-ratio: 16/9;
     background-color: var(--color-white);
 
     & img {
@@ -169,7 +170,7 @@
         display: flex;
         flex-direction: column;
         gap: var(--space-s);
-        min-width: 20%;
+        min-width: 30%;
         padding: var(--space-l);
         font-weight: 600;
         text-align: center;

@@ -1,5 +1,5 @@
 import type { Strapi5ResponseData } from '@nuxtjs/strapi'
-import type { Story, LifecycleState } from '~~/types/strapi'
+import type { Story, LifecycleState, SectionType } from '~~/types/strapi'
 
 type StrapiResponse = { data: Strapi5ResponseData<Story> }
 
@@ -9,7 +9,7 @@ type UpdateStory = {
   authorName: string | null
   title: string | null
   year: number | null
-  sections: { text: string | null; image: number | null }[]
+  sections: { type: SectionType; text?: string | null; image?: number | null }[]
   lifecyleState?: LifecycleState
 }
 

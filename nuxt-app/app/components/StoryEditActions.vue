@@ -13,7 +13,7 @@
   .wrapper {
     position: relative;
     bottom: 0;
-    z-index: 1000;
+    z-index: 700;
     display: grid;
     grid-template: 'stack' 1fr / 1fr;
 

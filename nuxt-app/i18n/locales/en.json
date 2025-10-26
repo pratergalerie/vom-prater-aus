@@ -163,10 +163,13 @@
     "edit": {
       "form": {
         "coverImage": {
-          "label": "Upload your cover image here."
+          "label": "Upload a cover image here."
         },
         "bodyText": {
           "label": "Paragraph"
+        },
+        "sectionImage": {
+          "label": "Upload a image here."
         },
         "errors": {
           "atLeast": "You must enter either a first paragraph or a cover image."
@@ -177,7 +180,15 @@
         "removeImage": "Remove image",
         "submitCheckbox": "Submit story?",
         "saveStory": "Save",
-        "submitStory": "Submit"
+        "submitStory": "Submit",
+        "section": {
+          "remove": "Lösche Absatz",
+          "add": {
+            "image": "Bildabschnitt hinzufügen",
+            "image-text": "Bild-Text-Abschnitt hinzufügen",
+            "text": "Textabschnitt hinzufügen"
+          }
+        }
       },
       "modals": {
         "deletePage": {

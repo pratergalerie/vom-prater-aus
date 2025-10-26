@@ -162,10 +162,13 @@
     "edit": {
       "form": {
         "coverImage": {
-          "label": "Lade hier dein Titlebild hoch."
+          "label": "Lade hier ein Titlebild hoch."
         },
         "bodyText": {
           "label": "Absatz"
+        },
+        "sectionImage": {
+          "label": "Lade hier ein Bild hoch."
         },
         "errors": {
           "atLeast": "Du musst entweder einen ersten Absatz oder ein Titelbild eintragen."
@@ -176,7 +179,15 @@
         "removeImage": "Bild entfernen",
         "submitCheckbox": "Geschichte einreichen?",
         "saveStory": "Speichern",
-        "submitStory": "Einreichen"
+        "submitStory": "Einreichen",
+        "section": {
+          "remove": "Delete section",
+          "add": {
+            "image": "Add image section",
+            "image-text": "Add image text section",
+            "text": "Add text section"
+          }
+        }
       },
       "modals": {
         "deletePage": {
