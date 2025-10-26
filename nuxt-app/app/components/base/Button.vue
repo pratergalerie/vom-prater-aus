@@ -233,14 +233,13 @@
     z-index: 800;
     display: grid;
     width: 100%;
+    min-width: 180px;
     max-width: 400px;
     height: 60px;
     color: var(--color-black);
     cursor: pointer;
     background: none;
     border: none;
-    container-type: inline-size;
-    container-name: button-container;
     transition: transform 0.2s ease-out;
 
     &:hover,
