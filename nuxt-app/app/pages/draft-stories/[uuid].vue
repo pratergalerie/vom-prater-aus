@@ -13,7 +13,7 @@
       .object({
         coverImage: z.instanceof(File).optional(),
         coverImageId: z.number().optional().nullable(),
-        bodyText: z.string(),
+        bodyText: z.string().optional().nullable(),
         authorName: z
           .string({
             message: 'pages.create.form.inputs.authorName.errors.required',
@@ -83,7 +83,7 @@
   }>({
     validationSchema,
     initialValues: {
-      bodyText: bodyText,
+      bodyText: bodyText ?? '',
       submitStory: false,
       coverImageId: coverImage?.id,
       storyTitle,
