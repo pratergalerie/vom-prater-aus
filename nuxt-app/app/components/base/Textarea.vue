@@ -33,6 +33,9 @@
 
 <style scoped>
   label {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
     width: 100%;
     max-width: 70ch;
   }
