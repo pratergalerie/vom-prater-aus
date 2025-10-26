@@ -181,11 +181,11 @@
         "saveStory": "Speichern",
         "submitStory": "Einreichen",
         "section": {
-          "remove": "Delete section",
+          "remove": "Lösche Absatz",
           "add": {
-            "image": "Add image section",
-            "image-text": "Add image text section",
-            "text": "Add text section"
+            "image": "Bildabschnitt hinzufügen",
+            "image-text": "Bild-Text-Abschnitt hinzufügen",
+            "text": "Textabschnitt hinzufügen"
           }
         }
       },
