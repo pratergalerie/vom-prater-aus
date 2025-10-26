@@ -14,46 +14,55 @@
   const { data: storyData, status, error } = await useGetDraftStory(uuid)
   const isPending = computed(() => pendingUpload || pendingUpdate)
 
+  const { text: bodyText, image: coverImage } =
+    storyData?.value?.sections[0] ?? {}
+
   const { values, handleSubmit } = useForm<{
     bodyText: string | null
     submitStory: boolean
     coverImage: File | null
+    coverImageId: number | null
   }>({
     initialValues: {
-      bodyText: storyData?.value?.sections[0]?.text ?? '',
+      bodyText: bodyText,
       submitStory: false,
-      coverImage: null,
+      coverImageId: coverImage?.id,
     },
   })
   const isSubmitStoryChecked = computed(() => values.submitStory)
 
-  const onSubmit = handleSubmit(async (values) => {
-    const { coverImage, bodyText } = values
-    const isSubmitting = values.submitStory
-    let coverImageId
+  const onSubmit = handleSubmit(
+    async ({
+      coverImage: coverImageField,
+      coverImageId: coverImageIdField,
+      bodyText,
+    }) => {
+      const isSubmitting = values.submitStory
+      let coverImageId = coverImageIdField
 
-    if (coverImage) {
-      const response = await upload(coverImage) // Then update the entry
+      if (coverImageField) {
+        const response = await upload(coverImageField)
 
-      if (response.type === 'ok') {
-        coverImageId = response.data?.id
+        if (response.type === 'ok') {
+          coverImageId = response.data?.id ?? null
+        }
+      }
+
+      const response = await update({
+        sections: [
+          {
+            text: bodyText,
+            image: coverImageId,
+          },
+        ],
+        ...(isSubmitting && { lifecycleState: 'submitted' }),
+      })
+
+      if (isSubmitting && response.type === 'ok') {
+        await navigateTo({ path: `/draft-stories/submitted` })
       }
     }
-
-    const response = await update({
-      sections: [
-        {
-          text: bodyText,
-          image: coverImageId ?? null,
-        },
-      ],
-      ...(isSubmitting && { lifecycleState: 'submitted' }),
-    })
-
-    if (isSubmitting && response.type === 'ok') {
-      await navigateTo({ path: `/draft-stories/submitted` })
-    }
-  })
+  )
 </script>
 <template>
   <div class="wrapper">

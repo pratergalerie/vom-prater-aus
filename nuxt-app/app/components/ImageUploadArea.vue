@@ -14,8 +14,18 @@
     }
   )
 
-  const { value, errorMessage, handleBlur, resetField } = useField(
-    () => props.name
+  const fileFieldName = props.name
+  const fileIdFieldName = `${props.name}Id`
+
+  const {
+    value,
+    errorMessage,
+    handleBlur,
+    resetField: resetFileField,
+  } = useField(() => fileFieldName)
+
+  const { value: imageId, setValue: setImageIdField } = useField(
+    () => fileIdFieldName
   )
 
   const fileInput = ref<HTMLInputElement | null>(null)
@@ -24,7 +34,7 @@
   const imageUrl = ref<string | null>(props.imageUrl)
 
   const triggerFileInput = () => {
-    resetField()
+    resetFileField()
     fileInput.value?.click()
   }
 
@@ -56,12 +66,13 @@
   }
 
   const handleFileRemove = () => {
-    resetField()
+    resetFileField()
+    setImageIdField(null)
     imageUrl.value = null
   }
 
   const handleFileChange = (event: Event) => {
-    resetField()
+    resetFileField()
     const input = event.target as HTMLInputElement
     if (input.files?.length) {
       const file = input.files[0]
@@ -91,14 +102,21 @@
     />
     <input
       v-bind="$attrs"
-      :id="name"
+      :id="fileFieldName"
       ref="fileInput"
-      :name="name"
+      :name="fileFieldName"
       type="file"
       class="visually-hidden"
       accept="image/png, image/jpeg"
       @change.stop="handleFileChange"
       @blur="handleBlur"
+    />
+    <input
+      :id="fileIdFieldName"
+      v-model="imageId"
+      :name="fileIdFieldName"
+      type="number"
+      class="visually-hidden"
     />
 
     <div class="info-wrapper">
