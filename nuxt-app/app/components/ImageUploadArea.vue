@@ -6,7 +6,7 @@
       name: string
       label: string
       required?: boolean
-      imageUrl?: string
+      imageUrl?: string | null
     }>(),
     {
       required: false,
@@ -19,7 +19,6 @@
 
   const {
     value,
-    errorMessage,
     handleBlur,
     resetField: resetFileField,
   } = useField(() => fileFieldName)
