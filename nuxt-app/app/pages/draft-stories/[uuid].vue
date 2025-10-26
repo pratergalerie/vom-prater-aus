@@ -14,6 +14,33 @@
         coverImage: z.instanceof(File).optional(),
         coverImageId: z.number().optional().nullable(),
         bodyText: z.string(),
+        authorName: z
+          .string({
+            message: 'pages.create.form.inputs.authorName.errors.required',
+          })
+          .nonempty({
+            message: 'pages.create.form.inputs.authorName.errors.required',
+          }),
+        storyTitle: z
+          .string({
+            message: 'pages.create.form.inputs.storyTitle.errors.required',
+          })
+          .nonempty({
+            message: 'pages.create.form.inputs.storyTitle.errors.required',
+          }),
+        storyYear: z.coerce
+          .number({
+            message: 'pages.create.form.inputs.storyYear.errors.required',
+          })
+          .int({
+            message: 'pages.create.form.inputs.storyYear.errors.invalid',
+          })
+          .min(1831, {
+            message: 'pages.create.form.inputs.storyYear.errors.min',
+          })
+          .max(2017, {
+            message: 'pages.create.form.inputs.storyYear.errors.max',
+          }),
       })
       .refine(
         (data) => {
@@ -33,25 +60,35 @@
   const route = useRoute()
   const uuid = route.params.uuid as string
 
-  const { update, pending: pendingUpdate } = useUpdateDraftStory(uuid)
-  const { upload, pending: pendingUpload } = useUploadImage()
+  const { update } = useUpdateDraftStory(uuid)
+  const { upload } = useUploadImage()
   const { data: storyData, status, error } = await useGetDraftStory(uuid)
-  const isPending = computed(() => pendingUpload || pendingUpdate)
 
-  const { text: bodyText, image: coverImage } =
-    storyData?.value?.sections[0] ?? {}
+  const {
+    title: storyTitle,
+    year: storyYear,
+    authorName,
+    sections,
+  } = storyData.value ?? {}
+  const { text: bodyText, image: coverImage } = sections?.[0] ?? {}
 
-  const { values, handleSubmit, errors } = useForm<{
+  const { values, handleSubmit, errors, isSubmitting } = useForm<{
     bodyText: string | null
     submitStory: boolean
     coverImage: File | null
     coverImageId: number | null
+    storyTitle: string | null
+    authorName: string | null
+    storyYear: number | null
   }>({
     validationSchema,
     initialValues: {
       bodyText: bodyText,
       submitStory: false,
       coverImageId: coverImage?.id,
+      storyTitle,
+      authorName,
+      storyYear,
     },
   })
   const isSubmitStoryChecked = computed(() => values.submitStory)
@@ -61,8 +98,12 @@
       coverImage: coverImageField,
       coverImageId: coverImageIdField,
       bodyText,
+      submitStory,
+      authorName,
+      storyTitle: title,
+      storyYear: year,
     }) => {
-      const isSubmitting = values.submitStory
+      const isSubmitting = submitStory
       let coverImageId = coverImageIdField
 
       if (coverImageField) {
@@ -74,6 +115,9 @@
       }
 
       const response = await update({
+        title,
+        authorName,
+        year,
         sections: [
           {
             text: bodyText,
@@ -123,11 +167,32 @@
           </template>
 
           <template #titleBlock>
-            <StoryTitleBlock
-              :title="storyData.title"
-              :author-name="storyData.authorName"
-              :year="storyData.year"
-            />
+            <StoryTitleLayout>
+              <template #title>
+                <BaseInput
+                  name="storyTitle"
+                  type="text"
+                  :required="true"
+                  :label="$t('pages.create.form.inputs.storyTitle.label')"
+                />
+              </template>
+              <template #author>
+                <BaseInput
+                  name="authorName"
+                  type="text"
+                  :required="true"
+                  :label="$t('pages.create.form.inputs.authorName.label')"
+                />
+              </template>
+              <template #year>
+                <BaseInput
+                  name="storyYear"
+                  type="number"
+                  :required="true"
+                  :label="$t('pages.create.form.inputs.storyYear.label')"
+                />
+              </template>
+            </StoryTitleLayout>
           </template>
         </StoryHeroLayout>
 
@@ -148,7 +213,7 @@
               </BaseCheckbox>
               <BaseButton
                 type="submit"
-                :disabled="isPending.value"
+                :disabled="isSubmitting"
                 :variant="isSubmitStoryChecked ? 'secondary' : 'primary'"
                 layout="label-icon"
                 class="button"
@@ -200,6 +265,7 @@
 
   .button-checkbox {
     display: flex;
+    flex-wrap: wrap-reverse;
     gap: var(--space-s);
     align-items: center;
   }

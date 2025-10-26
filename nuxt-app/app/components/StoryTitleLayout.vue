@@ -1,24 +1,12 @@
-<script setup lang="ts">
-  defineProps<{
-    title: string
-    authorName: string
-    year: number
-  }>()
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div class="title-container">
     <div class="title">
-      <h1>{{ title }}</h1>
-
+      <slot name="title"></slot>
       <div class="info">
-        <span>
-          {{ $t('pages.stories.story.memoryBy') + ' ' + authorName }}
-        </span>
-        <div class="year">
-          <Icon name="mdi:calendar" />
-          <span>{{ year }}</span>
-        </div>
+        <slot name="author"></slot>
+        <slot name="year"></slot>
       </div>
     </div>
     <div class="cutout"></div>
@@ -31,14 +19,14 @@
     grid-row: 6 / 8;
     grid-column: 1 / 1;
     width: 100%;
-    max-width: 600px;
 
     & .title {
+      container-type: inline-size;
       display: flex;
       flex-direction: column;
       gap: var(--space-3xs);
       justify-content: center;
-      padding: var(--space-xl) var(--space-l);
+      padding: var(--space-2xl) var(--space-l);
       background-color: var(--color-mustard);
       clip-path: polygon(
         0% 10%,
@@ -55,22 +43,17 @@
         0% 73.2%,
         0% 100%
       );
-
-      & h1 {
-        font-size: var(--step-2);
-        text-wrap: inherit;
-      }
     }
 
     .info {
-      display: flex;
+      display: grid;
+      grid-template-columns: minmax(300px, 4fr) minmax(100px, 1fr);
       gap: var(--space-xs);
       justify-content: space-between;
 
-      & .year {
+      @media (max-width: 500px) {
         display: flex;
-        gap: var(--space-3xs);
-        align-items: center;
+        flex-direction: column;
       }
     }
 
@@ -79,7 +62,7 @@
       right: 20%;
       bottom: 0;
       width: 70%;
-      height: 15%;
+      height: 12%;
       background-color: var(--color-mint);
       clip-path: polygon(
         23% 2%,

@@ -55,11 +55,24 @@
         </template>
 
         <template #titleBlock>
-          <StoryTitleBlock
-            :title="storyData.title"
-            :author-name="storyData.authorName"
-            :year="storyData.year"
-          />
+          <StoryTitleLayout
+            ><template #title
+              ><h1>{{ storyData.title }}</h1></template
+            >
+            <template #author>
+              <span>
+                {{
+                  `${$t('pages.stories.story.memoryBy')} ${storyData.authorName}`
+                }}
+              </span>
+            </template>
+            <template #year>
+              <div class="year">
+                <Icon name="mdi:calendar" />
+                <span>{{ storyData.year }}</span>
+              </div>
+            </template>
+          </StoryTitleLayout>
         </template>
       </StoryHeroLayout>
 
@@ -125,5 +138,12 @@
         width: 100%;
       }
     }
+  }
+
+  .year {
+    display: flex;
+    gap: var(--space-3xs);
+    align-items: center;
+    justify-content: flex-end;
   }
 </style>

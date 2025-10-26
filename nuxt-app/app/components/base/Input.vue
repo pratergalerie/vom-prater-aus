@@ -9,10 +9,10 @@
       type: InputType
       label: string
       description?: string
-      placeholder: string
+      placeholder?: string
       required?: boolean
     }>(),
-    { description: undefined, required: false }
+    { description: undefined, required: false, placeholder: '' }
   )
 
   const { value, errorMessage } = useField(() => props.name)
@@ -67,7 +67,6 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-2xs);
-    width: 100%;
   }
 
   .label-description {
@@ -94,7 +93,9 @@
 
   input {
     z-index: 3;
+    box-sizing: border-box;
     grid-area: stack;
+    width: 100%;
     padding: var(--space-s);
     font-family: var(--font-link);
     font-size: var(--step-0);
@@ -119,6 +120,12 @@
       0% 73.2%,
       0% 100%
     );
+
+    /* Remove auto-fill styling */
+    &:-webkit-autofill {
+      /* stylelint-disable-next-line property-no-vendor-prefix */
+      -webkit-background-clip: text;
+    }
 
     &::placeholder {
       font-size: var(--step-0);

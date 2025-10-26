@@ -25,7 +25,7 @@
       grid-row: 6 / 8;
       grid-column: 1 / 1;
       width: 100%;
-      max-width: 600px;
+      max-width: 700px;
     }
   }
 </style>

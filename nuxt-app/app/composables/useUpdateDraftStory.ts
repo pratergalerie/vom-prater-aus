@@ -6,6 +6,9 @@ type StrapiResponse = { data: Strapi5ResponseData<Story> }
 type Result<T> = { type: 'error'; error: Error } | { type: 'ok'; data: T }
 
 type UpdateStory = {
+  authorName: string | null
+  title: string | null
+  year: number | null
   sections: { text: string | null; image: number | null }[]
   lifecyleState?: LifecycleState
 }

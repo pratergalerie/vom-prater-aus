@@ -121,7 +121,7 @@
     <div class="info-wrapper">
       <div class="info">
         <p v-if="!imageUrl && !isFileUploaded">
-          {{ label }}<span v-if="!required">(optional)</span>
+          {{ label }}<span v-if="!required"> (optional)</span>
           <span v-if="required">*</span>
         </p>
 
