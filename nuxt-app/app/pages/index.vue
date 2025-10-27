@@ -81,6 +81,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-l-xl);
+    align-items: flex-start;
 
     & .section-text {
       display: flex;

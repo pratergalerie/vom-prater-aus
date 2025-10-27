@@ -163,10 +163,10 @@
     "edit": {
       "form": {
         "coverImage": {
-          "label": "Upload a cover image here."
+          "label": "Upload a cover image here. (optional)"
         },
         "bodyText": {
-          "label": "Paragraph"
+          "label": "Text"
         },
         "sectionImage": {
           "label": "Upload a image here."
@@ -182,11 +182,12 @@
         "saveStory": "Save",
         "submitStory": "Submit",
         "section": {
-          "remove": "Delete section",
+          "label": "Add/delete section",
+          "remove": "Delete",
           "add": {
-            "image": "Add image section",
-            "image-text": "Add image text section",
-            "text": "Add text section"
+            "image": "Image",
+            "image-text": "Image + Text",
+            "text": "Text"
           }
         }
       },

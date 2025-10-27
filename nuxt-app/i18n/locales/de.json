@@ -162,10 +162,10 @@
     "edit": {
       "form": {
         "coverImage": {
-          "label": "Lade hier ein Titlebild hoch."
+          "label": "Lade hier ein Titlebild hoch. (optional)"
         },
         "bodyText": {
-          "label": "Absatz"
+          "label": "Text"
         },
         "sectionImage": {
           "label": "Lade hier ein Bild hoch."
@@ -181,11 +181,12 @@
         "saveStory": "Speichern",
         "submitStory": "Einreichen",
         "section": {
-          "remove": "Lösche Absatz",
+          "label": "Abschnitt hinzufügen/löschen",
+          "remove": "Löschen",
           "add": {
-            "image": "Bildabschnitt hinzufügen",
-            "image-text": "Bild-Text-Abschnitt hinzufügen",
-            "text": "Textabschnitt hinzufügen"
+            "image": "Bild",
+            "image-text": "Bild + Text",
+            "text": "Text"
           }
         }
       },

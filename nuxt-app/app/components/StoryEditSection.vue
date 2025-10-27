@@ -15,7 +15,6 @@
 <template>
   <section>
     <Divider
-      v-if="index === 0"
       type="horizontal"
       color="var(--color-black)"
       width="40%"
@@ -32,7 +31,7 @@
       v-if="type === 'text' || type === 'image-text'"
       :required="true"
       :name="`section${props.index}Text`"
-      :label="`${props.index + 2}. ${$t('pages.edit.form.bodyText.label')}`"
+      :label="$t('pages.edit.form.bodyText.label')"
     />
     <Divider
       v-if="!lastSection"

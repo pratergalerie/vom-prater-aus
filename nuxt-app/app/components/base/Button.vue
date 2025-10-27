@@ -119,13 +119,12 @@
         :class="{ secondary: variant === 'secondary' }"
       >
         <span>{{ label }}</span>
-        <span v-if="icon">
-          <Icon
-            :name="icon"
-            mode="css"
-            class="icon"
-          />
-        </span>
+        <Icon
+          v-if="icon"
+          :name="icon"
+          mode="css"
+          class="icon"
+        />
       </span>
       <div
         v-if="layout === 'icon' && icon"
@@ -230,10 +229,9 @@
   }
 
   button {
-    z-index: 800;
+    z-index: 700;
     display: grid;
-    width: 100%;
-    min-width: 180px;
+    min-width: 150px;
     max-width: 400px;
     height: 60px;
     color: var(--color-black);
@@ -331,7 +329,7 @@
     gap: 0.5rem;
     align-items: center;
     justify-content: center;
-    padding: var(--space-3xs);
+    padding: var(--space-s);
     transform: translateY(-5%);
   }
 

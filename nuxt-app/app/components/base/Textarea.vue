@@ -38,6 +38,7 @@
     gap: var(--space-s);
     width: 100%;
     max-width: 70ch;
+    font-weight: 600;
   }
 
   textarea {

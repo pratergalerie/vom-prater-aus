@@ -170,7 +170,6 @@
         display: flex;
         flex-direction: column;
         gap: var(--space-s);
-        min-width: 30%;
         padding: var(--space-l);
         font-weight: 600;
         text-align: center;

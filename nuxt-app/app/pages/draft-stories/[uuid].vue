@@ -159,13 +159,8 @@
     })
   }
 
-  const removeSection = (id: string) => {
-    const index = userSections.value.findIndex((s) => s.id === id)
-    if (index === -1) return
-
-    userSections.value.splice(index, 1)
-
-    // Note: vee-validate will handle cleanup of field values
+  const removeSection = () => {
+    userSections.value.pop()
   }
 
   const onSubmit = handleSubmit(
@@ -301,7 +296,7 @@
       <section>
         <BaseTextarea
           name="bodyText"
-          :label="`1. ${$t('pages.edit.form.bodyText.label')}`"
+          :label="$t('pages.edit.form.bodyText.label')"
         />
       </section>
 
@@ -315,32 +310,47 @@
         :last-section="index === userSections.length - 1"
       />
 
+      <div class="section-actions-container">
+        <span>{{ $t('pages.edit.actions.section.label') }}</span>
+        <div class="section-actions">
+          <BaseButton
+            layout="label-icon"
+            icon="mdi:trash-can-outline"
+            :disabled="userSections.length === 0"
+            type="button"
+            variant="primary"
+            :label="$t('pages.edit.actions.section.remove')"
+            @click="removeSection"
+          />
+          <BaseButton
+            layout="label-icon"
+            icon="mdi:text-box-plus-outline"
+            type="button"
+            variant="primary"
+            :label="$t('pages.edit.actions.section.add.text')"
+            @click="addSection('text')"
+          />
+          <BaseButton
+            layout="label-icon"
+            icon="mdi:image-plus-outline"
+            type="button"
+            variant="primary"
+            :label="$t('pages.edit.actions.section.add.image')"
+            @click="addSection('image')"
+          />
+          <BaseButton
+            layout="label-icon"
+            icon="mdi:note-plus-outline"
+            type="button"
+            variant="primary"
+            :label="$t('pages.edit.actions.section.add.image-text')"
+            @click="addSection('image-text')"
+          />
+        </div>
+      </div>
+
       <StoryEditActions :style="{ position: 'sticky' }">
         <template #actions>
-          <div class="section-buttons">
-            <BaseButton
-              layout="label"
-              type="button"
-              variant="secondary"
-              :label="$t('pages.edit.actions.section.add.text')"
-              @click="addSection('text')"
-            />
-            <BaseButton
-              layout="label"
-              type="button"
-              variant="secondary"
-              :label="$t('pages.edit.actions.section.add.image')"
-              @click="addSection('image')"
-            />
-            <BaseButton
-              layout="label"
-              type="button"
-              variant="secondary"
-              :label="$t('pages.edit.actions.section.add.image-text')"
-              @click="addSection('image-text')"
-            />
-          </div>
-
           <div class="submit">
             <div class="button-checkbox">
               <BaseCheckbox name="submitStory">
@@ -400,12 +410,6 @@
     margin-block-end: var(--space-2xl);
   }
 
-  .section-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-xs);
-  }
-
   .submit {
     display: flex;
     flex-direction: column;
@@ -418,5 +422,27 @@
     flex-wrap: wrap-reverse;
     gap: var(--space-s);
     align-items: center;
+  }
+
+  .section-actions-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+    align-items: center;
+    max-width: 70ch;
+    margin: 0 auto;
+    margin-block-end: var(--space-2xl);
+
+    & > span {
+      font-weight: 600;
+      text-align: center;
+    }
+  }
+
+  .section-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    justify-content: center;
   }
 </style>
