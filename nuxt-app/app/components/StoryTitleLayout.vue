@@ -1,8 +1,10 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  withDefaults(defineProps<{ layout?: 'view' | 'edit' }>(), { layout: 'view' })
+</script>
 
 <template>
   <div class="title-container">
-    <div class="title">
+    <div :class="{ title: true, edit: layout === 'edit' }">
       <slot name="title"></slot>
       <div class="info">
         <slot name="author"></slot>
@@ -43,6 +45,23 @@
         0% 73.2%,
         0% 100%
       );
+
+      &.edit {
+        padding: var(--space-2xl) var(--space-l);
+        padding-top: var(--space-l);
+        clip-path: polygon(
+          0% 0%,
+          100% 0%,
+          100% 76.25%,
+          97.26% 89.26%,
+          88.2% 82.2%,
+          83.73% 91.73%,
+          53.76% 93.76%,
+          1.26% 89.26%,
+          0% 73.2%,
+          0% 100%
+        );
+      }
     }
 
     .info {

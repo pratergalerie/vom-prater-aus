@@ -162,17 +162,19 @@
     },
     "edit": {
       "form": {
+        "error": "The form contains errors. Please correct them before you can continue.",
         "coverImage": {
-          "label": "Upload a cover image here. (optional)"
+          "label": "Upload a cover image here."
         },
-        "bodyText": {
+        "sectionText": {
           "label": "Text"
         },
         "sectionImage": {
-          "label": "Upload a image here."
-        },
-        "errors": {
-          "atLeast": "You must enter either a first paragraph or a cover image."
+          "label": "Image",
+          "description": "Upload a image here.",
+          "errors": {
+            "required": "Each image section requires an image."
+          }
         }
       },
       "actions": {
@@ -181,9 +183,17 @@
         "submitCheckbox": "Submit story?",
         "saveStory": "Save",
         "submitStory": "Submit",
+        "cover": {
+          "label": "How should your story begin?",
+          "add": {
+            "image": "Cover image",
+            "text": "Cover text"
+          }
+        },
         "section": {
           "label": "Add/delete section",
           "remove": "Delete",
+          "removeCover": "Reset cover",
           "add": {
             "image": "Image",
             "image-text": "Image + Text",

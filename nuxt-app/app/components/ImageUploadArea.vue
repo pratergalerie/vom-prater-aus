@@ -5,6 +5,7 @@
     defineProps<{
       name: string
       label: string
+      description: string
       required?: boolean
       imageUrl?: string | null
     }>(),
@@ -21,6 +22,7 @@
     value,
     handleBlur,
     resetField: resetFileField,
+    errorMessage,
   } = useField(() => fileFieldName)
 
   const { value: imageId, setValue: setImageIdField } = useField(
@@ -87,56 +89,73 @@
 <template>
   <label
     :for="name"
-    :style="{
-      backgroundColor: isDragOver ? 'var(--color-success-light)' : undefined,
-    }"
     @dragover="handleDragOver"
     @drop="handleDrop"
     @dragleave="handleDragLeave"
   >
-    <NuxtImg
-      v-if="imageUrl"
-      :src="imageUrl"
-      alt=""
-    />
-    <input
-      v-bind="$attrs"
-      :id="fileFieldName"
-      ref="fileInput"
-      :name="fileFieldName"
-      type="file"
-      class="visually-hidden"
-      accept="image/png, image/jpeg"
-      @change.stop="handleFileChange"
-      @blur="handleBlur"
-    />
-    <input
-      :id="fileIdFieldName"
-      v-model="imageId"
-      :name="fileIdFieldName"
-      type="number"
-      class="visually-hidden"
-    />
+    <div>
+      <span>{{ label }}{{ required ? '*' : '' }}</span>
+      <span
+        v-if="errorMessage"
+        class="error error-message"
+      >
+        {{ ' ' }}
+        {{ $t(errorMessage) }}
+      </span>
+    </div>
+    <div
+      class="upload-area"
+      :style="{
+        backgroundColor: isDragOver ? 'var(--color-success-light)' : undefined,
+        backgroundImage: imageUrl ? `url(${imageUrl})` : undefined,
+      }"
+    >
+      <!-- <NuxtImg
+        v-if="imageUrl"
+        :src="imageUrl"
+        alt=""
+      /> -->
+      <input
+        v-bind="$attrs"
+        :id="fileFieldName"
+        ref="fileInput"
+        :name="fileFieldName"
+        type="file"
+        class="visually-hidden"
+        accept="image/png, image/jpeg"
+        @change.stop="handleFileChange"
+        @blur="handleBlur"
+      />
+      <input
+        :id="fileIdFieldName"
+        v-model="imageId"
+        :name="fileIdFieldName"
+        type="number"
+        class="visually-hidden"
+      />
 
-    <div class="info-wrapper">
-      <div class="info">
-        <p v-if="!imageUrl && !isFileUploaded">
-          <span>{{ label }}{{ required ? '*' : '' }}</span>
-        </p>
+      <div class="info-wrapper">
+        <div class="info">
+          <p v-if="!imageUrl && !isFileUploaded">
+            {{ description }}
+          </p>
 
-        <BaseButton
-          variant="primary"
-          layout="label"
-          class="button"
-          :label="
-            imageUrl || isFileUploaded
-              ? $t('pages.edit.actions.removeImage')
-              : $t('pages.edit.actions.uploadImage')
-          "
-          @click.stop="
-            imageUrl || isFileUploaded ? handleFileRemove() : triggerFileInput()
-          "
-        />
+          <BaseButton
+            variant="primary"
+            layout="label"
+            class="button"
+            :label="
+              imageUrl || isFileUploaded
+                ? $t('pages.edit.actions.removeImage')
+                : $t('pages.edit.actions.uploadImage')
+            "
+            @click.stop="
+              imageUrl || isFileUploaded
+                ? handleFileRemove()
+                : triggerFileInput()
+            "
+          />
+        </div>
       </div>
     </div>
   </label>
@@ -144,26 +163,30 @@
 
 <style scoped>
   label {
-    display: grid;
-    grid-template: 'stack' 1fr / 1fr;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+    width: 100%;
+    height: 100%;
+    font-weight: 600;
+  }
+
+  .upload-area {
+    display: flex;
+    flex-wrap: wrap;
     place-content: center;
     width: 100%;
+    height: 100%;
     min-height: 500px;
     background-color: var(--color-white);
-
-    & img {
-      z-index: 2;
-      grid-area: stack;
-      height: 600px;
-      opacity: 0.5;
-    }
+    background-position: center;
+    background-size: cover;
 
     & .info-wrapper {
       z-index: 3;
       display: flex;
       flex-flow: wrap;
       flex-direction: column;
-      grid-area: stack;
       place-content: center;
 
       & .info {
@@ -171,7 +194,6 @@
         flex-direction: column;
         gap: var(--space-s);
         padding: var(--space-l);
-        font-weight: 600;
         text-align: center;
         background-color: var(--color-white);
         clip-path: polygon(
@@ -192,7 +214,15 @@
           0% 73.2%,
           0% 100%
         );
+
+        & p {
+          font-weight: 600;
+        }
       }
     }
+  }
+
+  .error-message {
+    font-weight: 400;
   }
 </style>

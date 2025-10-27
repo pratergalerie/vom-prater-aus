@@ -15,20 +15,22 @@
 
 <template>
   <label :for="name">
-    <span>{{ label }}{{ required ? '*' : '' }}</span>
+    <div>
+      <span>{{ label }}{{ required ? '*' : '' }}</span>
+      <span
+        v-if="errorMessage"
+        class="error error-message"
+      >
+        {{ ' ' }}
+        {{ $t(errorMessage) }}
+      </span>
+    </div>
     <textarea
       :id="name"
       v-model="value"
       :name="name"
     />
   </label>
-
-  <span
-    v-if="errorMessage"
-    class="error error-message"
-  >
-    {{ $t(errorMessage) }}
-  </span>
 </template>
 
 <style scoped>
@@ -37,14 +39,14 @@
     flex-direction: column;
     gap: var(--space-s);
     width: 100%;
-    max-width: 70ch;
+    height: 100%;
     font-weight: 600;
   }
 
   textarea {
     box-sizing: border-box;
     width: 100%;
-    min-height: 60ch;
+    height: 100%;
     padding: var(--space-m);
     font-size: var(--step-0);
     resize: vertical;
@@ -52,7 +54,6 @@
   }
 
   .error-message {
-    /* stylelint-disable-next-line */
-    font-size: var(--step--1);
+    font-weight: 400;
   }
 </style>

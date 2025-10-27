@@ -19,14 +19,34 @@
   const validationSchema = computed(() => {
     const sectionFields = userSections.value.reduce(
       (acc, section, index) => {
-        if (section.type === 'image' || section.type === 'image-text') {
-          acc[`section${index}Image`] = z.instanceof(File).optional()
-          acc[`section${index}ImageId`] = z.number().optional().nullable()
-        }
-        if (section.type === 'text' || section.type === 'image-text') {
-          acc[`section${index}Text`] = z
-            .string()
-            .nonempty({ message: 'Required field' })
+        switch (section.type) {
+          case 'image': {
+            acc[`section${index}Image`] = z.instanceof(File).optional()
+            acc[`section${index}ImageId`] = z.number().optional().nullable()
+            break
+          }
+          case 'image-text': {
+            acc[`section${index}Image`] = z.instanceof(File).optional()
+            acc[`section${index}ImageId`] = z.number().optional().nullable()
+            acc[`section${index}Text`] = z
+              .string({
+                message: 'pages.edit.form.sectionText.errors.required',
+              })
+              .min(1, {
+                message: 'pages.edit.form.sectionText.errors.required',
+              })
+            break
+          }
+          case 'text': {
+            acc[`section${index}Text`] = z
+              .string({
+                message: 'pages.edit.form.sectionText.errors.required',
+              })
+              .min(1, {
+                message: 'pages.edit.form.sectionText.errors.required',
+              })
+            break
+          }
         }
         return acc
       },
@@ -36,9 +56,6 @@
     return toTypedSchema(
       z
         .object({
-          coverImage: z.instanceof(File).optional(),
-          coverImageId: z.number().optional().nullable(),
-          bodyText: z.string().optional().nullable(),
           authorName: z
             .string({
               message: 'pages.create.form.inputs.authorName.errors.required',
@@ -68,19 +85,26 @@
             }),
           ...sectionFields,
         })
-        .refine(
-          (data) => {
-            return (
-              data.coverImage ||
-              Boolean(data?.bodyText?.length) ||
-              data.coverImageId
-            )
-          },
-          {
-            message: 'pages.edit.form.errors.atLeast',
-            path: [''], // applies error to the root level
+        // Check each image section has at least one image source
+        .superRefine((data, ctx) => {
+          const formData = data as typeof data & Record<string, unknown>
+
+          for (let i = 0; i < userSections.value.length; i++) {
+            const section = userSections.value[i]
+            if (section?.type === 'image' || section?.type === 'image-text') {
+              const hasFile = formData[`section${i}Image`] instanceof File
+              const hasId = typeof formData[`section${i}ImageId`] === 'number'
+
+              if (!hasFile && !hasId) {
+                ctx.addIssue({
+                  code: z.ZodIssueCode.custom,
+                  message: 'pages.edit.form.sectionImage.errors.required',
+                  path: [`section${i}Image`],
+                })
+              }
+            }
           }
-        )
+        })
     )
   })
 
@@ -98,10 +122,8 @@
     sections,
   } = storyData.value ?? {}
 
-  const { text: bodyText, image: coverImage } = sections?.[0] ?? {}
-
   const userSections = ref<UserSection[]>(
-    sections?.slice(1).map((section) => {
+    sections?.map((section) => {
       return {
         id: crypto.randomUUID(),
         type: section.type,
@@ -124,11 +146,8 @@
     >
   )
 
-  const { values, handleSubmit, errors, isSubmitting } = useForm<{
-    bodyText: string | null
+  const { values, handleSubmit, errors, isSubmitting, validate } = useForm<{
     submitStory: boolean
-    coverImage: File | null
-    coverImageId: number | null
     storyTitle: string | null
     authorName: string | null
     storyYear: number | null
@@ -138,18 +157,25 @@
   }>({
     validationSchema,
     initialValues: {
-      bodyText: bodyText ?? '',
       submitStory: false,
-      coverImageId: coverImage?.id,
       storyTitle,
       authorName,
       storyYear,
       ...sectionInitialValues,
     },
   })
+  const hasValidationErrors = computed(() => {
+    return Object.keys(errors.value).length > 0
+  })
   const isSubmitStoryChecked = computed(() => values.submitStory)
 
-  const addSection = (type: 'image' | 'image-text' | 'text') => {
+  const addSection = async (type: 'image' | 'image-text' | 'text') => {
+    // Prevent user from adding new section when existing section has validation errros
+    await validate()
+    if (hasValidationErrors.value) {
+      return
+    }
+
     userSections.value.push({
       id: crypto.randomUUID(),
       type,
@@ -164,58 +190,30 @@
   }
 
   const onSubmit = handleSubmit(
-    async ({
-      coverImage: coverImageField,
-      coverImageId: coverImageIdField,
-      bodyText,
-      submitStory,
-      authorName,
-      storyTitle: title,
-      storyYear: year,
-    }) => {
+    async ({ submitStory, authorName, storyTitle: title, storyYear: year }) => {
       const isSubmitting = submitStory
 
-      const [coverImageUploadResult, ...sectionImageUploads] =
-        await Promise.all([
-          (async () => {
-            if (coverImageField) {
-              const response = await upload(coverImageField)
-              return response.type === 'ok' ? (response.data?.id ?? null) : null
-            }
-            return coverImageIdField
-          })(),
+      const [...sectionImageUploads] = await Promise.all(
+        userSections.value.map(async (section, index) => {
+          const imageFile = values[`section${index}Image`]
 
-          ...userSections.value.map(async (section, index) => {
-            const imageFile = values[`section${index}Image`]
-
-            if (imageFile instanceof File) {
-              const response = await upload(imageFile)
-              return response.type === 'ok' ? (response.data?.id ?? null) : null
-            }
-            return values[`section${index}ImageId`] ?? null
-          }),
-        ])
-
-      const coverImageId = coverImageUploadResult
+          if (imageFile instanceof File) {
+            const response = await upload(imageFile)
+            return response.type === 'ok' ? (response.data?.id ?? null) : null
+          }
+          return values[`section${index}ImageId`] ?? null
+        })
+      )
 
       const sections: Array<{
         type: 'image' | 'image-text' | 'text'
         text: string | null
         image: number | null
-      }> = [
-        // First section (cover image + body text)
-        {
-          type: 'image-text',
-          text: bodyText,
-          image: coverImageId,
-        },
-        // User-added sections
-        ...userSections.value.map((section, index) => ({
-          type: section.type,
-          text: values[`section${index}Text`] ?? null,
-          image: sectionImageUploads[index] ?? null,
-        })),
-      ]
+      }> = userSections.value.map((section, index) => ({
+        type: section.type,
+        text: values[`section${index}Text`] ?? null,
+        image: sectionImageUploads[index] ?? null,
+      }))
 
       const response = await update({
         title,
@@ -251,81 +249,105 @@
       v-else
       @submit="onSubmit"
     >
-      <StoryHeroLayout>
-        <template #image>
-          <ImageUploadArea
-            name="coverImage"
-            :image-url="
-              storyData.sections[0]?.image &&
-              getStrapiImageUrl(storyData.sections[0]?.image?.url)
-            "
-            :label="$t('pages.edit.form.coverImage.label')"
+      <div class="hero">
+        <div
+          v-if="!userSections[0]"
+          class="choose-cover"
+        >
+          {{ $t('pages.edit.actions.cover.label') }}
+          <div class="choose-actions">
+            <BaseButton
+              layout="label-icon"
+              icon="mdi:image-plus-outline"
+              variant="primary"
+              :label="$t('pages.edit.actions.cover.add.image')"
+              @click="addSection('image')"
+            />
+            <BaseButton
+              layout="label-icon"
+              icon="mdi:text-box-plus-outline"
+              variant="primary"
+              :label="$t('pages.edit.actions.cover.add.text')"
+              @click="addSection('text')"
+            />
+          </div>
+        </div>
+        <BaseTextarea
+          v-if="userSections[0]?.type === 'text'"
+          :required="true"
+          name="section0Text"
+          :label="$t('pages.edit.form.sectionText.label')"
+        />
+        <ImageUploadArea
+          v-if="userSections[0]?.type === 'image'"
+          name="section0Image"
+          :required="true"
+          :image-url="
+            storyData.sections[0]?.image &&
+            getStrapiImageUrl(storyData.sections[0].image.url)
+          "
+          :label="$t('pages.edit.form.sectionImage.label')"
+          :description="$t('pages.edit.form.sectionImage.description')"
+        />
+      </div>
+
+      <StoryTitleLayout layout="edit">
+        <template #title>
+          <BaseInput
+            name="storyTitle"
+            type="text"
+            :required="true"
+            :label="$t('pages.create.form.inputs.storyTitle.label')"
           />
         </template>
-
-        <template #titleBlock>
-          <StoryTitleLayout>
-            <template #title>
-              <BaseInput
-                name="storyTitle"
-                type="text"
-                :required="true"
-                :label="$t('pages.create.form.inputs.storyTitle.label')"
-              />
-            </template>
-            <template #author>
-              <BaseInput
-                name="authorName"
-                type="text"
-                :required="true"
-                :label="$t('pages.create.form.inputs.authorName.label')"
-              />
-            </template>
-            <template #year>
-              <BaseInput
-                name="storyYear"
-                type="number"
-                :required="true"
-                :label="$t('pages.create.form.inputs.storyYear.label')"
-              />
-            </template>
-          </StoryTitleLayout>
+        <template #author>
+          <BaseInput
+            name="authorName"
+            type="text"
+            :required="true"
+            :label="$t('pages.create.form.inputs.authorName.label')"
+          />
         </template>
-      </StoryHeroLayout>
-
-      <section>
-        <BaseTextarea
-          name="bodyText"
-          :label="$t('pages.edit.form.bodyText.label')"
-        />
-      </section>
+        <template #year>
+          <BaseInput
+            name="storyYear"
+            type="number"
+            :required="true"
+            :label="$t('pages.create.form.inputs.storyYear.label')"
+          />
+        </template>
+      </StoryTitleLayout>
 
       <!-- User Sections -->
       <StoryEditSection
-        v-for="(section, index) in userSections"
+        v-for="(section, index) in userSections.slice(1)"
         :key="section.id"
-        :type="section.type"
-        :index="index"
+        :layout="section.type"
+        :index="index + 1"
         :image-url="section.imageUrl"
         :last-section="index === userSections.length - 1"
       />
 
-      <div class="section-actions-container">
+      <div
+        v-if="userSections[0]"
+        class="section-actions-container"
+      >
         <span>{{ $t('pages.edit.actions.section.label') }}</span>
         <div class="section-actions">
           <BaseButton
             layout="label-icon"
             icon="mdi:trash-can-outline"
-            :disabled="userSections.length === 0"
-            type="button"
             variant="primary"
-            :label="$t('pages.edit.actions.section.remove')"
+            :label="
+              userSections.length === 1
+                ? $t('pages.edit.actions.section.removeCover')
+                : $t('pages.edit.actions.section.remove')
+            "
             @click="removeSection"
           />
           <BaseButton
             layout="label-icon"
             icon="mdi:text-box-plus-outline"
-            type="button"
             variant="primary"
             :label="$t('pages.edit.actions.section.add.text')"
             @click="addSection('text')"
@@ -333,7 +355,6 @@
           <BaseButton
             layout="label-icon"
             icon="mdi:image-plus-outline"
-            type="button"
             variant="primary"
             :label="$t('pages.edit.actions.section.add.image')"
             @click="addSection('image')"
@@ -341,7 +362,6 @@
           <BaseButton
             layout="label-icon"
             icon="mdi:note-plus-outline"
-            type="button"
             variant="primary"
             :label="$t('pages.edit.actions.section.add.image-text')"
             @click="addSection('image-text')"
@@ -372,10 +392,10 @@
               />
             </div>
             <p
-              v-if="errors['']"
+              v-if="hasValidationErrors"
               class="error"
             >
-              {{ $t(errors['']) }}
+              {{ $t('pages.edit.form.error') }}
             </p>
           </div>
         </template>
@@ -387,6 +407,31 @@
 <style scoped>
   /* stylelint-disable-next-line plugins/no-unused-selectors */
   .hero {
+    height: 600px;
+  }
+
+  .choose-cover {
+    box-sizing: border-box;
+    display: grid;
+    gap: var(--space-xs);
+    place-content: center;
+    width: 100%;
+    height: 100%;
+    padding: var(--space-l);
+    font-weight: 600;
+    text-align: center;
+    background-color: var(--color-white);
+
+    & .choose-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      justify-content: center;
+    }
+  }
+
+  /* stylelint-disable-next-line plugins/no-unused-selectors */
+  .title-container {
     margin-block-end: var(--space-2xl);
   }
 
@@ -397,17 +442,6 @@
     height: 100%;
     font-size: var(--step-1);
     font-weight: 600;
-  }
-
-  section {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2xl);
-    align-items: center;
-    justify-content: center;
-    max-width: 70ch;
-    margin: 0 auto;
-    margin-block-end: var(--space-2xl);
   }
 
   .submit {

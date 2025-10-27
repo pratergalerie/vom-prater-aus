@@ -161,17 +161,22 @@
     },
     "edit": {
       "form": {
+        "error": "Das Formular hat Fehler. Bitte korrigiere sie, bevor du weitermachen kannst.",
         "coverImage": {
-          "label": "Lade hier ein Titlebild hoch. (optional)"
+          "label": "Lade hier ein Titlebild hoch."
         },
-        "bodyText": {
-          "label": "Text"
+        "sectionText": {
+          "label": "Text",
+          "errors": {
+            "required": "Dieses Feld ist erforderlich."
+          }
         },
         "sectionImage": {
-          "label": "Lade hier ein Bild hoch."
-        },
-        "errors": {
-          "atLeast": "Du musst entweder einen ersten Absatz oder ein Titelbild eintragen."
+          "label": "Bild",
+          "description": "Lade hier ein Bild hoch.",
+          "errors": {
+            "required": "Dieses Feld ist erforderlich."
+          }
         }
       },
       "actions": {
@@ -180,9 +185,17 @@
         "submitCheckbox": "Geschichte einreichen?",
         "saveStory": "Speichern",
         "submitStory": "Einreichen",
+        "cover": {
+          "label": "Wie soll deine Geschichte beginnen?",
+          "add": {
+            "image": "Titelbild",
+            "text": "Titeltext"
+          }
+        },
         "section": {
           "label": "Abschnitt hinzufügen/löschen",
           "remove": "Löschen",
+          "removeCover": "Titel zurücksetzen",
           "add": {
             "image": "Bild",
             "image-text": "Bild + Text",

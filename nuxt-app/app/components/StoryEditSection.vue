@@ -1,9 +1,9 @@
 <script setup lang="ts">
-  type Type = 'image' | 'image-text' | 'text'
+  type Layout = 'image' | 'image-text' | 'text'
 
-  const props = withDefaults(
+  withDefaults(
     defineProps<{
-      type: Type
+      layout: Layout
       index: number
       imageUrl: string | null
       lastSection?: boolean
@@ -13,7 +13,12 @@
 </script>
 
 <template>
-  <section>
+  <section
+    :class="{
+      'layout-image-text': layout === 'image-text',
+      'layout-text': layout === 'text',
+    }"
+  >
     <Divider
       type="horizontal"
       color="var(--color-black)"
@@ -21,28 +26,37 @@
       margin="var(--space-xs) 0"
     />
     <ImageUploadArea
-      v-if="type === 'image' || type === 'image-text'"
+      v-if="layout === 'image' || layout === 'image-text'"
       :required="true"
-      :name="`section${props.index}Image`"
+      :name="`section${index}Image`"
       :image-url="imageUrl"
       :label="$t('pages.edit.form.sectionImage.label')"
+      :description="$t('pages.edit.form.sectionImage.description')"
     />
     <BaseTextarea
-      v-if="type === 'text' || type === 'image-text'"
+      v-if="layout === 'text' || layout === 'image-text'"
       :required="true"
-      :name="`section${props.index}Text`"
-      :label="$t('pages.edit.form.bodyText.label')"
+      :name="`section${index}Text`"
+      :label="$t('pages.edit.form.sectionText.label')"
     />
   </section>
 </template>
 
 <style scoped>
   section {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: var(--space-2xl);
-    align-items: center;
-    justify-content: center;
+    justify-items: center;
+    max-width: 70ch;
+    margin: 0 auto;
     margin-block-end: var(--space-2xl);
+
+    &.layout-text {
+      grid-template-rows: max-content 70ch;
+    }
+
+    &.layout-image-text {
+      grid-template-rows: max-content max-content 70ch;
+    }
   }
 </style>
