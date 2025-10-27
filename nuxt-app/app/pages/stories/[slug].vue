@@ -42,10 +42,13 @@
       :key="index"
     >
       <StoryHeroLayout
-        v-if="index === 0 && section.image !== null"
-        :style="{ placeItems: section.image === null ? 'center' : undefined }"
+        v-if="index === 0"
+        :layout="section.image ? 'cover-text' : 'text'"
       >
-        <template #image>
+        <template
+          v-if="section.image !== null"
+          #cover
+        >
           <NuxtImg
             :src="getStrapiImageUrl(section.image.url)"
             :alt="section.image.alternativeText ?? ''"
@@ -74,26 +77,6 @@
           </StoryTitleLayout>
         </template>
       </StoryHeroLayout>
-      <StoryTitleLayout
-        v-if="index === 0 && section.image === null"
-        :style="{ maxWidth: '700px' }"
-        ><template #title
-          ><h1>{{ storyData.title }}</h1></template
-        >
-        <template #author>
-          <span>
-            {{
-              `${$t('pages.stories.story.memoryBy')} ${storyData.authorName}`
-            }}
-          </span>
-        </template>
-        <template #year>
-          <div class="year">
-            <Icon name="mdi:calendar" />
-            <span>{{ storyData.year }}</span>
-          </div>
-        </template>
-      </StoryTitleLayout>
 
       <!-- Text -->
       <p
