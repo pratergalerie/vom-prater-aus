@@ -24,7 +24,7 @@
       container-type: inline-size;
       display: flex;
       flex-direction: column;
-      gap: var(--space-3xs);
+      gap: var(--space-xs);
       justify-content: center;
       padding: var(--space-2xl) var(--space-l);
       background-color: var(--color-mustard);
