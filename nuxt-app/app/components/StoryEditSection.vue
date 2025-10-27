@@ -33,13 +33,6 @@
       :name="`section${props.index}Text`"
       :label="$t('pages.edit.form.bodyText.label')"
     />
-    <Divider
-      v-if="!lastSection"
-      type="horizontal"
-      color="var(--color-black)"
-      width="40%"
-      margin="var(--space-xs) 0"
-    />
   </section>
 </template>
 
