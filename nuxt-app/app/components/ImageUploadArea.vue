@@ -148,7 +148,7 @@
     grid-template: 'stack' 1fr / 1fr;
     place-content: center;
     width: 100%;
-    aspect-ratio: 16/9;
+    min-height: 500px;
     background-color: var(--color-white);
 
     & img {
