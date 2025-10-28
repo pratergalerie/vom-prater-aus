@@ -59,6 +59,7 @@
           />
 
           <LanguageSwitcher />
+          <AccessibilityActions />
         </nav>
       </div>
       <div class="logos-and-text">
@@ -121,6 +122,7 @@
     width: 100%;
     max-width: var(--max-width);
     padding: var(--space-2xl-3xl) 0;
+    padding-bottom: var(--space-l-xl);
     margin-top: var(--space-xl-2xl);
   }
 
@@ -144,6 +146,9 @@
   }
 
   nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
     /* stylelint-disable-next-line */
     font-size: var(--step--1);
 
