@@ -7,7 +7,6 @@
     class="lang-switcher"
     aria-label="Language switcher"
   >
-    {{ $t('components.languageSwitcher.label') }}
     <a
       href="#"
       :class="{
@@ -34,8 +33,8 @@
 <style scoped>
   .lang-switcher {
     display: flex;
-    gap: var(--space-2xs);
-    align-items: center;
+    gap: var(--space-xs);
+    align-items: center2;
     font-family: var(--font-link);
     color: var(--color-beige);
 

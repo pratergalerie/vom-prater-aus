@@ -2,7 +2,6 @@
 
 <template>
   <div class="wrapper">
-    {{ $t('components.menu.actions.label') }}
     <BaseCheckbox
       name="termsPrivacy"
       color="white"

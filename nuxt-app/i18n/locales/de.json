@@ -26,12 +26,10 @@
         "dgs": "DGS"
       },
       "actions": {
-        "label": "Funktionen:",
         "fontSize": "Größerer Text"
       }
     },
     "languageSwitcher": {
-      "label": "Sprache:",
       "german": "Deutsch",
       "english": "Englisch"
     },

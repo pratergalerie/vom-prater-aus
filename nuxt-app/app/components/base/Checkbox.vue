@@ -68,7 +68,7 @@
     grid-template-areas: 'stack';
     width: var(--step-1);
     height: var(--step-1);
-    margin-top: 0.5ch;
+    margin-top: 0.35ch;
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100% 100%;
