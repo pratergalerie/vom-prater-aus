@@ -3,14 +3,6 @@
 
   const { isOpen, toggleMenu, menuRoutes } = useMenu()
 
-  const languageSwitcherDelay = computed(() => {
-    return `${(menuRoutes.value.length + 1) * 0.1}s`
-  })
-
-  const dividerDelay = computed(() => {
-    return `${menuRoutes.value.length * 0.1}s`
-  })
-
   function chooseRandomMenuImage() {
     const randomImage = Math.floor(Math.random() * 4) + 1
     illustrationImage.value = `/imgs/menu/image-${randomImage}.jpg`
@@ -221,17 +213,36 @@
             <li
               v-for="(route, index) in menuRoutes"
               :key="index"
-              :style="{
-                '--animation-delay': `${index * 0.1}s`,
-              }"
             >
               <NuxtLink
                 :to="route.path"
                 @click="closeMenu"
               >
                 {{ route.title }}
+                <Icon
+                  v-if="route.path === '/accessibility'"
+                  name="mdi:accessibility"
+                />
               </NuxtLink>
             </li>
+
+            <div class="accessibility-links">
+              <li>
+                <!-- TODO: Add link -->
+                <NuxtLink to="/">
+                  {{ $t('components.menu.nav.simpleLanguage') }}
+                  <Icon name="mdi:book-open-variant-outline" />
+                </NuxtLink>
+              </li>
+
+              <li>
+                <!-- TODO: Add link -->
+                <NuxtLink to="/">
+                  {{ $t('components.menu.nav.dgs') }}
+                  <Icon name="mdi:sign-language-outline" />
+                </NuxtLink>
+              </li>
+            </div>
           </ul>
 
           <div class="divider-container">
@@ -241,19 +252,12 @@
               width="40%"
               class="divider"
               margin="var(--space-xs) 0"
-              :style="{
-                '--animation-delay': dividerDelay,
-              }"
             />
           </div>
 
-          <div
-            class="lang-switcher-wrapper"
-            :style="{
-              '--animation-delay': languageSwitcherDelay,
-            }"
-          >
+          <div class="actions-wrapper">
             <LanguageSwitcher />
+            <AccessibilityActions />
           </div>
         </nav>
       </menu>
@@ -287,6 +291,7 @@
       opacity 0.3s ease,
       clip-path 0.3s ease;
 
+    /* stylelint-disable-next-line plugins/no-unused-selectors */
     picture {
       display: block;
       height: 100%;
@@ -299,8 +304,6 @@
   }
 
   menu {
-    --animation-time: 0.2s;
-
     z-index: 2;
     display: flex;
     grid-area: stack;
@@ -334,6 +337,7 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    align-items: flex-end;
     justify-content: center;
     width: 100%;
     max-width: var(--max-width);
@@ -351,136 +355,31 @@
     list-style: none;
 
     li {
-      --animation-delay: 0s;
-
       color: var(--color-beige);
       text-align: right;
       cursor: pointer;
-      opacity: 0;
-      transform: translateX(-20px);
-      animation: none;
 
       a {
+        display: flex;
+        gap: var(--space-2xs);
+        align-items: center;
+        justify-content: flex-end;
         text-decoration: none;
       }
-
-      &.slide-out {
-        animation: none;
-      }
     }
   }
 
-  .divider {
-    opacity: 1;
-
-    & :deep(.divider-path) {
-      stroke-dasharray: 1000;
-      stroke-dashoffset: 1000;
-      animation: draw-path 0.3s ease-out forwards;
-      animation-delay: v-bind(dividerDelay);
-
-      @media screen and (prefers-reduced-motion: reduce) {
-        stroke-dasharray: none;
-        stroke-dashoffset: 0;
-        animation: none;
-      }
-    }
-  }
-
-  .menu-container:not(.menu-visible) menu li {
-    opacity: 1;
-    transform: translateX(0);
-    transform-origin: right center;
-    animation: slide-out var(--animation-time) ease-out forwards;
-    animation-delay: var(--animation-delay);
-
-    @media screen and (prefers-reduced-motion: reduce) {
-      animation: none;
-    }
-  }
-
-  .menu-container.menu-visible menu li {
-    opacity: 0;
-    transform: translateX(20px);
-    transform-origin: right center;
-    animation: slide-in var(--animation-time) ease-out forwards;
-    animation-delay: var(--animation-delay);
-
-    @media screen and (prefers-reduced-motion: reduce) {
-      animation: none;
-    }
-  }
-
-  .menu-container:not(.menu-visible) .divider {
-    opacity: 1;
-    transform: translateX(0);
-    transform-origin: right center;
-    animation: slide-out var(--animation-time) ease-out forwards;
-    animation-delay: v-bind(dividerDelay);
-
-    @media screen and (prefers-reduced-motion: reduce) {
-      animation: none;
-    }
-  }
-
-  .menu-container.menu-visible .divider {
-    opacity: 0;
-    transform: translateX(20px);
-    transform-origin: right center;
-    animation: slide-in var(--animation-time) ease-out forwards;
-    animation-delay: v-bind(dividerDelay);
-
-    @media screen and (prefers-reduced-motion: reduce) {
-      animation: none;
-    }
-  }
-
-  .lang-switcher-wrapper {
+  .accessibility-links {
     display: flex;
+    gap: var(--space-s);
     justify-content: flex-end;
-    margin: 0;
-    opacity: 0;
-    transform: translateX(20px);
-    animation: slide-in var(--animation-time) ease-out forwards;
-    animation-delay: var(--animation-delay);
-
-    @media screen and (prefers-reduced-motion: reduce) {
-      animation: none;
-    }
   }
 
-  @keyframes slide-in {
-    from {
-      opacity: 0;
-      transform: translateX(4ch);
-    }
-
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  @keyframes slide-out {
-    from {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    to {
-      opacity: 0;
-      transform: translateX(4ch);
-    }
-  }
-
-  @keyframes draw-path {
-    from {
-      stroke-dashoffset: 1000;
-    }
-
-    to {
-      stroke-dashoffset: 0;
-    }
+  .actions-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xs-2xs);
+    align-items: flex-end;
   }
 
   .divider-container {

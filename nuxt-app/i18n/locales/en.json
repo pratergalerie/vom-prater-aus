@@ -21,7 +21,13 @@
         "privacy": "Privacy policy",
         "stories": "Discover memories",
         "stories-create": "Write your memory",
-        "terms": "Terms of use"
+        "terms": "Terms of use",
+        "simpleLanguage": "Simple language",
+        "dgs": "DGS"
+      },
+      "actions": {
+        "label": "Functions:",
+        "fontSize": "Larger Text"
       }
     },
     "languageSwitcher": {

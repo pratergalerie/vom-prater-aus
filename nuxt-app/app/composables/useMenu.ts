@@ -26,9 +26,9 @@ export const useMenu = () => {
     'stories',
     'stories-create',
     'about',
-    'accessibility',
     'privacy',
     'terms',
+    'accessibility',
   ]
 
   const footerExcludedRoutes = [

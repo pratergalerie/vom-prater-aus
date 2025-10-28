@@ -21,7 +21,13 @@
         "privacy": "Datenschutzerklärung",
         "stories": "Erinnerungen entdecken",
         "stories-create": "Schreibe deine Erinnerung",
-        "terms": "Nutzungsbedingungen"
+        "terms": "Nutzungsbedingungen",
+        "simpleLanguage": "Leichte Sprache",
+        "dgs": "DGS"
+      },
+      "actions": {
+        "label": "Funktionen:",
+        "fontSize": "Größerer Text"
       }
     },
     "languageSwitcher": {

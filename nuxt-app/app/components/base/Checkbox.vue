@@ -1,10 +1,14 @@
 <script lang="ts" setup>
   import { useField } from 'vee-validate'
 
-  const props = defineProps<{
-    name: string
-    required?: boolean
-  }>()
+  const props = withDefaults(
+    defineProps<{
+      name: string
+      required?: boolean
+      color?: 'black' | 'white'
+    }>(),
+    { color: 'black' }
+  )
 
   const { value, errorMessage } = useField(() => props.name)
 </script>
@@ -21,7 +25,7 @@
       />
       <div class="checkbox">
         <img
-          src="/svgs/inputs/checkbox.svg"
+          :src="`/svgs/inputs/checkbox-${color}.svg`"
           alt=""
           class="background"
         />
