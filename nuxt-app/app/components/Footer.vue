@@ -15,13 +15,49 @@
             >
               <NuxtLink :to="route.path">{{ route.title }}</NuxtLink>
             </li>
+
+            <div class="accessibility-links">
+              <Divider
+                type="horizontal"
+                color="var(--color-beige)"
+                width="40%"
+                class="divider"
+                margin="var(--space-2xs) 0"
+              />
+              <li>
+                <NuxtLink to="/accessibility">
+                  {{ $t('components.menu.nav.accessibility') }}
+                  <Icon name="mdi:accessibility" />
+                </NuxtLink>
+              </li>
+
+              <div>
+                <li>
+                  <!-- TODO: Add link -->
+                  <NuxtLink to="/">
+                    {{ $t('components.menu.nav.simpleLanguage') }}
+                    <Icon name="mdi:book-open-variant-outline" />
+                  </NuxtLink>
+                </li>
+
+                <li>
+                  <!-- TODO: Add link -->
+                  <NuxtLink to="/">
+                    {{ $t('components.menu.nav.dgs') }}
+                    <Icon name="mdi:sign-language-outline" />
+                  </NuxtLink>
+                </li>
+              </div>
+            </div>
           </ul>
+
           <Divider
             type="horizontal"
             color="var(--color-beige)"
             width="40%"
-            margin="var(--space-xs) 0"
+            margin="var(--space-2xs) 0"
           />
+
           <LanguageSwitcher />
         </nav>
       </div>
@@ -81,7 +117,7 @@
   footer {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(30ch, 1fr));
-    gap: 2rem;
+    gap: var(--space-l);
     width: 100%;
     max-width: var(--max-width);
     padding: var(--space-2xl-3xl) 0;
@@ -121,7 +157,11 @@
     }
 
     a {
+      display: flex;
+      gap: var(--space-2xs);
+      align-items: center;
       font-size: inherit;
+      text-decoration: none;
     }
   }
 
@@ -142,7 +182,7 @@
 
   .logos {
     display: flex;
-    gap: 1rem;
+    gap: var(--space-xs);
     align-items: center;
     justify-content: space-between;
     max-width: 100%;
@@ -157,6 +197,18 @@
       max-width: 30%;
       height: 100%;
       object-fit: contain;
+    }
+  }
+
+  .accessibility-links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xs-2xs);
+    align-items: flex-start;
+
+    & > div {
+      display: flex;
+      gap: var(--space-s);
     }
   }
 </style>

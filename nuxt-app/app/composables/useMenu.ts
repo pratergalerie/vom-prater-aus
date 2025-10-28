@@ -32,16 +32,17 @@ export const useMenu = () => {
   ]
 
   const footerExcludedRoutes = [
+    'accessibility',
     'admin-dashboard',
     'admin-login',
     'admin-story-id',
+    'draft-stories-submitted',
+    'draft-stories-uuid',
     'editor-id',
     'index',
     'stories-edit-id',
     'stories-id',
     'stories-slug',
-    'draft-stories-submitted',
-    'draft-stories-uuid',
   ]
 
   const footerOrder = [
