@@ -219,29 +219,50 @@
                 @click="closeMenu"
               >
                 {{ route.title }}
-                <Icon
-                  v-if="route.path === '/accessibility'"
-                  name="mdi:accessibility"
-                />
               </NuxtLink>
             </li>
 
             <div class="accessibility-links">
+              <Divider
+                type="horizontal"
+                color="var(--color-beige)"
+                width="40%"
+                class="divider"
+                margin="var(--space-2xs) 0"
+              />
               <li>
-                <!-- TODO: Add link -->
-                <NuxtLink to="/">
-                  {{ $t('components.menu.nav.simpleLanguage') }}
-                  <Icon name="mdi:book-open-variant-outline" />
+                <NuxtLink
+                  to="/accessibility"
+                  @click="closeMenu"
+                >
+                  {{ $t('components.menu.nav.accessibility') }}
+                  <Icon name="mdi:accessibility" />
                 </NuxtLink>
               </li>
 
-              <li>
-                <!-- TODO: Add link -->
-                <NuxtLink to="/">
-                  {{ $t('components.menu.nav.dgs') }}
-                  <Icon name="mdi:sign-language-outline" />
-                </NuxtLink>
-              </li>
+              <div>
+                <li>
+                  <!-- TODO: Add link -->
+                  <NuxtLink
+                    to="/"
+                    @click="closeMenu"
+                  >
+                    {{ $t('components.menu.nav.simpleLanguage') }}
+                    <Icon name="mdi:book-open-variant-outline" />
+                  </NuxtLink>
+                </li>
+
+                <li>
+                  <!-- TODO: Add link -->
+                  <NuxtLink
+                    to="/"
+                    @click="closeMenu"
+                  >
+                    {{ $t('components.menu.nav.dgs') }}
+                    <Icon name="mdi:sign-language-outline" />
+                  </NuxtLink>
+                </li>
+              </div>
             </div>
           </ul>
 
@@ -251,7 +272,7 @@
               color="var(--color-beige)"
               width="40%"
               class="divider"
-              margin="var(--space-xs) 0"
+              margin="var(--space-2xs) 0"
             />
           </div>
 
@@ -371,8 +392,14 @@
 
   .accessibility-links {
     display: flex;
-    gap: var(--space-s);
-    justify-content: flex-end;
+    flex-direction: column;
+    gap: var(--space-3xs-2xs);
+    align-items: flex-end;
+
+    & > div {
+      display: flex;
+      gap: var(--space-s);
+    }
   }
 
   .actions-wrapper {

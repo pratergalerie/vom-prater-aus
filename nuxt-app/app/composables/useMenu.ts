@@ -10,15 +10,16 @@ export const useMenu = () => {
   const router = useRouter()
 
   const menuExcludedRoutes = [
+    'accessibility',
     'admin-dashboard',
     'admin-login',
     'admin-story-id',
+    'draft-stories-submitted',
+    'draft-stories-uuid',
     'editor-id',
     'stories-edit-id',
     'stories-id',
     'stories-slug',
-    'draft-stories-submitted',
-    'draft-stories-uuid',
   ]
   const menuOrder = [
     'index',
@@ -28,7 +29,6 @@ export const useMenu = () => {
     'about',
     'privacy',
     'terms',
-    'accessibility',
   ]
 
   const footerExcludedRoutes = [
