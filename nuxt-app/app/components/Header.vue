@@ -17,7 +17,6 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    height: var(--header-height);
     background-color: var(--color-beige);
     clip-path: polygon(
       0% 0%,
