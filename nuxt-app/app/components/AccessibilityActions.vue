@@ -1,9 +1,33 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import { useForm, useField } from 'vee-validate'
+  import { useAccessibility } from '~/composables/useAccessibility'
+
+  const { largeFontEnabled, toggleLargeFont } = useAccessibility()
+
+  // Create a form context
+  useForm()
+
+  const { value } = useField('fontSize', undefined, {
+    initialValue: largeFontEnabled.value,
+  })
+
+  // Sync field value with shared state when field changes
+  watch(value, (newValue) => {
+    toggleLargeFont(!!newValue)
+  })
+
+  // Sync field value when shared state changes (from other instance)
+  watch(largeFontEnabled, (newValue) => {
+    if (value.value !== newValue) {
+      value.value = newValue
+    }
+  })
+</script>
 
 <template>
   <div class="wrapper">
     <BaseCheckbox
-      name="termsPrivacy"
+      name="fontSize"
       color="white"
     >
       <template #label>
