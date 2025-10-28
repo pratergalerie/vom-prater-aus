@@ -269,7 +269,7 @@
     display: grid;
     grid-template: 'stack' 1fr / 1fr;
     width: 100%;
-    height: 100svh;
+    height: 100dvh;
     pointer-events: none;
   }
 
