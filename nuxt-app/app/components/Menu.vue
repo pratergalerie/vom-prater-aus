@@ -345,7 +345,7 @@
   ul {
     display: flex;
     flex-direction: column;
-    gap: var(--space-xs);
+    gap: var(--space-3xs-2xs);
     padding: 0;
     margin: 0;
     list-style: none;
