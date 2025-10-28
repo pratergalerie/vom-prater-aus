@@ -34,7 +34,7 @@
 <style scoped>
   .lang-switcher {
     display: flex;
-    gap: 1rem;
+    gap: var(--space-s);
     align-items: center;
     color: var(--color-beige);
 
