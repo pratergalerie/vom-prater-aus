@@ -25,18 +25,17 @@
       justify-content: flex-end;
       width: 100%;
       max-width: var(--max-width);
-      padding: var(--space-m) var(--space-l);
-      padding-bottom: var(--space-l);
+      padding: var(--space-3xs-2xs) var(--space-xs);
+      padding-bottom: var(--space-s);
       background-color: var(--color-beige);
       clip-path: polygon(
-        0% 10%,
-        12.22% 5.3%,
-        21.5% 10.87%,
-        53.76% 8.25%,
+        0% 5%,
+        21.5% 0%,
+        53.76% 0%,
         98.35% 0%,
         98.64% 76.25%,
         97.26% 89.26%,
-        88.2% 82.2%,
+        88.2% 89.2%,
         83.73% 91.73%,
         70.85% 94.85%,
         63.69% 88.69%,
@@ -57,14 +56,13 @@
       height: 100%;
       background-color: var(--color-grey-light);
       clip-path: polygon(
-        0% 10%,
-        12.22% 5.3%,
-        21.5% 10.87%,
-        53.76% 8.25%,
+        0% 5%,
+        21.5% 0%,
+        53.76% 0%,
         98.35% 0%,
         98.64% 76.25%,
         97.26% 89.26%,
-        88.2% 82.2%,
+        88.2% 89.2%,
         83.73% 91.73%,
         70.85% 94.85%,
         63.69% 88.69%,
@@ -74,7 +72,7 @@
         0% 73.2%,
         0% 100%
       );
-      transform: scaleX(1.01) scaleY(1.06);
+      transform: scaleX(1.005) scaleY(1.08);
     }
   }
 </style>

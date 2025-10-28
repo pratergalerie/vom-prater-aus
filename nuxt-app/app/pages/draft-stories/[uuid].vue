@@ -454,7 +454,7 @@
   .button-checkbox {
     display: flex;
     flex-wrap: wrap-reverse;
-    gap: var(--space-s);
+    gap: var(--space-2xs);
     align-items: center;
   }
 
