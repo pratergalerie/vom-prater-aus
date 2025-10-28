@@ -48,7 +48,9 @@ export default factories.createCoreController(
         status: "draft",
         filters: {
           uuid,
-          lifecycleState: { $notContains: "submitted" },
+          lifecycleState: {
+            $contains: "pending",
+          },
         },
         populate: {
           sections: { populate: ["image"] },
@@ -77,7 +79,9 @@ export default factories.createCoreController(
           status: "draft",
           filters: {
             uuid,
-            lifecycleState: { $notContains: "submitted" },
+            lifecycleState: {
+              $contains: "pending",
+            },
           },
         });
 
