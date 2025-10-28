@@ -482,7 +482,7 @@ export interface ApiStoryStory extends Struct.CollectionTypeSchema {
     language: Schema.Attribute.Enumeration<['de', 'en']> &
       Schema.Attribute.Required;
     lifecycleState: Schema.Attribute.Enumeration<
-      ['created', 'pending', 'submitted']
+      ['created', 'pending', 'submitted', 'deleted']
     > &
       Schema.Attribute.Required &
       Schema.Attribute.Private &

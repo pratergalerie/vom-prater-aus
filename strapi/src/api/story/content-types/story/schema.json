@@ -119,7 +119,8 @@
       "enum": [
         "created",
         "pending",
-        "submitted"
+        "submitted",
+        "deleted"
       ]
     }
   }
