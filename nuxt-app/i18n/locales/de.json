@@ -24,6 +24,11 @@
         "terms": "Nutzungsbedingungen"
       }
     },
+    "languageSwitcher": {
+      "label": "Sprache:",
+      "german": "Deutsch",
+      "english": "Englisch"
+    },
     "storiesSearchDialog": {
       "title": "Geschichten suchen & filtern",
       "searchPlaceholder": "Nach Titel oder Schlüsselwörtern suchen...",

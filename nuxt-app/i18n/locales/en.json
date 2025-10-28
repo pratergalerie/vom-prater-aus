@@ -24,6 +24,11 @@
         "terms": "Terms of use"
       }
     },
+    "languageSwitcher": {
+      "label": "Language:",
+      "german": "German",
+      "english": "English"
+    },
     "storiesSearchDialog": {
       "title": "Search & Filter Stories",
       "searchPlaceholder": "Search by title or keywords...",

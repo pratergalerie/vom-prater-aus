@@ -1,9 +1,5 @@
 <script setup lang="ts">
-  const {
-    locale: currentLocale,
-    locales,
-    setLocale,
-  } = useI18n({ useScope: 'global' })
+  const { locale: currentLocale, setLocale } = useI18n({ useScope: 'global' })
 </script>
 
 <template>
@@ -11,6 +7,7 @@
     class="lang-switcher"
     aria-label="Language switcher"
   >
+    {{ $t('components.languageSwitcher.label') }}
     <a
       href="#"
       :class="{
@@ -19,7 +16,7 @@
       }"
       @click.prevent.stop="setLocale('de')"
     >
-      DE
+      {{ $t('components.languageSwitcher.german') }}
     </a>
     <a
       href="#"
@@ -29,7 +26,7 @@
       }"
       @click.prevent.stop="setLocale('en')"
     >
-      EN
+      {{ $t('components.languageSwitcher.english') }}
     </a>
   </div>
 </template>
@@ -43,7 +40,6 @@
 
     a {
       font-size: inherit;
-      text-transform: uppercase;
       text-decoration: none;
       cursor: pointer;
 
