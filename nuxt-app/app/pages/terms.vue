@@ -162,7 +162,6 @@
 
   .publishing-note {
     font-weight: bold;
-    color: var(--color-primary-dark);
   }
 
   .terms-sections {

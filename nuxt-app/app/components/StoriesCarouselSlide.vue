@@ -35,7 +35,6 @@
       <div class="link-year">
         <NuxtLink
           v-if="link"
-          class="highlight"
           :to="link"
         >
           {{ title }}
@@ -131,13 +130,15 @@
     text-align: right;
 
     & a {
-      font-size: var(--step-1);
-      color: var(--color-brown);
+      font-family: var(--font-heading);
+      font-size: var(--step-2);
+      font-weight: 600;
+      color: var(--color-black);
       text-decoration: none;
     }
   }
 
   .year {
-    font-size: 1rem;
+    font-size: var(--step-0);
   }
 </style>

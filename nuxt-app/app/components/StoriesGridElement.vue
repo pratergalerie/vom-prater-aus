@@ -137,8 +137,6 @@
   }
 
   .author {
-    /* stylelint-disable-next-line */
-    font-size: var(--step--1);
     color: var(--color-text-light);
 
     .author-name {

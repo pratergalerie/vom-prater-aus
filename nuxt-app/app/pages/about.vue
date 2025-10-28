@@ -56,7 +56,6 @@
 
   .acknowledgment {
     font-style: italic;
-    color: var(--color-text-light);
   }
 
   .credits {
