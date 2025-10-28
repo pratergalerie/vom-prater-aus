@@ -22,6 +22,11 @@
     font-family: var(--font-link);
     color: var(--color-beige);
 
+    @media (max-width: 800px) {
+      /* stylelint-disable-next-line custom-property-pattern */
+      font-size: var(--step--1);
+    }
+
     /* stylelint-disable-next-line plugins/no-unused-selectors */
     & > a {
       display: flex;

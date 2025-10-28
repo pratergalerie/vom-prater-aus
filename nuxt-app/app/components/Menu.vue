@@ -386,6 +386,11 @@
         align-items: center;
         justify-content: flex-end;
         text-decoration: none;
+
+        @media (max-width: 800px) {
+          /* stylelint-disable-next-line custom-property-pattern */
+          font-size: var(--step--1);
+        }
       }
     }
   }
