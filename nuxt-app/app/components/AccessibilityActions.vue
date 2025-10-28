@@ -19,8 +19,10 @@
     display: flex;
     gap: var(--space-s);
     align-items: center;
+    font-family: var(--font-link);
     color: var(--color-beige);
 
+    /* stylelint-disable-next-line plugins/no-unused-selectors */
     & > a {
       display: flex;
       gap: var(--space-2xs);
