@@ -35,6 +35,12 @@
     props.variant === 'primary' ? 'var(--color-black)' : 'var(--color-white)'
   )
 
+  const dottedGridColor = computed(() =>
+    props.variant === 'primary'
+      ? 'var(--color-beige)'
+      : 'var(--color-dark-grey)'
+  )
+
   const cutoutShape = ref('')
 
   onMounted(() => {
@@ -66,12 +72,8 @@
       secondary: variant === 'secondary',
       disabled: disabled,
     }"
-    :style="{}"
   >
-    <div
-      class="button-content"
-      :style="{ clipPath: cutoutShape }"
-    >
+    <div class="button-content">
       <NuxtLink
         v-if="href && label"
         :to="href"
@@ -85,18 +87,9 @@
         class="icon"
       />
     </div>
-    <div
-      class="button-content-border"
-      :style="{ clipPath: cutoutShape }"
-    ></div>
-    <div
-      class="button-background"
-      :style="{ clipPath: cutoutShape }"
-    >
-      <div
-        class="button-background-border"
-        :style="{ clipPath: cutoutShape }"
-      ></div>
+    <div class="button-content-border"></div>
+    <div class="button-background">
+      <div class="button-background-border"></div>
     </div>
   </button>
 </template>
@@ -115,6 +108,14 @@
     padding: var(--space-xs);
     padding-bottom: var(--space-s);
     background-color: v-bind(backgroundColor);
+    background-image: radial-gradient(
+      circle,
+      v-bind(dottedGridColor) 1px,
+      transparent 1px
+    );
+    background-position: 0 0;
+    background-size: 4px 4px;
+    clip-path: v-bind(cutoutShape);
   }
 
   .button-content-border {
@@ -123,6 +124,7 @@
     width: calc(100% + v-bind(borderSize));
     height: calc(100% + v-bind(borderSize));
     background-color: v-bind(borderColor);
+    clip-path: v-bind(cutoutShape);
   }
 
   .button-background {
@@ -136,6 +138,7 @@
     width: 100%;
     height: 100%;
     background-color: v-bind(borderColor);
+    clip-path: v-bind(cutoutShape);
     transition: all 200ms ease-in-out;
   }
 
@@ -146,6 +149,7 @@
     width: calc(100% - (v-bind(borderSize) / 2));
     height: calc(100% - (v-bind(borderSize) / 2));
     background-color: v-bind(shadowColor);
+    clip-path: v-bind(cutoutShape);
   }
 
   .icon {
