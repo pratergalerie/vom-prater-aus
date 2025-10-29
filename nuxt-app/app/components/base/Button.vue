@@ -231,8 +231,8 @@
   button {
     z-index: 700;
     display: grid;
-    min-width: 150px;
-    max-width: 400px;
+    min-width: 120px;
+    max-width: 300px;
     height: 60px;
     color: var(--color-black);
     cursor: pointer;
@@ -329,7 +329,7 @@
     gap: 0.5rem;
     align-items: center;
     justify-content: center;
-    padding: var(--space-s);
+    padding: var(--space-2xs);
     transform: translateY(-5%);
   }
 

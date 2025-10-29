@@ -44,7 +44,7 @@ export default defineNuxtConfig({
       {
         families: {
           'Sometype Mono': {
-            wght: '400',
+            wght: ['400', '600'],
           },
           'Crimson Pro': {
             wght: ['200', '600'],
