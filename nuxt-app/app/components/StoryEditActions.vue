@@ -2,8 +2,16 @@
 
 <template>
   <div class="wrapper">
-    <div class="actions">
-      <slot name="actions"></slot>
+    <div class="status-actions">
+      <div
+        v-if="$slots.formStatus"
+        class="form-status"
+      >
+        <slot name="formStatus"></slot>
+      </div>
+      <div class="actions">
+        <slot name="actions"></slot>
+      </div>
     </div>
     <div class="background"></div>
   </div>
@@ -17,10 +25,13 @@
     display: grid;
     grid-template: 'stack' 1fr / 1fr;
 
-    & .actions {
+    & .status-actions {
       z-index: 3;
       box-sizing: border-box;
       display: flex;
+      flex-wrap: wrap-reverse;
+      grid-area: stack;
+      gap: var(--space-xs);
       align-items: center;
       justify-content: flex-end;
       width: 100%;
@@ -44,6 +55,17 @@
         0% 73.2%,
         0% 100%
       );
+    }
+
+    & .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2xs);
+      justify-content: center;
+    }
+
+    & .form-status {
+      flex: 1 1 350px;
     }
 
     & .background {

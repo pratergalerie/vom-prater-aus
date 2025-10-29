@@ -122,6 +122,9 @@
     sections,
   } = storyData.value ?? {}
 
+  const showDeleteDialog = ref(false)
+  const showSubmitDialog = ref(false)
+
   const userSections = ref<UserSection[]>(
     sections?.map((section) => {
       return {
@@ -146,8 +149,13 @@
     >
   )
 
-  const { values, handleSubmit, errors, isSubmitting, validate } = useForm<{
-    submitStory: boolean
+  const {
+    values: formValues,
+    handleSubmit,
+    errors,
+    isSubmitting,
+    validate,
+  } = useForm<{
     storyTitle: string | null
     authorName: string | null
     storyYear: number | null
@@ -157,7 +165,6 @@
   }>({
     validationSchema,
     initialValues: {
-      submitStory: false,
       storyTitle,
       authorName,
       storyYear,
@@ -167,9 +174,19 @@
   const hasValidationErrors = computed(() => {
     return Object.keys(errors.value).length > 0
   })
-  const isSubmitStoryChecked = computed(() => values.submitStory)
 
-  const addSection = async (type: 'image' | 'image-text' | 'text') => {
+  const handleToggleDialog = (dialogToToggle: 'delete' | 'submit') => {
+    switch (dialogToToggle) {
+      case 'delete':
+        showDeleteDialog.value = !showDeleteDialog.value
+        break
+      case 'submit':
+        showSubmitDialog.value = !showSubmitDialog.value
+        break
+    }
+  }
+
+  const handleAddSection = async (type: 'image' | 'image-text' | 'text') => {
     // Prevent user from adding new section when existing section has validation errros
     await validate()
     if (hasValidationErrors.value) {
@@ -185,23 +202,22 @@
     })
   }
 
-  const removeSection = () => {
+  const handleRemoveSection = () => {
     userSections.value.pop()
   }
 
-  const onSubmit = handleSubmit(
-    async ({ submitStory, authorName, storyTitle: title, storyYear: year }) => {
-      const isSubmitting = submitStory
-
+  const handleOnSubmit = (action: 'save' | 'submit') =>
+    handleSubmit(async ({ authorName, storyTitle: title, storyYear: year }) => {
+      const isSubmitStory = action === 'submit'
       const [...sectionImageUploads] = await Promise.all(
-        userSections.value.map(async (section, index) => {
-          const imageFile = values[`section${index}Image`]
+        userSections.value.map(async (_, index) => {
+          const imageFile = formValues[`section${index}Image`]
 
           if (imageFile instanceof File) {
             const response = await upload(imageFile)
             return response.type === 'ok' ? (response.data?.id ?? null) : null
           }
-          return values[`section${index}ImageId`] ?? null
+          return formValues[`section${index}ImageId`] ?? null
         })
       )
 
@@ -211,7 +227,7 @@
         image: number | null
       }> = userSections.value.map((section, index) => ({
         type: section.type,
-        text: values[`section${index}Text`] ?? null,
+        text: formValues[`section${index}Text`] ?? null,
         image: sectionImageUploads[index] ?? null,
       }))
 
@@ -220,14 +236,32 @@
         authorName,
         year,
         sections,
-        ...(isSubmitting && { lifecycleState: 'submitted' }),
+        ...(isSubmitStory && { lifecycleState: 'submitted' }),
       })
 
-      if (isSubmitting && response.type === 'ok') {
+      if (isSubmitStory && response.type === 'ok') {
         await navigateTo({ path: `/draft-stories/submitted` })
       }
+    })
+
+  const handleSaveStory = handleOnSubmit('save')
+  const handleSubmitStory = handleOnSubmit('submit')
+
+  const handleDeleteStory = async () => {
+    const { storyTitle: title, authorName, storyYear: year } = formValues
+
+    const response = await update({
+      title,
+      authorName,
+      year,
+      sections: userSections.value,
+      lifecycleState: 'deleted',
+    })
+
+    if (response.type === 'ok') {
+      await navigateTo({ path: `/draft-stories/deleted` })
     }
-  )
+  }
 </script>
 <template>
   <div>
@@ -245,10 +279,7 @@
       {{ $t('pages.stories.story.error') }}
     </p>
 
-    <form
-      v-else
-      @submit="onSubmit"
-    >
+    <form v-else>
       <div class="hero">
         <div
           v-if="!userSections[0]"
@@ -257,18 +288,16 @@
           {{ $t('pages.edit.actions.cover.label') }}
           <div class="choose-actions">
             <BaseButton
-              layout="label-icon"
               icon="mdi:image-plus-outline"
               variant="primary"
               :label="$t('pages.edit.actions.cover.add.image')"
-              @click="addSection('image')"
+              @click="handleAddSection('image')"
             />
             <BaseButton
-              layout="label-icon"
               icon="mdi:text-box-plus-outline"
               variant="primary"
               :label="$t('pages.edit.actions.cover.add.text')"
-              @click="addSection('text')"
+              @click="handleAddSection('text')"
             />
           </div>
         </div>
@@ -335,7 +364,6 @@
         <span>{{ $t('pages.edit.actions.section.label') }}</span>
         <div class="section-actions">
           <BaseButton
-            layout="label-icon"
             icon="mdi:trash-can-outline"
             variant="primary"
             :label="
@@ -343,60 +371,125 @@
                 ? $t('pages.edit.actions.section.removeCover')
                 : $t('pages.edit.actions.section.remove')
             "
-            @click="removeSection"
+            @click="handleRemoveSection"
           />
           <BaseButton
-            layout="label-icon"
             icon="mdi:text-box-plus-outline"
             variant="primary"
             :label="$t('pages.edit.actions.section.add.text')"
-            @click="addSection('text')"
+            @click="handleAddSection('text')"
           />
           <BaseButton
-            layout="label-icon"
             icon="mdi:image-plus-outline"
             variant="primary"
             :label="$t('pages.edit.actions.section.add.image')"
-            @click="addSection('image')"
+            @click="handleAddSection('image')"
           />
           <BaseButton
-            layout="label-icon"
             icon="mdi:note-plus-outline"
             variant="primary"
             :label="$t('pages.edit.actions.section.add.image-text')"
-            @click="addSection('image-text')"
+            @click="handleAddSection('image-text')"
           />
         </div>
       </div>
 
       <StoryEditActions :style="{ position: 'sticky' }">
+        <template
+          v-if="hasValidationErrors"
+          #formStatus
+        >
+          <p class="error">
+            {{ $t('pages.edit.form.error') }}
+          </p>
+        </template>
+
         <template #actions>
-          <div class="submit">
-            <div class="button-checkbox">
-              <BaseCheckbox name="submitStory">
-                <template #label>
-                  <p>{{ $t('pages.edit.actions.submitCheckbox') }}</p>
-                </template>
-              </BaseCheckbox>
-              <BaseButton
-                type="submit"
-                :disabled="isSubmitting"
-                :variant="isSubmitStoryChecked ? 'secondary' : 'primary'"
-                layout="label"
-                class="button"
-                :label="
-                  isSubmitStoryChecked
-                    ? $t('pages.edit.actions.submitStory')
-                    : $t('pages.edit.actions.saveStory')
-                "
-              />
-            </div>
-            <p
-              v-if="hasValidationErrors"
-              class="error"
+          <!-- Delete Story -->
+          <div class="button-dialog-wrapper">
+            <BaseDialog
+              v-model:is-open="showDeleteDialog"
+              :modal="true"
+              width="40ch"
             >
-              {{ $t('pages.edit.form.error') }}
-            </p>
+              <p>
+                {{ $t('pages.edit.actions.deleteStory.modal.description') }}
+              </p>
+              <div class="dialog-buttons">
+                <BaseButton
+                  variant="primary"
+                  class="button"
+                  :label="$t('pages.edit.actions.deleteStory.modal.cancel')"
+                  @click="handleToggleDialog('delete')"
+                />
+                <BaseButton
+                  variant="secondary"
+                  class="button"
+                  :label="$t('pages.edit.actions.deleteStory.modal.confirm')"
+                  @click="handleDeleteStory"
+                />
+              </div>
+            </BaseDialog>
+
+            <BaseButton
+              :disabled="isSubmitting"
+              variant="primary"
+              class="button"
+              icon="mdi:trash-can-outline"
+              @click="handleToggleDialog('delete')"
+            />
+          </div>
+
+          <!-- Save Story -->
+          <BaseButton
+            :disabled="isSubmitting"
+            variant="primary"
+            class="button"
+            icon="mdi:content-save-outline"
+            @click="handleSaveStory"
+          />
+
+          <!-- Submit Story -->
+          <div class="button-dialog-wrapper">
+            <BaseDialog
+              v-model:is-open="showSubmitDialog"
+              :modal="true"
+              width="40ch"
+            >
+              <p>
+                {{ $t('pages.edit.actions.submitStory.modal.description') }}
+              </p>
+              <div class="dialog-buttons">
+                <BaseButton
+                  variant="primary"
+                  class="button"
+                  :label="$t('pages.edit.actions.submitStory.modal.cancel')"
+                  @click="handleToggleDialog('submit')"
+                />
+                <BaseButton
+                  variant="secondary"
+                  class="button"
+                  :label="$t('pages.edit.actions.submitStory.modal.confirm')"
+                  @click="handleSubmitStory"
+                />
+              </div>
+            </BaseDialog>
+            <BaseButton
+              :disabled="isSubmitting"
+              variant="secondary"
+              class="button"
+              :label="$t('pages.edit.actions.submitStory.label')"
+              @click="
+                async () => {
+                  // Doesn't show modal when form has still errors
+                  await validate()
+                  if (hasValidationErrors) {
+                    return
+                  }
+                  handleToggleDialog('submit')
+                }
+              "
+            />
           </div>
         </template>
       </StoryEditActions>
@@ -444,18 +537,8 @@
     font-weight: 600;
   }
 
-  .submit {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
-    align-items: flex-end;
-  }
-
-  .button-checkbox {
-    display: flex;
-    flex-wrap: wrap-reverse;
-    gap: var(--space-2xs);
-    align-items: center;
+  .button-dialog-wrapper {
+    position: relative;
   }
 
   .section-actions-container {
@@ -478,5 +561,11 @@
     flex-wrap: wrap;
     gap: var(--space-xs);
     justify-content: center;
+  }
+
+  .dialog-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--space-2xs);
   }
 </style>

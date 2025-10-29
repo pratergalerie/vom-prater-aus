@@ -191,9 +191,23 @@
       "actions": {
         "uploadImage": "Bild hochladen",
         "removeImage": "Bild entfernen",
-        "submitCheckbox": "Geschichte einreichen?",
         "saveStory": "Speichern",
-        "submitStory": "Einreichen",
+        "deleteStory": {
+          "label": "Löschen",
+          "modal": {
+            "description": "Bist du sicher, dass du diese Seite löschen möchtest? Das kann nicht rückgängig gemacht werden.",
+            "confirm": "Löschen",
+            "cancel": "Abbrechen"
+          }
+        },
+        "submitStory": {
+          "label": "Einreichen",
+          "modal": {
+            "description": "Deine Erinnerung wird nun zur Moderation eingereicht. Nach unserer Freigabe wird sie veröffentlicht. Du erhältst eine E-Mail, sobald der Moderationsprozess abgeschlossen ist. Bitte informiere dich über die Moderationsregeln und darüber, was mit deinen Daten passiert.",
+            "confirm": "Einreichen",
+            "cancel": "Abbrechen"
+          }
+        },
         "cover": {
           "label": "Wie soll deine Geschichte beginnen?",
           "add": {
@@ -211,47 +225,6 @@
             "text": "Text"
           }
         }
-      },
-      "modals": {
-        "deletePage": {
-          "title": "Seite löschen",
-          "description": "Bist du sicher, dass du diese Seite löschen möchtest? Das kann nicht rückgängig gemacht werden.",
-          "confirm": "Löschen",
-          "cancel": "Abbrechen",
-          "processing": "Seite wird gelöscht..."
-        },
-        "deleteStory": {
-          "title": "Geschichte löschen",
-          "description": "Bist du sicher, dass du deine Geschichte löschen möchtest? Das kann nicht rückgängig gemacht werden.",
-          "confirm": "Löschen",
-          "cancel": "Abbrechen",
-          "processing": "Geschichte wird gelöscht..."
-        },
-        "submitStory": {
-          "title": "Deine Erinnerung einreichen",
-          "description": "Deine Erinnerung wird nun zur Moderation eingereicht. Nach unserer Freigabe wird sie veröffentlicht. Du erhältst eine E-Mail, sobald der Moderationsprozess abgeschlossen ist. Bitte informiere dich über die Moderationsregeln und darüber, was mit deinen Daten passiert.",
-          "confirm": "Einreichen",
-          "cancel": "Abbrechen",
-          "processing": "Geschichte wird eingereicht..."
-        },
-        "exitEditor": {
-          "title": "Editor verlassen",
-          "description": "Bist du sicher, dass du deinen Erinnerungs-Editor verlassen möchtest? Alle nicht gespeicherten Daten gehen verloren.",
-          "confirm": "Verlassen",
-          "cancel": "Abbrechen"
-        },
-        "details": {
-          "title": "Geschichte-Details",
-          "storyTitle": "Titel der Geschichte",
-          "authorName": "Name der Autorin/des Autors",
-          "storyYear": "Jahr der Geschichte",
-          "confirm": "Speichern",
-          "cancel": "Abbrechen"
-        }
-      },
-      "snackbar": {
-        "saveSuccess": "Story saved successfully",
-        "saveError": "Error saving story"
       }
     },
     "home": {
@@ -288,7 +261,7 @@
       },
       "story": {
         "loading": "Geschichte wird geladen...",
-        "error": "Derzeit ist die Geschichte nicht verfügbar.",
+        "error": "Die Geschichte nicht verfügbar.",
         "memoryBy": "Erinnerung von"
       },
       "submitted": {

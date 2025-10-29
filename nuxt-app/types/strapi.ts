@@ -23,7 +23,7 @@ export type StrapiImage = {
   width: number
 }
 
-export type LifecycleState = 'created' | 'pending' | 'submitted'
+export type LifecycleState = 'created' | 'pending' | 'submitted' | 'deleted'
 
 export type SectionType = 'image' | 'image-text' | 'text'
 

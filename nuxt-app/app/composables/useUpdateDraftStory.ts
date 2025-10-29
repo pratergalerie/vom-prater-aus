@@ -10,7 +10,7 @@ type UpdateStory = {
   title: string | null
   year: number | null
   sections: { type: SectionType; text?: string | null; image?: number | null }[]
-  lifecyleState?: LifecycleState
+  lifecycleState?: LifecycleState
 }
 
 export const useUpdateDraftStory = (uuid: string) => {

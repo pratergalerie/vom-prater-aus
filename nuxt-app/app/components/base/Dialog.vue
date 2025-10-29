@@ -255,16 +255,12 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--space-s);
     justify-content: flex-start;
     width: 100%;
-    padding: 1.5rem;
+    padding: var(--space-m);
+    padding-bottom: var(--space-l);
     background-color: transparent;
-
-    /* If no title, remove the gap between the header and the content */
-    &:not(:has(h2)) {
-      gap: 0;
-    }
   }
 
   .header {
