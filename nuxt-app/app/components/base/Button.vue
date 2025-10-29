@@ -329,7 +329,7 @@
     gap: 0.5rem;
     align-items: center;
     justify-content: center;
-    padding: var(--space-2xs);
+    padding: var(--space-xs);
     transform: translateY(-5%);
   }
 
