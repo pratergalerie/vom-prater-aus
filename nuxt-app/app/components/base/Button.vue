@@ -1,12 +1,8 @@
 <script setup lang="ts">
-  import { svgPaths as baseButtonSvgPaths } from '~/assets/svgs/paths/baseButton'
-  import { svgPaths as iconButtonSvgPaths } from '~/assets/svgs/paths/iconButton'
-
   const props = withDefaults(
     defineProps<{
       type?: 'submit' | 'button'
       variant: 'primary' | 'secondary'
-      layout: 'label' | 'icon' | 'label-icon'
       label?: string
       icon?: string
       href?: string | null
@@ -20,74 +16,46 @@
     }
   )
 
-  const svgPaths = computed(() => {
-    return props.layout === 'icon' ? iconButtonSvgPaths : baseButtonSvgPaths
+  const borderSize = '5px'
+  const shadowOffset = '5px'
+
+  const foregroundColor = computed(() =>
+    props.variant === 'primary' ? 'var(--color-black)' : 'var(--color-white)'
+  )
+
+  const backgroundColor = computed(() =>
+    props.variant === 'primary' ? 'var(--color-white)' : 'var(--color-black)'
+  )
+
+  const borderColor = computed(() =>
+    props.variant === 'primary' ? 'var(--color-black)' : 'var(--color-black)'
+  )
+
+  const shadowColor = computed(() =>
+    props.variant === 'primary' ? 'var(--color-black)' : 'var(--color-white)'
+  )
+
+  const cutoutShape = ref('')
+
+  onMounted(() => {
+    cutoutShape.value = `polygon(
+        0% 10%,
+        9.22% 5.3%,
+        21.5% -0.13%,
+        47.76% 3.25%,
+        98.35% 4%,
+        98.64% 76.25%,
+        97.26% 89.26%,
+        87.73% 91.73%,
+        72.85% 94.85%,
+        54.69% 87.69%,
+        46.76% 92.76%,
+        26.98% 90.98%,
+        6.26% 90.26%,
+        0% 73.2%,
+        0% 100%
+      )`
   })
-
-  // function generateRandomSVGPath(): string {
-  //   // Helper function to generate a random float within a defined range
-  //   const randomInRange = (min: number, max: number) =>
-  //     Math.random() * (max - min) + min
-
-  //   // Pick one of the paths at random
-  //   const originalPath =
-  //     svgPaths.value[Math.floor(Math.random() * svgPaths.value.length)]
-
-  //   // TODO - Implement path variation, below generates an error
-  //   // Error: <path> attribute d: Expected path command, "….0495 34.1652 Z 0".
-
-  //   // Parse the original path to extract commands and numbers
-  //   const pathParts = originalPath
-  //     ? originalPath.match(/[a-zA-Z][^a-zA-Z]*/g) || []
-  //     : []
-
-  //   const variedPathParts = pathParts.map((part) => {
-  //     const command = part[0] // Get the command (M, C, Z, etc.)
-  //     const numbers = part
-  //       .slice(1)
-  //       .trim()
-  //       .split(/[\s,]+/)
-  //       .map((num) => parseFloat(num)) // Extract numbers
-
-  //     // Apply random variations to the numbers
-  //     const variedNumbers = numbers.map((num) => {
-  //       const newNum = num + randomInRange(-1.0, 1.0)
-  //       return isNaN(newNum) ? 0 : newNum.toFixed(4) // Default to 0 if NaN
-  //     })
-
-  //     const newPart = `${command} ${variedNumbers.join(' ')}`
-
-  //     // Construct the varied path part
-  //     return newPart
-  //   })
-
-  //   // Join the varied parts back into a single path string
-  //   const variedPath = variedPathParts.join(' ')
-
-  //   return variedPath
-  // }
-
-  // Deactivate path variation for now
-  const svgPath = svgPaths.value[0]
-
-  const textureSrc = computed(() => {
-    return props.variant === 'primary'
-      ? '/imgs/textures/halftone-texture-white.webp'
-      : '/imgs/textures/halftone-texture-black.webp'
-  })
-
-  const dropShadow = computed(() => {
-    if (props.layout === 'icon') {
-      return props.variant === 'primary'
-        ? `drop-shadow(-2px 2px 0 var(--color-black))`
-        : `drop-shadow(-2px 2px 0 var(--color-white)) drop-shadow(-1px 1px 0 var(--color-black))`
-    } else
-      return props.variant === 'primary'
-        ? `drop-shadow(-4px 4px 0 var(--color-black))`
-        : `drop-shadow(-4px 4px 0 var(--color-white)) drop-shadow(-2px 2px 0 var(--color-black)`
-  })
-
-  const randomId = Math.random().toString(36).substring(7)
 </script>
 
 <template>
@@ -96,177 +64,116 @@
     :class="{
       primary: variant === 'primary',
       secondary: variant === 'secondary',
-      icon: layout === 'icon',
       disabled: disabled,
     }"
+    :style="{}"
   >
-    <div class="button-content">
+    <div
+      class="button-content"
+      :style="{ clipPath: cutoutShape }"
+    >
       <NuxtLink
-        v-if="href"
+        v-if="href && label"
         :to="href"
-        class="button-link"
+        >{{ label }}</NuxtLink
+      >
+      <span v-if="!href && label">{{ label }}</span>
+      <Icon
+        v-if="icon"
+        :name="icon"
+        mode="css"
+        class="icon"
       />
-      <span
-        v-if="layout === 'label'"
-        class="button-label"
-        :class="{ secondary: variant === 'secondary' }"
-      >
-        {{ label }}
-      </span>
-      <span
-        v-if="layout === 'label-icon'"
-        class="button-label-icon"
-        :class="{ secondary: variant === 'secondary' }"
-      >
-        <span>{{ label }}</span>
-        <Icon
-          v-if="icon"
-          :name="icon"
-          mode="css"
-          class="icon"
-        />
-      </span>
-      <div
-        v-if="layout === 'icon' && icon"
-        class="button-icon"
-        :style="{ color: variant === 'primary' ? 'black' : 'white' }"
-      >
-        <Icon
-          :name="icon"
-          mode="css"
-          class="button-icon"
-        />
-      </div>
     </div>
-    <ClientOnly>
-      <div class="button-background">
-        <svg
-          class="button-shape"
-          :class="{
-            primary: variant === 'primary',
-            secondary: variant === 'secondary',
-          }"
-          :viewBox="layout === 'icon' ? '0 0 40 40' : '0 0 349 60'"
-          fill="none"
-          preserveAspectRatio="none"
-        >
-          <defs>
-            <pattern
-              :id="`button-texture-${randomId}`"
-              patternUnits="userSpaceOnUse"
-              width="540px"
-              height="360px"
-              patternTransform="scale(0.5 0.5)"
-            >
-              <image
-                :href="textureSrc"
-                x="0"
-                y="0"
-                width="540px"
-                height="360px"
-              />
-            </pattern>
-          </defs>
-
-          <path
-            :d="svgPath"
-            :fill="`url(#button-texture-${randomId})`"
-            stroke="var(--color-black)"
-            stroke-width="2"
-          />
-          <!-- Add a "vignette" effect using radial blur, clipped to the path -->
-          <filter :id="`button-vignette-${randomId}`">
-            <feGaussianBlur
-              in="SourceGraphic"
-              stdDeviation="10"
-            />
-          </filter>
-          <clipPath
-            :id="
-              layout === 'icon'
-                ? `icon-button-clip-path-${randomId}`
-                : `base-button-clip-path-${randomId}`
-            "
-          >
-            <path :d="svgPath" />
-          </clipPath>
-          <rect
-            :d="svgPath"
-            :fill="
-              variant === 'primary'
-                ? 'var(--color-white)'
-                : 'var(--color-black)'
-            "
-            :filter="`url(#button-vignette-${randomId})`"
-            width="100%"
-            height="100%"
-            :clip-path="
-              layout === 'icon'
-                ? `url(#icon-button-clip-path-${randomId})`
-                : `url(#base-button-clip-path-${randomId})`
-            "
-            opacity="0.8"
-          />
-        </svg>
-      </div>
-    </ClientOnly>
+    <div
+      class="button-content-border"
+      :style="{ clipPath: cutoutShape }"
+    ></div>
+    <div
+      class="button-background"
+      :style="{ clipPath: cutoutShape }"
+    >
+      <div
+        class="button-background-border"
+        :style="{ clipPath: cutoutShape }"
+      ></div>
+    </div>
   </button>
 </template>
 
 <style scoped>
-  .button-shape {
-    position: absolute;
-    top: 0;
-    left: 0;
+  .button-content {
+    z-index: 4;
+    box-sizing: border-box;
+    display: flex;
+    grid-area: stack;
+    gap: var(--space-xs);
+    align-items: center;
+    justify-content: center;
     width: 100%;
     height: 100%;
-    filter: v-bind(dropShadow);
-    transition: filter 0.2s ease-out;
+    padding: var(--space-xs);
+    padding-bottom: var(--space-s);
+    background-color: v-bind(backgroundColor);
+  }
 
-    @media screen and (prefers-reduced-motion: reduce) {
-      transition: none;
-    }
+  .button-content-border {
+    z-index: 3;
+    grid-area: stack;
+    width: calc(100% + v-bind(borderSize));
+    height: calc(100% + v-bind(borderSize));
+    background-color: v-bind(borderColor);
+  }
+
+  .button-background {
+    position: relative;
+    top: 7px;
+    left: -7px;
+    z-index: 2;
+    grid-area: stack;
+    grid-template: 'background-stack' 1fr/1fr;
+    place-items: center center;
+    width: 100%;
+    height: 100%;
+    background-color: v-bind(borderColor);
+    transition: all 200ms ease-in-out;
+  }
+
+  .button-background-border {
+    position: relative;
+    z-index: 2;
+    grid-area: background-stack;
+    width: calc(100% - (v-bind(borderSize) / 2));
+    height: calc(100% - (v-bind(borderSize) / 2));
+    background-color: v-bind(shadowColor);
+  }
+
+  .icon {
+    width: 1.5rem;
+    height: 1.5rem;
   }
 
   button {
     z-index: 700;
     display: grid;
-    min-width: 120px;
+    grid-template: 'stack' 1fr/1fr;
+    place-items: center center;
     max-width: 300px;
     height: 60px;
-    color: var(--color-black);
+    color: v-bind(foregroundColor);
     cursor: pointer;
     background: none;
     border: none;
-    transition: transform 0.2s ease-out;
+    transition: all 0.2s ease-out;
 
     &:hover,
     &:focus {
-      transform: scale(1.01);
+      transform: scale(1.05);
 
-      &.primary .button-shape {
-        filter: drop-shadow(-8px 8px 0 var(--color-black));
+      & .button-background {
+        top: calc(v-bind(shadowOffset) * 1.3);
+        left: calc(v-bind(shadowOffset) * -1.3);
       }
-
-      &.secondary .button-shape {
-        filter: drop-shadow(-6px 6px 0 var(--color-white))
-          drop-shadow(-2px 2px 0 var(--color-black));
-      }
-
-      &.primary.icon .button-shape {
-        filter: drop-shadow(-4px 4px 0 var(--color-black));
-      }
-
-      &.secondary.icon .button-shape {
-        filter: drop-shadow(-4px 4px 0 var(--color-white))
-          drop-shadow(-2px 2px 0 var(--color-black));
-      }
-    }
-
-    &.icon {
-      width: 40px;
-      min-width: 40px;
-      height: 40px;
     }
 
     &.disabled {
@@ -283,82 +190,8 @@
   }
 
   a {
+    font-weight: 600;
     color: inherit;
     text-decoration: none;
-  }
-
-  .button-content {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    grid-area: 1 / 1;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-  }
-
-  .button-link {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 3;
-    width: 100%;
-    height: 100%;
-    pointer-events: auto;
-  }
-
-  .button-background {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    grid-area: 1 / 1;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-  }
-
-  .button-label,
-  .button-icon,
-  .button-label-icon {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    justify-content: center;
-    padding: var(--space-xs);
-    transform: translateY(-5%);
-  }
-
-  .button-label {
-    width: 100%;
-    height: 100%;
-  }
-
-  .button-icon {
-    width: 65%;
-    height: 65%;
-    margin: auto;
-  }
-
-  .button-label,
-  .button-label-icon {
-    transition: transform 0.2s ease-out;
-
-    &.secondary {
-      color: var(--color-white);
-    }
-
-    @media screen and (prefers-reduced-motion: reduce) {
-      transition: none;
-    }
-  }
-
-  .icon {
-    width: 1.5rem;
-    height: 1.5rem;
   }
 </style>
