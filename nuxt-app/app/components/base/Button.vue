@@ -107,7 +107,7 @@
     box-sizing: border-box;
     display: flex;
     grid-area: stack;
-    gap: var(--space-xs);
+    gap: var(--space-2xs);
     align-items: center;
     justify-content: center;
     width: 100%;
