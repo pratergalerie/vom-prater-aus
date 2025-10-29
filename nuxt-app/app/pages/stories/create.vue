@@ -343,6 +343,7 @@
     flex-wrap: wrap;
     gap: var(--space-s);
     align-items: center;
+    justify-content: space-between;
 
     & > * {
       flex: 1 1 300px;
