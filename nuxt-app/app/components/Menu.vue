@@ -193,11 +193,13 @@
         }"
       >
         <NuxtPicture
+          loading="eager"
           :src="illustrationImage"
           alt=""
           :modifiers="{ grayscale: true }"
           :img-attrs="{
             style: 'display: block; height: 100%;',
+            fetchpriority: 'high',
           }"
         />
       </div>
