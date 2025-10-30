@@ -170,7 +170,6 @@
   >
     <div class="dialog-wrapper">
       <div class="dialog-content">
-        <div class="halftone background" />
         <div class="dialog-content-inner">
           <div class="header">
             <h2 v-if="title">{{ title }}</h2>
@@ -213,7 +212,7 @@
     container-name: dialog-container;
 
     &::backdrop {
-      background: rgb(0 0 0 / 50%);
+      background: rgb(0 0 0 / 25%);
     }
 
     &.absolute-position {
