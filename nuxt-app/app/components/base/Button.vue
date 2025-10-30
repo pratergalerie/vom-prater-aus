@@ -127,8 +127,7 @@
     justify-content: center;
     width: 100%;
     height: 100%;
-    padding: var(--space-xs);
-    padding-bottom: var(--space-s);
+    padding: var(--space-2xs-xs);
     background-color: v-bind(backgroundColor);
     background-image: radial-gradient(
       circle,
@@ -138,6 +137,10 @@
     background-position: 0 0;
     background-size: 4px 4px;
     clip-path: v-bind(cutoutShape);
+
+    & > span {
+      transform: translateY(-0.25ch);
+    }
   }
 
   .button-content-border {
@@ -175,8 +178,8 @@
   }
 
   .icon {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 1.5em;
+    height: 1.5em;
   }
 
   button,
@@ -186,6 +189,8 @@
     grid-template: 'stack' 1fr/1fr;
     place-items: center center;
     height: 60px;
+    font-family: var(--font-button);
+    font-size: var(--step-0);
     font-weight: 600;
     color: v-bind(foregroundColor);
     text-decoration: none;

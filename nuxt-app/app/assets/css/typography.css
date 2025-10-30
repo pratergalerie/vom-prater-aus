@@ -65,13 +65,6 @@ a.dark {
   }
 }
 
-button {
-  font-family: var(--font-button);
-  font-size: var(--step--1);
-  font-weight: 600;
-  font-size-adjust: 0.5;
-}
-
 .highlight {
   --color-highlight: var(--color-mustard);
   background:

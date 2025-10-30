@@ -445,7 +445,7 @@
             :disabled="isSubmitting"
             variant="primary"
             class="button"
-            icon="mdi:content-save-outline"
+            :label="$t('pages.edit.actions.saveStory')"
             @click="handleSaveStory"
           />
 
@@ -498,6 +498,11 @@
 </template>
 
 <style scoped>
+  button {
+    /* stylelint-disable-next-line custom-property-pattern */
+    font-size: var(--step--1);
+  }
+
   /* stylelint-disable-next-line plugins/no-unused-selectors */
   .hero {
     height: 600px;
