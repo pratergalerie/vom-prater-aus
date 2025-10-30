@@ -36,7 +36,7 @@
       justify-content: flex-end;
       width: 100%;
       max-width: var(--max-width);
-      padding: var(--space-3xs-2xs) var(--space-xs);
+      padding: var(--space-2xs-xs) var(--space-xs);
       padding-bottom: var(--space-s);
       background-color: var(--color-beige);
       clip-path: polygon(
@@ -55,6 +55,10 @@
         0% 73.2%,
         0% 100%
       );
+
+      @media (max-width: 600px) {
+        justify-content: center;
+      }
     }
 
     & .actions {
@@ -65,7 +69,11 @@
     }
 
     & .form-status {
-      flex: 1 1 350px;
+      flex: 1 1 20ch;
+
+      @media (max-width: 600px) {
+        text-align: center;
+      }
     }
 
     & .background {
