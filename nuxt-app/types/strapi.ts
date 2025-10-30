@@ -25,7 +25,7 @@ export type StrapiImage = {
 
 export type LifecycleState = 'created' | 'pending' | 'submitted' | 'deleted'
 
-export type SectionType = 'image' | 'image-text' | 'text'
+export type SectionType = 'image' | 'image-text' | 'text' | null
 
 export type Section = {
   documentId?: string

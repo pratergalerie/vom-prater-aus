@@ -10,7 +10,7 @@
 
   type UserSection = {
     id: string
-    type: 'image' | 'image-text' | 'text'
+    type: 'image' | 'image-text' | 'text' | null
     imageUrl: string | null
     imageId: number | null
     text: string | null
@@ -18,17 +18,23 @@
 
   const validationSchema = computed(() => {
     const sectionFields = userSections.value.reduce(
-      (acc, section, index) => {
+      (acc, section) => {
         switch (section.type) {
           case 'image': {
-            acc[`section${index}Image`] = z.instanceof(File).optional()
-            acc[`section${index}ImageId`] = z.number().optional().nullable()
+            acc[`section${section.id}Image`] = z.instanceof(File).optional()
+            acc[`section${section.id}ImageId`] = z
+              .number()
+              .optional()
+              .nullable()
             break
           }
           case 'image-text': {
-            acc[`section${index}Image`] = z.instanceof(File).optional()
-            acc[`section${index}ImageId`] = z.number().optional().nullable()
-            acc[`section${index}Text`] = z
+            acc[`section${section.id}Image`] = z.instanceof(File).optional()
+            acc[`section${section.id}ImageId`] = z
+              .number()
+              .optional()
+              .nullable()
+            acc[`section${section.id}Text`] = z
               .string({
                 message: 'pages.edit.form.sectionText.errors.required',
               })
@@ -38,7 +44,7 @@
             break
           }
           case 'text': {
-            acc[`section${index}Text`] = z
+            acc[`section${section.id}Text`] = z
               .string({
                 message: 'pages.edit.form.sectionText.errors.required',
               })
@@ -89,17 +95,18 @@
         .superRefine((data, ctx) => {
           const formData = data as typeof data & Record<string, unknown>
 
-          for (let i = 0; i < userSections.value.length; i++) {
-            const section = userSections.value[i]
+          for (const section of userSections.value) {
             if (section?.type === 'image' || section?.type === 'image-text') {
-              const hasFile = formData[`section${i}Image`] instanceof File
-              const hasId = typeof formData[`section${i}ImageId`] === 'number'
+              const hasFile =
+                formData[`section${section.id}Image`] instanceof File
+              const hasId =
+                typeof formData[`section${section.id}ImageId`] === 'number'
 
               if (!hasFile && !hasId) {
                 ctx.addIssue({
                   code: z.ZodIssueCode.custom,
                   message: 'pages.edit.form.sectionImage.errors.required',
-                  path: [`section${i}Image`],
+                  path: [`section${section.id}Image`],
                 })
               }
             }
@@ -137,14 +144,18 @@
     }) ?? []
   )
 
+  const userSectionsWithoutCover = computed(() =>
+    userSections.value.slice(1).filter((section) => section.type !== null)
+  )
+
   const sectionInitialValues = userSections.value.reduce(
-    (acc, section, index) => {
-      acc[`section${index}ImageId`] = section.imageId
-      acc[`section${index}Text`] = section.text
+    (acc, section) => {
+      acc[`section${section.id}ImageId`] = section.imageId
+      acc[`section${section.id}Text`] = section.text
       return acc
     },
     {} as Record<
-      `section${number}ImageId` | `section${number}Text`,
+      `section${string}ImageId` | `section${string}Text`,
       number | string | null
     >
   )
@@ -159,9 +170,9 @@
     storyTitle: string | null
     authorName: string | null
     storyYear: number | null
-    [key: `section${number}Image`]: File | null
-    [key: `section${number}ImageId`]: number | null
-    [key: `section${number}Text`]: string | null
+    [key: `section${string}Image`]: File | null
+    [key: `section${string}ImageId`]: number | null
+    [key: `section${string}Text`]: string | null
   }>({
     validationSchema,
     initialValues: {
@@ -186,14 +197,18 @@
     }
   }
 
-  const handleAddSection = async (type: 'image' | 'image-text' | 'text') => {
+  const handleAddSection = async (
+    type: 'image' | 'image-text' | 'text',
+    position: number
+  ) => {
     // Prevent user from adding new section when existing section has validation errros
     await validate()
     if (hasValidationErrors.value) {
       return
     }
 
-    userSections.value.push({
+    // Insert new section
+    userSections.value.splice(position, 0, {
       id: crypto.randomUUID(),
       type,
       imageUrl: null,
@@ -202,32 +217,48 @@
     })
   }
 
-  const handleRemoveSection = () => {
-    userSections.value.pop()
+  const handleResetCover = () => {
+    if (userSections.value[0]) {
+      userSections.value[0] = {
+        id: crypto.randomUUID(),
+        type: null,
+        imageUrl: null,
+        imageId: null,
+        text: null,
+      }
+    }
+  }
+
+  const handleRemoveSection = (sectionId: string) => {
+    // Remove section by UUID
+    const index = userSections.value.findIndex((section) => section.id === sectionId)
+    if (index !== -1) {
+      userSections.value.splice(index, 1)
+    }
   }
 
   const handleOnSubmit = (action: 'save' | 'submit') =>
     handleSubmit(async ({ authorName, storyTitle: title, storyYear: year }) => {
       const isSubmitStory = action === 'submit'
       const [...sectionImageUploads] = await Promise.all(
-        userSections.value.map(async (_, index) => {
-          const imageFile = formValues[`section${index}Image`]
+        userSections.value.map(async (section) => {
+          const imageFile = formValues[`section${section.id}Image`]
 
           if (imageFile instanceof File) {
             const response = await upload(imageFile)
             return response.type === 'ok' ? (response.data?.id ?? null) : null
           }
-          return formValues[`section${index}ImageId`] ?? null
+          return formValues[`section${section.id}ImageId`] ?? null
         })
       )
 
       const sections: Array<{
-        type: 'image' | 'image-text' | 'text'
+        type: 'image' | 'image-text' | 'text' | null
         text: string | null
         image: number | null
       }> = userSections.value.map((section, index) => ({
         type: section.type,
-        text: formValues[`section${index}Text`] ?? null,
+        text: formValues[`section${section.id}Text`] ?? null,
         image: sectionImageUploads[index] ?? null,
       }))
 
@@ -282,7 +313,7 @@
     <form v-else>
       <div class="hero">
         <div
-          v-if="!userSections[0]"
+          v-if="userSections[0]?.type === null"
           class="choose-cover"
         >
           {{ $t('pages.edit.actions.cover.label') }}
@@ -291,25 +322,25 @@
               icon="mdi:image-plus-outline"
               variant="primary"
               :label="$t('pages.edit.actions.cover.add.image')"
-              @click="handleAddSection('image')"
+              @click="handleAddSection('image', 0)"
             />
             <BaseButton
               icon="mdi:text-box-plus-outline"
               variant="primary"
               :label="$t('pages.edit.actions.cover.add.text')"
-              @click="handleAddSection('text')"
+              @click="handleAddSection('text', 0)"
             />
           </div>
         </div>
         <BaseTextarea
           v-if="userSections[0]?.type === 'text'"
           :required="true"
-          name="section0Text"
+          :name="`section${userSections[0].id}Text`"
           :label="$t('pages.edit.form.sectionText.label')"
         />
         <ImageUploadArea
           v-if="userSections[0]?.type === 'image'"
-          name="section0Image"
+          :name="`section${userSections[0].id}Image`"
           :required="true"
           :image-url="
             storyData.sections[0]?.image &&
@@ -347,52 +378,77 @@
         </template>
       </StoryTitleLayout>
 
-      <!-- User Sections -->
-      <StoryEditSection
-        v-for="(section, index) in userSections.slice(1)"
-        :key="section.id"
-        :layout="section.type"
-        :index="index + 1"
-        :image-url="section.imageUrl"
-        :last-section="index === userSections.length - 1"
-      />
-
-      <div
-        v-if="userSections[0]"
-        class="section-actions-container"
-      >
+      <!-- Cover Edits -->
+      <div class="section-actions-container">
         <span>{{ $t('pages.edit.actions.section.label') }}</span>
         <div class="section-actions">
           <BaseButton
             icon="mdi:trash-can-outline"
             variant="primary"
-            :label="
-              userSections.length === 1
-                ? $t('pages.edit.actions.section.removeCover')
-                : $t('pages.edit.actions.section.remove')
-            "
-            @click="handleRemoveSection"
+            :label="$t('pages.edit.actions.section.removeCover')"
+            @click="handleResetCover"
           />
           <BaseButton
             icon="mdi:text-box-plus-outline"
             variant="primary"
             :label="$t('pages.edit.actions.section.add.text')"
-            @click="handleAddSection('text')"
+            @click="handleAddSection('text', 1)"
           />
           <BaseButton
             icon="mdi:image-plus-outline"
             variant="primary"
             :label="$t('pages.edit.actions.section.add.image')"
-            @click="handleAddSection('image')"
+            @click="handleAddSection('image', 1)"
           />
           <BaseButton
             icon="mdi:note-plus-outline"
             variant="primary"
             :label="$t('pages.edit.actions.section.add.image-text')"
-            @click="handleAddSection('image-text')"
+            @click="handleAddSection('image-text', 1)"
           />
         </div>
       </div>
+
+      <!-- User Sections -->
+      <StoryEditSection
+        v-for="(section, index) in userSectionsWithoutCover"
+        :key="section.id"
+        :layout="section.type"
+        :section-id="section.id"
+        :image-url="section.imageUrl"
+      >
+        <template #actions>
+          <div class="section-actions-container">
+            <span>{{ $t('pages.edit.actions.section.label') }}</span>
+            <div class="section-actions">
+              <BaseButton
+                icon="mdi:trash-can-outline"
+                variant="primary"
+                :label="$t('pages.edit.actions.section.remove')"
+                @click="handleRemoveSection(section.id)"
+              />
+              <BaseButton
+                icon="mdi:text-box-plus-outline"
+                variant="primary"
+                :label="$t('pages.edit.actions.section.add.text')"
+                @click="handleAddSection('text', index + 2)"
+              />
+              <BaseButton
+                icon="mdi:image-plus-outline"
+                variant="primary"
+                :label="$t('pages.edit.actions.section.add.image')"
+                @click="handleAddSection('image', index + 2)"
+              />
+              <BaseButton
+                icon="mdi:note-plus-outline"
+                variant="primary"
+                :label="$t('pages.edit.actions.section.add.image-text')"
+                @click="handleAddSection('image-text', index + 2)"
+              />
+            </div>
+          </div>
+        </template>
+      </StoryEditSection>
 
       <StoryEditActions :style="{ position: 'sticky' }">
         <template

@@ -1,15 +1,11 @@
 <script setup lang="ts">
   type Layout = 'image' | 'image-text' | 'text'
 
-  withDefaults(
-    defineProps<{
-      layout: Layout
-      index: number
-      imageUrl: string | null
-      lastSection?: boolean
-    }>(),
-    { lastSection: false }
-  )
+  defineProps<{
+    layout: Layout
+    sectionId: string
+    imageUrl: string | null
+  }>()
 </script>
 
 <template>
@@ -19,16 +15,10 @@
       'layout-text': layout === 'text',
     }"
   >
-    <Divider
-      type="horizontal"
-      color="var(--color-black)"
-      width="40%"
-      margin="var(--space-xs) 0"
-    />
     <ImageUploadArea
       v-if="layout === 'image' || layout === 'image-text'"
       :required="true"
-      :name="`section${index}Image`"
+      :name="`section${sectionId}Image`"
       :image-url="imageUrl"
       :label="$t('pages.edit.form.sectionImage.label')"
       :description="$t('pages.edit.form.sectionImage.description')"
@@ -36,9 +26,10 @@
     <BaseTextarea
       v-if="layout === 'text' || layout === 'image-text'"
       :required="true"
-      :name="`section${index}Text`"
+      :name="`section${sectionId}Text`"
       :label="$t('pages.edit.form.sectionText.label')"
     />
+    <slot name="actions"></slot>
   </section>
 </template>
 
@@ -49,14 +40,13 @@
     justify-items: center;
     max-width: 70ch;
     margin: 0 auto;
-    margin-block-end: var(--space-2xl);
 
     &.layout-text {
-      grid-template-rows: max-content 70ch;
+      grid-template-rows: 70ch max-content;
     }
 
     &.layout-image-text {
-      grid-template-rows: max-content max-content 70ch;
+      grid-template-rows: max-content 70ch max-content;
     }
   }
 </style>
