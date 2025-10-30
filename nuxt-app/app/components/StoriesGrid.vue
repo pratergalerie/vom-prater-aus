@@ -26,26 +26,24 @@
   const stories = computed(() =>
     storiesData.value
       .map<(ListElement & { id: string }) | undefined>((story) => {
-        // Check if featured story has any images
-        const firstSectionWithImage = story.sections.find(
-          (section) => section.image !== null
-        )
+        // Use the first section (cover)
+        const firstSection = story.sections[0]
         const keywords = story.keywords.map((keyword) => ({
           name: keyword.name,
           id: keyword.documentId,
           selected: selectedKeywords.value.includes(keyword.name),
         }))
 
-        if (firstSectionWithImage !== undefined) {
+        if (firstSection?.image !== null && firstSection?.image !== undefined) {
           return {
             variant: 'image',
             id: story.documentId,
             img: {
               src: getStrapiImageUrl(
-                (firstSectionWithImage.image as StrapiImage).url
+                (firstSection.image as StrapiImage).url
               ),
               alt:
-                (firstSectionWithImage.image as StrapiImage).alternativeText ??
+                (firstSection.image as StrapiImage).alternativeText ??
                 '',
             },
             text: null,
@@ -58,13 +56,9 @@
           }
         }
 
-        const firstSectionWithText = story.sections.find(
-          (section) => section.text !== null
-        )
-
-        if (firstSectionWithText !== undefined) {
+        if (firstSection?.text !== null && firstSection?.text !== undefined) {
           const previewText =
-            firstSectionWithText?.text
+            firstSection.text
               ?.match(/^.*?[.!?](?=\s|$)/)?.[0]
               .replace(/[.!?]+$/, '...') ?? ''
 
