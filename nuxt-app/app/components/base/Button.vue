@@ -28,17 +28,13 @@
   )
 
   const borderColor = computed(() =>
-    props.variant === 'primary' ? 'var(--color-black)' : 'var(--color-black)'
-  )
-
-  const shadowColor = computed(() =>
-    props.variant === 'primary' ? 'var(--color-black)' : 'var(--color-white)'
+    props.variant === 'primary' ? 'var(--color-black)' : 'var(--color-beige)'
   )
 
   const dottedGridColor = computed(() =>
     props.variant === 'primary'
       ? 'var(--color-beige)'
-      : 'var(--color-dark-grey)'
+      : 'var(--color-grey-dark)'
   )
 
   const cutoutShape = ref('')
@@ -85,9 +81,6 @@
       />
     </div>
     <div class="button-content-border"></div>
-    <div class="button-background">
-      <div class="button-background-border"></div>
-    </div>
   </button>
 
   <!-- Button Link  -->
@@ -110,9 +103,6 @@
       />
     </div>
     <div class="button-content-border"></div>
-    <div class="button-background">
-      <div class="button-background-border"></div>
-    </div>
   </NuxtLink>
 </template>
 
@@ -152,31 +142,6 @@
     clip-path: v-bind(cutoutShape);
   }
 
-  .button-background {
-    position: relative;
-    top: 7px;
-    left: -7px;
-    z-index: 2;
-    grid-area: stack;
-    grid-template: 'background-stack' 1fr/1fr;
-    place-items: center center;
-    width: 100%;
-    height: 100%;
-    background-color: v-bind(borderColor);
-    clip-path: v-bind(cutoutShape);
-    transition: all 200ms ease-in-out;
-  }
-
-  .button-background-border {
-    position: relative;
-    z-index: 2;
-    grid-area: background-stack;
-    width: calc(100% - (v-bind(borderSize) / 2));
-    height: calc(100% - (v-bind(borderSize) / 2));
-    background-color: v-bind(shadowColor);
-    clip-path: v-bind(cutoutShape);
-  }
-
   .icon {
     width: 1.5em;
     height: 1.5em;
@@ -197,16 +162,18 @@
     cursor: pointer;
     background: none;
     border: none;
+    filter: drop-shadow(
+      calc(v-bind(shadowOffset) * -1) v-bind(shadowOffset) 0 var(--color-black)
+    );
     transition: all 0.2s ease-out;
 
     &:hover,
     &:focus {
+      filter: drop-shadow(
+        calc(v-bind(shadowOffset) * -1.4) calc(v-bind(shadowOffset) * 1.4) 0
+          var(--color-black)
+      );
       transform: scale(1.05);
-
-      & .button-background {
-        top: calc(v-bind(shadowOffset) * 1.75);
-        left: calc(v-bind(shadowOffset) * -1.75);
-      }
     }
 
     &.disabled {
