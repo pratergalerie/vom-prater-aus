@@ -170,7 +170,7 @@
     },
     "edit": {
       "form": {
-        "error": "Das Formular hat Fehler. Bitte korrigiere sie, bevor du weitermachen kannst.",
+        "error": "Bitte korrigiere alle Fehler, bevor du weitermachen kannst.",
         "coverImage": {
           "label": "Lade hier ein Titlebild hoch."
         },
@@ -195,7 +195,7 @@
         "deleteStory": {
           "label": "Löschen",
           "modal": {
-            "description": "Bist du sicher, dass du diese Seite löschen möchtest? Das kann nicht rückgängig gemacht werden.",
+            "description": "Bist du sicher, dass du deine Geschichte löschen möchtest? Das kann nicht rückgängig gemacht werden.",
             "confirm": "Löschen",
             "cancel": "Abbrechen"
           }
@@ -213,6 +213,9 @@
           "add": {
             "image": "Titelbild",
             "text": "Titeltext"
+          },
+          "errors": {
+            "required": "Der Title muss ausgefüllt sein."
           }
         },
         "section": {

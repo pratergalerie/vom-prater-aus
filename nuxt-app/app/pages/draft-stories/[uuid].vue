@@ -95,6 +95,43 @@
         .superRefine((data, ctx) => {
           const formData = data as typeof data & Record<string, unknown>
 
+          // Check if cover section is filled with valid content
+          const coverSection = userSections.value[0]
+
+          if (coverSection?.type === null) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: 'pages.edit.actions.cover.errors.required',
+              path: ['cover'],
+            })
+          } else if (coverSection?.type === 'text') {
+            // Check if cover text is filled
+            const coverText = formData[`section${coverSection.id}Text`]
+            if (
+              !coverText ||
+              (typeof coverText === 'string' && coverText.trim().length === 0)
+            ) {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: 'pages.edit.actions.cover.errors.required',
+                path: ['cover'],
+              })
+            }
+          } else if (coverSection?.type === 'image') {
+            // Check if cover image is filled
+            const hasFile =
+              formData[`section${coverSection.id}Image`] instanceof File
+            const hasId =
+              typeof formData[`section${coverSection.id}ImageId`] === 'number'
+            if (!hasFile && !hasId) {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: 'pages.edit.actions.cover.errors.required',
+                path: ['cover'],
+              })
+            }
+          }
+
           for (const section of userSections.value) {
             if (section?.type === 'image' || section?.type === 'image-text') {
               const hasFile =
@@ -170,6 +207,7 @@
     storyTitle: string | null
     authorName: string | null
     storyYear: number | null
+    cover?: string | null
     [key: `section${string}Image`]: File | null
     [key: `section${string}ImageId`]: number | null
     [key: `section${string}Text`]: string | null
@@ -201,10 +239,13 @@
     type: 'image' | 'image-text' | 'text',
     position: number
   ) => {
-    // Prevent user from adding new section when existing section has validation errros
-    await validate()
-    if (hasValidationErrors.value) {
-      return
+    // Allow adding cover section (position 0) even when empty
+    // But prevent adding other sections when cover is not filled or when there are validation errors
+    if (position > 0) {
+      await validate()
+      if (hasValidationErrors.value) {
+        return
+      }
     }
 
     // Insert new section
@@ -231,7 +272,9 @@
 
   const handleRemoveSection = (sectionId: string) => {
     // Remove section by UUID
-    const index = userSections.value.findIndex((section) => section.id === sectionId)
+    const index = userSections.value.findIndex(
+      (section) => section.id === sectionId
+    )
     if (index !== -1) {
       userSections.value.splice(index, 1)
     }
@@ -451,11 +494,12 @@
       </StoryEditSection>
 
       <StoryEditActions :style="{ position: 'sticky' }">
-        <template
-          v-if="hasValidationErrors"
-          #formStatus
-        >
-          <p class="error">
+        <template #formStatus>
+          <p
+            v-if="hasValidationErrors"
+            class="error"
+          >
+            {{ errors['cover'] && $t(errors['cover']) }}
             {{ $t('pages.edit.form.error') }}
           </p>
         </template>

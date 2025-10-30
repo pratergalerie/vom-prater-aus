@@ -171,7 +171,7 @@
     },
     "edit": {
       "form": {
-        "error": "The form contains errors. Please correct them before you can continue.",
+        "error": "Please correct all errors before you can continue.",
         "coverImage": {
           "label": "Upload a cover image here."
         },
@@ -211,6 +211,9 @@
           "add": {
             "image": "Cover image",
             "text": "Cover text"
+          },
+          "errors": {
+            "required": "The title must be filled in."
           }
         },
         "section": {
