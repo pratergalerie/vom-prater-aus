@@ -31,9 +31,10 @@
 
     <!-- Prater Section -->
     <section>
-      <NuxtPicture
-        src="imgs/anfaenge-prater.jpg"
-        :alt="$t('pages.home.sections.prater.imageAlt')"
+      <CaptionImage
+        :caption="$t('images.postkarte1895.caption')"
+        src="imgs/postkarte1895.jpg"
+        :alt="$t('images.postkarte1895.alt')"
       />
       <div class="section-text">
         <h2>{{ $t('pages.home.sections.prater.title') }}</h2>
@@ -50,9 +51,10 @@
 
     <!-- Create Section -->
     <section>
-      <NuxtPicture
-        src="imgs/kreiskulturhaus-1.jpg"
-        :alt="$t('pages.home.sections.create.imageAlt')"
+      <CaptionImage
+        :caption="$t('images.konzertKindertag1986.caption')"
+        src="imgs/konzertKindertag1986.jpg"
+        :alt="$t('images.konzertKindertag1986.alt')"
       />
       <div class="section-text">
         <h2>{{ $t('pages.home.sections.create.title') }}</h2>
@@ -92,12 +94,12 @@
     &:nth-child(even) {
       align-items: flex-end;
 
-      & picture {
+      & > div:nth-child(1) {
         width: 100%;
         max-width: 70%;
       }
 
-      & .section-text {
+      & > div:nth-child(2) {
         text-align: right;
       }
     }

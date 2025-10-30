@@ -236,14 +236,12 @@
           "button": "Discover memories"
         },
         "prater": {
-          "imageAlt": "MISSING",
           "title": "About the history of the Berlin Prater",
           "text": "Opened in 1837 as a garden tavern just outside the city gates, the Berlin Prater has always attracted those seeking relaxation and adventure in nature. Entertainment was offered in the Prater hall and beer garden, but it was also a place of political agitation and discussion.\nAs the city grew and changed, the Prater remained a central meeting point for the neighborhood, where people gathered to eat, drink, debate, dance, and celebrate together. Today, the Prater is under municipal management. After the renovation is completed, the Volksbühne and independent theater groups will perform in the main hall, while the Prater Galerie for contemporary art will occupy a side wing.",
           "button": "About the Berlin Prater"
         },
         "create": {
           "title": "Tell your Prater memory",
-          "imageAlt": "MISSING",
           "text": "There is no ONE single history of the Prater. It is made up of many stories – of your memories and images. Share them with us!",
           "button": "Write your memory"
         }
@@ -419,7 +417,6 @@
         "beginnings": {
           "title": "The Beginnings of the Berlin Prater",
           "year": "1831-1895",
-          "imageAlt": "ALT MISSING",
           "text": {
             "p1": "Opened in the 1830s as a beer garden just outside the city gates, the Berlin Prater has always been a big draw for people seeking relaxation and entertainment in the open air – regardless of class or cultural background. The Prater soon began hosting shows and musical events in the hall and on the open-air stage. Orchestras performed, and countless visitors enjoyed summer theatre performances, afternoon dances, variety shows featuring tightrope acrobatics at dizzying heights and wrestling matches. The billiard salon was also a popular attraction. Renowned artists from far and wide found their way onto the Prater's stages.",
             "p2": "This is an image of one of the first postcards depicting the Berlin Prater, dating back to 1895. It shows the Prater façade at Kastanienallee No.7, with the 1875 archway, the dance and events room, as well as the garden with its summer stage, as well as the open-air hall that housed shooting galleries and vendor's booths."
@@ -428,7 +425,6 @@
         "coffeeKitchen": {
           "title": "The Coffee Kitchen",
           "year": "1905",
-          "imageAlt": "ALT MISSING",
           "text": {
             "p1": "'The old custom remains unbroken, families can make coffee here' – proclaims a sign hanging at the entrances to most Berlin garden establishments at the beginning of the 19th century. To bypass the beverage licensing laws, only hot water and the utensils needed for making coffee were provided. Guests had to bring their own ground coffee. This tradition dated back to the 18th century and probably originated in the garden taverns of Treptow. There, migrants from Saxony sold coffee to people out for a stroll. When the Berlin Magistrate denied them a license to serve beverages, they instead offered only hot water and provided the necessary coffee-making equipment for a fee. This practice spread throughout Berlin and the surrounding area, remaining common in some beer gardens right up until the 1950s."
           }
@@ -442,7 +438,6 @@
         "boxingMatches": {
           "title": "Boxing Matches in the Pratergarten",
           "year": "1949",
-          "imageAlt": "ALT MISSING",
           "text": {
             "p1": "After the Second World War, the Berlin Prater was leased to former wrestler Hans Schwarz, who, in addition to running the restaurant business, initiated the return of boxing matches there.",
             "p2": "Boxing match at the Pratergarten, 15 May 1949. 19-year-old Gustav \"Bubi\" Scholz, a native of Prenzlauer Berg and future European champion, fought against Helmut Hörauf at the well-attended Pratergarten, winning in the first round. The photo shows Hörauf, who was knocked out after a hook to the liver."
@@ -460,7 +455,6 @@
         "renovation": {
           "title": "Renovation of the Pratergarten",
           "year": "1958",
-          "imageAlt": "ALT MISSING",
           "text": {
             "p1": "Over the years, the Pratergarten had fallen increasingly into disrepair, so construction works got underway at the end of the 1950s. A new large open-air stage with a dance floor and new service areas were created, and the old dance hall was renovated and rebuilt. The renovation work was undertaken in part by volunteers from the Nationales Aufbauwerk (National Reconstruction Committee) who contributed over 50,000 hours of their time."
           }
@@ -468,7 +462,6 @@
         "reopening": {
           "title": "Reopening after the Renovation",
           "year": "1960",
-          "imageAlt": "ALT MISSING",
           "text": {
             "p1": "After extensive renovations, the Pratergarten reopened during the annual May Day celebrations in 1960. One tradition that was then relegated to the past was the century-old tradition of families making their own coffee, with the state-run Handelsorganisation (Trade Organisation) taking on the food and drinks. A multifunctional venue emerged, financed by the borough of Prenzlauer Berg, offering music, dancing, social gatherings, political rallies, sports events and training sessions, as well as the DEFA cinema."
           }
@@ -484,7 +477,6 @@
         "firstGallery": {
           "title": "The first gallery at the Prater",
           "year": "1967-1969",
-          "imageAlt": "ALT MISSING",
           "text": {
             "p1": "Starting in 1967, the Prater became a Kulturhaus (cultural centre) and eventually the Kreiskulturhaus (district cultural centre) for Prenzlauer Berg.",
             "p2": "That same year, the artist Skip Pahler opened a gallery directly across from the Prater, believing that art should be accessible to everyone, especially in this workers' district. In addition to artworks, the gallery also displayed sketches, studies and artists' materials and tools. The storefront at Kastanienallee No. 100 was used for exhibitions from 1967 to 1969."
@@ -493,8 +485,6 @@
         "districtCulturalCenter": {
           "title": "The Kreiskulturhaus",
           "year": "1967-1986",
-          "imageAlt1": "ALT MISSING",
-          "imageAlt2": "ALT MISSING",
           "text": {
             "p1": "The Kreiskulturhaus (district cultural centre) offered a wide range of events: In addition to youth dances and brass bands for older people, there were fashion shows and sporting events, including judo, weightlifting, and boxing tournaments. With children's programmes, events for senior citizens, afternoon women's groups, and cultural events for workers, there was something for every age group and target audience. The 40 to 50 amateur art groups of the district also found space in the Prater for their rehearsals and performances. Over the years, visitor numbers steadily increased until the Prater could no longer accommodate the crowds. In the spring of 1986, a large portion of the cultural activities was relocated to a new cultural centre in Ernst-Thälmann Park."
           }
@@ -502,7 +492,6 @@
         "galleryAtPrater": {
           "title": "Gallery at the Prater",
           "year": "1973-2005",
-          "imageAlt": "ALT MISSING",
           "text": {
             "p1": "The municipal gallery at the Prater was opened on the initiative of local artist Wolfgang Leber, during the World Festival of Youth and Students in 1973. It primarily provided a platform for young artists, with auctions and sales exhibitions held there. The gallery's day-to-day business was run by local artists who curated and organised the diverse programme."
           }
@@ -524,7 +513,6 @@
         "bastardClub": {
           "title": "The Bastard Club",
           "year": "1999-2007",
-          "imageAlt": "ALT MISSING",
           "text": {
             "p1": "In addition to the Volksbühne, the Bastard Club was also based at the Prater between 1999 and 2007. The manager was one of the co-founders of the club Maria am Ostbahnhof – and the much smaller club on Kastanienallee was dubbed Bastard, as the offspring of Maria so to speak. The audience was a mixed bunch, with upcoming cultural influencers, BIPoC artists, as well as the old regulars at the Prater. Among others, the DJ/MC collective FEMMES WITH FATAL BREAKS performed there. Under the title Vollversammlung (General Assembly), they specifically invited female-presenting DJs to play at the Bastard Club."
           }
@@ -584,5 +572,55 @@
     "tr": "Turkish",
     "uk": "Ukrainian",
     "cy": "Welsh"
+  },
+  "images": {
+    "arbeitenAufbauwerk1958": {
+      "caption": "Missing Caption",
+      "alt": ""
+    },
+    "boxkampf1949": {
+      "caption": "Missing Caption",
+      "alt": ""
+    },
+    "postkarte1895": {
+      "caption": "Missing Caption",
+      "alt": ""
+    },
+    "flyerFemmesWithFatalBreaks2000": {
+      "caption": "Missing Caption",
+      "alt": ""
+    },
+    "gaestebuchJetztHier2005": {
+      "caption": "Missing Caption",
+      "alt": ""
+    },
+    "gatAusstellung1979": {
+      "caption": "Missing Caption",
+      "alt": ""
+    },
+    "kaffeekueche1905": {
+      "caption": "Missing Caption",
+      "alt": ""
+    },
+    "konzertKindertag1986": {
+      "caption": "Missing Caption",
+      "alt": ""
+    },
+    "skatspielerwiederoeffnung1960": {
+      "caption": "Missing Caption",
+      "alt": ""
+    },
+    "tanzPratergarten1980": {
+      "caption": "Missing Caption",
+      "alt": ""
+    },
+    "defaKastanienallee1954": {
+      "caption": "Missing Caption",
+      "alt": ""
+    },
+    "skipPahlerProblemAusstellung2021": {
+      "caption": "Missing Caption",
+      "alt": ""
+    }
   }
 }
