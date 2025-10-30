@@ -65,7 +65,9 @@
 </script>
 
 <template>
+  <!-- Button -->
   <button
+    v-if="!href"
     :type="type"
     :class="{
       primary: variant === 'primary',
@@ -74,12 +76,7 @@
     }"
   >
     <div class="button-content">
-      <NuxtLink
-        v-if="href && label"
-        :to="href"
-        >{{ label }}</NuxtLink
-      >
-      <span v-if="!href && label">{{ label }}</span>
+      <span v-if="label">{{ label }}</span>
       <Icon
         v-if="icon"
         :name="icon"
@@ -92,6 +89,31 @@
       <div class="button-background-border"></div>
     </div>
   </button>
+
+  <!-- Button Link  -->
+  <NuxtLink
+    v-else
+    :to="href"
+    :class="{
+      primary: variant === 'primary',
+      secondary: variant === 'secondary',
+      disabled: disabled,
+    }"
+  >
+    <div class="button-content">
+      <span v-if="label">{{ label }}</span>
+      <Icon
+        v-if="icon"
+        :name="icon"
+        mode="css"
+        class="icon"
+      />
+    </div>
+    <div class="button-content-border"></div>
+    <div class="button-background">
+      <div class="button-background-border"></div>
+    </div>
+  </NuxtLink>
 </template>
 
 <style scoped>
@@ -157,14 +179,16 @@
     height: 1.5rem;
   }
 
-  button {
+  button,
+  a {
     z-index: 700;
     display: grid;
     grid-template: 'stack' 1fr/1fr;
     place-items: center center;
-    max-width: 300px;
     height: 60px;
+    font-weight: 600;
     color: v-bind(foregroundColor);
+    text-decoration: none;
     cursor: pointer;
     background: none;
     border: none;
@@ -175,8 +199,8 @@
       transform: scale(1.05);
 
       & .button-background {
-        top: calc(v-bind(shadowOffset) * 1.3);
-        left: calc(v-bind(shadowOffset) * -1.3);
+        top: calc(v-bind(shadowOffset) * 1.75);
+        left: calc(v-bind(shadowOffset) * -1.75);
       }
     }
 
@@ -191,11 +215,5 @@
     @media screen and (prefers-reduced-motion: reduce) {
       transition: none;
     }
-  }
-
-  a {
-    font-weight: 600;
-    color: inherit;
-    text-decoration: none;
   }
 </style>
