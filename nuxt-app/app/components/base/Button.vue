@@ -28,18 +28,12 @@
   )
 
   const borderColor = computed(() =>
-    props.variant === 'primary' ? 'var(--color-black)' : 'var(--color-beige)'
-  )
-
-  const backgroundGradient = computed(() =>
-    props.variant === 'primary'
-      ? 'linear-gradient(transparent, var(--color-white))'
-      : 'linear-gradient(transparent, var(--color-black))'
+    props.variant === 'primary' ? 'var(--color-black)' : 'var(--color-white)'
   )
 
   const dottedGridColor = computed(() =>
     props.variant === 'primary'
-      ? 'var(--color-grey-light)'
+      ? 'var(--color-grey-lightest)'
       : 'var(--color-grey-dark)'
   )
 
@@ -126,26 +120,14 @@
     padding: var(--space-2xs-xs);
     overflow: hidden;
     background-color: v-bind(backgroundColor);
+    background-image: radial-gradient(
+      circle,
+      v-bind(dottedGridColor) 1px,
+      transparent 1px
+    );
+    background-position: 0 0;
+    background-size: 3px 3px;
     clip-path: v-bind(cutoutShape);
-
-    &::after {
-      position: absolute;
-      top: -100%;
-      left: -50%;
-      z-index: -1;
-      width: 200%;
-      height: 400%;
-      content: '';
-      background-image: radial-gradient(
-        circle,
-        v-bind(dottedGridColor) 1px,
-        transparent 1px
-      );
-      background-position: 0 0;
-      background-size: 3px 3px;
-      opacity: 0.5;
-      transform: rotate(45deg) scale(1.5);
-    }
 
     & > span {
       transform: translateY(-0.25ch);

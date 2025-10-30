@@ -10,8 +10,10 @@
   --color-cerulean: rgb(46 124 246 / 100%);
   --color-white: rgb(255 255 255 / 100%);
   --color-black: rgb(0 0 0 / 100%);
-  --color-dark-grey: rgb(48, 48, 48);
+  --color-grey-lightest: rgb(100 100 100 / 10%);
+  --color-grey-light: rgb(100 100 100 / 30%);
   --color-grey: rgb(100 100 100 / 100%);
+  --color-grey-dark: rgb(48, 48, 48);
   --color-pink: rgb(252, 117, 139);
 
   /* --- Typography colors --- */
@@ -21,8 +23,6 @@
   --color-heading: var(--color-black);
   --color-link: var(--color-beige);
   --color-link-hover: var(--color-mustard);
-
-  --color-grey-light: rgb(100 100 100 / 30%);
 
   /* --- Status colors --- */
   --color-success: var(--color-mint);

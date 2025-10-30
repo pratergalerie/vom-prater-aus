@@ -238,16 +238,6 @@
     clip-path: v-bind(shapeClipPath);
   }
 
-  .background {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    user-select: none;
-  }
-
   .dialog-content-inner {
     position: relative;
     z-index: 1;
@@ -284,12 +274,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 1.5rem;
-    height: 1.5rem;
     color: var(--color-black);
     cursor: pointer;
     background: none;
     border: none;
+
+    /* stylelint-disable-next-line plugins/no-unused-selectors */
+    & > span {
+      width: var(--step-0);
+      height: var(--step-0);
+    }
   }
 
   .speech-bubble {
