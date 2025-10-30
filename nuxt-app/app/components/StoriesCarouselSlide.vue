@@ -12,35 +12,31 @@
 </script>
 
 <template>
-  <div class="slide">
-    <NuxtLink
-      v-if="img"
-      :to="link"
-    >
-      <NuxtImg
-        class="image"
-        :src="img.src"
-        :alt="img.alt"
-      />
-    </NuxtLink>
+  <NuxtLink
+    v-if="img"
+    :to="link"
+    class="slide"
+  >
+    <NuxtImg
+      class="image"
+      :src="img.src"
+      :alt="img.alt"
+    />
 
-    <div class="content">
-      <span
-        v-if="author"
-        class="copyright"
-      >
-        ©{{ author }}
-      </span>
+    <div class="info-quote">
+      <div class="info">
+        <h2>{{ title }}</h2>
 
-      <div class="link-year">
-        <NuxtLink
-          v-if="link"
-          :to="link"
-        >
-          {{ title }}
-        </NuxtLink>
+        <div class="author-year">
+          <span>
+            {{ `${$t('pages.stories.story.memoryBy')} ${author}` }}
+          </span>
 
-        <span class="year">{{ year }}</span>
+          <div class="year">
+            <Icon name="mdi:calendar" />
+            <span>{{ year }}</span>
+          </div>
+        </div>
       </div>
 
       <div
@@ -64,14 +60,15 @@
         </div>
       </div>
     </div>
-  </div>
+  </NuxtLink>
 </template>
 
 <style scoped>
   .slide {
-    display: grid;
-    grid-template-rows: 1fr 80%;
-    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    font-family: inherit;
+    color: inherit;
   }
 
   .image {
@@ -81,26 +78,47 @@
     filter: grayscale(100%);
   }
 
-  .copyright {
-    grid-area: copyright;
-    /* stylelint-disable-next-line */
-    font-size: var(--step--1);
-    text-align: left;
+  .info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    justify-content: space-between;
+    justify-content: flex-start;
+  }
+
+  .info-quote {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    padding: var(--space-m) 0;
+  }
+
+  .author-year {
+    display: flex;
+    gap: var(--space-xs);
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  .year {
+    display: flex;
+    gap: var(--space-3xs);
+    align-items: center;
   }
 
   .quote-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
+    justify-self: end;
   }
 
   .quote {
     display: flex;
-    width: fit-content;
     padding: var(--space-xs-s);
-    font-size: var(--step-1);
+    font-size: var(--step-2);
     font-style: italic;
-    text-wrap: balanced;
+    font-weight: 600;
+    text-wrap: balance;
   }
 
   .quote-symbol {
@@ -121,24 +139,5 @@
       width: 100%;
       height: 100%;
     }
-  }
-
-  .link-year {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    text-align: right;
-
-    & a {
-      font-family: var(--font-heading);
-      font-size: var(--step-2);
-      font-weight: 600;
-      color: var(--color-black);
-      text-decoration: none;
-    }
-  }
-
-  .year {
-    font-size: var(--step-0);
   }
 </style>

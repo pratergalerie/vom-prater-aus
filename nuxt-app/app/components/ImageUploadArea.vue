@@ -143,7 +143,6 @@
           <BaseButton
             variant="primary"
             layout="label"
-            class="button"
             :label="
               imageUrl || isFileUploaded
                 ? $t('pages.edit.actions.removeImage')

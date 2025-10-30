@@ -8,7 +8,6 @@
       variant="primary"
       layout="label"
       href="/stories"
-      class="button"
       :label="$t('pages.stories.submitted.button')"
     />
   </div>

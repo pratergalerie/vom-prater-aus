@@ -298,7 +298,6 @@
           variant="secondary"
           layout="label-icon"
           icon="mdi:creation"
-          class="button"
           :disabled="pending"
           :label="$t('pages.create.form.inputs.submitButton')"
         />

@@ -13,15 +13,14 @@
 
 <template>
   <div class="layout-container">
-    <!-- Stories Section -->
+    <StoriesCarousel />
+
     <section>
-      <StoriesCarousel />
       <div class="section-text">
         <h2>{{ $t('pages.home.sections.stories.title') }}</h2>
         <p>{{ $t('pages.home.sections.stories.text') }}</p>
       </div>
       <BaseButton
-        class="button"
         variant="primary"
         layout="label"
         :label="$t('pages.home.sections.stories.button')"
@@ -41,7 +40,6 @@
         <p>{{ $t('pages.home.sections.prater.text') }}</p>
       </div>
       <BaseButton
-        class="button"
         variant="primary"
         layout="label"
         :label="$t('pages.home.sections.prater.button')"
@@ -61,7 +59,6 @@
         <p>{{ $t('pages.home.sections.create.text') }}</p>
       </div>
       <BaseButton
-        class="button"
         variant="primary"
         layout="label"
         :label="$t('pages.home.sections.create.button')"
@@ -94,12 +91,13 @@
     &:nth-child(even) {
       align-items: flex-end;
 
-      & > div:nth-child(1) {
+      & > div:nth-child(even) {
         width: 100%;
         max-width: 70%;
+        text-align: right;
       }
 
-      & > div:nth-child(2) {
+      & > div:nth-child(odd) {
         text-align: right;
       }
     }

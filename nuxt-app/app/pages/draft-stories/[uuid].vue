@@ -529,13 +529,11 @@
               <div class="dialog-buttons">
                 <BaseButton
                   variant="primary"
-                  class="button"
                   :label="$t('pages.edit.actions.deleteStory.modal.cancel')"
                   @click="handleToggleDialog('delete')"
                 />
                 <BaseButton
                   variant="secondary"
-                  class="button"
                   :label="$t('pages.edit.actions.deleteStory.modal.confirm')"
                   @click="handleDeleteStory"
                 />
@@ -545,7 +543,6 @@
             <BaseButton
               :disabled="isSubmitting"
               variant="primary"
-              class="button"
               icon="mdi:trash-can-outline"
               @click="handleToggleDialog('delete')"
             />
@@ -555,7 +552,6 @@
           <BaseButton
             :disabled="isSubmitting"
             variant="primary"
-            class="button"
             :label="$t('pages.edit.actions.saveStory')"
             @click="handleSaveStory"
           />
@@ -573,13 +569,11 @@
               <div class="dialog-buttons">
                 <BaseButton
                   variant="primary"
-                  class="button"
                   :label="$t('pages.edit.actions.submitStory.modal.cancel')"
                   @click="handleToggleDialog('submit')"
                 />
                 <BaseButton
                   variant="secondary"
-                  class="button"
                   :label="$t('pages.edit.actions.submitStory.modal.confirm')"
                   @click="handleSubmitStory"
                 />
@@ -588,7 +582,6 @@
             <BaseButton
               :disabled="isSubmitting"
               variant="secondary"
-              class="button"
               :label="$t('pages.edit.actions.submitStory.label')"
               @click="
                 async () => {
