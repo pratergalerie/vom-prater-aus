@@ -31,9 +31,15 @@
     props.variant === 'primary' ? 'var(--color-black)' : 'var(--color-beige)'
   )
 
+  const backgroundGradient = computed(() =>
+    props.variant === 'primary'
+      ? 'linear-gradient(transparent, var(--color-white))'
+      : 'linear-gradient(transparent, var(--color-black))'
+  )
+
   const dottedGridColor = computed(() =>
     props.variant === 'primary'
-      ? 'var(--color-beige)'
+      ? 'var(--color-grey-light)'
       : 'var(--color-grey-dark)'
   )
 
@@ -71,7 +77,7 @@
       disabled: disabled,
     }"
   >
-    <div class="button-content halftone">
+    <div class="button-content">
       <span v-if="label">{{ label }}</span>
       <Icon
         v-if="icon"
@@ -93,7 +99,7 @@
       disabled: disabled,
     }"
   >
-    <div class="button-content halftone">
+    <div class="button-content">
       <span v-if="label">{{ label }}</span>
       <Icon
         v-if="icon"
@@ -118,8 +124,28 @@
     width: 100%;
     height: 100%;
     padding: var(--space-2xs-xs);
+    overflow: hidden;
     background-color: v-bind(backgroundColor);
     clip-path: v-bind(cutoutShape);
+
+    &::after {
+      position: absolute;
+      top: -100%;
+      left: -50%;
+      z-index: -1;
+      width: 200%;
+      height: 400%;
+      content: '';
+      background-image: radial-gradient(
+        circle,
+        v-bind(dottedGridColor) 1px,
+        transparent 1px
+      );
+      background-position: 0 0;
+      background-size: 3px 3px;
+      opacity: 0.5;
+      transform: rotate(45deg) scale(1.5);
+    }
 
     & > span {
       transform: translateY(-0.25ch);
