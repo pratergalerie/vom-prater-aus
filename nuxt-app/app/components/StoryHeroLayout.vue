@@ -1,13 +1,13 @@
 <script setup lang="ts">
-  defineProps<{ layout: 'cover-text' | 'text' }>()
+  defineProps<{ layout: 'image' | 'text' }>()
 </script>
 
 <template>
   <div
     :class="{
       hero: true,
-      'cover-text': layout === 'cover-text',
-      text: layout === 'text',
+      'image-layout': layout === 'image',
+      'text-layout': layout === 'text',
     }"
   >
     <slot name="cover"></slot>
@@ -20,14 +20,14 @@
     display: grid;
     width: 100%;
 
-    &.text {
+    &.text-layout {
       & > :nth-child(1) {
         place-self: center;
         max-width: 700px;
       }
     }
 
-    &.cover-text {
+    &.image-layout {
       & > :nth-child(1) {
         z-index: 1;
         grid-row: 1 / 8;
