@@ -1,9 +1,9 @@
 .halftone {
   --mask: linear-gradient(rgb(0 0 0), rgb(0 0 0 / 20%));
-  --stop1: 0.01rem;
-  --stop2: 0.07rem;
+  --stop1: 0.2px;
+  --stop2: 1px;
   --invert: 0;
-  --dot-color: black;
+  --dot-color: rgba(0, 0, 0, 0.65);
   --bg-color: white;
   --dotted-background: radial-gradient(
     circle at center,
@@ -13,17 +13,12 @@
   --opacity: 1;
   --rotation: 200deg;
 
-  aspect-ratio: 1;
-  background: var(--bg-color);
-  isolation: isolate;
-  filter: contrast(10) invert(var(--invert, 0));
-  position: relative;
-  overflow: hidden;
+  filter: contrast(2) invert(var(--invert, 0));
 
   &::after {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: -50%;
+    left: -50%;
     z-index: 1;
     width: 200%;
     height: 200%;

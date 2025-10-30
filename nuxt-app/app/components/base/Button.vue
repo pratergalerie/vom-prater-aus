@@ -71,7 +71,7 @@
       disabled: disabled,
     }"
   >
-    <div class="button-content">
+    <div class="button-content halftone">
       <span v-if="label">{{ label }}</span>
       <Icon
         v-if="icon"
@@ -93,7 +93,7 @@
       disabled: disabled,
     }"
   >
-    <div class="button-content">
+    <div class="button-content halftone">
       <span v-if="label">{{ label }}</span>
       <Icon
         v-if="icon"
@@ -119,13 +119,6 @@
     height: 100%;
     padding: var(--space-2xs-xs);
     background-color: v-bind(backgroundColor);
-    background-image: radial-gradient(
-      circle,
-      v-bind(dottedGridColor) 1px,
-      transparent 1px
-    );
-    background-position: 0 0;
-    background-size: 4px 4px;
     clip-path: v-bind(cutoutShape);
 
     & > span {
