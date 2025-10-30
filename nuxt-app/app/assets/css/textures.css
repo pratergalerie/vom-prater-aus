@@ -13,7 +13,10 @@
   --opacity: 1;
   --rotation: 200deg;
 
+  background: var(--bg-color);
+  isolation: isolate;
   filter: contrast(2) invert(var(--invert, 0));
+  overflow: hidden;
 
   &::after {
     position: absolute;
