@@ -181,6 +181,17 @@
     }) ?? []
   )
 
+  // Always ensure there's a first section (cover) if there isn't one
+  if (userSections.value.length === 0) {
+    userSections.value.push({
+      id: crypto.randomUUID(),
+      type: null,
+      imageUrl: null,
+      imageId: null,
+      text: null,
+    })
+  }
+
   const userSectionsWithoutCover = computed(() =>
     userSections.value.slice(1).filter((section) => section.type !== null)
   )
