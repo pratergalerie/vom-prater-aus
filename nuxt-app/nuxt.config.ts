@@ -42,6 +42,7 @@ export default defineNuxtConfig({
     [
       '@nuxtjs/google-fonts',
       {
+        download: true,
         families: {
           'Sometype Mono': {
             wght: ['400', '600'],
