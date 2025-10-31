@@ -5,7 +5,7 @@
 
   function chooseRandomMenuImage() {
     const randomImage = Math.floor(Math.random() * 4) + 1
-    illustrationImage.value = `/imgs/menu/image-${randomImage}.jpg`
+    illustrationImage.value = `/imgs/menu/image-${randomImage}.png`
   }
 
   const windowSize = useWindowSize()
@@ -150,11 +150,11 @@
 
   watch(isOpen, async (open) => {
     if (open) {
+      chooseRandomMenuImage()
       isVisible.value = true
       await nextTick()
       revealIllustration.value = true
       animateMenuClipPath(true)
-      chooseRandomMenuImage()
     } else {
       isTransitioning.value = true
       // First animate the illustration out
@@ -192,11 +192,11 @@
             : 'clip-path 0.3s ease',
         }"
       >
-        <NuxtPicture
+        <NuxtImg
           loading="eager"
+          placeholder
           :src="illustrationImage"
           alt=""
-          :modifiers="{ grayscale: true }"
           :img-attrs="{
             style: 'display: block; height: 100%;',
             fetchpriority: 'high',
@@ -315,7 +315,7 @@
       clip-path 0.3s ease;
 
     /* stylelint-disable-next-line plugins/no-unused-selectors */
-    picture {
+    img {
       display: block;
       height: 100%;
       mix-blend-mode: multiply;
