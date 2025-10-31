@@ -11,12 +11,8 @@ export const useMenu = () => {
 
   const menuExcludedRoutes = [
     'accessibility',
-    'admin-dashboard',
-    'admin-login',
-    'admin-story-id',
     'draft-stories-submitted',
     'draft-stories-uuid',
-    'editor-id',
     'stories-edit-id',
     'stories-id',
     'stories-slug',
@@ -33,27 +29,22 @@ export const useMenu = () => {
 
   const footerExcludedRoutes = [
     'accessibility',
-    'admin-dashboard',
-    'admin-login',
-    'admin-story-id',
     'draft-stories-submitted',
     'draft-stories-uuid',
-    'editor-id',
-    'index',
     'stories-edit-id',
     'stories-id',
     'stories-slug',
   ]
 
   const footerOrder = [
+    'index',
     'prater',
-    'stories-list',
+    'stories',
     'stories-create',
     'about',
     'accessibility',
     'privacy',
     'terms',
-    'admin-dashboard',
   ]
 
   const menuRoutes = computed(() =>
