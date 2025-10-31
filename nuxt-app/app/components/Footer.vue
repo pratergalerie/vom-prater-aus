@@ -81,7 +81,7 @@
             alt="Logo"
           />
           <img
-            src="/logos/kommunale.png"
+            src="/logos/kommunale.webp"
             alt="Logo"
           />
           <img
