@@ -13,7 +13,6 @@ export const useMenu = () => {
     'accessibility',
     'draft-stories-submitted',
     'draft-stories-uuid',
-    'stories-edit-id',
     'stories-id',
     'stories-slug',
   ]
@@ -31,7 +30,6 @@ export const useMenu = () => {
     'accessibility',
     'draft-stories-submitted',
     'draft-stories-uuid',
-    'stories-edit-id',
     'stories-id',
     'stories-slug',
   ]
