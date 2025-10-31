@@ -91,13 +91,7 @@
     &:nth-child(even) {
       align-items: flex-end;
 
-      & > div:nth-child(even) {
-        width: 100%;
-        max-width: 70%;
-        text-align: right;
-      }
-
-      & > div:nth-child(odd) {
+      & .section-text {
         text-align: right;
       }
     }
