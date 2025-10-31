@@ -479,7 +479,53 @@ export interface ApiStoryStory extends Struct.CollectionTypeSchema {
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<false>;
     keywords: Schema.Attribute.Relation<'manyToMany', 'api::keyword.keyword'>;
-    language: Schema.Attribute.Enumeration<['de', 'en']> &
+    language: Schema.Attribute.Enumeration<
+      [
+        'sq',
+        'hy',
+        'az',
+        'eu',
+        'be',
+        'bs',
+        'bg',
+        'ca',
+        'hr',
+        'cs',
+        'da',
+        'de',
+        'nl',
+        'en',
+        'et',
+        'fi',
+        'fr',
+        'ka',
+        'el',
+        'hu',
+        'is',
+        'ga',
+        'it',
+        'kk',
+        'ku',
+        'lv',
+        'lt',
+        'lb',
+        'mk',
+        'mt',
+        'no',
+        'pl',
+        'pt',
+        'ro',
+        'ru',
+        'sr',
+        'sk',
+        'sl',
+        'es',
+        'sv',
+        'tr',
+        'uk',
+        'cy',
+      ]
+    > &
       Schema.Attribute.Required;
     lifecycleState: Schema.Attribute.Enumeration<
       ['created', 'pending', 'submitted', 'deleted']
