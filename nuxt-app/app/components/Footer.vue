@@ -76,18 +76,33 @@
           {{ $t('components.footer.text') }}
         </p>
         <div class="logos">
-          <img
-            src="/logos/prater-galerie.svg"
-            alt="Logo"
-          />
-          <img
-            src="/logos/kommunale.webp"
-            alt="Logo"
-          />
-          <img
-            src="/logos/berlin-stadt-regierung.png"
-            alt="Logo"
-          />
+          <a
+            target="_blank"
+            href="https://pratergalerie.de"
+          >
+            <img
+              src="/logos/prater-galerie.svg"
+              alt="Prater Galerie"
+            />
+          </a>
+          <a
+            target="_blank"
+            href="https://kgberlin.net"
+          >
+            <img
+              src="/logos/kommunale.webp"
+              alt="Kommunale Galerien Berlin"
+            />
+          </a>
+          <a
+            target="_blank"
+            href="https://berlin.de"
+          >
+            <img
+              src="/logos/berlin-stadt-regierung.png"
+              alt="https://www.berlin.de/ba-pankow/"
+            />
+          </a>
         </div>
       </div>
     </footer>
@@ -195,13 +210,6 @@
 
     @media (min-width: 500px) {
       justify-content: flex-start;
-    }
-
-    img {
-      width: auto;
-      max-width: 30%;
-      height: 100%;
-      object-fit: contain;
     }
   }
 
