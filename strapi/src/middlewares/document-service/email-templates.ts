@@ -5,7 +5,7 @@ export interface EmailTemplate {
 }
 
 export const createdTemplateDe: EmailTemplate = {
-  subject: "Link zu deiner Erinnerung",
+  subject: "Vielen Dank für deinen Beitrag zu Vom Prater aus",
   text: "",
   html: `<html><body><b>Hallo,</b>
 
@@ -25,7 +25,7 @@ export const createdTemplateDe: EmailTemplate = {
 };
 
 export const createdTemplateEn: EmailTemplate = {
-  subject: "Link to your memory",
+  subject: "Thank you for contributing to Vom Prater aus",
   text: "",
   html: `<html><body><b>Hello,</b>
 
@@ -45,7 +45,7 @@ export const createdTemplateEn: EmailTemplate = {
 };
 
 export const submittedTemplateDe: EmailTemplate = {
-  subject: "Deine Erinnerung wurde eingereicht",
+  subject: "Dein Beitrag wird überprüft",
   text: "",
   html: `<html><body><b>Hallo,</b>
 
@@ -59,7 +59,7 @@ export const submittedTemplateDe: EmailTemplate = {
 };
 
 export const submittedTemplateEn: EmailTemplate = {
-  subject: "Your memory has been submitted",
+  subject: "Your submission is being reviewed",
   text: "",
   html: `<html><body><b>Hello,</b>
 
@@ -73,7 +73,7 @@ export const submittedTemplateEn: EmailTemplate = {
 };
 
 export const rejectedTemplateDe: EmailTemplate = {
-  subject: "Update zu deiner Geschichte",
+  subject: "Dein Beitrag konnte nicht veröffentlicht werden",
   text: "",
   html: `<html><body><b>Hallo,</b>
 
@@ -91,7 +91,7 @@ export const rejectedTemplateDe: EmailTemplate = {
 };
 
 export const rejectedTemplateEn: EmailTemplate = {
-  subject: "Update about your story",
+  subject: "Our submission could not be published",
   text: "",
   html: `<html><body><b>Hello,</b>
 
@@ -112,7 +112,7 @@ export const rejectedTemplateEn: EmailTemplate = {
 };
 
 export const acceptedTemplateDe: EmailTemplate = {
-  subject: "Deine Erinnerung wurde veröffentlicht",
+  subject: "Dein Beitrag wurde veröffentlicht",
   text: "",
   html: `<html><body><b>Hallo,</b>
 
@@ -128,7 +128,7 @@ export const acceptedTemplateDe: EmailTemplate = {
 };
 
 export const acceptedTemplateEn: EmailTemplate = {
-  subject: "Your memory has been published",
+  subject: "Our submission has been published",
   text: "",
   html: `<html><body><b>Hello,</b>
 
