@@ -17,6 +17,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-3xs);
+    width: 100%;
     margin-block-end: var(--space-xs);
   }
 </style>

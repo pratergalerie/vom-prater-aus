@@ -45,7 +45,7 @@
         <div class="image-placeholder">
           <CaptionImage
             :caption="$t('images.postkarte1895.caption')"
-            src="imgs/postkarte1895.jpg"
+            src="imgs/postkarte1895.webp"
             :alt="$t('images.postkarte1895.alt')"
           />
         </div>
@@ -63,7 +63,7 @@
         <div class="image-placeholder">
           <CaptionImage
             :caption="$t('images.kaffeekueche1905.caption')"
-            src="imgs/kaffeekueche1905.jpg"
+            src="imgs/kaffeekueche1905.webp"
             :alt="$t('images.kaffeekueche1905.alt')"
           />
         </div>
@@ -88,7 +88,7 @@
         <div class="image-placeholder">
           <CaptionImage
             :caption="$t('images.boxkampf1949.caption')"
-            src="imgs/boxkampf1949.jpg"
+            src="imgs/boxkampf1949.webp"
             :alt="$t('images.boxkampf1949.alt')"
           />
         </div>
@@ -106,7 +106,7 @@
         <div class="image-placeholder">
           <CaptionImage
             :caption="$t('images.defaKastanienallee1954.caption')"
-            src="imgs/defaKastanienallee1954.jpg"
+            src="imgs/defaKastanienallee1954.webp"
             :alt="$t('images.defaKastanienallee1954.alt')"
           />
         </div>
@@ -125,7 +125,7 @@
         <div class="image-placeholder">
           <CaptionImage
             :caption="$t('images.arbeitenAufbauwerk1958.caption')"
-            src="imgs/arbeitenAufbauwerk1958.jpg"
+            src="imgs/arbeitenAufbauwerk1958.webp"
             :alt="$t('images.arbeitenAufbauwerk1958.alt')"
           />
         </div>
@@ -142,7 +142,7 @@
         <div class="image-placeholder">
           <CaptionImage
             :caption="$t('images.skatspielerwiederoeffnung1960.caption')"
-            src="imgs/skatspielerwiederoeffnung1960.jpg"
+            src="imgs/skatspielerwiederoeffnung1960.webp"
             :alt="$t('images.skatspielerwiederoeffnung1960.alt')"
           />
         </div>
@@ -171,7 +171,7 @@
         <div class="image-placeholder">
           <CaptionImage
             :caption="$t('images.skipPahlerProblemAusstellung2021.caption')"
-            src="imgs/skipPahlerProblemAusstellung2021.jpg"
+            src="imgs/skipPahlerProblemAusstellung2021.webp"
             :alt="$t('images.skipPahlerProblemAusstellung2021.alt')"
           />
         </div>
@@ -189,12 +189,12 @@
         <div class="image-placeholder">
           <CaptionImage
             :caption="$t('images.konzertKindertag1986.caption')"
-            src="imgs/konzertKindertag1986.jpg"
+            src="imgs/konzertKindertag1986.webp"
             :alt="$t('images.konzertKindertag1986.alt')"
           />
           <CaptionImage
             :caption="$t('images.tanzPratergarten1980.caption')"
-            src="imgs/tanzPratergarten1980.jpg"
+            src="imgs/tanzPratergarten1980.webp"
             :alt="$t('images.tanzPratergarten1980.alt')"
           />
         </div>
@@ -215,7 +215,7 @@
         <div class="image-placeholder">
           <CaptionImage
             :caption="$t('images.gatAusstellung1979.caption')"
-            src="imgs/gatAusstellung1979.jpg"
+            src="imgs/gatAusstellung1979.webp"
             :alt="$t('images.gatAusstellung1979.alt')"
           />
         </div>
@@ -254,7 +254,7 @@
         <div class="image-placeholder">
           <CaptionImage
             :caption="$t('images.flyerFemmesWithFatalBreaks2000.caption')"
-            src="imgs/flyerFemmesWithFatalBreaks2000.jpg"
+            src="imgs/flyerFemmesWithFatalBreaks2000.webp"
             :alt="$t('images.flyerFemmesWithFatalBreaks2000.alt')"
           />
         </div>
@@ -271,7 +271,7 @@
         <div class="image-placeholder">
           <CaptionImage
             :caption="$t('images.gaestebuchJetztHier2005.caption')"
-            src="imgs/gaestebuchJetztHier2005.jpg"
+            src="imgs/gaestebuchJetztHier2005.webp"
             :alt="$t('images.gaestebuchJetztHier2005.alt')"
           />
         </div>

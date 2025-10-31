@@ -32,7 +32,7 @@
     <section>
       <CaptionImage
         :caption="$t('images.postkarte1895.caption')"
-        src="imgs/postkarte1895.jpg"
+        src="imgs/postkarte1895.webp"
         :alt="$t('images.postkarte1895.alt')"
       />
       <div class="section-text">
@@ -51,7 +51,7 @@
     <section>
       <CaptionImage
         :caption="$t('images.konzertKindertag1986.caption')"
-        src="imgs/konzertKindertag1986.jpg"
+        src="imgs/konzertKindertag1986.webp"
         :alt="$t('images.konzertKindertag1986.alt')"
       />
       <div class="section-text">
@@ -82,6 +82,10 @@
     gap: var(--space-l-xl);
     align-items: flex-start;
 
+    & .image-caption {
+      max-width: 80%;
+    }
+
     & .section-text {
       display: flex;
       flex-direction: column;
@@ -91,7 +95,8 @@
     &:nth-child(even) {
       align-items: flex-end;
 
-      & .section-text {
+      & > div:nth-child(even),
+      div:nth-child(odd) {
         text-align: right;
       }
     }
