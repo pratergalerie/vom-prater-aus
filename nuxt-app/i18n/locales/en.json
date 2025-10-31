@@ -148,7 +148,7 @@
           },
           "storyYear": {
             "label": "Year",
-            "description": "Your story must have taken place between 1830 and 2018.",
+            "description": "Your story must have taken place between 1830 and 2017.",
             "placeholder": "Enter the year of your story",
             "errors": {
               "required": "This field is required.",
@@ -180,7 +180,7 @@
         },
         "sectionImage": {
           "label": "Image",
-          "description": "Upload a image here.",
+          "description": "Upload an image here.",
           "errors": {
             "required": "Each image section requires an image."
           }
@@ -201,7 +201,7 @@
         "submitStory": {
           "label": "Submit",
           "modal": {
-            "description": "Your memory will now be submitted for moderation. Once we have approved the content, it will be published. You will receive an email as soon as the moderation process is completed. Please inform yourself about the moderation rules and what happens to your data.",
+            "description": "Your memory will now be submitted for moderation. Once we have approved the content, it will be published. You will receive an email as soon as the moderation process is completed. You can inform yourself about the moderation rules and what happens to your data in the Terms of use.",
             "confirm": "Submit",
             "cancel": "Cancel"
           }
