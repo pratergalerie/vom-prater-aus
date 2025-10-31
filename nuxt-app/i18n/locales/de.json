@@ -147,7 +147,7 @@
           },
           "storyYear": {
             "label": "Jahr",
-            "description": "Deine Geschichte muss zwischen 1830 und 2018 passiert sein.",
+            "description": "Deine Geschichte muss zwischen 1830 und 2017 passiert sein.",
             "placeholder": "Gib das Jahr deiner Geschichte ein",
             "errors": {
               "required": "Dieses Feld ist erforderlich.",
@@ -172,7 +172,7 @@
       "form": {
         "error": "Bitte korrigiere alle Fehler, bevor du weitermachen kannst.",
         "coverImage": {
-          "label": "Lade hier ein Titlebild hoch."
+          "label": "Lade hier ein Titelbild hoch."
         },
         "sectionText": {
           "label": "Text",
@@ -203,7 +203,7 @@
         "submitStory": {
           "label": "Einreichen",
           "modal": {
-            "description": "Deine Erinnerung wird nun zur Moderation eingereicht. Nach unserer Freigabe wird sie veröffentlicht. Du erhältst eine E-Mail, sobald der Moderationsprozess abgeschlossen ist. Bitte informiere dich über die Moderationsregeln und darüber, was mit deinen Daten passiert.",
+            "description": "Deine Erinnerung wird nun zur Moderation eingereicht. Nach unserer Freigabe wird sie veröffentlicht. Du erhältst eine E-Mail, sobald der Moderationsprozess abgeschlossen ist. In den Nutzungsbedingungen kannst du dich über die Moderationsregeln informieren und darüber, was mit deinen Daten passiert.",
             "confirm": "Einreichen",
             "cancel": "Abbrechen"
           }
@@ -215,7 +215,7 @@
             "text": "Titeltext"
           },
           "errors": {
-            "required": "Der Title muss ausgefüllt sein."
+            "required": "Der Titel muss ausgefüllt sein."
           }
         },
         "section": {
