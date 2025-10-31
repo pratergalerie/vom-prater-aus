@@ -13,7 +13,6 @@ export const useMenu = () => {
     'accessibility',
     'draft-stories-submitted',
     'draft-stories-uuid',
-    'stories-id',
     'stories-slug',
   ]
   const menuOrder = [
@@ -30,7 +29,6 @@ export const useMenu = () => {
     'accessibility',
     'draft-stories-submitted',
     'draft-stories-uuid',
-    'stories-id',
     'stories-slug',
   ]
 
