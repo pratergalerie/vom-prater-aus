@@ -15,7 +15,13 @@
             >
               <NuxtLink :to="route.path">{{ route.title }}</NuxtLink>
             </li>
+          </ul>
+        </nav>
+      </div>
 
+      <div class="title-and-nav">
+        <nav>
+          <ul>
             <div class="accessibility-links">
               <Divider
                 type="horizontal"
@@ -55,6 +61,7 @@
             type="horizontal"
             color="var(--color-beige)"
             width="40%"
+            class="divider"
             margin="var(--space-2xs) 0"
           />
 
@@ -62,6 +69,7 @@
           <AccessibilityActions />
         </nav>
       </div>
+
       <div class="logos-and-text">
         <i18n-t
           keypath="components.footer.contact.text"
@@ -222,6 +230,16 @@
     & > div {
       display: flex;
       gap: var(--space-s);
+    }
+  }
+
+  /* Hide dividers when grid wraps to fewer columns */
+  /* stylelint-disable-next-line a11y/no-display-none */
+  .divider {
+    display: block;
+
+    @media (min-width: 700px) {
+      display: none;
     }
   }
 </style>
