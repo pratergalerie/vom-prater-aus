@@ -18,6 +18,5 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-m);
-    padding-top: 50px;
   }
 </style>

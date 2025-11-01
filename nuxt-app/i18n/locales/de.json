@@ -528,6 +528,14 @@
           }
         }
       }
+    },
+    "moderation": {
+      "title": "Moderationsprozess",
+      "p1": "Wenn du eine Erinnerung einreichen möchtest, bitten wir dich um einen Namen und eine E-Mail-Adresse. Du musst nicht deinen echten Namen angeben. Deine E-Mail-Adresse benötigen wir, um dir einen Link und ein Passwort zu deinem Beitrag zu schicken. Damit kannst du deinen Text zu einem späteren Zeitpunkt bearbeiten, solange du ihn noch nicht eingereicht hast. Deine E-Mail-Adresse wird nicht veröffentlicht.",
+      "p2": "Sobald du deine Erinnerung eingereicht hast, wird sie vom Team der Prater Galerie überprüft. Sollte dein Beitrag nicht unseren Vorgaben entsprechen, wirst du von uns informiert und kannst ihn über den Link erneut bearbeiten.",
+      "p3": "Mögliche Gründe, warum wir deinen Beitrag nicht veröffentlichen können, sind zum Beispiel diskriminierende, beleidigende oder unwahre Inhalte. Mehr Infos dazu findest du in den Nutzungsbedingungen.",
+      "p4": "Sobald deine Erinnerung veröffentlicht wurde, wirst du von uns per Mail darüber informiert.",
+      "p5": "Wir freuen uns auf deine Einreichung!"
     }
   },
   "languages": {

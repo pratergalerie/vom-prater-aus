@@ -526,6 +526,14 @@
           }
         }
       }
+    },
+    "moderation": {
+      "title": "Moderation Process",
+      "p1": "If you would like to submit a memory, we ask you to provide a name and an email address. You do not need to use your real name. We require your email address in order to send you a link and a password for your memory. This will allow you to edit your text later on, as long as you have not yet submitted it. Your email address will not be published.",
+      "p2": "Once you have submitted your memory, it will be reviewed by the Prater Galerie team. If your submission does not meet our guidelines, we will inform you, and you can edit it again using the link provided.",
+      "p3": "Possible reasons why we may not be able to publish your contribution include, for example, discriminatory, offensive, or false content. You can find more information about this in the Terms of Use.",
+      "p4": "Once your memory has been published, we will notify you by email.",
+      "p5": "We look forward to your submission!"
     }
   },
   "languages": {

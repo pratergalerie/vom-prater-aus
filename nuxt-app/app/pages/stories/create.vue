@@ -272,10 +272,10 @@
               tag="span"
             >
               <template #moderationConditions>
-                <!-- TODO: Add model-->
                 <NuxtLink
                   class="dark"
-                  to="/"
+                  to="/moderation"
+                  target="_blank"
                   :style="{ fontFamily: 'var(--font-text)' }"
                   >{{
                     $t(
