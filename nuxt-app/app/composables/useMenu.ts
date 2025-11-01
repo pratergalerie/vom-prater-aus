@@ -11,6 +11,7 @@ export const useMenu = () => {
 
   const menuExcludedRoutes = [
     'accessibility',
+    'draft-stories-deleted',
     'draft-stories-submitted',
     'draft-stories-uuid',
     'moderation',
@@ -28,6 +29,7 @@ export const useMenu = () => {
 
   const footerExcludedRoutes = [
     'accessibility',
+    'draft-stories-deleted',
     'draft-stories-submitted',
     'draft-stories-uuid',
     'moderation',
