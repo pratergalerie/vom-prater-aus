@@ -2,19 +2,19 @@
   const { t } = useI18n()
 
   useHead({
-    title: t('pages.stories.submitted.title'),
+    title: t('pages.stories.deleted.title'),
   })
 </script>
 
 <template>
   <div class="wrapper">
-    <h1>{{ $t('pages.stories.submitted.title') }}</h1>
-    <p>{{ $t('pages.stories.submitted.text') }}</p>
+    <h1>{{ $t('pages.stories.deleted.title') }}</h1>
+    <p>{{ $t('pages.stories.deleted.text') }}</p>
     <BaseButton
       variant="primary"
       layout="label"
-      href="/stories"
-      :label="$t('pages.stories.submitted.button')"
+      href="/"
+      :label="$t('pages.stories.deleted.button')"
     />
   </div>
 </template>

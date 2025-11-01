@@ -3,13 +3,6 @@
 
   useHead({
     title: t('pages.accessibility.title'),
-    meta: [
-      {
-        name: 'description',
-        content:
-          'Declaration on digital accessibility for the Vom Prater aus archive project',
-      },
-    ],
   })
 </script>
 
