@@ -4,6 +4,7 @@
   import { useForm } from 'vee-validate'
   import { toTypedSchema } from '@vee-validate/zod'
   import { useUpdateDraftStory } from '~/composables/useUpdateDraftStory'
+  import { useDeleteDraftStory } from '~/composables/useDeleteDraftStory'
   import { useUploadImage } from '~/composables/useUploadImage'
   import { getStrapiImageUrl } from '~/utils/strapi'
   import * as z from 'zod'
@@ -156,6 +157,7 @@
   const uuid = route.params.uuid as string
 
   const { update } = useUpdateDraftStory(uuid)
+  const { delete: deleteStory } = useDeleteDraftStory(uuid)
   const { upload } = useUploadImage()
 
   const { data: storyData, status, error } = await useGetDraftStory(uuid)
@@ -333,15 +335,7 @@
   const handleSubmitStory = handleOnSubmit('submit')
 
   const handleDeleteStory = async () => {
-    const { storyTitle: title, authorName, storyYear: year } = formValues
-
-    const response = await update({
-      title,
-      authorName,
-      year,
-      sections: userSections.value,
-      lifecycleState: 'deleted',
-    })
+    const response = await deleteStory()
 
     if (response.type === 'ok') {
       await navigateTo({ path: `/draft-stories/deleted` })
