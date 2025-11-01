@@ -174,10 +174,12 @@
         "error": "Please correct all errors before you can continue.",
         "coverImage": {
           "label": "Upload a cover image here."
-          }
         },
         "sectionText": {
-          "label": "Text"
+          "label": "Text",
+          "errors": {
+            "required": "This field is required."
+          }
         },
         "sectionImage": {
           "label": "Image",
