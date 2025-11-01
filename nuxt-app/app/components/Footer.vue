@@ -85,8 +85,9 @@
         </p>
         <div class="logos">
           <a
-            target="_blank"
             href="https://pratergalerie.de"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             <img
               src="/logos/prater-galerie.svg"
@@ -94,8 +95,9 @@
             />
           </a>
           <a
-            target="_blank"
             href="https://kgberlin.net"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             <img
               src="/logos/kommunale.webp"
@@ -103,8 +105,9 @@
             />
           </a>
           <a
-            target="_blank"
             href="https://berlin.de"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             <img
               src="/logos/berlin-stadt-regierung.png"

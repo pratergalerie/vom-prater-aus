@@ -536,6 +536,84 @@
       "p3": "Mögliche Gründe, warum wir deinen Beitrag nicht veröffentlichen können, sind zum Beispiel diskriminierende, beleidigende oder unwahre Inhalte. Mehr Infos dazu findest du in den Nutzungsbedingungen.",
       "p4": "Sobald deine Erinnerung veröffentlicht wurde, wirst du von uns per Mail darüber informiert.",
       "p5": "Wir freuen uns auf deine Einreichung!"
+    },
+    "accessibility": {
+      "title": "Erklärung zur digitalen Barrierefreiheit",
+      "p1": "Die Prater Galerie bemüht sich, ihren Webauftritt barrierefrei zu gestalten. Die Erklärung zur digitalen Barrierefreiheit wird im Gesetz über die barrierefreie Informations- und Kommunikationstechnik Berlin (BIKTG Bln) vorgeschrieben. Die technischen Anforderungen zur Barrierefreiheit ergeben sich aus der Barrierefreie-Informationstechnik-Verordnung (BITV 2.0).",
+      "p2": {
+        "text": "Diese Erklärung zur digitalen Barrierefreiheit gilt für das digitale Archiv der Prater Galerie Vom Prater aus {0}",
+        "link": "https://vomprateraus.pratergalerie.de/"
+      },
+      "subtitle1": "Wann wurde die Erklärung zur Barrierefreiheit erstellt?",
+      "ul1": {
+        "li1": "Diese Erklärung wurde am 10.03.2025 erstellt bzw. zuletzt überarbeitet. Die technische Überprüfung der Barrierefreiheit wurde durchgeführt als Selbstbewertung vom Team der Prater Galerie."
+      },
+      "subtitle2": "Wie barrierefrei ist das Angebot?",
+      "ul2": {
+        "li1": "Dieser Webauftritt ist nur teilweise barrierefrei. Es werden nur teilweise die Anforderungen der BITV 2.0 erfüllt.",
+        "li2": "Wir bemühen uns, die technischen Normen für einen barrierefreien Zugang stets aktuell zu halten.",
+        "li3": "Wir bauen verbleibende Barrieren kontinuierlich ab und beheben diese soweit möglich."
+      },
+      "subtitle3": "Folgende Normen zur Barrierefreiheit wurden implementiert:",
+      "ul3": {
+        "li1": "Alternativtexte für Bilder, Symbole und nicht-textuelle Inhalte (Alt-Attribute, ARIA-Labels).",
+        "li2": "Inhalte können auf verschiedene Weise dargestellt werden, ohne ihre Bedeutung zu verlieren (z. B. Bildschirmlesegeräte, hoher Kontrast).",
+        "li3": "Mindestkontrastverhältnis von 4,5:1 für Text und Hintergrund (kann als „Hochkontrastmodus“ angeboten werden).",
+        "li4": "Text kann auf bis zu 200 % vergrößert werden, ohne dass die Funktionalität verloren geht.",
+        "li5": "Farbe wird nicht allein zur Bedeutungsvermittlung verwendet: Interaktionen werden durch Text, Symbole und andere visuelle Elemente unterstützt.",
+        "li6": "Alle Kernfunktionen sind über die Tastatur zugänglich (keine Maus erforderlich).",
+        "li7": "Es wird kein flackernder Inhalt verwendet.",
+        "li8": "Eine semantische HTML5-Dokumentenstruktur wird implementiert.",
+        "li9": "Formularfelder haben zugehörige Beschriftungen und unterstützen Autofill, Eingabebeschränkungen und deutliche Fokuszustände, wenn erforderlich.",
+        "li10": "ARIA-Attribute werden verwendet, um wichtige Inhaltsrollen zu kennzeichnen.",
+        "li11": "Interaktive Elemente sind groß genug (mind. 44x44 Pixel) und erfordern keine komplexen Gesten.",
+        "li12": "Verwendung einer einfachen und klaren Sprache mit gut lesbaren Schriftarten.",
+        "li13": "Navigation und UI-Elemente sind auf allen Seiten konsistent.",
+        "li14": "Im Fehlerfall werden Meldungen und Vorschläge an die Nutzer kommuniziert.",
+        "li15": "Getestet mit gängigen Bildschirmlesegeräten (NVDA, JAWS, VoiceOver).",
+        "li16": "Code folgt den W3C-Standards, um Probleme beim Parsen und Rendern zu vermeiden."
+      },
+      "subtitle4": "Welche Bereiche sind nicht barrierefrei?",
+      "subtitle4Sub": "Teilbereiche, die nicht oder noch nicht barrierefrei sind:",
+      "ul4": {
+        "li1": {
+          "title": "Bilder:",
+          "content": "Die von den Nutzer:innen veröffentlichten Bilder und Grafiken enthalten keine Alternativtexte."
+        },
+        "li2": {
+          "title": "Beiträge der Nutzer:innen:",
+          "content": "Die Inhalte sind nach § 4, BITV 2.0 nicht barrierefrei verfügbar."
+        },
+        "li3": {
+          "title": "Leichte Sprache:",
+          "content": "Nicht alle Inhalte sind nach § 4, BITV 2.0 in Leichter Sprache verfügbar. Alle allgemeinen Informationen der Website sind auf einer Seite „Leichte Sprache“ in leichter Sprache zusammengefasst."
+        },
+        "li4": {
+          "title": "Gebärdensprache:",
+          "content": "Nicht alle Inhalte sind nach § 4, BITV 2.0 in Deutscher Gebärdensprache verfügbar. Alle allgemeinen Informationen der Website sind auf einer Seite „DGS“ in Gebärdensprache zusammengefasst."
+        }
+      },
+      "subtitle5": "Wen können Sie bei Anmerkungen oder Fragen zur digitalen Barrierefreiheit kontaktieren?",
+      "contact": {
+        "name": "Lena Prents",
+        "organization": "Bezirksamt Pankow von Berlin",
+        "department": "Amt für Weiterbildung und Kultur",
+        "unit": "FB Kunst und Kultur",
+        "phone": "Tel.: 030 90295-3832",
+        "email": "lena.prents{'@'}ba-pankow.berlin.de"
+      },
+      "subtitle6": "Kontakt zur Landesbeauftragten für digitale Barrierefreiheit",
+      "contactCommissioner": {
+        "intro": "Wir bemühen uns, Ihre Anfragen innerhalb einer angemessenen Frist zu beantworten. Wenn Sie keine Antwort erhalten oder mit der Antwort ganz oder teilweise unzufrieden sind, können Sie sich an die Landesbeauftragte für digitale Barrierefreiheit wenden:",
+        "formLink": {
+          "text": "Link zum Kontaktformular",
+          "url": "https://www.berlin.de/moderne-verwaltung/barrierefreie-it/anlaufstellen/landesbeauftragte/formular.989601.php"
+        },
+        "infoLink": {
+          "text": "Weitere Informationen zur Landesbeauftragten für digitale Barrierefreiheit",
+          "url": "https://www.berlin.de/moderne-verwaltung/barrierefreie-it/anlaufstellen/landesbeauftragte/artikel.988070.php"
+        }
+      }
     }
   },
   "languages": {
