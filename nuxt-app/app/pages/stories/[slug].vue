@@ -9,6 +9,10 @@
 
   const coverSection = computed(() => storyData.value?.sections[0])
   const otherSections = computed(() => storyData.value?.sections.slice(1) ?? [])
+
+  useHead({
+    title: `Vom Prater aus | ${storyData.value?.title}`,
+  })
 </script>
 
 <template>

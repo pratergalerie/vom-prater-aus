@@ -2,7 +2,7 @@
   const { t } = useI18n()
 
   useHead({
-    title: t('pages.accessibility.title'),
+    title: `Vom Prater aus | ${t('pages.accessibility.title')}`,
   })
 </script>
 

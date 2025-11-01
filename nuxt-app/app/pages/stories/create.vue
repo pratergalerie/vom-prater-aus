@@ -1,8 +1,13 @@
 <script setup lang="ts">
   import slugify from '@sindresorhus/slugify'
-  import { useForm } from 'vee-validate'
   import { toTypedSchema } from '@vee-validate/zod'
+  import { useForm } from 'vee-validate'
   import * as z from 'zod'
+  const { t } = useI18n()
+
+  useHead({
+    title: `Vom Prater aus | ${t('pages.create.title')}`,
+  })
 
   const localeOptions = [
     'sq', // Albanian

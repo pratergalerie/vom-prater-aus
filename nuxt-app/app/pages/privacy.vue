@@ -2,13 +2,7 @@
   const { t } = useI18n()
 
   useHead({
-    title: t('pages.privacy.title'),
-    meta: [
-      {
-        name: 'description',
-        content: 'Privacy policy for the Vom Prater aus archive project',
-      },
-    ],
+    title: `Vom Prater aus | ${t('pages.privacy.title')}`,
   })
 </script>
 

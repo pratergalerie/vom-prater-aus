@@ -1,13 +1,8 @@
 <script setup lang="ts">
-  useHead({
-    title: 'Vom Prater aus',
+  const { t } = useI18n()
 
-    meta: [
-      {
-        name: 'description',
-        content: 'Home page',
-      },
-    ],
+  useHead({
+    title: `Vom Prater aus | ${t('components.menu.nav.index')}`,
   })
 </script>
 

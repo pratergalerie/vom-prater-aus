@@ -1,5 +1,6 @@
 <script lang="ts" setup>
   import StoriesGrid from '~/components/StoriesGrid.vue'
+  const { t } = useI18n()
 
   // const viewMode = ref<'list' | 'explorer'>('list')
   // const showSearchDialog = ref(false)
@@ -8,6 +9,10 @@
   // const handleSearchFilter = (filteredResults: Story[]) => {
   //   filteredStories.value = filteredResults
   // }
+
+  useHead({
+    title: `Vom Prater aus | ${t('pages.stories.index.title')}`,
+  })
 </script>
 
 <template>

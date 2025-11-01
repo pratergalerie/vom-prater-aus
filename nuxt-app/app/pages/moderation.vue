@@ -1,4 +1,10 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+  const { t } = useI18n()
+
+  useHead({
+    title: `Vom Prater aus | ${t('pages.moderation.title')}`,
+  })
+</script>
 
 <template>
   <div class="wrapper">

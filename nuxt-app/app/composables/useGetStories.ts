@@ -9,7 +9,6 @@ type Options = {
 export const useGetStories = async (options?: Options) => {
   const { featured, keywords } = options ?? {}
   const { find } = useStrapi()
-  // const { locale } = useI18n()
 
   const key = computed(() => {
     const keywordsPart = keywords?.value?.length

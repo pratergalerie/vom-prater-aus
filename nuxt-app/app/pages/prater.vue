@@ -2,13 +2,7 @@
   const { t } = useI18n()
 
   useHead({
-    title: t('pages.prater.title'),
-    meta: [
-      {
-        name: 'description',
-        content: t('pages.prater.intro.description.p1'),
-      },
-    ],
+    title: `Vom Prater aus | ${t('pages.prater.title')}`,
   })
 </script>
 

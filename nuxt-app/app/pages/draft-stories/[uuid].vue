@@ -8,6 +8,11 @@
   import { useUploadImage } from '~/composables/useUploadImage'
   import { getStrapiImageUrl } from '~/utils/strapi'
   import * as z from 'zod'
+  const { t } = useI18n()
+
+  useHead({
+    title: `Vom Prater aus | ${t('pages.create.title')}`,
+  })
 
   type UserSection = {
     id: string
