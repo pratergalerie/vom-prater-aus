@@ -171,10 +171,13 @@
   const showDeleteDialog = ref(false)
   const showSubmitDialog = ref(false)
 
+  // Counter for generating unique section IDs
+  let nextSectionId = 0
+
   const userSections = ref<UserSection[]>(
-    sections?.map((section) => {
+    sections?.map((section, index) => {
       return {
-        id: crypto.randomUUID(),
+        id: `section-${index}`,
         type: section.type,
         imageUrl: section.image ? getStrapiImageUrl(section.image.url) : null,
         imageId: section.image?.id ?? null,
@@ -186,13 +189,16 @@
   // Always ensure there's a first section (cover) if there isn't one
   if (userSections.value.length === 0) {
     userSections.value.push({
-      id: crypto.randomUUID(),
+      id: 'section-0',
       type: null,
       imageUrl: null,
       imageId: null,
       text: null,
     })
   }
+
+  // Set counter to the next available ID
+  nextSectionId = userSections.value.length
 
   const userSectionsWithoutCover = computed(() =>
     userSections.value.slice(1).filter((section) => section.type !== null)
@@ -263,7 +269,7 @@
 
     // Insert new section
     userSections.value.splice(position, 0, {
-      id: crypto.randomUUID(),
+      id: `section-${nextSectionId++}`,
       type,
       imageUrl: null,
       imageId: null,
@@ -274,7 +280,7 @@
   const handleResetCover = () => {
     if (userSections.value[0]) {
       userSections.value[0] = {
-        id: crypto.randomUUID(),
+        id: 'section-0',
         type: null,
         imageUrl: null,
         imageId: null,
@@ -284,7 +290,7 @@
   }
 
   const handleRemoveSection = (sectionId: string) => {
-    // Remove section by UUID
+    // Remove section by ID
     const index = userSections.value.findIndex(
       (section) => section.id === sectionId
     )
