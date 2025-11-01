@@ -23,6 +23,7 @@
     "@vee-validate/nuxt": "^4.15.1",
     "@vee-validate/zod": "^4.15.1",
     "bcryptjs": "^3.0.2",
+    "browser-image-compression": "^2.0.2",
     "embla-carousel": "^8.6.0",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-vue": "^8.6.0",

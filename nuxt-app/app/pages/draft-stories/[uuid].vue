@@ -10,7 +10,7 @@
   import * as z from 'zod'
   const { t } = useI18n()
 
-  const MAX_FILE_SIZE = 1_000_000
+  const MAX_FILE_SIZE = 2_500_000
   const ACCEPTED_IMAGE_TYPES = [
     'image/jpeg',
     'image/jpg',

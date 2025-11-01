@@ -1,5 +1,7 @@
 import type {} from '@nuxtjs/strapi'
 import type { StrapiImage } from '~~/types/strapi'
+import imageCompression from 'browser-image-compression'
+import slugify from '@sindresorhus/slugify'
 
 type StrapiResponse = StrapiImage[]
 
@@ -17,8 +19,19 @@ export const useUploadImage = () => {
     error.value = false
 
     try {
+      const compressedFile = await imageCompression(file, {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 2400,
+        initialQuality: 0.9,
+      })
+
+      const lastDotIndex = compressedFile.name.lastIndexOf('.')
+      const name = compressedFile.name.substring(0, lastDotIndex)
+      const extension = compressedFile.name.substring(lastDotIndex)
+      const sanitizedName = slugify(name) + extension
+
       const formData = new FormData()
-      formData.append('files', file, file.name)
+      formData.append('files', compressedFile, sanitizedName)
 
       const response = await client<StrapiResponse>('upload', {
         method: 'POST',

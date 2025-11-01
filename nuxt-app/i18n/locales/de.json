@@ -186,7 +186,7 @@
           "errors": {
             "required": "Dieses Feld ist erforderlich.",
             "format": "Dein Bild muss in einem dieser Formate sein: '.jpg', '.jpeg', '.png' oder '.webp'.",
-            "maxSize": "Dein Bild darf nicht größer als 1 MB sein."
+            "maxSize": "Dein Bild darf nicht größer als 2,5 MB sein."
           }
         }
       },
