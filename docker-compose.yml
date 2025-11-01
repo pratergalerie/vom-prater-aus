@@ -96,6 +96,7 @@ services:
       JWT_SECRET: ${JWT_SECRET}
       ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      BREVO_API_KEY: ${BREVO_API_KEY}
     volumes:
       - ./strapi/config:/opt/app/config
       - ./strapi/src:/opt/app/src
