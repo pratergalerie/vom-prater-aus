@@ -624,5 +624,36 @@
       "caption": "Skip Pahler mit dem Plakat zur Problem-Ausstellung 2021. Filmstill: Diana Näcke und Susanne Schüle.",
       "alt": "Skip Pahler hält in seinem Atelier das Plakat zur ersten Problem-Ausstellung von 1967 in die Kamera. "
     }
+  },
+  "tags": {
+    "gallery": "Galerie",
+    "art": "Kunst",
+    "boxing": "Boxen",
+    "openAirStage": "Freilichtbühne",
+    "theatre": "Theater",
+    "volksbuehne": "Volksbühne",
+    "theaterAnDerParkaue": "Theater an der Parkaue",
+    "praterGarden": "Pratergarten / Biergarten",
+    "familyAfternoon": "Familiennachmittag",
+    "seniorCitizen": "Senior:innen",
+    "women": "Frauen",
+    "youthClub": "Jugendtreff",
+    "defa": "DEFA",
+    "bastard": "Bastard",
+    "schmalzwald": "Schmalzwald",
+    "sklavenmarkt": "Sklavenmarkt",
+    "culturalCentre": "Kulturhaus",
+    "chance2000": "Chance 2000",
+    "praterSaga": "Prater Saga",
+    "amateurArtGroup": "Laienzirkel / Laienkunst / Volkskunst",
+    "pantomine": "Pantomine",
+    "performance": "Performance",
+    "music": "Musik",
+    "concert": "Konzert",
+    "praterFestival": "Praterfest",
+    "praterBall": "Praterball",
+    "dance": "Tanz / Schwof / Disko",
+    "reading": "Lesung",
+    "pleinAir": "Plein Air"
   }
 }
