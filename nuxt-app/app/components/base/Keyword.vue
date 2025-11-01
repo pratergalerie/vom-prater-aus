@@ -38,7 +38,7 @@
     :class="{ selected: selected }"
     @click="handleClick"
   >
-    <span class="keyword-text">{{ name }}</span>
+    <span class="keyword-text">{{ $t(`keywords.${name}`) }}</span>
   </button>
 </template>
 
