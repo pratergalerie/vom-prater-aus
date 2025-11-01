@@ -3,7 +3,7 @@ export default ({ env }) => ({
     config: {
       provider: "strapi-provider-email-brevo",
       providerOptions: {
-        apiKey: env.BREVO_API_KEY,
+        apiKey: env('BREVO_API_KEY'),
       },
       settings: {
         defaultSenderEmail: "vomprateraus@pratergalerie.de",
