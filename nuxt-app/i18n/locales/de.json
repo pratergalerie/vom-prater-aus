@@ -184,7 +184,9 @@
           "label": "Bild",
           "description": "Lade hier ein Bild hoch.",
           "errors": {
-            "required": "Dieses Feld ist erforderlich."
+            "required": "Dieses Feld ist erforderlich.",
+            "format": "Dein Bild muss in einem dieser Formate sein: '.jpg', '.jpeg', '.png' oder '.webp'.",
+            "maxSize": "Dein Bild darf nicht größer als 1 MB sein."
           }
         }
       },

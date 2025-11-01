@@ -10,6 +10,14 @@
   import * as z from 'zod'
   const { t } = useI18n()
 
+  const MAX_FILE_SIZE = 1_000_000
+  const ACCEPTED_IMAGE_TYPES = [
+    'image/jpeg',
+    'image/jpg',
+    'image/png',
+    'image/webp',
+  ]
+
   useHead({
     title: `Vom Prater aus | ${t('pages.create.title')}`,
   })
@@ -25,9 +33,21 @@
   const validationSchema = computed(() => {
     const sectionFields = userSections.value.reduce(
       (acc, section) => {
+        const imageFileValidation = z
+          .instanceof(File)
+          .refine(
+            (file) => ACCEPTED_IMAGE_TYPES.includes(file?.type),
+            'pages.edit.form.sectionImage.errors.format'
+          )
+          .refine(
+            (file) => file?.size <= MAX_FILE_SIZE,
+            'pages.edit.form.sectionImage.errors.maxSize'
+          )
+          .optional()
+
         switch (section.type) {
           case 'image': {
-            acc[`section${section.id}Image`] = z.instanceof(File).optional()
+            acc[`section${section.id}Image`] = imageFileValidation
             acc[`section${section.id}ImageId`] = z
               .number()
               .optional()
@@ -35,7 +55,7 @@
             break
           }
           case 'image-text': {
-            acc[`section${section.id}Image`] = z.instanceof(File).optional()
+            acc[`section${section.id}Image`] = imageFileValidation
             acc[`section${section.id}ImageId`] = z
               .number()
               .optional()
