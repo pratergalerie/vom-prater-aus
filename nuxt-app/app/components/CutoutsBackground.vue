@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+  const route = useRoute()
   const cutouts = ref<
     Array<{
       src: string
@@ -15,12 +16,14 @@
     }>
   >([])
 
+  const { cutoutFiles } = useCutouts()
+
+  // Store active animations so we can cancel them before regenerating
+  const activeAnimations = ref<Animation[]>([])
+
   // Generate cutouts only on client side to prevent hydration mismatch
   onMounted(() => {
     if (import.meta.client) {
-      // Load cutout images dynamically
-      const { cutoutFiles } = useCutouts()
-
       // Watch for when cutout files are loaded and generate cutouts
       watch(
         cutoutFiles,
@@ -37,6 +40,25 @@
       )
     }
   })
+
+  // Watch for route changes and regenerate cutouts based on new page height
+  watch(
+    () => route.path,
+    () => {
+      if (import.meta.client && cutoutFiles.value.length > 0) {
+        // Wait for DOM to update with new page content
+        nextTick(() => {
+          // Small delay to ensure page content has fully rendered
+          setTimeout(() => {
+            generateCutouts(cutoutFiles.value)
+            nextTick(() => {
+              applyScrollTimelines()
+            })
+          }, 100)
+        })
+      }
+    }
+  )
 
   const applyScrollTimelines = () => {
     // Get all cutout images
