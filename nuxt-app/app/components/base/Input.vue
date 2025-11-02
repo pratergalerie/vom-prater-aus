@@ -16,6 +16,36 @@
   )
 
   const { value, errorMessage } = useField(() => props.name)
+
+  const isFocused = ref(false)
+
+  const borderSize = '3px'
+  const borderColor = computed(() =>
+    isFocused.value ? 'var(--color-cerulean)' : 'transparent'
+  )
+
+  const cutoutShape = ref('')
+
+  onMounted(() => {
+    cutoutShape.value = `polygon(
+      0% 10%,
+      12.22% 5.3%,
+      21.5% 10.87%,
+      53.76% 8.25%,
+      98.35% 0%,
+      98.64% 76.25%,
+      97.26% 89.26%,
+      88.2% 82.2%,
+      83.73% 91.73%,
+      70.85% 94.85%,
+      61.69% 78.69%,
+      53.76% 93.76%,
+      26.98% 92.98%,
+      1.26% 89.26%,
+      0% 73.2%,
+      0% 100%
+    )`
+  })
 </script>
 
 <template>
@@ -35,6 +65,8 @@
           :type="type"
           :placeholder="placeholder"
           :class="{ error: errorMessage }"
+          @focus="isFocused = true"
+          @blur="isFocused = false"
         />
         <input
           v-else
@@ -46,9 +78,12 @@
           :placeholder="placeholder"
           :class="{ error: errorMessage }"
           pattern="[0-9]*"
+          @focus="isFocused = true"
+          @blur="isFocused = false"
         />
 
-        <div class="text-input foreground" />
+        <div class="foreground" />
+        <div class="input-border" />
       </div>
     </label>
 
@@ -82,6 +117,7 @@
     position: relative;
     display: grid;
     grid-template: 'stack' 1fr / 1fr;
+    place-items: center center;
     filter: drop-shadow(-6px 6px 0 var(--color-black));
   }
 
@@ -92,7 +128,7 @@
   }
 
   input {
-    z-index: 3;
+    z-index: 4;
     box-sizing: border-box;
     grid-area: stack;
     width: 100%;
@@ -100,26 +136,8 @@
     font-family: var(--font-link);
     font-size: var(--step-0);
     outline: none;
-    background: unset;
+    background: transparent;
     border: none;
-    clip-path: polygon(
-      0% 10%,
-      12.22% 5.3%,
-      21.5% 10.87%,
-      53.76% 8.25%,
-      98.35% 0%,
-      98.64% 76.25%,
-      97.26% 89.26%,
-      88.2% 82.2%,
-      83.73% 91.73%,
-      70.85% 94.85%,
-      61.69% 78.69%,
-      53.76% 93.76%,
-      26.98% 92.98%,
-      1.26% 89.26%,
-      0% 73.2%,
-      0% 100%
-    );
 
     /* Remove auto-fill styling */
     &:-webkit-autofill {
@@ -134,27 +152,21 @@
   }
 
   .foreground {
+    z-index: 3;
+    grid-area: stack;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-white);
+    clip-path: v-bind(cutoutShape);
+  }
+
+  .input-border {
     z-index: 2;
     grid-area: stack;
-    background-color: var(--color-white);
-    clip-path: polygon(
-      0% 10%,
-      12.22% 5.3%,
-      21.5% 10.87%,
-      53.76% 8.25%,
-      98.35% 0%,
-      98.64% 76.25%,
-      97.26% 89.26%,
-      88.2% 82.2%,
-      83.73% 91.73%,
-      70.85% 94.85%,
-      61.69% 78.69%,
-      53.76% 93.76%,
-      26.98% 92.98%,
-      1.26% 89.26%,
-      0% 73.2%,
-      0% 100%
-    );
+    width: calc(100% + v-bind(borderSize) * 2);
+    height: calc(100% + v-bind(borderSize) * 2);
+    background-color: v-bind(borderColor);
+    clip-path: v-bind(cutoutShape);
   }
 
   .error-message {
