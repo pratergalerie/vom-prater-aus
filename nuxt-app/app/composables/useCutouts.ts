@@ -6,7 +6,7 @@ export function useCutouts() {
   })
 
   const cutoutFiles = computed(() => {
-    const files = Object.entries(images)
+    return Object.entries(images)
       .map(([path, module]) => {
         const filename = path.split('/').pop() || ''
 
@@ -21,16 +21,6 @@ export function useCutouts() {
         }
       })
       .filter((file) => file.filename.endsWith('.png'))
-
-    // Sort files numerically if they have numeric names
-    return files.sort((a, b) => {
-      const numA = parseInt(a.filename.replace('.png', ''))
-      const numB = parseInt(b.filename.replace('.png', ''))
-      if (!isNaN(numA) && !isNaN(numB)) {
-        return numA - numB
-      }
-      return a.filename.localeCompare(b.filename)
-    })
   })
 
   return {

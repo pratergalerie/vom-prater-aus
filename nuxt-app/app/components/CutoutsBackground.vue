@@ -108,10 +108,28 @@
       () => Math.random() - 0.5
     )
 
-    // Generate cutouts, reusing SVG files if we need more than available
+    // Helper function to select a random cutout different from the previous one
+    const selectRandomCutout = (
+      previousIndex: number | null
+    ): number => {
+      if (svgFiles.length === 1) return 0
+
+      let randomIndex: number
+      do {
+        randomIndex = Math.floor(Math.random() * svgFiles.length)
+      } while (randomIndex === previousIndex)
+
+      return randomIndex
+    }
+
+    // Generate cutouts, ensuring no consecutive duplicates
+    let previousCutoutIndex: number | null = null
     cutouts.value = Array.from({ length: cutoutCount }, (_, index) => {
-      // Cycle through available SVG files
-      const file = svgFiles[index % svgFiles.length]!
+      // Select a random cutout that's different from the previous one
+      const cutoutIndex = selectRandomCutout(previousCutoutIndex)
+      previousCutoutIndex = cutoutIndex
+      const file = svgFiles[cutoutIndex]!
+
       // Use shuffled array and cycle through if needed
       const randomAlignSelf =
         alignSelfOptions[Math.floor(Math.random() * alignSelfOptions.length)] ??
