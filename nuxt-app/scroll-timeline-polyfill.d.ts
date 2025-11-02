@@ -1,21 +1,25 @@
 declare module 'scroll-timeline-polyfill/dist/scroll-timeline.js'
 
-// ScrollTimeline API type definitions
-// See: https://drafts.csswg.org/scroll-animations-1/
-
 type ScrollAxis = 'block' | 'inline' | 'x' | 'y'
 
-interface ScrollTimelineOptions {
-  source?: Element | Document | null
+interface ViewTimelineOptions {
+  subject: Element
   axis?: ScrollAxis
 }
 
-interface ScrollTimeline extends AnimationTimeline {
-  readonly source: Element | Document | null
+interface ViewTimeline extends AnimationTimeline {
+  readonly subject: Element
   readonly axis: ScrollAxis
 }
 
-declare var ScrollTimeline: {
-  prototype: ScrollTimeline
-  new (options?: ScrollTimelineOptions): ScrollTimeline
+declare const ViewTimeline: {
+  prototype: ViewTimeline
+  new (options: ViewTimelineOptions): ViewTimeline
+}
+
+// Extended KeyframeAnimationOptions to support scroll-driven animations
+interface KeyframeAnimationOptions extends EffectTiming {
+  timeline?: AnimationTimeline
+  rangeStart?: string
+  rangeEnd?: string
 }

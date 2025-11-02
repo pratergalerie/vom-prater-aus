@@ -62,7 +62,8 @@
             transform: 'translateY(0vh) rotate(0deg)',
           },
           {
-            transform: 'translateY(-30vh) rotate(calc(var(--rotation-degree) * 1deg * var(--rotation-direction)))',
+            transform:
+              'translateY(-30vh) rotate(calc(var(--rotation-degree) * 1deg * var(--rotation-direction)))',
           },
         ],
         {

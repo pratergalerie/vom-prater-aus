@@ -1,14 +1,13 @@
 import { computed } from 'vue'
 
 export function useCutouts() {
-  const images = import.meta.glob('~/assets/svgs/cutouts/*.svg', {
+  const images = import.meta.glob('~/assets/cutouts/*.png', {
     eager: true,
   })
 
   const cutoutFiles = computed(() => {
     const files = Object.entries(images)
       .map(([path, module]) => {
-        // Extract filename from full path (e.g., "/src/assets/svgs/cutouts/1.svg" -> "1.svg")
         const filename = path.split('/').pop() || ''
 
         // Get the processed asset URL from the module
@@ -21,12 +20,12 @@ export function useCutouts() {
           url: assetUrl,
         }
       })
-      .filter((file) => file.filename.endsWith('.svg'))
+      .filter((file) => file.filename.endsWith('.png'))
 
     // Sort files numerically if they have numeric names
     return files.sort((a, b) => {
-      const numA = parseInt(a.filename.replace('.svg', ''))
-      const numB = parseInt(b.filename.replace('.svg', ''))
+      const numA = parseInt(a.filename.replace('.png', ''))
+      const numB = parseInt(b.filename.replace('.png', ''))
       if (!isNaN(numA) && !isNaN(numB)) {
         return numA - numB
       }
