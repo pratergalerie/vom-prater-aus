@@ -46,7 +46,7 @@
 </script>
 
 <template>
-  <div>
+  <div class="wrapper">
     <label :for="name">
       <div class="label-description">
         <span>{{ label }}{{ required ? '*' : '' }}</span>
@@ -89,6 +89,10 @@
 </template>
 
 <style scoped>
+  .wrapper {
+    z-index: 700;
+  }
+
   .label-description {
     display: flex;
     flex-direction: column;

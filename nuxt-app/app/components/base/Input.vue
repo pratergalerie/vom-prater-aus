@@ -98,6 +98,7 @@
 
 <style scoped>
   .wrapper {
+    z-index: 700;
     display: flex;
     flex-direction: column;
     gap: var(--space-2xs);
