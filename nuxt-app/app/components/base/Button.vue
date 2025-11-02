@@ -16,6 +16,8 @@
     }
   )
 
+  const isFocused = ref(false)
+
   const borderSize = '5px'
   const shadowOffset = '5px'
 
@@ -27,9 +29,12 @@
     props.variant === 'primary' ? 'var(--color-white)' : 'var(--color-black)'
   )
 
-  const borderColor = computed(() =>
-    props.variant === 'primary' ? 'var(--color-black)' : 'var(--color-white)'
-  )
+  const borderColor = computed(() => {
+    if (isFocused.value) return 'var(--color-cerulean)'
+    return props.variant === 'primary'
+      ? 'var(--color-black)'
+      : 'var(--color-white)'
+  })
 
   const dottedGridColor = computed(() =>
     props.variant === 'primary'
@@ -70,6 +75,8 @@
       secondary: variant === 'secondary',
       disabled: disabled,
     }"
+    @focus="isFocused = true"
+    @blur="isFocused = false"
   >
     <div class="button-content">
       <span v-if="label">{{ label }}</span>
@@ -92,6 +99,8 @@
       secondary: variant === 'secondary',
       disabled: disabled,
     }"
+    @focus="isFocused = true"
+    @blur="isFocused = false"
   >
     <div class="button-content">
       <span v-if="label">{{ label }}</span>
@@ -161,6 +170,7 @@
     color: v-bind(foregroundColor);
     text-decoration: none;
     cursor: pointer;
+    outline: none;
     background: none;
     border: none;
     filter: drop-shadow(
