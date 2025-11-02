@@ -40,27 +40,36 @@
 
   const applyScrollTimelines = () => {
     // Get all cutout images
-    const images = document.querySelectorAll('.cutouts-background img')
+    const images = document.querySelectorAll('.cutout-wrapper')
 
-    images.forEach((img) => {
-      const element = img as HTMLElement
+    images.forEach((wrapper) => {
+      const element = wrapper as HTMLElement
 
-      // Apply animation with scroll timeline using Web Animations API
-      element.animate(
+      // Create a view timeline that tracks when element enters/exits viewport
+      const viewTimeline = new ViewTimeline({
+        subject: element,
+        axis: 'block',
+      })
+
+      const img = element.querySelector('img') as HTMLElement
+      if (!img) return
+
+      // Animate the cutout falling and rotating as it passes through viewport
+      // Cutouts enter from bottom and exit at top (fall slower than scroll)
+      img.animate(
         [
           {
-            transform: 'translateY(0) rotate(0deg)',
+            transform: 'translateY(0vh) rotate(0deg)',
           },
           {
-            transform: `translateY(calc(25vh * var(--parallax-speed))) rotate(calc(var(--rotation-degree) * 1deg * var(--rotation-speed) * var(--rotation-direction)))`,
+            transform: 'translateY(-30vh) rotate(calc(var(--rotation-degree) * 1deg * var(--rotation-direction)))',
           },
         ],
         {
           fill: 'both',
-          timeline: new ScrollTimeline({
-            source: document.documentElement,
-            axis: 'block',
-          }),
+          timeline: viewTimeline,
+          rangeStart: 'entry 0%',
+          rangeEnd: 'exit 100%',
         }
       )
     })
@@ -70,18 +79,38 @@
   const maxCutoutSize = 30
   const cutoutsCount = computed(() => cutouts.value.length)
 
+  // Calculate number of cutouts based on document height
+  const calculateCutoutCount = (): number => {
+    if (!import.meta.client) return 0
+
+    const documentHeight = document.documentElement.scrollHeight
+    // Target spacing: one cutout every ~500px
+    const targetSpacing = 500
+
+    // Add 1 because the last cutout is always hidden (behind footer)
+    return Math.floor(documentHeight / targetSpacing) + 1
+  }
+
   const generateCutouts = (
     svgFiles: Array<{ filename: string; url: string }>
   ) => {
+    if (svgFiles.length === 0) return
+
     const alignSelfOptions = ['center', 'flex-end'] as const
     const justifySelfOptions = ['left', 'center', 'right'] as const
+
+    // Calculate how many cutouts to render based on document height
+    const cutoutCount = calculateCutoutCount()
 
     // Shuffle justifySelf options to ensure no duplicates
     const shuffledJustifySelf = [...justifySelfOptions].sort(
       () => Math.random() - 0.5
     )
 
-    cutouts.value = svgFiles.map((file, index) => {
+    // Generate cutouts, reusing SVG files if we need more than available
+    cutouts.value = Array.from({ length: cutoutCount }, (_, index) => {
+      // Cycle through available SVG files
+      const file = svgFiles[index % svgFiles.length]!
       // Use shuffled array and cycle through if needed
       const randomAlignSelf =
         alignSelfOptions[Math.floor(Math.random() * alignSelfOptions.length)] ??
@@ -133,8 +162,6 @@
           :src="cutout.src"
           alt=""
           :style="{
-            '--parallax-speed': 3 - index * 0.3,
-            '--rotation-speed': cutout.rotationSpeed,
             '--rotation-direction': cutout.rotationDirection,
             '--rotation-degree': cutout.rotationDegree,
             zIndex: index,
