@@ -61,6 +61,12 @@
   )
 
   const applyScrollTimelines = () => {
+    // Cancel all existing animations before creating new ones
+    activeAnimations.value.forEach((animation) => {
+      animation.cancel()
+    })
+    activeAnimations.value = []
+
     // Get all cutout images
     const images = document.querySelectorAll('.cutout-wrapper')
 
@@ -78,7 +84,7 @@
 
       // Animate the cutout falling and rotating as it passes through viewport
       // Cutouts enter from bottom and exit at top (fall slower than scroll)
-      img.animate(
+      const animation = img.animate(
         [
           {
             transform: 'translateY(0vh) rotate(0deg)',
@@ -95,6 +101,9 @@
           rangeEnd: 'exit 100%',
         }
       )
+
+      // Store the animation so we can cancel it later
+      activeAnimations.value.push(animation)
     })
   }
 
