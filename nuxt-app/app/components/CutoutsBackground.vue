@@ -27,6 +27,10 @@
         (files) => {
           if (files.length > 0) {
             generateCutouts(files)
+            // Apply scroll timeline after cutouts are generated
+            nextTick(() => {
+              applyScrollTimelines()
+            })
           }
         },
         { immediate: true }
@@ -34,11 +38,41 @@
     }
   })
 
+  const applyScrollTimelines = () => {
+    // Get all cutout images
+    const images = document.querySelectorAll('.cutouts-background img')
+
+    images.forEach((img) => {
+      const element = img as HTMLElement
+
+      // Apply animation with scroll timeline using Web Animations API
+      element.animate(
+        [
+          {
+            transform: 'translateY(0) rotate(0deg)',
+          },
+          {
+            transform: `translateY(calc(25vh * var(--parallax-speed))) rotate(calc(var(--rotation-degree) * 1deg * var(--rotation-speed) * var(--rotation-direction)))`,
+          },
+        ],
+        {
+          fill: 'both',
+          timeline: new ScrollTimeline({
+            source: document.documentElement,
+            axis: 'block',
+          }),
+        }
+      )
+    })
+  }
+
   const minCutoutSize = 20
   const maxCutoutSize = 30
   const cutoutsCount = computed(() => cutouts.value.length)
 
-  function generateCutouts(svgFiles: Array<{ filename: string; url: string }>) {
+  const generateCutouts = (
+    svgFiles: Array<{ filename: string; url: string }>
+  ) => {
     const alignSelfOptions = ['center', 'flex-end'] as const
     const justifySelfOptions = ['left', 'center', 'right'] as const
 
@@ -90,10 +124,10 @@
   <ClientOnly>
     <div class="cutouts-background">
       <div
-        class="cutout-wrapper"
         v-for="(cutout, index) in cutouts"
         v-show="index < cutouts.length - 1"
         :key="index"
+        class="cutout-wrapper"
       >
         <img
           :src="cutout.src"
@@ -116,12 +150,6 @@
 
 <style scoped>
   .cutouts-background {
-    /* Initialize variables to prevent error  */
-    --parallax-speed: 0;
-    --rotation-speed: 1;
-    --rotation-direction: 1;
-    --rotation-degree: 90;
-
     position: absolute;
     inset: 0;
     box-sizing: border-box;
@@ -135,14 +163,11 @@
     pointer-events: none;
     mix-blend-mode: multiply;
     opacity: 0.5;
+  }
 
-    & > div > img {
-      animation: parallax linear both;
-      animation-timeline: scroll(block root);
-
-      @media (prefers-reduced-motion: reduce) {
-        animation: none;
-      }
+  @media (prefers-reduced-motion: reduce) {
+    .cutouts-background img {
+      animation: none;
     }
   }
 
@@ -150,17 +175,5 @@
     display: grid;
     width: 100%;
     height: 100%;
-  }
-
-  @keyframes parallax {
-    to {
-      transform: translateY(calc(25vh * var(--parallax-speed)))
-        rotate(
-          calc(
-            var(--rotation-degree) * 1deg * var(--rotation-speed) *
-              var(--rotation-direction)
-          )
-        );
-    }
   }
 </style>
