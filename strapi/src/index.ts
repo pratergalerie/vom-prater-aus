@@ -13,7 +13,6 @@ export default {
    */
   register({ strapi }: { strapi: Core.Strapi }) {
     const middlewares = [
-      storyLifecycleMiddleware,
       storyCreateEmailMiddleware,
       storySubmitEmailMiddleware,
       storyReviewEmailMiddleware,
