@@ -26,10 +26,7 @@
 
 <template>
   <div class="wrapper">
-    <BaseCheckbox
-      name="fontSize"
-      color="white"
-    >
+    <BaseCheckbox name="fontSize">
       <template #label>
         <span>{{ $t('components.menu.actions.fontSize') }}</span>
       </template>
