@@ -131,7 +131,7 @@
           },
           "authorEmail": {
             "label": "E-Mail-Adresse",
-            "description": "Diese brauchen wir, um dir einen Link zu deiner Erinnerung zu schicken, damit du sie jederzeit öffnen und bearbeiten kannst. Wir schicken dir auch Infos zur Moderation und Veröffentlichung deines Beitrags per E-Mail. Deine E-Mail-Adresse wird nicht auf der Website angezeigt.",
+            "description": "Diese brauchen wir, um dir einen Link zu deiner Erinnerung zu schicken, damit du sie jederzeit öffnen und bearbeiten kannst. Wir schicken dir auch Infos zur Moderation und Veröffentlichung deines Beitrags per E-Mail. Deine E-Mail-Adresse wird ausschließlich für diesen Zweck verwendet. Sie wird nicht auf der Website angezeigt, nicht weitergeleitet und nicht für Werbezwecke missbraucht.",
             "placeholder": "Gib deine E-Mail-Adresse ein",
             "errors": {
               "required": "Dieses Feld ist erforderlich.",
@@ -147,7 +147,7 @@
           },
           "storyYear": {
             "label": "Jahr",
-            "description": "Deine Geschichte muss zwischen 1830 und 2017 passiert sein.",
+            "description": "Deine Geschichte muss vor 2018 passiert sein.",
             "placeholder": "Gib das Jahr deiner Geschichte ein",
             "errors": {
               "required": "Dieses Feld ist erforderlich.",
@@ -253,7 +253,7 @@
     },
     "stories": {
       "index": {
-        "title": "Geschichten",
+        "title": "Erinnerungen, Geschichten, Anekdoten",
         "loading": "Geschichten werden geladen...",
         "error": "Fehler beim Laden der Geschichten",
         "noStories": "Derzeit sind keine Geschichten verfügbar.",
