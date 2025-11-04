@@ -132,7 +132,7 @@
           },
           "authorEmail": {
             "label": "Email",
-            "description": "We need this to send you a link to your memory so that you can open and edit it at any time. We will also send you information about the moderation and publication of your post by email. Your email address will not be displayed on the website.",
+            "description": "We need this to send you a link to your memory so that you can open and edit it at any time. We will also send you information about the moderation and publication of your post by email. Your email address will be used exclusively for this purpose. It will not be displayed on the website, not shared with others, and not misused for advertising purposes.",
             "placeholder": "Enter your email address",
             "errors": {
               "required": "This field is required.",
@@ -148,7 +148,7 @@
           },
           "storyYear": {
             "label": "Year",
-            "description": "Your story must have taken place between 1830 and 2017.",
+            "description": "Your story must have taken place before 2018.",
             "placeholder": "Enter the year of your story",
             "errors": {
               "required": "This field is required.",
@@ -254,7 +254,7 @@
     },
     "stories": {
       "index": {
-        "title": "Stories",
+        "title": "Memories, Stories, Anecdotes",
         "loading": "Loading stories...",
         "error": "Error loading stories",
         "noStories": "No stories available at the moment.",
