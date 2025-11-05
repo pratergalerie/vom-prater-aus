@@ -236,10 +236,8 @@
       "sections": {
         "stories": {
           "title": "Ein Ort voller Erinnerungen",
-          "text": {
-            "p1": "\"Vom Prater aus\" ist ein Archivprojekt der Prater Galerie und Prater Digital, das individuelle Erinnerungen an den Berliner Prater vor seiner vorläufigen Schließung im Jahr 2017 zugänglich macht. Sein Ziel ist es, ein vielfältiges, multiperspektivisches Bild dieses einzigartigen historischen Ortes zu zeichnen. Zeitzeug:innen sind herzlich eingeladen, sowohl Bilder als auch Texte hochzuladen und so zu einem wachsenden und lebendigen Wissensspeicher beizutragen. Entdecke Erinnerungen der Besucher:innen über ihre persönlichen Erlebnisse an einem der beliebtesten und kulturell reichsten Orte Berlins.",
-          "p2": "Entdecke Erinnerungen der Besucher:innen über ihre persönlichen Erlebnisse an einem der beliebtesten und kulturell reichsten Orte Berlins.",
-            "button": "Erinnerungen entdecken"
+          "text": "\"Vom Prater aus\" ist ein Archivprojekt der Prater Galerie und Prater Digital, das individuelle Erinnerungen an den Berliner Prater vor seiner vorläufigen Schließung im Jahr 2017 zugänglich macht. Sein Ziel ist es, ein vielfältiges, multiperspektivisches Bild dieses einzigartigen historischen Ortes zu zeichnen. Zeitzeug:innen sind herzlich eingeladen, sowohl Bilder als auch Texte hochzuladen und so zu einem wachsenden und lebendigen Wissensspeicher beizutragen. Entdecke Erinnerungen der Besucher:innen über ihre persönlichen Erlebnisse an einem der beliebtesten und kulturell reichsten Orte Berlins.",
+          "button": "Erinnerungen entdecken"
         },
         "prater": {
           "title": "Zur Geschichte des Berliner Praters",
