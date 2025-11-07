@@ -120,16 +120,6 @@
     "reviewState": {
       "type": "enumeration",
       "private": true,
-      "conditions": {
-        "visible": {
-          "==": [
-            {
-              "var": "lifecycleState"
-            },
-            "submitted"
-          ]
-        }
-      },
       "required": true,
       "default": "pending",
       "enum": [
@@ -140,17 +130,7 @@
     },
     "rejectionReason": {
       "type": "text",
-      "private": true,
-      "conditions": {
-        "visible": {
-          "==": [
-            {
-              "var": "lifecycleState"
-            },
-            "submitted"
-          ]
-        }
-      }
+      "private": true
     },
     "lifecycleState": {
       "type": "enumeration",
