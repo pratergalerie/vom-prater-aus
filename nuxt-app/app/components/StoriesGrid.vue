@@ -138,6 +138,7 @@
   <div
     v-else
     class="stories-grid"
+    :class="{ 'inline-layout': isInlineLayout }"
   >
     <StoriesGridElement
       v-for="story in displayedStories"
@@ -166,6 +167,20 @@
     /* Make left column items have a Y offset */
     & div:nth-child(2n + 1) {
       margin-top: var(--space-l);
+    }
+
+    &.inline-layout {
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+
+      /* Remove Y offset for inline layout */
+      & div:nth-child(2n + 1) {
+        margin-top: 0;
+      }
+
+      /* Force 3 columns on larger screens */
+      @media (min-width: 1000px) {
+        grid-template-columns: repeat(3, 1fr);
+      }
     }
   }
 </style>
