@@ -237,7 +237,10 @@
       "sections": {
         "stories": {
           "title": "A place full of memories",
-          "text": "\"Vom Prater aus\" is an archival project by Prater Galerie and Prater Digital that makes the lived history of the Berlin Prater before its temporary closure in 2017, accessible to all. The aim is to create a diverse, multi-perspective portrait of this unique historical icon. Contemporary witnesses are warmly invited to upload both written pieces and images to contribute to a growing and vibrant repository of knowledge. Discover visitors' memories about their personal experiences at one of Berlin's most popular and culturally rich locations.",
+          "text": {
+            "p1": "\"Vom Prater aus\" is an archival project by Prater Galerie and Prater Digital that makes the lived history of the Berlin Prater before its temporary closure in 2017, accessible to all. The aim is to create a diverse, multi-perspective portrait of this unique historical icon. Contemporary witnesses are warmly invited to upload both written pieces and images to contribute to a growing and vibrant repository of knowledge.",
+            "p2": "Discover visitors' memories about their personal experiences at one of Berlin's most popular and culturally rich locations."
+          },
           "button": "Discover memories"
         },
         "prater": {

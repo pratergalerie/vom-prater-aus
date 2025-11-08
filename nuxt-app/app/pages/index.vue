@@ -13,7 +13,8 @@
     <section>
       <div class="section-text">
         <h2>{{ $t('pages.home.sections.stories.title') }}</h2>
-        <p>{{ $t('pages.home.sections.stories.text') }}</p>
+        <p>{{ $t('pages.home.sections.stories.text.p1') }}</p>
+        <p>{{ $t('pages.home.sections.stories.text.p2') }}</p>
       </div>
       <BaseButton
         variant="primary"
