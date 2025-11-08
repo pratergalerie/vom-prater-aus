@@ -35,7 +35,19 @@
       </template>
       <template v-else-if="text">
         <NuxtLink :to="link">
-          <p class="text">{{ text }}</p>
+          <div class="text">
+            <NuxtImg
+              class="quote-symbol open"
+              src="/svgs/quote.svg"
+              alt=""
+            />
+            <p>{{ text }}</p>
+            <NuxtImg
+              class="quote-symbol close"
+              src="/svgs/quote.svg"
+              alt=""
+            />
+          </div>
         </NuxtLink>
       </template>
     </div>
@@ -89,8 +101,7 @@
     align-items: center;
     justify-content: center;
     height: 100%;
-    padding: var(--space-xs);
-    overflow: hidden;
+    padding: var(--space-m-l);
     text-overflow: ellipsis;
     font-style: italic;
     white-space: wrap;
@@ -161,5 +172,31 @@
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-2xs);
+  }
+
+  .quote-symbol {
+    z-index: 0;
+    width: auto;
+    height: var(--space-l);
+    opacity: 0.3;
+
+    &.open {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translateY(-50%);
+    }
+
+    &.close {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      transform: translateY(50%) rotate(180deg);
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
   }
 </style>

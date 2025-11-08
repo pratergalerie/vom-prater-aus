@@ -39,12 +39,8 @@
             variant: 'image',
             id: story.documentId,
             img: {
-              src: getStrapiImageUrl(
-                (firstSection.image as StrapiImage).url
-              ),
-              alt:
-                (firstSection.image as StrapiImage).alternativeText ??
-                '',
+              src: getStrapiImageUrl((firstSection.image as StrapiImage).url),
+              alt: (firstSection.image as StrapiImage).alternativeText ?? '',
             },
             text: null,
             title: story.title,
@@ -57,10 +53,7 @@
         }
 
         if (firstSection?.text !== null && firstSection?.text !== undefined) {
-          const previewText =
-            firstSection.text
-              ?.match(/^.*?[.!?](?=\s|$)/)?.[0]
-              .replace(/[.!?]+$/, '...') ?? ''
+          const previewText = `${firstSection.text?.split(/\s+/).slice(0, 40).join(' ')}...`
 
           return {
             variant: 'text',
