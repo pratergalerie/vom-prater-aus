@@ -91,7 +91,7 @@ export const rejectedTemplateDe: EmailTemplate = {
 };
 
 export const rejectedTemplateEn: EmailTemplate = {
-  subject: "Our submission could not be published",
+  subject: "Your submission could not be published",
   text: "",
   html: `<html><body><b>Hello,</b>
 
@@ -128,7 +128,7 @@ export const acceptedTemplateDe: EmailTemplate = {
 };
 
 export const acceptedTemplateEn: EmailTemplate = {
-  subject: "Our submission has been published",
+  subject: "Your submission has been published",
   text: "",
   html: `<html><body><b>Hello,</b>
 
