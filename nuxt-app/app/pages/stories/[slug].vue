@@ -7,8 +7,17 @@
   const slug = route.params.slug as string
   const { data: storyData, status, error } = await useGetStory(slug)
 
-  const coverSection = computed(() => storyData.value?.sections[0])
-  const otherSections = computed(() => storyData.value?.sections.slice(1) ?? [])
+  const coverSection = computed(() => {
+    const firstSection = storyData.value?.sections[0]
+    return firstSection?.type === 'image' ? firstSection : undefined
+  })
+  const otherSections = computed(() => {
+    const firstSection = storyData.value?.sections[0]
+    if (firstSection?.type === 'image') {
+      return storyData.value?.sections.slice(1) ?? []
+    }
+    return storyData.value?.sections ?? []
+  })
 
   useHead({
     title: `Vom Prater aus | ${storyData.value?.title}`,
@@ -47,12 +56,9 @@
       v-else
       class="stack"
     >
-      <StoryHeroLayout
-        v-if="coverSection"
-        :layout="coverSection.type === 'image' ? 'image' : 'text'"
-      >
+      <StoryHeroLayout :layout="coverSection ? 'image' : 'text'">
         <template
-          v-if="coverSection.type === 'image'"
+          v-if="coverSection"
           #cover
         >
           <CaptionImage
