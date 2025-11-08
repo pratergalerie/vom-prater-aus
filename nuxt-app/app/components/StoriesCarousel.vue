@@ -11,7 +11,7 @@
     featured: true,
   })
 
-  const slides = slidesData.value
+  const initialSlides = slidesData.value
     .map<(Slide & { id: string }) | undefined>((story) => {
       const coverImage = story.sections[0]?.image
 
@@ -33,7 +33,13 @@
       }
     })
     .filter((story) => story !== undefined)
-    .sort(() => Math.random() - 0.5) // Randomize the order
+
+  const slides = ref(initialSlides)
+
+  // Randomize only on client side to avoid hydration mismatch
+  onMounted(() => {
+    slides.value = [...initialSlides].sort(() => Math.random() - 0.5)
+  })
 
   const options: EmblaOptionsType = {
     loop: true,
