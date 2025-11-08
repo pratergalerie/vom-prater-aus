@@ -102,8 +102,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100dvh;
-    height: 100dvh;
+    width: 100%;
+    height: 100%;
     padding: 0;
     margin: 0;
     cursor: pointer;
