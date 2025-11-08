@@ -13,7 +13,7 @@ export const createdTemplateDe: EmailTemplate = {
 
   <p>Solange du deine Erinnerung noch nicht final eingereicht hast, kannst du sie jederzeit mit dem folgenden Link bearbeiten:</p>
 
-  <p>Link zum Bearbeiten:: <a href="<%= story.link %>"><%= story.title %></a></p>
+  <p>Link zum Bearbeiten: <a href="<%= story.link %>"><%= story.title %></a></p>
 
   <p>Bitte bewahre diese E-Mail sicher auf. Wenn du deinen Link verlierst, kannst du deine Erinnerung nicht mehr bearbeiten.</p>
 
