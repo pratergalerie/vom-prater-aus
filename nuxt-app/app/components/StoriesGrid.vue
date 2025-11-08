@@ -50,7 +50,9 @@
         const keywords = story.keywords.map((keyword) => ({
           name: keyword.name,
           id: keyword.documentId,
-          selected: isInlineLayout.value ? false : selectedKeywords.value.includes(keyword.name),
+          selected: isInlineLayout.value
+            ? false
+            : selectedKeywords.value.includes(keyword.name),
         }))
 
         if (firstSection?.image !== null && firstSection?.image !== undefined) {
@@ -112,7 +114,9 @@
   })
 
   const displayedStories = computed(() => {
-    return props.maxItems ? stories.value.slice(0, props.maxItems) : stories.value
+    return props.maxItems
+      ? stories.value.slice(0, props.maxItems)
+      : stories.value
   })
 </script>
 
@@ -161,7 +165,7 @@
   .stories-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: var(--space-l);
+    gap: var(--space-2xl-3xl) var(--space-l);
     padding-top: var(--space-l);
 
     /* Make left column items have a Y offset */
