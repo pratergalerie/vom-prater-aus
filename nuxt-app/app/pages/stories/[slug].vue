@@ -210,7 +210,7 @@
   .text {
     & .inline-image {
       display: inline;
-      width: 40%;
+      width: 50%;
       min-width: 300px;
       max-height: 400px;
       /* stylelint-disable-next-line custom-property-pattern */
