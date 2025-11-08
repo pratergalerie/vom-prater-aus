@@ -14,21 +14,17 @@
   const slides = slidesData.value
     .map<(Slide & { id: string }) | undefined>((story) => {
       // Check if featured story has any images
-      const firstSectionWithImage = story.sections.find(
-        (section) => section.image !== null
-      )
-      if (firstSectionWithImage === undefined) {
+      const coverImage = story.sections[0]?.image
+
+      if (coverImage === undefined) {
         return undefined
       }
 
       return {
         id: story.documentId,
         img: {
-          src: getStrapiImageUrl(
-            (firstSectionWithImage.image as StrapiImage).url
-          ),
-          alt:
-            (firstSectionWithImage.image as StrapiImage).alternativeText ?? '',
+          src: getStrapiImageUrl((coverImage as StrapiImage).url),
+          alt: (coverImage as StrapiImage).alternativeText ?? '',
         },
         title: story.title,
         link: `/stories/${story.slug}`,
@@ -38,6 +34,7 @@
       }
     })
     .filter((story) => story !== undefined)
+    .sort(() => Math.random() - 0.5) // Randomize the order
 
   const options: EmblaOptionsType = {
     loop: true,
