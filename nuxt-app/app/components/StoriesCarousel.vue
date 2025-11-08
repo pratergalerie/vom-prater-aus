@@ -13,10 +13,9 @@
 
   const slides = slidesData.value
     .map<(Slide & { id: string }) | undefined>((story) => {
-      // Check if featured story has any images
       const coverImage = story.sections[0]?.image
 
-      if (coverImage === undefined) {
+      if (coverImage === null) {
         return undefined
       }
 
