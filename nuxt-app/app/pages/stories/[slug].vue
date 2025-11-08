@@ -143,6 +143,33 @@
           />
         </template>
       </div>
+
+      <Divider
+        type="horizontal"
+        color="var(--color-black)"
+        width="100%"
+        margin="var(--space-2xl) 0"
+      />
+
+      <div class="more-stories">
+        <h2>
+          {{ $t('pages.stories.story.moreStories.title') }}
+        </h2>
+
+        <StoriesGrid
+          :max-items="3"
+          layout="inline"
+          :exclude-slug="slug"
+          randomize
+        />
+
+        <BaseButton
+          variant="primary"
+          layout="label"
+          :label="$t('pages.stories.story.moreStories.link')"
+          href="/stories"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -200,5 +227,12 @@
     gap: var(--space-3xs);
     align-items: center;
     justify-content: flex-end;
+  }
+
+  .more-stories {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-l);
+    align-items: center;
   }
 </style>

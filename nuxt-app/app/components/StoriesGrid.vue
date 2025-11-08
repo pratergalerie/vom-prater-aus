@@ -4,10 +4,22 @@
   import StoriesGridElement from './StoriesGridElement.vue'
   import { getStrapiImageUrl } from '~/utils/strapi'
 
+  const props = defineProps<{
+    maxItems?: number
+    layout?: 'default' | 'inline'
+    excludeSlug?: string
+    randomize?: boolean
+  }>()
+
   const selectedKeywords = ref<string[]>([])
   provide('selectedKeywords', selectedKeywords)
 
+  const isInlineLayout = computed(() => props.layout === 'inline')
+
   const handleKeywordClick = async (name: string, selected: boolean) => {
+    // Disable keyword filtering in inline layout
+    if (isInlineLayout.value) return
+
     if (selected) {
       selectedKeywords.value.push(name)
     } else {
@@ -23,15 +35,22 @@
     error,
   } = await useGetStories({ keywords: selectedKeywords })
 
-  const stories = computed(() =>
-    storiesData.value
+  const initialStories = computed(() => {
+    return storiesData.value
+      .filter((story) => {
+        // Filter out the excluded story
+        if (props.excludeSlug && story.slug === props.excludeSlug) {
+          return false
+        }
+        return true
+      })
       .map<(ListElement & { id: string }) | undefined>((story) => {
         // Use the first section (cover)
         const firstSection = story.sections[0]
         const keywords = story.keywords.map((keyword) => ({
           name: keyword.name,
           id: keyword.documentId,
-          selected: selectedKeywords.value.includes(keyword.name),
+          selected: isInlineLayout.value ? false : selectedKeywords.value.includes(keyword.name),
         }))
 
         if (firstSection?.image !== null && firstSection?.image !== undefined) {
@@ -72,7 +91,29 @@
         return undefined
       })
       .filter((story) => story !== undefined)
-  )
+  })
+
+  const stories = ref(initialStories.value)
+
+  // Randomize only on client side to avoid hydration mismatch
+  onMounted(() => {
+    if (props.randomize) {
+      stories.value = [...initialStories.value].sort(() => Math.random() - 0.5)
+    }
+  })
+
+  // Watch for changes in initialStories (e.g., when keywords change)
+  watch(initialStories, (newStories) => {
+    if (props.randomize) {
+      stories.value = [...newStories].sort(() => Math.random() - 0.5)
+    } else {
+      stories.value = newStories
+    }
+  })
+
+  const displayedStories = computed(() => {
+    return props.maxItems ? stories.value.slice(0, props.maxItems) : stories.value
+  })
 </script>
 
 <template>
@@ -90,7 +131,7 @@
   </p>
 
   <!-- No stories state -->
-  <p v-else-if="stories.length === 0">
+  <p v-else-if="displayedStories.length === 0">
     {{ $t('pages.stories.index.noStories') }}
   </p>
 
@@ -99,7 +140,7 @@
     class="stories-grid"
   >
     <StoriesGridElement
-      v-for="story in stories"
+      v-for="story in displayedStories"
       :key="story.id"
       :variant="story.variant"
       :title="story.title"
@@ -110,6 +151,7 @@
       :author="story.author"
       :keywords="story.keywords"
       :on-keyword-click="handleKeywordClick"
+      :show-keywords="!isInlineLayout"
     />
   </div>
 </template>

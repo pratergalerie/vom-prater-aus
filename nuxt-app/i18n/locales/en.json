@@ -269,7 +269,11 @@
       "story": {
         "loading": "Loading story...",
         "error": "Story is unavailable.",
-        "memoryBy": "Erinnerung von"
+        "memoryBy": "Memory of",
+        "moreStories": {
+          "title": "You may also be interested in these stories",
+          "link": "Back to all stories"
+        }
       },
       "submitted": {
         "title": "Your memory has been submitted.",

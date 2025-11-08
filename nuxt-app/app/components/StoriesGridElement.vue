@@ -15,9 +15,10 @@
     img: { src: string; alt: string } | null
     text: string | null
     onKeywordClick: (name: string, selected: boolean) => void
+    showKeywords?: boolean
   }
 
-  const { title, author, img, link, year, keywords } =
+  const { title, author, img, link, year, keywords, showKeywords = true } =
     defineProps<ListElement>()
 </script>
 
@@ -66,7 +67,7 @@
         </div>
       </div>
       <div
-        v-if="keywords.length"
+        v-if="showKeywords && keywords.length"
         class="keywords"
       >
         <BaseKeyword

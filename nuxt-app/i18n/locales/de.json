@@ -268,7 +268,11 @@
       "story": {
         "loading": "Geschichte wird geladen...",
         "error": "Die Geschichte ist nicht verfügbar.",
-        "memoryBy": "Erinnerung von"
+        "memoryBy": "Erinnerung von",
+        "moreStories": {
+          "title": "Diese Geschichten könnten dich auch interessieren",
+          "link": "Zurück zu allen Geschichten"
+        }
       },
       "submitted": {
         "title": "Deine Erinnerung wurde eingereicht.",
