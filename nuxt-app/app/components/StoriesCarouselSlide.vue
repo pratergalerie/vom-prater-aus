@@ -22,6 +22,7 @@
       :src="img.src"
       :alt="img.alt"
       :caption="`© ${author}`"
+      text-position="inline"
     />
 
     <div class="info-quote">
