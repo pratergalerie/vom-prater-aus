@@ -32,7 +32,6 @@
         z-index: 1;
         grid-row: 1 / 8;
         grid-column: 1 / 1;
-        height: 600px;
       }
 
       & > :nth-child(2) {
