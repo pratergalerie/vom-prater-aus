@@ -17,10 +17,11 @@
     :to="link"
     class="slide"
   >
-    <NuxtImg
-      class="image"
+    <CaptionImage
+      :img-attrs="{ style: 'aspect-ratio: 16/9; filter: grayscale(100%);' }"
       :src="img.src"
       :alt="img.alt"
+      :caption="`© ${author}`"
     />
 
     <div class="info-quote">
@@ -69,13 +70,6 @@
     flex-direction: column;
     font-family: inherit;
     color: inherit;
-  }
-
-  .image {
-    width: 100%;
-    aspect-ratio: 16/9;
-    object-fit: cover;
-    filter: grayscale(100%);
   }
 
   .info {

@@ -55,10 +55,15 @@
           v-if="coverSection.type === 'image'"
           #cover
         >
-          <NuxtImg
+          <CaptionImage
             v-if="coverSection.image"
+            :img-attrs="{
+              style: 'max-height: 600px',
+            }"
+            text-position="inline"
             :src="getStrapiImageUrl(coverSection.image.url)"
             :alt="coverSection.image.alternativeText ?? ''"
+            :caption="`© ${storyData.authorName}`"
           />
         </template>
 
@@ -84,53 +89,54 @@
         </template>
       </StoryHeroLayout>
 
-      <section
-        v-for="(section, index) in otherSections"
-        :key="index"
-      >
-        <!-- Image Section -->
-        <NuxtImg
-          v-if="section.type === 'image' && section.image"
-          class="image"
-          :src="getStrapiImageUrl(section.image.url)"
-          :alt="section.image.alternativeText ?? ''"
-        />
-
-        <!-- Text Section -->
-        <p
-          v-if="section.type === 'text'"
-          class="text"
+      <div class="section-wrapper">
+        <template
+          v-for="(section, index) in otherSections"
+          :key="index"
         >
-          {{ section.text }}
-        </p>
+          <!-- Image Section -->
+          <section v-if="section.type === 'image' && section.image">
+            <CaptionImage
+              :src="getStrapiImageUrl(section.image.url)"
+              :alt="section.image.alternativeText ?? ''"
+              :caption="`© ${storyData.authorName}`"
+            />
+          </section>
 
-        <!-- Image+Text Section -->
-        <p
-          v-if="section.type === 'image-text'"
-          class="text"
-        >
-          <NuxtImg
-            v-if="section.image"
-            :src="getStrapiImageUrl(section.image.url)"
-            :alt="section.image.alternativeText ?? ''"
-            :style="{
-              float: index % 2 ? 'left' : 'right',
-              marginRight: index % 2 ? 'var(--step-0)' : undefined,
-              marginLeft: index % 2 ? undefined : 'var(--step-0)',
-            }"
-            class="inline-image"
+          <!-- Text Section -->
+          <section v-else-if="section.type === 'text'">
+            <p class="text">
+              {{ section.text }}
+            </p>
+          </section>
+
+          <!-- Image+Text Section -->
+          <section v-else-if="section.type === 'image-text' && section.image">
+            <p class="text">
+              <CaptionImage
+                class="inline-image"
+                :style="{
+                  float: index % 2 ? 'left' : 'right',
+                  marginRight: index % 2 ? 'var(--step-0)' : undefined,
+                  marginLeft: index % 2 ? undefined : 'var(--step-0)',
+                }"
+                :src="getStrapiImageUrl(section.image.url)"
+                :alt="section.image.alternativeText ?? ''"
+                :caption="`© ${storyData.authorName}`"
+              />
+              <span>{{ section.text }}</span>
+            </p>
+          </section>
+
+          <Divider
+            v-if="index !== otherSections.length - 1"
+            type="horizontal"
+            color="var(--color-black)"
+            width="40%"
+            margin="var(--space-xs) 0"
           />
-          {{ section.text }}
-        </p>
-
-        <Divider
-          v-if="index !== otherSections.length - 1"
-          type="horizontal"
-          color="var(--color-black)"
-          width="40%"
-          margin="var(--space-xs) 0"
-        />
-      </section>
+        </template>
+      </div>
     </div>
   </div>
 </template>
@@ -150,17 +156,22 @@
     gap: var(--space-2xl);
   }
 
-  section {
+  .section-wrapper {
     display: flex;
     flex-direction: column;
     gap: var(--space-2xl);
     align-items: center;
     justify-content: center;
+    margin: 0 auto;
   }
 
-  .image {
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
     max-width: 70ch;
-    max-height: 600px;
   }
 
   .text {
@@ -169,7 +180,8 @@
       width: 40%;
       min-width: 300px;
       max-height: 400px;
-      margin-bottom: var(--step-0);
+      /* stylelint-disable-next-line custom-property-pattern */
+      margin-bottom: var(--step--1);
 
       @media (max-width: 600px) {
         width: 100%;
