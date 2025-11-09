@@ -57,6 +57,13 @@
     document.body.style.overflow = originalBodyStyle.value
   }
 
+  function handleBackdropClick(event: MouseEvent) {
+    // Only close if clicking directly on the dialog (backdrop), not on the content
+    if (event.target === dialogRef.value) {
+      close()
+    }
+  }
+
   onMounted(() => {
     // Initialize clip path
     shapeClipPath.value = `polygon(${baseClipPathPoints.map(([x, y]) => `${x}% ${y}%`).join(', ')})`
@@ -158,6 +165,7 @@
   <dialog
     ref="dialogRef"
     :class="{ 'absolute-position': !modal }"
+    @click="handleBackdropClick"
   >
     <div class="dialog-wrapper">
       <div class="dialog-content">
