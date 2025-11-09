@@ -79,20 +79,16 @@
     }
   })
 
-  // Get unique keywords from stories
+  // Fetch all keywords from the API
+  const { data: allKeywords } = await useGetKeywords('all')
+
+  // Get unique keywords from API
   const uniqueKeywords = computed(() => {
-    const keywordMap = new Map<string, { id: string; name: string }>()
-    props.stories.forEach((story) => {
-      story.keywords.forEach((keyword) => {
-        if (!keywordMap.has(keyword.name)) {
-          keywordMap.set(keyword.name, {
-            id: keyword.documentId ?? '',
-            name: keyword.name,
-          })
-        }
-      })
-    })
-    return Array.from(keywordMap.values())
+    if (!allKeywords.value) return []
+    return allKeywords.value.map((keyword) => ({
+      id: keyword.documentId ?? '',
+      name: keyword.name,
+    }))
   })
 
   // Filter stories based on applied search criteria
