@@ -211,12 +211,12 @@
     & .inline-image {
       display: inline;
       width: 50%;
-      min-width: 300px;
-      max-height: 400px;
       /* stylelint-disable-next-line custom-property-pattern */
       margin-bottom: var(--step--1);
 
       @media (max-width: 600px) {
+        float: unset;
+        display: inline-block;
         width: 100%;
       }
     }
