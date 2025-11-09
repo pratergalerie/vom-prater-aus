@@ -34,6 +34,7 @@
 <template>
   <button
     ref="buttonRef"
+    type="button"
     class="keyword highlight"
     :class="{ selected: selected }"
     @click="handleClick"

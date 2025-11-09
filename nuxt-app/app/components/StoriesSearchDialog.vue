@@ -143,6 +143,9 @@
 
     // Emit the filtered results
     emit('filter', filteredStories.value)
+
+    // Keep the dialog open
+    // isOpen.value = false // Removed to keep dialog open
   })
 
   function handleClearFilters() {
