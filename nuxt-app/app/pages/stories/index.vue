@@ -60,8 +60,7 @@
         <BaseButton
           variant="primary"
           layout="label-icon"
-          :label="$t('pages.stories.index.filter')"
-          icon="mdi:filter"
+          :label="$t('pages.stories.index.searchButton')"
           @click="showSearchDialog = true"
         />
       </div>

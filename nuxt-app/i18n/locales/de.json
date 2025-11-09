@@ -262,8 +262,7 @@
         "loading": "Geschichten werden geladen...",
         "error": "Fehler beim Laden der Geschichten",
         "noStories": "Derzeit sind keine Geschichten verfügbar.",
-        "searchPlaceholder": "Suchen",
-        "filter": "Filtern",
+        "searchButton": "Suchen",
         "viewMode": {
           "list": "Listenansicht",
           "explorer": "Entdecken-Ansicht"

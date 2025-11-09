@@ -263,8 +263,7 @@
         "loading": "Loading stories...",
         "error": "Error loading stories",
         "noStories": "No stories available at the moment.",
-        "searchPlaceholder": "Search",
-        "filter": "Filter",
+        "searchButton": "Search",
         "viewMode": {
           "list": "List View",
           "explorer": "Explorer View"
