@@ -393,6 +393,7 @@
 
   .results-count {
     color: var(--color-text-light);
+    text-align: center;
   }
 
   .actions {
