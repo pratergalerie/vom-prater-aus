@@ -1,4 +1,4 @@
-import type { LanguageCode } from '~/pages/stories/create.vue'
+export type LanguageCode = string
 
 export type StrapiImage = {
   alternativeText: string | null
@@ -39,6 +39,7 @@ export type Keyword = {
   name: string
   createdAt: string
   updatedAt: string
+  stories: Story[]
 }
 
 export type Story = {

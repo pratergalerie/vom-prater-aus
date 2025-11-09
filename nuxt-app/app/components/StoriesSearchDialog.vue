@@ -2,6 +2,7 @@
   import { toTypedSchema } from '@vee-validate/zod'
   import { useForm } from 'vee-validate'
   import * as z from 'zod'
+  import { useGetKeywords } from '~/composables/useGetKeywords'
   import type { Story } from '~~/types/strapi'
 
   const props = defineProps<{
@@ -16,10 +17,57 @@
 
   const isOpen = defineModel<boolean>('is-open', { default: false })
 
+  const localeOptions = [
+    'sq', // Albanian
+    'hy', // Armenian
+    'az', // Azerbaijani
+    'eu', // Basque
+    'be', // Belarusian
+    'bs', // Bosnian
+    'bg', // Bulgarian
+    'ca', // Catalan
+    'hr', // Croatian
+    'cs', // Czech
+    'da', // Danish
+    'de', // Deutsch (German)
+    'nl', // Dutch
+    'en', // English
+    'et', // Estonian
+    'fi', // Finnish
+    'fr', // French
+    'ka', // Georgian
+    'el', // Greek
+    'hu', // Hungarian
+    'is', // Icelandic
+    'ga', // Irish (Gaeilge)
+    'it', // Italian
+    'kk', // Kazakh
+    'ku', // Kurdish
+    'lv', // Latvian
+    'lt', // Lithuanian
+    'lb', // Luxembourgish
+    'mk', // Macedonian
+    'mt', // Maltese
+    'no', // Norwegian
+    'pl', // Polish
+    'pt', // Portuguese
+    'ro', // Romanian
+    'ru', // Russian
+    'sr', // Serbian
+    'sk', // Slovak
+    'sl', // Slovenian
+    'es', // Spanish
+    'sv', // Swedish
+    'tr', // Turkish
+    'uk', // Ukrainian
+    'cy', // Welsh (Cymraeg)
+  ] as const
+
   // Validation schema reusing storyYear validation pattern
   const validationSchema = toTypedSchema(
     z.object({
       searchQuery: z.string().optional(),
+      storyLanguage: z.string().optional(),
       yearStart: z.coerce
         .number({
           message: 'pages.create.form.inputs.storyYear.errors.required',
@@ -57,6 +105,7 @@
     validationSchema,
     initialValues: {
       searchQuery: '',
+      storyLanguage: '',
       yearStart: '',
       yearEnd: '',
     },
@@ -68,6 +117,7 @@
   // Applied filter state (what's actually being used for filtering)
   const appliedSearchQuery = ref('')
   const appliedKeywords = ref<string[]>([])
+  const appliedLanguage = ref<string>('')
   const appliedYearStart = ref<number | null>(null)
   const appliedYearEnd = ref<number | null>(null)
 
@@ -80,15 +130,17 @@
   })
 
   // Fetch all keywords from the API
-  const { data: allKeywords } = await useGetKeywords('all')
+  const { data: allKeywords } = await useGetKeywords()
 
   // Get unique keywords from API
   const uniqueKeywords = computed(() => {
     if (!allKeywords.value) return []
-    return allKeywords.value.map((keyword) => ({
-      id: keyword.documentId ?? '',
-      name: keyword.name,
-    }))
+    return allKeywords.value.map(
+      (keyword: { documentId?: string; name: string }) => ({
+        id: keyword.documentId ?? '',
+        name: keyword.name,
+      })
+    )
   })
 
   // Filter stories based on applied search criteria
@@ -113,13 +165,17 @@
           story.keywords.some((keyword) => keyword.name === selectedKeyword)
         )
 
+      // Language filter
+      const languageMatch =
+        !appliedLanguage.value || story.language === appliedLanguage.value
+
       // Year range filter
       const yearMatch =
         (appliedYearStart.value === null ||
           story.year >= appliedYearStart.value) &&
         (appliedYearEnd.value === null || story.year <= appliedYearEnd.value)
 
-      return searchMatch && keywordMatch && yearMatch
+      return searchMatch && keywordMatch && languageMatch && yearMatch
     })
   })
 
@@ -136,6 +192,7 @@
     // Apply the current input values to the applied filter state
     appliedSearchQuery.value = formValues.searchQuery || ''
     appliedKeywords.value = [...localSelectedKeywords.value]
+    appliedLanguage.value = formValues.storyLanguage || ''
     appliedYearStart.value =
       typeof formValues.yearStart === 'number' ? formValues.yearStart : null
     appliedYearEnd.value =
@@ -157,6 +214,7 @@
 
     appliedSearchQuery.value = ''
     appliedKeywords.value = []
+    appliedLanguage.value = ''
     appliedYearStart.value = null
     appliedYearEnd.value = null
 
@@ -186,6 +244,28 @@
           :label="$t('components.storiesSearchDialog.searchLabel')"
           :placeholder="$t('components.storiesSearchDialog.searchPlaceholder')"
         />
+      </div>
+
+      <!-- Language Filter -->
+      <div class="language-section">
+        <BaseSelect
+          name="storyLanguage"
+          :required="false"
+          :label="$t('components.storiesSearchDialog.languageLabel')"
+          :placeholder="
+            $t('components.storiesSearchDialog.languagePlaceholder')
+          "
+        >
+          <template #options>
+            <option
+              v-for="locale in localeOptions"
+              :key="locale"
+              :value="locale"
+            >
+              {{ $t(`languages.${locale}`) }}
+            </option>
+          </template>
+        </BaseSelect>
       </div>
 
       <!-- Keywords Filter -->

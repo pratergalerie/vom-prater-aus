@@ -37,6 +37,8 @@
       "searchPlaceholder": "Suche nach Titel",
       "searchLabel": "Geschichten suchen",
       "keywordsLabel": "Schlüsselwörter",
+      "languageLabel": "Sprache",
+      "languagePlaceholder": "Wähle eine Sprache",
       "yearStart": "Von Jahr",
       "yearStartPlaceholder": "z.B. 1831",
       "yearEnd": "Bis Jahr",
