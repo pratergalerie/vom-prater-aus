@@ -2,13 +2,7 @@
   import { toTypedSchema } from '@vee-validate/zod'
   import { useForm } from 'vee-validate'
   import * as z from 'zod'
-
-  export interface Story {
-    documentId: string
-    title: string
-    year: number
-    keywords: Array<{ documentId?: string; name: string }>
-  }
+  import type { Story } from '~~/types/strapi'
 
   const props = defineProps<{
     stories: Story[]
@@ -69,7 +63,7 @@
   })
 
   // Search and filter state
-  const selectedKeywords = ref<string[]>([])
+  const localSelectedKeywords = ref<string[]>([])
 
   // Applied filter state (what's actually being used for filtering)
   const appliedSearchQuery = ref('')
@@ -80,7 +74,7 @@
   // Sync selectedKeywords from parent when dialog opens
   watch(isOpen, (newValue) => {
     if (newValue && props.selectedKeywords) {
-      selectedKeywords.value = [...props.selectedKeywords]
+      localSelectedKeywords.value = [...props.selectedKeywords]
       appliedKeywords.value = [...props.selectedKeywords]
     }
   })
@@ -134,18 +128,18 @@
   })
 
   function handleKeywordToggle(keyword: string) {
-    const index = selectedKeywords.value.indexOf(keyword)
+    const index = localSelectedKeywords.value.indexOf(keyword)
     if (index > -1) {
-      selectedKeywords.value.splice(index, 1)
+      localSelectedKeywords.value.splice(index, 1)
     } else {
-      selectedKeywords.value.push(keyword)
+      localSelectedKeywords.value.push(keyword)
     }
   }
 
   const onSubmit = handleSubmit((formValues) => {
     // Apply the current input values to the applied filter state
     appliedSearchQuery.value = formValues.searchQuery || ''
-    appliedKeywords.value = [...selectedKeywords.value]
+    appliedKeywords.value = [...localSelectedKeywords.value]
     appliedYearStart.value =
       typeof formValues.yearStart === 'number' ? formValues.yearStart : null
     appliedYearEnd.value =
@@ -160,7 +154,7 @@
 
   function handleClearFilters() {
     // Clear both input and applied filter states
-    selectedKeywords.value = []
+    localSelectedKeywords.value = []
 
     appliedSearchQuery.value = ''
     appliedKeywords.value = []
@@ -206,7 +200,7 @@
             :id="keyword.id"
             :key="keyword.id"
             :name="keyword.name"
-            :selected="selectedKeywords.includes(keyword.name)"
+            :selected="localSelectedKeywords.includes(keyword.name)"
             @click="handleKeywordToggle(keyword.name)"
           />
         </div>

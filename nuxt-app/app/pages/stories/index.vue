@@ -1,8 +1,7 @@
 <script lang="ts" setup>
+  import type { Story } from '~~/types/strapi'
   import StoriesGrid from '~/components/StoriesGrid.vue'
-  import StoriesSearchDialog, {
-    type Story,
-  } from '~/components/StoriesSearchDialog.vue'
+  import StoriesSearchDialog from '~/components/StoriesSearchDialog.vue'
 
   const { t } = useI18n()
 
