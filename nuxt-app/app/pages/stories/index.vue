@@ -40,6 +40,11 @@
     showSearchDialog.value = false
   }
 
+  // Handle keyword updates from the search dialog
+  const handleKeywordsUpdate = (keywords: string[]) => {
+    selectedKeywords.value = keywords
+  }
+
   useHead({
     title: `Vom Prater aus | ${t('pages.stories.index.title')}`,
   })
@@ -74,7 +79,9 @@
       <StoriesSearchDialog
         v-model:is-open="showSearchDialog"
         :stories="storiesData"
+        :selected-keywords="selectedKeywords"
         @filter="handleSearchFilter"
+        @update:selected-keywords="handleKeywordsUpdate"
       />
     </div>
   </div>

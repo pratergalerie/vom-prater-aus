@@ -12,10 +12,12 @@
 
   const props = defineProps<{
     stories: Story[]
+    selectedKeywords?: string[]
   }>()
 
   const emit = defineEmits<{
     (e: 'filter', filteredStories: Story[]): void
+    (e: 'update:selectedKeywords', keywords: string[]): void
   }>()
 
   const isOpen = defineModel<boolean>('is-open', { default: false })
@@ -57,7 +59,7 @@
     })
   )
 
-  const { handleSubmit, values } = useForm({
+  const { handleSubmit } = useForm({
     validationSchema,
     initialValues: {
       searchQuery: '',
@@ -74,6 +76,14 @@
   const appliedKeywords = ref<string[]>([])
   const appliedYearStart = ref<number | null>(null)
   const appliedYearEnd = ref<number | null>(null)
+
+  // Sync selectedKeywords from parent when dialog opens
+  watch(isOpen, (newValue) => {
+    if (newValue && props.selectedKeywords) {
+      selectedKeywords.value = [...props.selectedKeywords]
+      appliedKeywords.value = [...props.selectedKeywords]
+    }
+  })
 
   // Get unique keywords from stories
   const uniqueKeywords = computed(() => {
@@ -141,6 +151,9 @@
     appliedYearEnd.value =
       typeof formValues.yearEnd === 'number' ? formValues.yearEnd : null
 
+    // Emit the applied keywords to sync back to parent
+    emit('update:selectedKeywords', appliedKeywords.value)
+
     // Emit the filtered results
     emit('filter', filteredStories.value)
 
@@ -156,6 +169,9 @@
     appliedKeywords.value = []
     appliedYearStart.value = null
     appliedYearEnd.value = null
+
+    // Emit the cleared keywords to sync back to parent
+    emit('update:selectedKeywords', [])
 
     // Emit the unfiltered results
     emit('filter', props.stories)
