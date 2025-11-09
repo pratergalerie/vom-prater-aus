@@ -53,7 +53,7 @@
     })
   )
 
-  const { handleSubmit } = useForm({
+  const { handleSubmit, resetForm } = useForm({
     validationSchema,
     initialValues: {
       searchQuery: '',
@@ -153,6 +153,9 @@
   })
 
   function handleClearFilters() {
+    // Clear form inputs
+    resetForm()
+
     // Clear both input and applied filter states
     localSelectedKeywords.value = []
 
