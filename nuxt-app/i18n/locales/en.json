@@ -35,9 +35,9 @@
     },
     "storiesSearchDialog": {
       "searchPlaceholder": "Search by title",
-      "searchLabel": "Geschichte suchen",
+      "searchLabel": "Stories",
       "keywordsLabel": "Keywords",
-      "languageLabel": "Language",
+      "languageLabel": "Languages",
       "languagePlaceholder": "Choose a language",
       "yearStart": "From year",
       "yearStartPlaceholder": "e.g. 1831",
