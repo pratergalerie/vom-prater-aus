@@ -16,12 +16,17 @@
 
   // Internal state for when stories are not provided (backward compatibility)
   const internalSelectedKeywords = ref<string[]>([])
-  const selectedKeywordsRef = computed(() => props.selectedKeywords ?? internalSelectedKeywords.value)
+  const selectedKeywordsRef = computed(
+    () => props.selectedKeywords ?? internalSelectedKeywords.value
+  )
   provide('selectedKeywords', selectedKeywordsRef)
 
   const isInlineLayout = computed(() => props.layout === 'inline')
 
-  const internalHandleKeywordClick = async (name: string, selected: boolean) => {
+  const internalHandleKeywordClick = async (
+    name: string,
+    selected: boolean
+  ) => {
     // Disable keyword filtering in inline layout
     if (isInlineLayout.value) return
 
@@ -34,7 +39,9 @@
     }
   }
 
-  const handleKeywordClick = computed(() => props.onKeywordClick ?? internalHandleKeywordClick)
+  const handleKeywordClick = computed(
+    () => props.onKeywordClick ?? internalHandleKeywordClick
+  )
 
   // Fetch stories only if not provided via props
   const shouldFetchStories = computed(() => !props.stories)
@@ -161,7 +168,7 @@
   .stories-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: var(--space-2xl-3xl) var(--space-l);
+    gap: var(--space-xl-2xl) var(--space-l);
     padding-top: var(--space-l);
 
     /* Make left column items have a Y offset */
