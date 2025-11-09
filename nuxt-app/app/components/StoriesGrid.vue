@@ -12,8 +12,6 @@
     stories?: Story[]
     selectedKeywords?: string[]
     onKeywordClick?: (name: string, selected: boolean) => void
-    status?: string
-    error?: Error | null
   }>()
 
   // Internal state for when stories are not provided (backward compatibility)
@@ -51,8 +49,6 @@
 
   // Use provided stories or fetched stories
   const currentStoriesData = computed(() => props.stories ?? storiesData.value)
-  const status = computed(() => props.status ?? fetchStatus.value)
-  const error = computed(() => props.error ?? fetchError.value)
 
   const initialStories = computed(() => {
     return currentStoriesData.value
@@ -140,26 +136,7 @@
 </script>
 
 <template>
-  <!-- Loading state -->
-  <p v-if="status === 'pending'">
-    {{ $t('pages.stories.index.loading') }}
-  </p>
-
-  <!-- Error state -->
-  <p
-    v-else-if="error"
-    class="error"
-  >
-    {{ $t('pages.stories.index.error') }}
-  </p>
-
-  <!-- No stories state -->
-  <p v-else-if="displayedStories.length === 0">
-    {{ $t('pages.stories.index.noStories') }}
-  </p>
-
   <div
-    v-else
     class="stories-grid"
     :class="{ 'inline-layout': isInlineLayout }"
   >

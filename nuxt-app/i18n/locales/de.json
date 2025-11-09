@@ -264,6 +264,7 @@
         "loading": "Geschichten werden geladen...",
         "error": "Fehler beim Laden der Geschichten",
         "noStories": "Derzeit sind keine Geschichten verfügbar.",
+        "noStoriesMatchingFilter": "Keine Geschichten mit den ausgewählten Filtern gefunden.",
         "searchButton": "Suchen",
         "viewMode": {
           "list": "Listenansicht",
