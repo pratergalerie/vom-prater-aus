@@ -41,7 +41,7 @@
       "yearStartPlaceholder": "z.B. 1831",
       "yearEnd": "Bis Jahr",
       "yearEndPlaceholder": "z.B. 2017",
-      "resultsCount": "{count} von {total} Geschichten gefunden",
+      "resultsCount": "{count} Geschichten gefunden",
       "noResults": "Keine Geschichten mit diesen Filtern gefunden",
       "clearFilters": "Löschen",
       "applyFilters": "Anwenden"

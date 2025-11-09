@@ -256,7 +256,6 @@
             filteredStories.length > 0
               ? $t('components.storiesSearchDialog.resultsCount', {
                   count: filteredStories.length,
-                  total: stories.length,
                 })
               : $t('components.storiesSearchDialog.noResults')
           }}
