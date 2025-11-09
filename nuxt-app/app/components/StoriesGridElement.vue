@@ -18,8 +18,15 @@
     showKeywords?: boolean
   }
 
-  const { title, author, img, link, year, keywords, showKeywords = true } =
-    defineProps<ListElement>()
+  const {
+    title,
+    author,
+    img,
+    link,
+    year,
+    keywords,
+    showKeywords = true,
+  } = defineProps<ListElement>()
 </script>
 
 <template>
@@ -58,8 +65,9 @@
       </NuxtLink>
       <div class="meta">
         <p class="author">
-          Von
-          <span class="author-name">{{ author }}</span>
+          <span class="author-name">
+            {{ `${$t('pages.stories.story.memoryBy')} ${author}` }}
+          </span>
         </p>
         <div class="year">
           <Icon name="mdi:calendar" />
