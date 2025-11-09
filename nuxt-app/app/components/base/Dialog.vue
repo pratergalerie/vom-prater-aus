@@ -59,7 +59,7 @@
 
   onMounted(() => {
     // Initialize clip path
-    shapeClipPath.value = `polygon(${randomizeClipPath()})`
+    shapeClipPath.value = `polygon(${baseClipPathPoints.map(([x, y]) => `${x}% ${y}%`).join(', ')})`
 
     // Add close on ESC key
     dialogRef.value?.addEventListener('cancel', (event) => {
@@ -152,15 +152,6 @@
     }
     return 'none'
   })
-
-  function randomizeClipPath() {
-    return baseClipPathPoints
-      .map(([x, y]) => {
-        const jitter = 2
-        return `${x! + (Math.random() - 0.5) * jitter}% ${y! + (Math.random() - 0.5) * jitter}%`
-      })
-      .join(', ')
-  }
 </script>
 
 <template>
@@ -234,7 +225,7 @@
   .dialog-content {
     position: relative;
     width: 100%;
-    background-color: var(--color-white);
+    background-color: var(--color-beige);
     clip-path: v-bind(shapeClipPath);
   }
 
@@ -247,8 +238,7 @@
     gap: var(--space-s);
     justify-content: flex-start;
     width: 100%;
-    padding: var(--space-m);
-    padding-bottom: var(--space-l);
+    padding: var(--space-xl) var(--space-m);
     background-color: transparent;
   }
 
@@ -292,14 +282,13 @@
     z-index: -1;
     width: 0;
     height: 0;
-    border-color: var(--color-white) transparent transparent transparent;
+    border-color: var(--color-beige) transparent transparent transparent;
     border-style: solid;
     border-width: 12px 10px 0;
 
     /* stylelint-disable-next-line plugins/no-unused-selectors */
     &.bottom-left {
       left: 20px;
-      filter: drop-shadow(-3px -2px 0 var(--color-black));
       transform: translateY(-5px) rotate(-90deg);
       scale: 2;
     }
@@ -307,7 +296,6 @@
     /* stylelint-disable-next-line plugins/no-unused-selectors */
     &.bottom-center {
       left: 50%;
-      filter: drop-shadow(-1px 3px 0 var(--color-black));
       transform: translateX(-26%) skew(-0.02turn, 5deg);
       scale: 2;
     }
@@ -315,7 +303,6 @@
     /* stylelint-disable-next-line plugins/no-unused-selectors */
     &.bottom-right {
       right: 30px;
-      filter: drop-shadow(3px -1px 0 var(--color-black));
       transform: translateY(-7px) rotate(90deg);
       scale: 3;
     }
