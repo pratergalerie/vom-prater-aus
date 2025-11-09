@@ -52,47 +52,47 @@
 
 <template>
   <div>
-    <div>
-      <!-- Filter button -->
-      <div class="filter-bar">
-        <h1>{{ $t('pages.stories.index.title') }}</h1>
+    <h1>{{ $t('pages.stories.index.title') }}</h1>
 
-        <BaseButton
-          variant="primary"
-          layout="label-icon"
-          :label="$t('pages.stories.index.searchButton')"
-          @click="showSearchDialog = true"
-        />
-      </div>
+    <!-- Stories grid with keyword filtering -->
+    <StoriesGrid
+      :stories="displayStories"
+      :selected-keywords="selectedKeywords"
+      :on-keyword-click="handleKeywordClick"
+      :status="status"
+      :error="error"
+    />
 
-      <!-- Stories grid with keyword filtering -->
-      <StoriesGrid
-        :stories="displayStories"
-        :selected-keywords="selectedKeywords"
-        :on-keyword-click="handleKeywordClick"
-        :status="status"
-        :error="error"
-      />
+    <!-- Advanced Filter -->
+    <StoriesSearchDialog
+      v-model:is-open="showSearchDialog"
+      :stories="storiesData"
+      :selected-keywords="selectedKeywords"
+      @filter="handleSearchFilter"
+      @update:selected-keywords="handleKeywordsUpdate"
+    />
 
-      <!-- Advanced Filter -->
-      <StoriesSearchDialog
-        v-model:is-open="showSearchDialog"
-        :stories="storiesData"
-        :selected-keywords="selectedKeywords"
-        @filter="handleSearchFilter"
-        @update:selected-keywords="handleKeywordsUpdate"
+    <!-- Filter button -->
+    <div class="filter-button">
+      <BaseButton
+        variant="primary"
+        layout="label-icon"
+        :label="$t('pages.stories.index.searchButton')"
+        @click="showSearchDialog = true"
       />
     </div>
   </div>
 </template>
 
 <style scoped>
-  .filter-bar {
+  .filter-button {
+    position: sticky;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-xs);
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: var(--space-l);
+    justify-content: flex-end;
+    width: 100%;
+    padding-bottom: var(--space-m);
   }
 </style>
