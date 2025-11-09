@@ -49,7 +49,7 @@
     padding: var(--space-3xs) var(--space-2xs);
     font-family: var(--font-button);
     /* stylelint-disable-next-line */
-    font-size: var(--step--1);
+    font-size: var(--step-0);
     color: var(--color-text);
     cursor: pointer;
     border: none;

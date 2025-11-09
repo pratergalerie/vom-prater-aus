@@ -34,15 +34,17 @@
       "english": "Englisch"
     },
     "storiesSearchDialog": {
-      "title": "Geschichten suchen & filtern",
       "searchPlaceholder": "Nach Titel oder Schlüsselwörtern suchen...",
       "searchLabel": "Geschichten suchen",
-      "popularKeywords": "Beliebte Schlüsselwörter",
-      "yearRange": "Jahresbereich",
+      "keywordsLabel": "Schlüsselwörter",
+      "yearStart": "Von Jahr",
+      "yearStartPlaceholder": "z.B. 1831",
+      "yearEnd": "Bis Jahr",
+      "yearEndPlaceholder": "z.B. 2017",
       "resultsCount": "{count} von {total} Geschichten gefunden",
       "noResults": "Keine Geschichten mit diesen Filtern gefunden",
-      "clearFilters": "Filter löschen",
-      "applyFilters": "Filter anwenden"
+      "clearFilters": "Löschen",
+      "applyFilters": "Anwenden"
     },
     "rangeSlider": {
       "from": "Von",
@@ -260,6 +262,8 @@
         "loading": "Geschichten werden geladen...",
         "error": "Fehler beim Laden der Geschichten",
         "noStories": "Derzeit sind keine Geschichten verfügbar.",
+        "searchPlaceholder": "Suchen",
+        "filter": "Filtern",
         "viewMode": {
           "list": "Listenansicht",
           "explorer": "Entdecken-Ansicht"

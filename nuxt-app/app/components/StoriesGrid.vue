@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import type { StrapiImage } from '~~/types/strapi'
+  import type { StrapiImage, Story } from '~~/types/strapi'
   import type { ListElement } from './StoriesGridElement.vue'
   import StoriesGridElement from './StoriesGridElement.vue'
   import { getStrapiImageUrl } from '~/utils/strapi'
@@ -9,34 +9,53 @@
     layout?: 'default' | 'inline'
     excludeSlug?: string
     randomize?: boolean
+    stories?: Story[]
+    selectedKeywords?: string[]
+    onKeywordClick?: (name: string, selected: boolean) => void
+    status?: string
+    error?: Error | null
   }>()
 
-  const selectedKeywords = ref<string[]>([])
-  provide('selectedKeywords', selectedKeywords)
+  // Internal state for when stories are not provided (backward compatibility)
+  const internalSelectedKeywords = ref<string[]>([])
+  const selectedKeywordsRef = computed(() => props.selectedKeywords ?? internalSelectedKeywords.value)
+  provide('selectedKeywords', selectedKeywordsRef)
 
   const isInlineLayout = computed(() => props.layout === 'inline')
 
-  const handleKeywordClick = async (name: string, selected: boolean) => {
+  const internalHandleKeywordClick = async (name: string, selected: boolean) => {
     // Disable keyword filtering in inline layout
     if (isInlineLayout.value) return
 
     if (selected) {
-      selectedKeywords.value.push(name)
+      internalSelectedKeywords.value.push(name)
     } else {
-      selectedKeywords.value = selectedKeywords.value.filter(
+      internalSelectedKeywords.value = internalSelectedKeywords.value.filter(
         (keyword) => keyword !== name
       )
     }
   }
 
+  const handleKeywordClick = computed(() => props.onKeywordClick ?? internalHandleKeywordClick)
+
+  // Fetch stories only if not provided via props
+  const shouldFetchStories = computed(() => !props.stories)
+
   const {
     data: storiesData,
-    status,
-    error,
-  } = await useGetStories({ keywords: selectedKeywords })
+    status: fetchStatus,
+    error: fetchError,
+  } = shouldFetchStories.value
+    ? await useGetStories({ keywords: internalSelectedKeywords })
+    : { data: ref([]), status: ref('success'), error: ref(null) }
+
+  // Use provided stories or fetched stories
+  const currentStoriesData = computed(() => props.stories ?? storiesData.value)
+  const status = computed(() => props.status ?? fetchStatus.value)
+  const error = computed(() => props.error ?? fetchError.value)
 
   const initialStories = computed(() => {
-    return storiesData.value
+    return currentStoriesData.value
       .filter((story) => {
         // Filter out the excluded story
         if (props.excludeSlug && story.slug === props.excludeSlug) {
@@ -49,16 +68,16 @@
         const firstSection = story.sections[0]
         const keywords = story.keywords.map((keyword) => ({
           name: keyword.name,
-          id: keyword.documentId,
+          id: keyword.documentId ?? '',
           selected: isInlineLayout.value
             ? false
-            : selectedKeywords.value.includes(keyword.name),
+            : selectedKeywordsRef.value.includes(keyword.name),
         }))
 
         if (firstSection?.image !== null && firstSection?.image !== undefined) {
           return {
             variant: 'image',
-            id: story.documentId,
+            id: story.documentId ?? '',
             img: {
               src: getStrapiImageUrl((firstSection.image as StrapiImage).url),
               alt: (firstSection.image as StrapiImage).alternativeText ?? '',
@@ -69,7 +88,7 @@
             year: story.year.toString(),
             author: story.authorName,
             keywords: keywords,
-            onKeywordClick: handleKeywordClick,
+            onKeywordClick: handleKeywordClick.value,
           }
         }
 
@@ -78,7 +97,7 @@
 
           return {
             variant: 'text',
-            id: story.documentId,
+            id: story.documentId ?? '',
             img: null,
             text: previewText,
             title: story.title,
@@ -86,7 +105,7 @@
             year: story.year.toString(),
             author: story.authorName,
             keywords: keywords,
-            onKeywordClick: handleKeywordClick,
+            onKeywordClick: handleKeywordClick.value,
           }
         }
 

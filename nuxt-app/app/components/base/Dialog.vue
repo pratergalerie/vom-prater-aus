@@ -238,7 +238,8 @@
     gap: var(--space-s);
     justify-content: flex-start;
     width: 100%;
-    padding: var(--space-xl) var(--space-m);
+    padding: var(--space-l) var(--space-m);
+    padding-bottom: var(--space-xl);
     background-color: transparent;
   }
 

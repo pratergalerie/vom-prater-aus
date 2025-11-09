@@ -1,5 +1,14 @@
 <script setup lang="ts">
-  import type { Story } from '~/types/frontend'
+  import { toTypedSchema } from '@vee-validate/zod'
+  import { useForm } from 'vee-validate'
+  import * as z from 'zod'
+
+  export interface Story {
+    documentId: string
+    title: string
+    year: number
+    keywords: Array<{ documentId?: string; name: string }>
+  }
 
   const props = defineProps<{
     stories: Story[]
@@ -11,35 +20,75 @@
 
   const isOpen = defineModel<boolean>('is-open', { default: false })
 
-  // Search and filter state (current input values)
-  const searchQuery = ref('')
+  // Validation schema reusing storyYear validation pattern
+  const validationSchema = toTypedSchema(
+    z.object({
+      searchQuery: z.string().optional(),
+      yearStart: z.coerce
+        .number({
+          message: 'pages.create.form.inputs.storyYear.errors.required',
+        })
+        .int({
+          message: 'pages.create.form.inputs.storyYear.errors.invalid',
+        })
+        .min(1831, {
+          message: 'pages.create.form.inputs.storyYear.errors.min',
+        })
+        .max(2017, {
+          message: 'pages.create.form.inputs.storyYear.errors.max',
+        })
+        .optional()
+        .or(z.literal('')),
+      yearEnd: z.coerce
+        .number({
+          message: 'pages.create.form.inputs.storyYear.errors.required',
+        })
+        .int({
+          message: 'pages.create.form.inputs.storyYear.errors.invalid',
+        })
+        .min(1831, {
+          message: 'pages.create.form.inputs.storyYear.errors.min',
+        })
+        .max(2017, {
+          message: 'pages.create.form.inputs.storyYear.errors.max',
+        })
+        .optional()
+        .or(z.literal('')),
+    })
+  )
+
+  const { handleSubmit, values } = useForm({
+    validationSchema,
+    initialValues: {
+      searchQuery: '',
+      yearStart: '',
+      yearEnd: '',
+    },
+  })
+
+  // Search and filter state
   const selectedKeywords = ref<string[]>([])
-  const yearRange = ref<[number, number]>([1980, 2024])
 
   // Applied filter state (what's actually being used for filtering)
   const appliedSearchQuery = ref('')
   const appliedKeywords = ref<string[]>([])
-  const appliedYearRange = ref<[number, number]>([1980, 2024])
+  const appliedYearStart = ref<number | null>(null)
+  const appliedYearEnd = ref<number | null>(null)
 
-  // Get year range from stories
-  const storyYears = computed(() => {
-    if (!props.stories.length) return [1980, 2024]
-    const years = props.stories.map((story) => story.year)
-    return [Math.min(...years), Math.max(...years)]
-  })
-
-  // Initialize year range with actual story data
-  onMounted(() => {
-    if (storyYears.value[0] !== 1980 || storyYears.value[1] !== 2024) {
-      yearRange.value = [
-        storyYears.value[0] ?? 1980,
-        storyYears.value[1] ?? 2024,
-      ]
-      appliedYearRange.value = [
-        storyYears.value[0] ?? 1980,
-        storyYears.value[1] ?? 2024,
-      ]
-    }
+  // Get unique keywords from stories
+  const uniqueKeywords = computed(() => {
+    const keywordMap = new Map<string, { id: string; name: string }>()
+    props.stories.forEach((story) => {
+      story.keywords.forEach((keyword) => {
+        if (!keywordMap.has(keyword.name)) {
+          keywordMap.set(keyword.name, {
+            id: keyword.documentId ?? '',
+            name: keyword.name,
+          })
+        }
+      })
+    })
+    return Array.from(keywordMap.values())
   })
 
   // Filter stories based on applied search criteria
@@ -52,7 +101,7 @@
           .toLowerCase()
           .includes(appliedSearchQuery.value.toLowerCase()) ||
         story.keywords.some((keyword) =>
-          keyword.word
+          keyword.name
             .toLowerCase()
             .includes(appliedSearchQuery.value.toLowerCase())
         )
@@ -61,49 +110,49 @@
       const keywordMatch =
         appliedKeywords.value.length === 0 ||
         appliedKeywords.value.some((selectedKeyword) =>
-          story.keywords.some((keyword) => keyword.word === selectedKeyword)
+          story.keywords.some((keyword) => keyword.name === selectedKeyword)
         )
 
       // Year range filter
       const yearMatch =
-        story.year >= appliedYearRange.value[0] &&
-        story.year <= appliedYearRange.value[1]
+        (appliedYearStart.value === null ||
+          story.year >= appliedYearStart.value) &&
+        (appliedYearEnd.value === null || story.year <= appliedYearEnd.value)
 
       return searchMatch && keywordMatch && yearMatch
     })
   })
 
-  // function handleKeywordToggle(keyword: string) {
-  //   const index = selectedKeywords.value.indexOf(keyword)
-  //   if (index > -1) {
-  //     selectedKeywords.value.splice(index, 1)
-  //   } else {
-  //     selectedKeywords.value.push(keyword)
-  //   }
-  // }
+  function handleKeywordToggle(keyword: string) {
+    const index = selectedKeywords.value.indexOf(keyword)
+    if (index > -1) {
+      selectedKeywords.value.splice(index, 1)
+    } else {
+      selectedKeywords.value.push(keyword)
+    }
+  }
 
-  function handleApplyFilters() {
+  const onSubmit = handleSubmit((formValues) => {
     // Apply the current input values to the applied filter state
-    appliedSearchQuery.value = searchQuery.value
+    appliedSearchQuery.value = formValues.searchQuery || ''
     appliedKeywords.value = [...selectedKeywords.value]
-    appliedYearRange.value = [...yearRange.value]
+    appliedYearStart.value =
+      typeof formValues.yearStart === 'number' ? formValues.yearStart : null
+    appliedYearEnd.value =
+      typeof formValues.yearEnd === 'number' ? formValues.yearEnd : null
 
     // Emit the filtered results
     emit('filter', filteredStories.value)
-  }
+  })
 
   function handleClearFilters() {
     // Clear both input and applied filter states
-    searchQuery.value = ''
     selectedKeywords.value = []
-    yearRange.value = [storyYears.value[0] ?? 1980, storyYears.value[1] ?? 2024]
 
     appliedSearchQuery.value = ''
     appliedKeywords.value = []
-    appliedYearRange.value = [
-      storyYears.value[0] ?? 1980,
-      storyYears.value[1] ?? 2024,
-    ]
+    appliedYearStart.value = null
+    appliedYearEnd.value = null
 
     // Emit the unfiltered results
     emit('filter', props.stories)
@@ -113,16 +162,17 @@
 <template>
   <BaseDialog
     v-model:is-open="isOpen"
-    :title="$t('components.storiesSearchDialog.title')"
     class="search-dialog"
     :width="500"
   >
-    <div class="search-dialog-content">
+    <form
+      class="search-dialog-content"
+      @submit="onSubmit"
+    >
       <!-- Search Input -->
       <div class="search-section">
         <BaseInput
-          id="story-search"
-          v-model="searchQuery"
+          name="searchQuery"
           type="text"
           :label="$t('components.storiesSearchDialog.searchLabel')"
           :placeholder="$t('components.storiesSearchDialog.searchPlaceholder')"
@@ -131,83 +181,83 @@
 
       <!-- Keywords Filter -->
       <div class="keywords-section">
-        <h3 class="section-title">
-          {{ $t('components.storiesSearchDialog.popularKeywords') }}
-        </h3>
+        <span class="keywords-label">
+          {{ $t('components.storiesSearchDialog.keywordsLabel') }}
+        </span>
         <div class="keywords-list">
-          <!-- <BaseKeyword
-            v-for="keyword in keywords"
+          <BaseKeyword
+            v-for="keyword in uniqueKeywords"
             :id="keyword.id"
             :key="keyword.id"
-            :keyword="keyword.word"
-            :selected="selectedKeywords.includes(keyword.word)"
-            @click="handleKeywordToggle(keyword.word)"
-          /> -->
+            :name="keyword.name"
+            :selected="selectedKeywords.includes(keyword.name)"
+            @click="handleKeywordToggle(keyword.name)"
+          />
         </div>
       </div>
 
       <!-- Year Range Filter -->
       <div class="year-section">
-        <BaseRangeSlider
-          v-if="storyYears[0] && storyYears[1]"
-          id="year-range"
-          v-model="yearRange"
-          :label="$t('components.storiesSearchDialog.yearRange')"
-          :min="storyYears[0]"
-          :max="storyYears[1]"
-          :step="1"
+        <div class="year-inputs">
+          <BaseInput
+            name="yearStart"
+            type="number"
+            :label="$t('components.storiesSearchDialog.yearStart')"
+            :placeholder="
+              $t('components.storiesSearchDialog.yearStartPlaceholder')
+            "
+          />
+          <BaseInput
+            name="yearEnd"
+            type="number"
+            :label="$t('components.storiesSearchDialog.yearEnd')"
+            :placeholder="
+              $t('components.storiesSearchDialog.yearEndPlaceholder')
+            "
+          />
+        </div>
+      </div>
+
+      <!-- Actions & Results -->
+      <div class="actions">
+        <BaseButton
+          type="button"
+          variant="secondary"
+          layout="label-icon"
+          :label="$t('components.storiesSearchDialog.clearFilters')"
+          class="clear-filters-button"
+          @click="handleClearFilters"
+        />
+        <BaseButton
+          type="submit"
+          variant="primary"
+          layout="label-icon"
+          :label="$t('components.storiesSearchDialog.applyFilters')"
+          class="apply-filters-button"
         />
       </div>
 
-      <!-- Results and Actions -->
       <div class="results-section">
-        <div class="results-info">
-          <span class="results-count">
-            {{
-              filteredStories.length > 0
-                ? $t('components.storiesSearchDialog.resultsCount', {
-                    count: filteredStories.length,
-                    total: stories.length,
-                  })
-                : $t('components.storiesSearchDialog.noResults')
-            }}
-          </span>
-        </div>
-
-        <div class="actions">
-          <BaseButton
-            variant="secondary"
-            layout="label-icon"
-            :label="$t('components.storiesSearchDialog.clearFilters')"
-            icon="mdi:refresh"
-            class="clear-filters-button"
-            @click="handleClearFilters"
-          />
-          <BaseButton
-            variant="primary"
-            layout="label-icon"
-            :label="$t('components.storiesSearchDialog.applyFilters')"
-            icon="mdi:filter"
-            class="apply-filters-button"
-            @click="handleApplyFilters"
-          />
-        </div>
+        <span class="results-count">
+          {{
+            filteredStories.length > 0
+              ? $t('components.storiesSearchDialog.resultsCount', {
+                  count: filteredStories.length,
+                  total: stories.length,
+                })
+              : $t('components.storiesSearchDialog.noResults')
+          }}
+        </span>
       </div>
-    </div>
+    </form>
   </BaseDialog>
 </template>
 
 <style scoped>
-  .search-dialog {
-    &:deep(.dialog-content-inner) {
-      padding: 50px 2rem 70px;
-    }
-  }
-
   .search-dialog-content {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: var(--space-l);
   }
 
   .search-section {
@@ -217,22 +267,32 @@
   .keywords-section {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--space-xs);
   }
 
-  .section-title {
-    margin: 0;
-    font-size: 1rem;
+  .keywords-label {
+    font-weight: 600;
   }
 
   .keywords-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: var(--space-xs);
   }
 
   .year-section {
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .year-inputs {
+    display: flex;
+    gap: var(--space-xs);
+
+    :deep(.input-wrapper) {
+      flex: 1;
+    }
   }
 
   .results-section {
@@ -241,36 +301,16 @@
     gap: 1rem;
     align-items: center;
     justify-content: space-between;
-    margin-top: -1.5rem;
-  }
-
-  .results-info {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: radial-gradient(
-      circle,
-      rgb(255 255 255 / 100%) 0%,
-      rgb(255 255 255 / 50%) 100%
-    );
   }
 
   .results-count {
-    font-family: var(--font-link);
-    font-size: 0.9rem;
     color: var(--color-text-light);
   }
 
   .actions {
     display: flex;
-    gap: 1rem;
+    gap: var(--space-xs);
     align-items: center;
-  }
-
-  .clear-filters-button,
-  .apply-filters-button {
-    width: 200px;
-    min-width: 200px;
-    height: 40px;
+    justify-content: center;
   }
 </style>
