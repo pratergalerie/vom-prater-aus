@@ -34,7 +34,7 @@
       "english": "English"
     },
     "storiesSearchDialog": {
-      "searchPlaceholder": "Search by title or keywords...",
+      "searchPlaceholder": "Search by title",
       "searchLabel": "Geschichte suchen",
       "keywordsLabel": "Keywords",
       "yearStart": "From year",

@@ -1,6 +1,8 @@
 <script lang="ts" setup>
   import StoriesGrid from '~/components/StoriesGrid.vue'
-  import StoriesSearchDialog from '~/components/StoriesSearchDialog.vue'
+  import StoriesSearchDialog, {
+    type Story,
+  } from '~/components/StoriesSearchDialog.vue'
 
   const { t } = useI18n()
 
@@ -37,7 +39,6 @@
   // Handle advanced search dialog filter results
   const handleSearchFilter = (results: Story[]) => {
     filteredStories.value = results
-    showSearchDialog.value = false
   }
 
   // Handle keyword updates from the search dialog
@@ -75,7 +76,7 @@
         :error="error"
       />
 
-      <!-- Advanced search dialog -->
+      <!-- Advanced Filter -->
       <StoriesSearchDialog
         v-model:is-open="showSearchDialog"
         :stories="storiesData"
