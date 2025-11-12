@@ -246,10 +246,10 @@
                 <li>
                   <!-- TODO: Add link -->
                   <NuxtLink
-                    to="/"
+                    to="/leichte-sprache"
                     @click="closeMenu"
                   >
-                    {{ $t('components.menu.nav.simpleLanguage') }}
+                    {{ $t('components.menu.nav.leichteSprache') }}
                     <Icon name="mdi:book-open-variant-outline" />
                   </NuxtLink>
                 </li>
