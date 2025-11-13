@@ -703,12 +703,14 @@
             "imageDescription": {
               "title": "Bild-Beschreibung",
               "p1": "Das Bild zeigt eine alte Post-Karte des Berliner Praters. Die Post-Karte ist ungefähr aus dem Jahr 1895. Links oben sieht man das Haus in der Kastanien-Allee 7. Das Haus wurde im Jahr 1856 gebaut. Die Tor-Durchfahrt wurde im Jahr 1875 gebaut. Rechts oben sieht man den Tanz- und Veranstaltungs-Saal. Unten sieht man den Garten mit einer Sommer-Bühne. Dort gibt es auch eine offene Halle. In der Halle gibt es damals Schieß-Stände und Verkaufs-Buden."
-            }
+            },
+            "imageAlt": "Alte Ansichtskarte des Berliner Praters aus dem Jahr 1895."
           },
           "section3": {
             "h4": "Die Kaffee-Küche",
             "p1": "Die Berliner Lokale dürfen damals nur Getränke verkaufen, wenn die Stadt-Verwaltung ihnen das erlaubt. Manchmal erlaubt die Stadt-Verwaltung das nicht. Viele Lokale nutzen deshalb einen Trick: Sie bieten ihren Gästen nur heißes Wasser und das Geschirr zum Kaffee-Kochen an. Das Kaffee-Pulver müssen die Gäste selbst mitbringen.",
-            "p2": "Manche Lokale machen das bis in die 1950er-Jahre so. Es gibt in Berlin ein bekanntes Sprichwort dazu: „Der alte Brauch wird nicht gebrochen, hier können Familien Kaffee kochen.“"
+            "p2": "Manche Lokale machen das bis in die 1950er-Jahre so. Es gibt in Berlin ein bekanntes Sprichwort dazu: „Der alte Brauch wird nicht gebrochen, hier können Familien Kaffee kochen.“",
+            "imageAlt": "Schwarz-weiß-Fotografie einer weiblichen Bedienung am Ausschank um das Jahr 1900."
           },
           "a": "zurück zur Inhalts-Übersicht"
         },
@@ -721,7 +723,8 @@
               "title": "Bild-Beschreibung",
               "p1": "Am 15. Mai 1949 findet im Prater-Garten ein Box-Kampf zwischen Gustav Scholz und Helmut Hörauf statt. Viele Menschen sehen dabei zu. Gustav Scholz kommt aus dem Berliner Stadt-Teil Prenzlauer Berg und ist zu dem Zeitpunkt 19 Jahre alt. Später wird er Europa-Meister im Boxen. Sein Spitz-Name ist „Bubi“.",
               "p2": "Gustav Scholz gewinnt diesen Box-Kampf schon in der 1. Runde. Im Bild sieht man Helmut Hörauf auf dem Boden knien. Er ist nach einem Schlag auf die Leber k.o., das bedeutet: Er kann nicht mehr weiterkämpfen."
-            }
+            },
+            "imageAlt": "Ein Schiedsrichter und der im Boxring kniende Helmut Hörauf auf einer Schwarz-weiß-Fotografie."
           },
           "section2": {
             "h4": "Das DEFA Premieren-Kino",
@@ -731,12 +734,14 @@
               "title": "Bild-Beschreibung",
               "p1": "Auf dem Plakat im Bild wird der Film „Ernst Thälmann, Sohn seiner Klasse“ angekündigt. Ernst Thälmann war ein deutscher kommunistischer Politiker. Er wurde im Jahr 1944 von den Nazis ermordet. Die Menschen in der DDR verehrten ihn als mutigen Kämpfer gegen den Faschismus.",
               "p2": "2 Mitarbeitende des DDR-Betriebs „Aktivist“ unterhalten sich über den Film. Die Sozialistische Einheits-Partei Deutschlands, kurz SED, hat den Film drehen lassen und sehr gelobt. Die SED war die Regierungs-Partei in der DDR, die dort alles bestimmte."
-            }
+            },
+            "imageAlt": "Schwarz-weiß-Fotografie einer mit einem Mann diskutierenden Frau vor dem Kino-Plakat „Ernst Thälmann, Sohn seiner Klasse“."
           },
           "section3": {
             "h4": "Der Umbau des Prater-Gartens",
             "p1": "Mit der Zeit gehen immer mehr Dinge im Prater-Garten kaputt und niemand kümmert sich darum. Deshalb wird der Prater Garten ab dem Jahr 1958 zu einem Sport- und Kultur-Zentrum für den sogenannten Arbeiter-Bezirk umgebaut. Denn im Stadt-Bezirk Prenzlauer Berg leben zu dieser Zeit hauptsächlich Arbeiter*innen.",
-            "p2": "Freiwillige Helfer*innen des Nationalen Aufbau-Werks arbeiten über 50 Tausend Stunden lang am Umbau mit. So entstehen eine neue große Garten-Bühne mit Tanz-Fläche und neue Wirtschafts-Räume, zum Beispiel Lager-Räume für Lebens-Mittel. Außerdem wird das alte Tanz-Lokal renoviert und umgebaut."
+            "p2": "Freiwillige Helfer*innen des Nationalen Aufbau-Werks arbeiten über 50 Tausend Stunden lang am Umbau mit. So entstehen eine neue große Garten-Bühne mit Tanz-Fläche und neue Wirtschafts-Räume, zum Beispiel Lager-Räume für Lebens-Mittel. Außerdem wird das alte Tanz-Lokal renoviert und umgebaut.",
+            "imageAlt": "Schwarz-weiß-Fotografie helfender Personen während der Umbauarbeiten des Pratergartens in den 1950er-Jahren."
           },
           "section4": {
             "h4": "Die Wieder-Eröffnung des Prater-Gartens",
@@ -747,7 +752,8 @@
               "li2": "politische Versammlungen der Massen-Organisationen der DDR,",
               "li3": "Trainings- und Wettkämpfe",
               "li4": "und das DEFA-Kino im Kino-Saal."
-            }
+            },
+            "imageAlt": "Schwarz-weiß-Fotografie von an einem Biergartentisch sitzenden Männern."
           },
           "section5": {
             "h4": "Die Freilicht-Bühne",
@@ -767,16 +773,20 @@
               "li6": "Senioren-Veranstaltungen",
               "li7": "Hausfrauen-Nachmittage"
             },
+            "imageAlt1": "Schwarz-weiß-Fotografie von auf einer Freilichtbühne tanzenden Paaren.",
+            "imageAlt2": "Schwarz-weiß-Fotografie von einem Konzert im Pratergarten mit Publikum.",
             "p2": "Viele freie Kunst-Gruppen des Bezirks können dort ihr Programm proben und aufführen. Immer mehr Besucher*innen kommen in den Berliner Prater. Mit der Zeit gibt es zu wenig Platz für alle. Deshalb zieht im Jahr 1986 ein großer Teil der Kultur-Arbeit in ein neues Kultur-Zentrum im Ernst-Thälmann-Park um."
           },
           "section7": {
             "h4": "Die erste Galerie am Berliner Prater",
             "p1": "Im Jahr 1967 eröffnet der Künstler Skip Pahler eine Kunst-Galerie gegenüber vom Berliner Prater. Er findet: Die Menschen in diesem Arbeiter*innen-Bezirk müssen einen besseren Zugang zu Kunst bekommen.",
-            "p2": "Die Galerie zeigt neben den Kunst-Werken auch die Skizzen, das Material und die Werkzeuge der Künstler*innen. Es gibt die Galerie bis zum Jahr 1969."
+            "p2": "Die Galerie zeigt neben den Kunst-Werken auch die Skizzen, das Material und die Werkzeuge der Künstler*innen. Es gibt die Galerie bis zum Jahr 1969.",
+            "imageAlt": "Farbfotografie einer Person, die ein Ausstellungsplakat der Galerie am Prater hochhält."
           },
           "section8": {
             "h4": "Die kommunale Galerie am Prater",
-            "p1": "Im Jahr 1973 finden die Weltjugend-Festspiele statt. Der Maler Wolfgang Leber eröffnet deshalb die kommunale Galerie am Prater in der Kastanien-Allee 100. Dort können vor allem junge Künstler*innen ihre Werke zeigen und auch verkaufen. Menschen aus der Kultur-Arbeit gestalten sehr frei das abwechslungsreiche Programm in der Galerie."
+            "p1": "Im Jahr 1973 finden die Weltjugend-Festspiele statt. Der Maler Wolfgang Leber eröffnet deshalb die kommunale Galerie am Prater in der Kastanien-Allee 100. Dort können vor allem junge Künstler*innen ihre Werke zeigen und auch verkaufen. Menschen aus der Kultur-Arbeit gestalten sehr frei das abwechslungsreiche Programm in der Galerie.",
+            "imageAlt": "Farbfotografie des Berliner Praters."
           },
           "a": "zurück zur Inhalts-Übersicht"
         },
@@ -804,12 +814,14 @@
             "h4": "Der „Bastard Club“",
             "p1": "Zwischen den Jahren 1999 und 2007 gibt es im Berliner Prater auch den „Bastard Club“. Der Betreiber des Clubs hat auch den Club „Maria am Ostbahnhof“ mitgegründet. Der „Bastard Club“ ist viel kleiner als der Club „Maria am Ostbahnhof“.",
             "p2": "Viele verschiedene Menschen gehen in den „Bastard-Club“: Kultur-Produzent*innen, frühere Besucher*innen vom Prater und BIPoC-Künstler*innen. Das sind Menschen, die Rassismus und Diskriminierung erfahren haben und die sich dagegen einsetzen. BIPoC ist die Abkürzung von {0}B{1}lack, {0}I{1}ndigenous und {0}P{1}eople of {0}C{1}olour. Das ist Englisch und bedeutet „Menschen mit schwarzer Hautfarbe, Menschen der ursprünglichen Bevölkerung und Menschen mit nicht-weißer Hautfarbe“.",
-            "p3": "Unter anderem legt die Gruppe Femmes With Fatal Breaks Musik im „Bastard Club“ auf. Der Name ist eine Mischung aus Französisch und Englisch und bedeutet so viel wie „Frauen mit krassen Übergängen“. In der Gruppe sind nur Frauen und Menschen, die sich als Frauen fühlen. Ihre Auftritte heißen „Vollversammlung“."
+            "p3": "Unter anderem legt die Gruppe Femmes With Fatal Breaks Musik im „Bastard Club“ auf. Der Name ist eine Mischung aus Französisch und Englisch und bedeutet so viel wie „Frauen mit krassen Übergängen“. In der Gruppe sind nur Frauen und Menschen, die sich als Frauen fühlen. Ihre Auftritte heißen „Vollversammlung“.",
+            "imageAlt": "Plakat zur ersten Geburtstagsfeier des Bastard Clubs mit dem Bild von vier jungen Frauen, die eine Torte mit der Aufschrift \"Femmes with fatal breaks\" in die Kamera halten."
           },
           "section4": {
             "h4": "Die Galerie im Prater",
             "p1": "Im Jahr 2005 wird die Kastanien-Allee 100 saniert. Deshalb muss die Galerie am Prater ausziehen. Sie zieht in eines der Berliner-Prater-Gebäude gegenüber. Die erste Ausstellung an dem neuen Ort heißt „jetzt hier!“. In den folgenden 2 Jahren finden dort noch 23 Ausstellungen statt.",
-            "p2": "Im Jahr 2007 wird der Berliner Prater saniert und die Galerie am Prater schließt während der Sanierungs-Arbeiten. Die Galerie am Prater hat bis dahin insgesamt 328 Ausstellungen gezeigt."
+            "p2": "Im Jahr 2007 wird der Berliner Prater saniert und die Galerie am Prater schließt während der Sanierungs-Arbeiten. Die Galerie am Prater hat bis dahin insgesamt 328 Ausstellungen gezeigt.",
+            "imageAlt": "Fehlt"
           },
           "a": "zurück zur Inhalts-Übersicht"
         }
@@ -929,14 +941,14 @@
         },
         "problems": {
           "h3": "Probleme melden",
-          "p1": "Haben Sie Probleme bei der Nutzung dieser Internet-Seite? Dann melden Sie diese Probleme bitte an Lena Prents.",
+          "p1": "Haben Sie Probleme bei der Nutzung dieser Internet-Seite? Dann melden Sie diese Probleme bitte an Katharina von Hagenow.",
           "phone": {
-            "text": "Das ist ihre Telefon-Nummer: {0}.",
+            "text": "Das ist ihre Telefon-Nummer:",
             "number": "030 90 29 53 832"
           },
           "email": {
-            "text": "Oder schreiben Sie eine E-Mail an: {0}",
-            "address": "lena.prents{'@'}ba-pankow.berlin.de"
+            "text": "Oder schreiben Sie eine E-Mail an:",
+            "address": "katharina.von-hagenow{'@'}ba-pankow.berlin.de"
           }
         },
         "arbitration": {

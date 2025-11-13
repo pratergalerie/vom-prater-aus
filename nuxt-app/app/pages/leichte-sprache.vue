@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import { NuxtPicture } from '#components'
+
   const { t } = useI18n()
 
   useHead({
@@ -176,6 +178,14 @@
                 {{ $t('pages.leichteSprache.history.year1837.section2.p2') }}
               </p>
 
+              <CaptionImage
+                class="history-image"
+                src="imgs/postkarte1895.webp"
+                :alt="
+                  $t('pages.leichteSprache.history.year1837.section2.imageAlt')
+                "
+              />
+
               <aside class="image-description">
                 <h5>
                   {{
@@ -206,6 +216,14 @@
               </p>
             </div>
 
+            <CaptionImage
+              class="history-image"
+              src="imgs/kaffeekueche1905.webp"
+              :alt="
+                $t('pages.leichteSprache.history.year1837.section3.imageAlt')
+              "
+            />
+
             <a
               href="#top"
               class="back-to-top"
@@ -227,6 +245,14 @@
               <p>
                 {{ $t('pages.leichteSprache.history.year1940.section1.p1') }}
               </p>
+
+              <CaptionImage
+                class="history-image"
+                src="imgs/boxkampf1949.webp"
+                :alt="
+                  $t('pages.leichteSprache.history.year1940.section1.imageAlt')
+                "
+              />
 
               <aside class="image-description">
                 <h5>
@@ -263,6 +289,14 @@
               <p>
                 {{ $t('pages.leichteSprache.history.year1940.section2.p2') }}
               </p>
+
+              <CaptionImage
+                class="history-image"
+                src="imgs/defaKastanienallee1954.webp"
+                :alt="
+                  $t('pages.leichteSprache.history.year1940.section2.imageAlt')
+                "
+              />
 
               <aside class="image-description">
                 <h5>
@@ -301,6 +335,14 @@
               </p>
             </div>
 
+            <CaptionImage
+              class="history-image"
+              src="imgs/arbeitenAufbauwerk1958.webp"
+              :alt="
+                $t('pages.leichteSprache.history.year1940.section3.imageAlt')
+              "
+            />
+
             <div class="history-subsection">
               <h4>
                 {{ $t('pages.leichteSprache.history.year1940.section4.h4') }}
@@ -334,6 +376,14 @@
                 </li>
               </ul>
             </div>
+
+            <CaptionImage
+              class="history-image"
+              src="imgs/skatspielerwiederoeffnung1960.webp"
+              :alt="
+                $t('pages.leichteSprache.history.year1940.section4.imageAlt')
+              "
+            />
 
             <div class="history-subsection">
               <h4>
@@ -399,6 +449,21 @@
               </p>
             </div>
 
+            <CaptionImage
+              class="history-image"
+              src="imgs/tanzPratergarten1980.webp"
+              :alt="
+                $t('pages.leichteSprache.history.year1940.section6.imageAlt1')
+              "
+            />
+            <CaptionImage
+              class="history-image"
+              src="imgs/konzertKindertag1986.webp"
+              :alt="
+                $t('pages.leichteSprache.history.year1940.section6.imageAlt2')
+              "
+            />
+
             <div class="history-subsection">
               <h4>
                 {{ $t('pages.leichteSprache.history.year1940.section7.h4') }}
@@ -411,6 +476,14 @@
               </p>
             </div>
 
+            <CaptionImage
+              class="history-image"
+              src="imgs/skipPahlerProblemAusstellung2021.webp"
+              :alt="
+                $t('pages.leichteSprache.history.year1940.section7.imageAlt')
+              "
+            />
+
             <div class="history-subsection">
               <h4>
                 {{ $t('pages.leichteSprache.history.year1940.section8.h4') }}
@@ -419,6 +492,14 @@
                 {{ $t('pages.leichteSprache.history.year1940.section8.p1') }}
               </p>
             </div>
+
+            <CaptionImage
+              class="history-image"
+              src="imgs/gatAusstellung1979.webp"
+              :alt="
+                $t('pages.leichteSprache.history.year1940.section8.imageAlt')
+              "
+            />
 
             <a
               href="#top"
@@ -506,6 +587,14 @@
               </p>
             </div>
 
+            <CaptionImage
+              class="history-image"
+              src="imgs/flyerFemmesWithFatalBreaks2000.webp"
+              :alt="
+                $t('pages.leichteSprache.history.year1989.section3.imageAlt')
+              "
+            />
+
             <div class="history-subsection">
               <h4>
                 {{ $t('pages.leichteSprache.history.year1989.section4.h4') }}
@@ -517,6 +606,14 @@
                 {{ $t('pages.leichteSprache.history.year1989.section4.p2') }}
               </p>
             </div>
+
+            <CaptionImage
+              class="history-image"
+              src="imgs/gaestebuchJetztHier2005.webp"
+              :alt="
+                $t('pages.leichteSprache.history.year1989.section4.imageAlt')
+              "
+            />
 
             <a
               href="#top"
@@ -629,16 +726,18 @@
                     $t('pages.leichteSprache.structure.header.menu.ul.l8.title')
                   }}</strong>
                   <span class="structure-label">
-                    <i18n-t
-                      keypath="pages.leichteSprache.structure.header.menu.ul.l8.description.text"
-                      tag="span"
-                    >
-                      <a href="#barrierefreiheit">{{
+                    <span
+                      >{{
                         $t(
-                          'pages.leichteSprache.structure.header.menu.ul.l8.description.link'
+                          'pages.leichteSprache.structure.header.menu.ul.l8.description.text'
                         )
-                      }}</a>
-                    </i18n-t>
+                      }} </span
+                    ><br />
+                    <a href="#barrierefreiheit">{{
+                      $t(
+                        'pages.leichteSprache.structure.header.menu.ul.l8.description.link'
+                      )
+                    }}</a>
                   </span>
                 </li>
                 <li>
@@ -785,38 +884,36 @@
           <div class="accessibility-subsection">
             <h3>{{ $t('pages.leichteSprache.accessibility.problems.h3') }}</h3>
             <p>{{ $t('pages.leichteSprache.accessibility.problems.p1') }}</p>
-            <p>
-              <i18n-t
-                keypath="pages.leichteSprache.accessibility.problems.phone.text"
-                tag="span"
+            <div class="problems-contact">
+              <span>
+                {{
+                  $t('pages.leichteSprache.accessibility.problems.phone.text')
+                }}
+              </span>
+              <a
+                class="dark"
+                :href="`tel:${t('pages.leichteSprache.accessibility.problems.phone.number')}`"
+                >{{
+                  $t('pages.leichteSprache.accessibility.problems.phone.number')
+                }}</a
               >
-                <a
-                  class="dark"
-                  :href="`tel:${t('pages.leichteSprache.accessibility.problems.phone.number')}`"
-                  >{{
-                    $t(
-                      'pages.leichteSprache.accessibility.problems.phone.number'
-                    )
-                  }}</a
-                >
-              </i18n-t>
-            </p>
-            <p>
-              <i18n-t
-                keypath="pages.leichteSprache.accessibility.problems.email.text"
-                tag="span"
+            </div>
+            <div class="problems-contact">
+              <span
+                >{{
+                  $t('pages.leichteSprache.accessibility.problems.email.text')
+                }}
+              </span>
+              <a
+                class="dark"
+                :href="`mailto:${t('pages.leichteSprache.accessibility.problems.email.address')}`"
+                >{{
+                  $t(
+                    'pages.leichteSprache.accessibility.problems.email.address'
+                  )
+                }}</a
               >
-                <a
-                  class="dark"
-                  :href="`mailto:${t('pages.leichteSprache.accessibility.problems.email.address')}`"
-                  >{{
-                    $t(
-                      'pages.leichteSprache.accessibility.problems.email.address'
-                    )
-                  }}</a
-                >
-              </i18n-t>
-            </p>
+            </div>
           </div>
 
           <div class="accessibility-subsection">
@@ -859,8 +956,8 @@
                       'pages.leichteSprache.accessibility.arbitration.contact.phone.number'
                     )
                   }}</a
-                > </i18n-t
-              ><br />
+                >
+              </i18n-t>
               <i18n-t
                 keypath="pages.leichteSprache.accessibility.arbitration.contact.email.text"
                 tag="span"
@@ -960,8 +1057,12 @@
     gap: var(--space-s-m);
   }
 
+  .history-image {
+    max-width: 70ch;
+  }
+
   .image-description {
-    width: max-content;
+    width: fit-content;
     padding: var(--space-s-m);
     margin-top: var(--space-xs);
     background-color: var(--color-white);
@@ -989,6 +1090,11 @@
     display: block;
   }
 
+  .problems-contact {
+    display: flex;
+    flex-direction: column;
+  }
+
   .accessibility-subsection {
     display: flex;
     flex-direction: column;
@@ -1005,7 +1111,6 @@
   a {
     font-family: var(--font-text);
     color: var(--color-black);
-    white-space: preserve nowrap;
     text-decoration: underline;
 
     &:hover,
@@ -1031,7 +1136,6 @@
 
     & span {
       display: block;
-      white-space: preserve nowrap;
 
       &:nth-child(1) {
         font-weight: 600;

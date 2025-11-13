@@ -1,13 +1,13 @@
 <script setup lang="ts">
   withDefaults(
     defineProps<{
-      caption: string
+      caption?: string
       src: string
       alt: string
       imgAttrs?: Record<string, string>
       textPosition?: string
     }>(),
-    { imgAttrs: () => ({}), textPosition: undefined }
+    { imgAttrs: () => ({}), textPosition: undefined, caption: undefined }
   )
 
   const isLightboxOpen = ref(false)
@@ -37,9 +37,11 @@
         <Icon name="mdi:magnify-plus-outline" />
       </button>
     </div>
-    <span :class="{ 'caption-inline': textPosition === 'inline' }">{{
-      caption
-    }}</span>
+    <span
+      v-if="caption"
+      :class="{ 'caption-inline': textPosition === 'inline' }"
+      >{{ caption }}</span
+    >
     <Lightbox
       :is-open="isLightboxOpen"
       :image-src="src"

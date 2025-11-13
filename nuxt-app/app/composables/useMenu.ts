@@ -14,6 +14,7 @@ export const useMenu = () => {
     'draft-stories-deleted',
     'draft-stories-submitted',
     'draft-stories-uuid',
+    'leichte-sprache',
     'moderation',
     'stories-slug',
   ]
@@ -32,6 +33,7 @@ export const useMenu = () => {
     'draft-stories-deleted',
     'draft-stories-submitted',
     'draft-stories-uuid',
+    'leichte-sprache',
     'moderation',
     'stories-slug',
   ]
