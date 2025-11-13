@@ -637,6 +637,13 @@
               <span class="structure-label">{{
                 $t('pages.leichteSprache.structure.header.logo.span1')
               }}</span>
+
+              <NuxtImg
+                class="structure-image"
+                src="logos/vom-prater-aus.svg"
+                :alt="$t('pages.leichteSprache.structure.header.logo.imageAlt')"
+              />
+
               <p>
                 {{ $t('pages.leichteSprache.structure.header.logo.span2') }}
               </p>
@@ -646,6 +653,13 @@
               <span class="structure-label">{{
                 $t('pages.leichteSprache.structure.header.menu.span1')
               }}</span>
+
+              <NuxtImg
+                class="structure-image"
+                src="imgs/menu-example.png"
+                :alt="$t('pages.leichteSprache.structure.header.menu.imageAlt')"
+              />
+
               <p>
                 {{ $t('pages.leichteSprache.structure.header.menu.span2') }}
               </p>
@@ -819,6 +833,15 @@
                 <span class="structure-label">{{
                   $t('pages.leichteSprache.structure.homepage.ul.l1.span')
                 }}</span>
+
+                <NuxtImg
+                  class="structure-image structure-image-button"
+                  src="imgs/button-1-example.png"
+                  :alt="
+                    $t('pages.leichteSprache.structure.homepage.ul.l1.imageAlt')
+                  "
+                />
+
                 <p>
                   {{ $t('pages.leichteSprache.structure.homepage.ul.l1.p') }}
                 </p>
@@ -830,6 +853,15 @@
                 <span class="structure-label">{{
                   $t('pages.leichteSprache.structure.homepage.ul.l2.span')
                 }}</span>
+
+                <NuxtImg
+                  class="structure-image structure-image-button"
+                  src="imgs/button-2-example.png"
+                  :alt="
+                    $t('pages.leichteSprache.structure.homepage.ul.l2.imageAlt')
+                  "
+                />
+
                 <p>
                   {{ $t('pages.leichteSprache.structure.homepage.ul.l2.p') }}
                 </p>
@@ -841,6 +873,15 @@
                 <span class="structure-label">{{
                   $t('pages.leichteSprache.structure.homepage.ul.l3.span')
                 }}</span>
+
+                <NuxtImg
+                  class="structure-image structure-image-button"
+                  src="imgs/button-3-example.png"
+                  :alt="
+                    $t('pages.leichteSprache.structure.homepage.ul.l3.imageAlt')
+                  "
+                />
+
                 <p>
                   {{ $t('pages.leichteSprache.structure.homepage.ul.l3.p') }}
                 </p>
@@ -1088,6 +1129,19 @@
 
   .structure-label {
     display: block;
+  }
+
+  .structure-image {
+    width: 85%;
+    max-width: 200px;
+    padding: var(--space-xs);
+    margin: var(--space-s) 0;
+    border-radius: 12px;
+    box-shadow: 2px 2px 20px var(--color-grey);
+  }
+
+  .structure-image-button {
+    max-width: 400px;
   }
 
   .problems-contact {

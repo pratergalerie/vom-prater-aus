@@ -831,10 +831,12 @@
           "h3": "Oberer Seiten-Teil",
           "logo": {
             "span1": "Ganz oben links ist immer dieses Logo:",
+            "imageAlt": "Logo aus rot-gelb-grünen, im Kreis angeordneten Formen auf hellgelbem Hintergrund, rechts darunter steht \"Vom Prater aus\".",
             "span2": "Dort kommen Sie zur Start-Seite. Sie verlassen dann den Leichte-Sprache-Bereich."
           },
           "menu": {
             "span1": "Ganz oben rechts ist immer dieses Menü:",
+            "imageAlt": "Drei weiße Querbalken auf blauem Hintergrund",
             "span2": "Beim Klick darauf öffnen sich diese Bereiche:",
             "ul": {
               "l1": {
@@ -903,16 +905,19 @@
             "l1": {
               "title": "Ein Ort voller Erinnerungen",
               "span": "Dort finden Sie diese Schalt-Fläche",
+              "imageAlt": "Schaltfläche mit der Aufschrift \"Erinnerungen entdecken\"",
               "p": "Beim Klick darauf können Sie die persönlichen Texte von anderen Menschen lesen. Diese Texte gibt es nicht in Leichter Sprache."
             },
             "l2": {
               "title": "Zur Geschichte des Berliner Praters",
               "span": "Dort finden Sie diese Schalt-Fläche:",
+              "imageAlt": "Schaltfläche mit der Aufschrift \"Über den Berliner Prater\"",
               "p": "Beim Klick darauf erfahren Sie mehr über die Geschichte des Berliner Praters. Diesen Text gibt es in Leichter Sprache."
             },
             "l3": {
               "title": "Erzähle deine Prater Erinnerung",
               "span": "Dort finden Sie diese Schalt-Fläche:",
+              "imageAlt": "Schaltfläche mit der Aufschrift \"Schreibe deine Erinnerung\"",
               "p": "Beim Klick darauf bekommen Sie die Möglichkeit, Ihre persönliche Erinnerung aufzuschreiben. Dafür müssen Sie unter anderem Ihre E-Mail-Adresse, Ihren Namen und den Titel Ihrer Geschichte angeben.Außerdem müssen Sie verschiedenen Bedingungen zustimmen, zum Beispiel den Nutzungs-Bedingungen der Internet-Seite."
             }
           }
