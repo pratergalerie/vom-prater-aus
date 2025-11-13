@@ -812,7 +812,13 @@
           "section3": {
             "h4": "Der „Bastard Club“",
             "p1": "Zwischen den Jahren 1999 und 2007 gibt es im Berliner Prater auch den „Bastard Club“. Der Betreiber des Clubs hat auch den Club „Maria am Ostbahnhof“ mitgegründet. Der „Bastard Club“ ist viel kleiner als der Club „Maria am Ostbahnhof“.",
-            "p2": "Viele verschiedene Menschen gehen in den „Bastard-Club“: Kultur-Produzent*innen, frühere Besucher*innen vom Prater und BIPoC-Künstler*innen. Das sind Menschen, die Rassismus und Diskriminierung erfahren haben und die sich dagegen einsetzen. BIPoC ist die Abkürzung von {0}B{1}lack, {0}I{1}ndigenous und {0}P{1}eople of {0}C{1}olour. Das ist Englisch und bedeutet „Menschen mit schwarzer Hautfarbe, Menschen der ursprünglichen Bevölkerung und Menschen mit nicht-weißer Hautfarbe“.",
+            "p2": {
+              "text": "Viele verschiedene Menschen gehen in den „Bastard-Club“: Kultur-Produzent*innen, frühere Besucher*innen vom Prater und BIPoC-Künstler*innen. Das sind Menschen, die Rassismus und Diskriminierung erfahren haben und die sich dagegen einsetzen. BIPoC ist die Abkürzung von {b}lack, {i}ndigenous und {p}eople of {c}olour. Das ist Englisch und bedeutet „Menschen mit schwarzer Hautfarbe, Menschen der ursprünglichen Bevölkerung und Menschen mit nicht-weißer Hautfarbe“.",
+              "b": "B",
+              "i": "I",
+              "p": "P",
+              "c": "C"
+            },
             "p3": "Unter anderem legt die Gruppe Femmes With Fatal Breaks Musik im „Bastard Club“ auf. Der Name ist eine Mischung aus Französisch und Englisch und bedeutet so viel wie „Frauen mit krassen Übergängen“. In der Gruppe sind nur Frauen und Menschen, die sich als Frauen fühlen. Ihre Auftritte heißen „Vollversammlung“.",
             "imageAlt": "Plakat zur ersten Geburtstagsfeier des Bastard Clubs mit dem Bild von vier jungen Frauen, die eine Torte mit der Aufschrift \"Femmes with fatal breaks\" in die Kamera halten."
           },

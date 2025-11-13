@@ -574,11 +574,31 @@
               </p>
               <p>
                 <i18n-t
-                  keypath="pages.leichteSprache.history.year1989.section3.p2"
+                  keypath="pages.leichteSprache.history.year1989.section3.p2.text"
                   tag="span"
                 >
-                  <template #0>
-                    <strong></strong>
+                  <template #b>
+                    <strong>{{
+                      $t('pages.leichteSprache.history.year1989.section3.p2.b')
+                    }}</strong>
+                  </template>
+
+                  <template #i>
+                    <strong>{{
+                      $t('pages.leichteSprache.history.year1989.section3.p2.i')
+                    }}</strong>
+                  </template>
+
+                  <template #p>
+                    <strong>{{
+                      $t('pages.leichteSprache.history.year1989.section3.p2.p')
+                    }}</strong>
+                  </template>
+
+                  <template #c>
+                    <strong>{{
+                      $t('pages.leichteSprache.history.year1989.section3.p2.c')
+                    }}</strong>
                   </template>
                 </i18n-t>
               </p>
