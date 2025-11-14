@@ -180,6 +180,7 @@
 
               <CaptionImage
                 class="history-image"
+                :caption="$t('images.postkarte1895.caption')"
                 src="imgs/postkarte1895.webp"
                 :alt="
                   $t('pages.leichteSprache.history.year1837.section2.imageAlt')
@@ -218,6 +219,7 @@
 
             <CaptionImage
               class="history-image"
+              :caption="$t('images.kaffeekueche1905.caption')"
               src="imgs/kaffeekueche1905.webp"
               :alt="
                 $t('pages.leichteSprache.history.year1837.section3.imageAlt')
@@ -248,6 +250,7 @@
 
               <CaptionImage
                 class="history-image"
+                :caption="$t('images.boxkampf1949.caption')"
                 src="imgs/boxkampf1949.webp"
                 :alt="
                   $t('pages.leichteSprache.history.year1940.section1.imageAlt')
@@ -292,6 +295,7 @@
 
               <CaptionImage
                 class="history-image"
+                :caption="$t('images.defaKastanienallee1954.caption')"
                 src="imgs/defaKastanienallee1954.webp"
                 :alt="
                   $t('pages.leichteSprache.history.year1940.section2.imageAlt')
@@ -337,6 +341,7 @@
 
             <CaptionImage
               class="history-image"
+              :caption="$t('images.arbeitenAufbauwerk1958.caption')"
               src="imgs/arbeitenAufbauwerk1958.webp"
               :alt="
                 $t('pages.leichteSprache.history.year1940.section3.imageAlt')
@@ -379,6 +384,7 @@
 
             <CaptionImage
               class="history-image"
+              :caption="$t('images.skatspielerwiederoeffnung1960.caption')"
               src="imgs/skatspielerwiederoeffnung1960.webp"
               :alt="
                 $t('pages.leichteSprache.history.year1940.section4.imageAlt')
@@ -451,6 +457,7 @@
 
             <CaptionImage
               class="history-image"
+              :caption="$t('images.tanzPratergarten1980.caption')"
               src="imgs/tanzPratergarten1980.webp"
               :alt="
                 $t('pages.leichteSprache.history.year1940.section6.imageAlt1')
@@ -458,6 +465,7 @@
             />
             <CaptionImage
               class="history-image"
+              :caption="$t('images.konzertKindertag1986.caption')"
               src="imgs/konzertKindertag1986.webp"
               :alt="
                 $t('pages.leichteSprache.history.year1940.section6.imageAlt2')
@@ -478,6 +486,7 @@
 
             <CaptionImage
               class="history-image"
+              :caption="$t('images.skipPahlerProblemAusstellung2021.caption')"
               src="imgs/skipPahlerProblemAusstellung2021.webp"
               :alt="
                 $t('pages.leichteSprache.history.year1940.section7.imageAlt')
@@ -495,6 +504,7 @@
 
             <CaptionImage
               class="history-image"
+              :caption="$t('images.gatAusstellung1979.caption')"
               src="imgs/gatAusstellung1979.webp"
               :alt="
                 $t('pages.leichteSprache.history.year1940.section8.imageAlt')
@@ -609,6 +619,7 @@
 
             <CaptionImage
               class="history-image"
+              :caption="$t('images.flyerFemmesWithFatalBreaks2000.caption')"
               src="imgs/flyerFemmesWithFatalBreaks2000.webp"
               :alt="
                 $t('pages.leichteSprache.history.year1989.section3.imageAlt')
@@ -629,6 +640,7 @@
 
             <CaptionImage
               class="history-image"
+              :caption="$t('images.gaestebuchJetztHier2005.caption')"
               src="imgs/gaestebuchJetztHier2005.webp"
               :alt="
                 $t('pages.leichteSprache.history.year1989.section4.imageAlt')
