@@ -77,32 +77,19 @@
     font-size: var(--step-1);
     cursor: pointer;
     border: unset;
+    box-shadow: -2px 2px 0 var(--color-black);
     opacity: 0.8;
-    clip-path: polygon(
-      0% 10%,
-      9.22% 5.3%,
-      21.5% -0.13%,
-      47.76% 3.25%,
-      98.35% 4%,
-      98.64% 76.25%,
-      97.26% 89.26%,
-      87.73% 91.73%,
-      72.85% 94.85%,
-      54.69% 87.69%,
-      46.76% 92.76%,
-      26.98% 90.98%,
-      6.26% 90.26%,
-      0% 73.2%,
-      0% 100%
-    );
+    transition: all 200ms ease-in-out;
+
+    @media screen and (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
 
     &:hover,
     &:focus {
+      box-shadow: -4px 4px 0 var(--color-black);
       opacity: 1;
-    }
-
-    :deep(svg) {
-      pointer-events: none;
+      transform: scale(1.05);
     }
   }
 
