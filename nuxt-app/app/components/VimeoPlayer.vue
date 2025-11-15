@@ -16,6 +16,7 @@
 <style scoped>
   .vimeo-player {
     position: relative;
+    z-index: 500;
     width: 100%;
     min-width: 300px;
     aspect-ratio: 16/9;
