@@ -1,5 +1,6 @@
 export const useMenu = () => {
   const isOpen = useState('opened', () => false)
+  const toggleButtonRef = useState<HTMLElement | null>('menuToggleRef', () => null)
 
   function toggleMenu() {
     isOpen.value = !isOpen.value
@@ -90,6 +91,7 @@ export const useMenu = () => {
   return {
     isOpen,
     toggleMenu,
+    toggleButtonRef,
     menuRoutes,
     footerRoutes,
   }

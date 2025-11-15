@@ -29,6 +29,7 @@
     "embla-carousel": "^8.6.0",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-vue": "^8.6.0",
+    "focus-trap-vue": "^4.1.0",
     "happy-dom": "^17.4.7",
     "jsonwebtoken": "^9.0.2",
     "localforage": "^1.10.0",

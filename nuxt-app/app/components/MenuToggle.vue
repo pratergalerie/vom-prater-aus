@@ -1,5 +1,10 @@
 <script setup lang="ts">
-  const { isOpen, toggleMenu } = useMenu()
+  const { isOpen, toggleMenu, toggleButtonRef } = useMenu()
+  const buttonRef = ref<HTMLButtonElement>()
+
+  onMounted(() => {
+    toggleButtonRef.value = buttonRef.value || null
+  })
 
   function handleToggleMenu() {
     if (!isOpen.value) {
@@ -12,7 +17,9 @@
 
 <template>
   <button
+    ref="buttonRef"
     aria-label="Menu"
+    :aria-expanded="isOpen"
     @click="handleToggleMenu"
   >
     <div

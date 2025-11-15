@@ -1,7 +1,8 @@
 <script setup lang="ts">
   const illustrationImage = ref<string>('')
 
-  const { isOpen, toggleMenu, menuRoutes } = useMenu()
+  const { isOpen, toggleMenu, toggleButtonRef, menuRoutes } = useMenu()
+  const menuRef = ref<HTMLElement>()
 
   function chooseRandomMenuImage() {
     const randomImage = Math.floor(Math.random() * 4) + 1
@@ -148,6 +149,40 @@
     }, 75)
   }
 
+  // Focus trap logic
+  function getFocusableElements() {
+    if (!menuRef.value) return []
+    const selector =
+      'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    return Array.from(menuRef.value.querySelectorAll(selector)) as HTMLElement[]
+  }
+
+  function handleTabKey(e: KeyboardEvent) {
+    if (!isOpen.value) return
+
+    const focusableElements = getFocusableElements()
+    if (focusableElements.length === 0) return
+
+    const firstElement = focusableElements[0]
+    const lastElement = focusableElements[focusableElements.length - 1]
+
+    if (!firstElement || !lastElement) return
+
+    if (e.shiftKey) {
+      // Shift + Tab
+      if (document.activeElement === firstElement) {
+        e.preventDefault()
+        lastElement.focus()
+      }
+    } else {
+      // Tab
+      if (document.activeElement === lastElement) {
+        e.preventDefault()
+        firstElement.focus()
+      }
+    }
+  }
+
   watch(isOpen, async (open) => {
     if (open) {
       chooseRandomMenuImage()
@@ -155,8 +190,18 @@
       await nextTick()
       revealIllustration.value = true
       animateMenuClipPath(true)
+      // Focus first element after menu is visible
+      await nextTick()
+      const focusableElements = getFocusableElements()
+      if (focusableElements.length > 0) {
+        focusableElements[0]?.focus()
+      }
     } else {
       isTransitioning.value = true
+      // Restore focus to toggle button
+      if (toggleButtonRef.value) {
+        toggleButtonRef.value.focus()
+      }
       // First animate the illustration out
       animateIllustrationClipPath(false)
       // Then after illustration animation completes, animate the menu out
@@ -174,6 +219,23 @@
   function closeMenu() {
     toggleMenu()
   }
+
+  // Handle keyboard events
+  onMounted(() => {
+    const handleKeydown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isOpen.value) {
+        closeMenu()
+      } else if (event.key === 'Tab') {
+        handleTabKey(event)
+      }
+    }
+
+    window.addEventListener('keydown', handleKeydown)
+
+    onUnmounted(() => {
+      window.removeEventListener('keydown', handleKeydown)
+    })
+  })
 </script>
 
 <template>
@@ -204,6 +266,7 @@
         />
       </div>
       <menu
+        ref="menuRef"
         aria-label="Menu"
         :style="{
           clipPath: menuClipPath,
