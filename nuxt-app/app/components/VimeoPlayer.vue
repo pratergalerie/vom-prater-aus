@@ -14,8 +14,8 @@
 
   interface VimeoLibrary {
     Player: new (
-      element: HTMLElement,
-      options?: { id: number; responsive: boolean }
+      element: string | HTMLElement | HTMLIFrameElement,
+      options?: Player.Options | undefined
     ) => Player
   }
 
