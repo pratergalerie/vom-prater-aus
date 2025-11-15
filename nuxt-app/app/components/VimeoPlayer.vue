@@ -1,6 +1,7 @@
 <script setup lang="ts">
   defineProps<{
     id: number
+    aboveTheFold?: boolean
   }>()
 </script>
 
@@ -8,6 +9,7 @@
   <ScriptVimeoPlayer
     :id="id"
     class="vimeo-player"
+    :above-the-fold
   />
 </template>
 

@@ -58,12 +58,15 @@
 
     <div class="videos-container">
       <section
-        v-for="video in videos"
+        v-for="(video, index) in videos"
         :key="video.key"
         class="video-section"
       >
         <h2>{{ video.title }}</h2>
-        <VimeoPlayer :id="video.videoId" />
+        <VimeoPlayer
+          :id="video.videoId"
+          :above-the-fold="index === 0"
+        />
       </section>
     </div>
   </div>
