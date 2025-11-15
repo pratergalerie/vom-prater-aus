@@ -982,6 +982,94 @@
           "a": "zurück zur Inhalts-Übersicht"
         }
       }
+    },
+    "dgs": {
+      "title": "Deutsche Gebärdensprache (DGS)",
+      "fischSigns": {
+        "text": "Die Videos in Gebärdensprache wurden von {0}.",
+        "link": {
+          "text": "FISCHSIGNS - Agentur für Gebärdensprachvideos erstellt",
+          "url": "https://www.fischsigns.de"
+        }
+      },
+      "videos": {
+        "about": {
+          "title": "Über das Projekt",
+          "videoId": "1136100091"
+        },
+        "navigation": {
+          "title": "Navigation der Website",
+          "videoId": "1136100305"
+        },
+        "accessibility": {
+          "title": "Erklärung zur digitalen Barrierefreiheit",
+          "videoId": "1136100614"
+        },
+        "history": {
+          "title": "Zur Geschichte des Berliner Praters",
+          "videoId": "1136100970"
+        },
+        "beginnings": {
+          "title": "Die Anfänge des Berliner Praters",
+          "videoId": "1136101112"
+        },
+        "coffeeKitchen": {
+          "title": "Die Kaffeeküche",
+          "videoId": "1136101316"
+        },
+        "gardenLocations": {
+          "title": "Berliner Gartenlokale",
+          "videoId": "1136101491"
+        },
+        "boxingMatches": {
+          "title": "Boxkämpfe im Pratergarten",
+          "videoId": "1136101632"
+        },
+        "defaPremiere": {
+          "title": "Das DEFA Premierenkino",
+          "videoId": "1136101803"
+        },
+        "renovation": {
+          "title": "Umbau des Pratergartens",
+          "videoId": "1136102002"
+        },
+        "reopening": {
+          "title": "Wiedereröffnung nach dem Umbau",
+          "videoId": "1136102132"
+        },
+        "openAirStage": {
+          "title": "Die Freilichtbühne",
+          "videoId": "1136102307"
+        },
+        "firstGallery": {
+          "title": "Die erste Galerie am Prater",
+          "videoId": "1136102626"
+        },
+        "districtCulturalCenter": {
+          "title": "Das Kreiskulturhaus",
+          "videoId": "1136102819"
+        },
+        "galleryAtPrater": {
+          "title": "Galerie am Prater",
+          "videoId": "1136103002"
+        },
+        "constructionWork": {
+          "title": "Bauarbeiten nach der Wende",
+          "videoId": "1136103136"
+        },
+        "chance2000": {
+          "title": "Chance 2000 von Christoph Schlingensief",
+          "videoId": "1136103315"
+        },
+        "bastardClub": {
+          "title": "Der Bastard Club",
+          "videoId": "1136103474"
+        },
+        "galleryInPrater": {
+          "title": "Galerie im Prater",
+          "videoId": "1136103641"
+        }
+      }
     }
   },
   "languages": {

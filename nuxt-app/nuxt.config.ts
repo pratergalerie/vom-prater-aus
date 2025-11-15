@@ -67,6 +67,7 @@ export default defineNuxtConfig({
     '@hypernym/nuxt-anime',
     '@nuxtjs/strapi',
     '@vee-validate/nuxt',
+    '@nuxt/scripts',
   ],
 
   image: {
@@ -129,4 +130,10 @@ export default defineNuxtConfig({
   },
 
   strapi: {},
+
+  scripts: {
+    registry: {
+      vimeoPlayer: true,
+    },
+  },
 })

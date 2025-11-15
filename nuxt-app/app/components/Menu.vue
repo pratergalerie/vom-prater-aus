@@ -254,9 +254,8 @@
                 </li>
 
                 <li>
-                  <!-- TODO: Add link -->
                   <NuxtLink
-                    to="/"
+                    to="/dgs"
                     @click="closeMenu"
                   >
                     {{ $t('components.menu.nav.dgs') }}

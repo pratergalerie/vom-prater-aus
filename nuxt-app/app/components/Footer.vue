@@ -46,8 +46,7 @@
                 </li>
 
                 <li>
-                  <!-- TODO: Add link -->
-                  <NuxtLink to="/">
+                  <NuxtLink to="/dgs">
                     {{ $t('components.menu.nav.dgs') }}
                     <Icon name="mdi:sign-language-outline" />
                   </NuxtLink>
