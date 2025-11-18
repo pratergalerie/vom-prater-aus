@@ -14,7 +14,13 @@
 
     <div class="intro">
       <span class="welcome">{{ $t('pages.leichteSprache.intro.span') }}</span>
-      <p>{{ $t('pages.leichteSprache.intro.p') }}</p>
+
+      <i18n-t
+        keypath="pages.leichteSprache.intro.p"
+        tag="p"
+      >
+        <br class="leichte-sprache-break" />
+      </i18n-t>
 
       <section>
         <span>{{
@@ -52,9 +58,12 @@
         </ol>
       </section>
 
-      <p>
-        {{ $t('pages.leichteSprache.intro.capitoBerlin.p1') }}
-      </p>
+      <i18n-t
+        keypath="pages.leichteSprache.intro.capitoBerlin.p1"
+        tag="p"
+      >
+        <br class="leichte-sprache-break" />
+      </i18n-t>
     </div>
 
     <div class="sections">
@@ -63,7 +72,12 @@
         <h2>{{ $t('pages.leichteSprache.project.h2') }}</h2>
 
         <div class="section-content">
-          <p>{{ $t('pages.leichteSprache.project.p1') }}</p>
+          <i18n-t
+            keypath="pages.leichteSprache.project.p1"
+            tag="p"
+          >
+            <br class="leichte-sprache-break" />
+          </i18n-t>
 
           <ul>
             <li>
@@ -92,12 +106,40 @@
             </li>
           </ul>
 
-          <p>{{ $t('pages.leichteSprache.project.p2') }}</p>
-          <p>{{ $t('pages.leichteSprache.project.p3') }}</p>
-          <p>{{ $t('pages.leichteSprache.project.p4') }}</p>
-          <p>{{ $t('pages.leichteSprache.project.p5') }}</p>
+          <i18n-t
+            keypath="pages.leichteSprache.project.p2"
+            tag="p"
+          >
+            <br class="leichte-sprache-break" />
+          </i18n-t>
 
-          <p>{{ $t('pages.leichteSprache.project.p6') }}</p>
+          <i18n-t
+            keypath="pages.leichteSprache.project.p3"
+            tag="p"
+          >
+            <br class="leichte-sprache-break" />
+          </i18n-t>
+
+          <i18n-t
+            keypath="pages.leichteSprache.project.p4"
+            tag="p"
+          >
+            <br class="leichte-sprache-break" />
+          </i18n-t>
+
+          <i18n-t
+            keypath="pages.leichteSprache.project.p5"
+            tag="p"
+          >
+            <br class="leichte-sprache-break" />
+          </i18n-t>
+
+          <i18n-t
+            keypath="pages.leichteSprache.project.p6"
+            tag="p"
+          >
+            <br class="leichte-sprache-break" />
+          </i18n-t>
 
           <ul>
             <li>{{ $t('pages.leichteSprache.project.ul2.li1') }}</li>
@@ -107,7 +149,12 @@
             <li>{{ $t('pages.leichteSprache.project.ul2.l5') }}</li>
           </ul>
 
-          <p>{{ $t('pages.leichteSprache.project.p7') }}</p>
+          <i18n-t
+            keypath="pages.leichteSprache.project.p7"
+            tag="p"
+          >
+            <br class="leichte-sprache-break" />
+          </i18n-t>
 
           <a
             href="#top"
@@ -122,7 +169,12 @@
         <h2>{{ $t('pages.leichteSprache.history.h2') }}</h2>
 
         <div class="section-content">
-          <p>{{ $t('pages.leichteSprache.history.p1') }}</p>
+          <i18n-t
+            keypath="pages.leichteSprache.history.p1"
+            tag="p"
+          >
+            <br class="leichte-sprache-break" />
+          </i18n-t>
 
           <section>
             <ol>
@@ -161,24 +213,40 @@
               <h4>
                 {{ $t('pages.leichteSprache.history.year1837.section1.h4') }}
               </h4>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1837.section1.p1') }}
-              </p>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1837.section1.p2') }}
-              </p>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1837.section1.p1"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1837.section1.p2"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
             </div>
 
             <div class="history-subsection">
               <h4>
                 {{ $t('pages.leichteSprache.history.year1837.section2.h4') }}
               </h4>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1837.section2.p1') }}
-              </p>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1837.section2.p2') }}
-              </p>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1837.section2.p1"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1837.section2.p2"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
 
               <CaptionImage
                 class="history-image"
@@ -197,13 +265,13 @@
                     )
                   }}
                 </h5>
-                <p>
-                  {{
-                    $t(
-                      'pages.leichteSprache.history.year1837.section2.imageDescription.p1'
-                    )
-                  }}
-                </p>
+
+                <i18n-t
+                  keypath="pages.leichteSprache.history.year1837.section2.imageDescription.p1"
+                  tag="p"
+                >
+                  <br class="leichte-sprache-break" />
+                </i18n-t>
               </aside>
             </div>
 
@@ -211,12 +279,20 @@
               <h4>
                 {{ $t('pages.leichteSprache.history.year1837.section3.h4') }}
               </h4>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1837.section3.p1') }}
-              </p>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1837.section3.p2') }}
-              </p>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1837.section3.p1"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1837.section3.p2"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
             </div>
 
             <CaptionImage
@@ -246,9 +322,13 @@
               <h4>
                 {{ $t('pages.leichteSprache.history.year1940.section1.h4') }}
               </h4>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1940.section1.p1') }}
-              </p>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1940.section1.p1"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
 
               <CaptionImage
                 class="history-image"
@@ -267,20 +347,20 @@
                     )
                   }}
                 </h5>
-                <p>
-                  {{
-                    $t(
-                      'pages.leichteSprache.history.year1940.section1.imageDescription.p1'
-                    )
-                  }}
-                </p>
-                <p>
-                  {{
-                    $t(
-                      'pages.leichteSprache.history.year1940.section1.imageDescription.p2'
-                    )
-                  }}
-                </p>
+
+                <i18n-t
+                  keypath="pages.leichteSprache.history.year1940.section1.imageDescription.p1"
+                  tag="p"
+                >
+                  <br class="leichte-sprache-break" />
+                </i18n-t>
+
+                <i18n-t
+                  keypath="pages.leichteSprache.history.year1940.section1.imageDescription.p2"
+                  tag="p"
+                >
+                  <br class="leichte-sprache-break" />
+                </i18n-t>
               </aside>
             </div>
 
@@ -288,12 +368,20 @@
               <h4>
                 {{ $t('pages.leichteSprache.history.year1940.section2.h4') }}
               </h4>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1940.section2.p1') }}
-              </p>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1940.section2.p2') }}
-              </p>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1940.section2.p1"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1940.section2.p2"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
 
               <CaptionImage
                 class="history-image"
@@ -312,20 +400,20 @@
                     )
                   }}
                 </h5>
-                <p>
-                  {{
-                    $t(
-                      'pages.leichteSprache.history.year1940.section2.imageDescription.p1'
-                    )
-                  }}
-                </p>
-                <p>
-                  {{
-                    $t(
-                      'pages.leichteSprache.history.year1940.section2.imageDescription.p2'
-                    )
-                  }}
-                </p>
+
+                <i18n-t
+                  keypath="pages.leichteSprache.history.year1940.section2.imageDescription.p1"
+                  tag="p"
+                >
+                  <br class="leichte-sprache-break" />
+                </i18n-t>
+
+                <i18n-t
+                  keypath="pages.leichteSprache.history.year1940.section2.imageDescription.p2"
+                  tag="p"
+                >
+                  <br class="leichte-sprache-break" />
+                </i18n-t>
               </aside>
             </div>
 
@@ -333,12 +421,20 @@
               <h4>
                 {{ $t('pages.leichteSprache.history.year1940.section3.h4') }}
               </h4>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1940.section3.p1') }}
-              </p>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1940.section3.p2') }}
-              </p>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1940.section3.p1"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1940.section3.p2"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
             </div>
 
             <CaptionImage
@@ -354,12 +450,21 @@
               <h4>
                 {{ $t('pages.leichteSprache.history.year1940.section4.h4') }}
               </h4>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1940.section4.p1') }}
-              </p>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1940.section4.p2') }}
-              </p>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1940.section4.p1"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1940.section4.p2"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
+
               <ul>
                 <li>
                   {{
@@ -397,24 +502,41 @@
               <h4>
                 {{ $t('pages.leichteSprache.history.year1940.section5.h4') }}
               </h4>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1940.section5.p1') }}
-              </p>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1940.section5.p2') }}
-              </p>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1940.section5.p3') }}
-              </p>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1940.section5.p1"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1940.section5.p2"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1940.section5.p3"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
             </div>
 
             <div class="history-subsection">
               <h4>
                 {{ $t('pages.leichteSprache.history.year1940.section6.h4') }}
               </h4>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1940.section6.p1') }}
-              </p>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1940.section6.p1"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
+
               <ul>
                 <li>
                   {{
@@ -452,9 +574,13 @@
                   }}
                 </li>
               </ul>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1940.section6.p2') }}
-              </p>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1940.section6.p2"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
             </div>
 
             <CaptionImage
@@ -478,12 +604,20 @@
               <h4>
                 {{ $t('pages.leichteSprache.history.year1940.section7.h4') }}
               </h4>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1940.section7.p1') }}
-              </p>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1940.section7.p2') }}
-              </p>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1940.section7.p1"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1940.section7.p2"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
             </div>
 
             <CaptionImage
@@ -499,9 +633,13 @@
               <h4>
                 {{ $t('pages.leichteSprache.history.year1940.section8.h4') }}
               </h4>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1940.section8.p1') }}
-              </p>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1940.section8.p1"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
             </div>
 
             <CaptionImage
@@ -531,33 +669,76 @@
               <h4>
                 {{ $t('pages.leichteSprache.history.year1989.section1.h4') }}
               </h4>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1989.section1.p1') }}
-              </p>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1989.section1.p2') }}
-              </p>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1989.section1.p3') }}
-              </p>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1989.section1.p4') }}
-              </p>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1989.section1.p1"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1989.section1.p1"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1989.section1.p2"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1989.section1.p3"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1989.section1.p4"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
             </div>
 
             <div class="history-subsection">
               <h4>
                 {{ $t('pages.leichteSprache.history.year1989.section2.h4') }}
               </h4>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1989.section2.p1') }}
-              </p>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1989.section2.p2') }}
-              </p>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1989.section2.p3') }}
-              </p>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1989.section2.p1"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1989.section2.p1"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1989.section2.p2"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1989.section2.p3"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
+
               <ul>
                 <li>
                   {{
@@ -581,14 +762,23 @@
               <h4>
                 {{ $t('pages.leichteSprache.history.year1989.section3.h4') }}
               </h4>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1989.section3.p1') }}
-              </p>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1989.section3.p1"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
+
               <p>
                 <i18n-t
                   keypath="pages.leichteSprache.history.year1989.section3.p2.text"
                   tag="span"
                 >
+                  <template #lb>
+                    <br class="leichte-sprache-break" />
+                  </template>
+
                   <template #b>
                     <strong>{{
                       $t('pages.leichteSprache.history.year1989.section3.p2.b')
@@ -614,9 +804,13 @@
                   </template>
                 </i18n-t>
               </p>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1989.section3.p3') }}
-              </p>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1989.section3.p3"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
             </div>
 
             <CaptionImage
@@ -632,12 +826,20 @@
               <h4>
                 {{ $t('pages.leichteSprache.history.year1989.section4.h4') }}
               </h4>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1989.section4.p1') }}
-              </p>
-              <p>
-                {{ $t('pages.leichteSprache.history.year1989.section4.p2') }}
-              </p>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1989.section4.p1"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
+
+              <i18n-t
+                keypath="pages.leichteSprache.history.year1989.section4.p2"
+                tag="p"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
             </div>
 
             <CaptionImage
@@ -678,9 +880,12 @@
                 :alt="$t('pages.leichteSprache.structure.header.logo.imageAlt')"
               />
 
-              <p>
-                {{ $t('pages.leichteSprache.structure.header.logo.span2') }}
-              </p>
+              <i18n-t
+                keypath="pages.leichteSprache.structure.header.logo.span2"
+                tag="span"
+              >
+                <br class="leichte-sprache-break" />
+              </i18n-t>
             </div>
 
             <div class="structure-item">
@@ -703,148 +908,197 @@
                   <strong>{{
                     $t('pages.leichteSprache.structure.header.menu.ul.l1.title')
                   }}</strong>
+
                   <span class="structure-label">{{
                     $t(
                       'pages.leichteSprache.structure.header.menu.ul.l1.description'
                     )
                   }}</span>
                 </li>
+
                 <li>
                   <strong>{{
                     $t('pages.leichteSprache.structure.header.menu.ul.l2.title')
                   }}</strong>
-                  <span class="structure-label">{{
-                    $t(
-                      'pages.leichteSprache.structure.header.menu.ul.l2.description'
-                    )
-                  }}</span>
+
+                  <i18n-t
+                    class="structure-label"
+                    keypath="pages.leichteSprache.structure.header.menu.ul.l2.description"
+                    tag="span"
+                  >
+                    <br class="leichte-sprache-break" />
+                  </i18n-t>
                 </li>
+
                 <li>
                   <strong>{{
                     $t('pages.leichteSprache.structure.header.menu.ul.l3.title')
                   }}</strong>
-                  <span class="structure-label">{{
-                    $t(
-                      'pages.leichteSprache.structure.header.menu.ul.l3.description'
-                    )
-                  }}</span>
+
+                  <i18n-t
+                    class="structure-label"
+                    keypath="pages.leichteSprache.structure.header.menu.ul.l3.description"
+                    tag="span"
+                  >
+                    <br class="leichte-sprache-break" />
+                  </i18n-t>
                 </li>
+
                 <li>
                   <strong>{{
                     $t('pages.leichteSprache.structure.header.menu.ul.l4.title')
                   }}</strong>
-                  <span class="structure-label">{{
-                    $t(
-                      'pages.leichteSprache.structure.header.menu.ul.l4.description'
-                    )
-                  }}</span>
+
+                  <i18n-t
+                    class="structure-label"
+                    keypath="pages.leichteSprache.structure.header.menu.ul.l4.description"
+                    tag="span"
+                  >
+                    <br class="leichte-sprache-break" />
+                  </i18n-t>
                 </li>
+
                 <li>
                   <strong>{{
                     $t('pages.leichteSprache.structure.header.menu.ul.l5.title')
                   }}</strong>
-                  <span class="structure-label">{{
-                    $t(
-                      'pages.leichteSprache.structure.header.menu.ul.l5.description'
-                    )
-                  }}</span>
+
+                  <i18n-t
+                    class="structure-label"
+                    keypath="pages.leichteSprache.structure.header.menu.ul.l5.description"
+                    tag="span"
+                  >
+                    <br class="leichte-sprache-break" />
+                  </i18n-t>
                 </li>
+
                 <li>
                   <strong>{{
                     $t('pages.leichteSprache.structure.header.menu.ul.l6.title')
                   }}</strong>
-                  <span class="structure-label">{{
-                    $t(
-                      'pages.leichteSprache.structure.header.menu.ul.l6.description'
-                    )
-                  }}</span>
+
+                  <i18n-t
+                    class="structure-label"
+                    keypath="pages.leichteSprache.structure.header.menu.ul.l6.description"
+                    tag="span"
+                  >
+                    <br class="leichte-sprache-break" />
+                  </i18n-t>
                 </li>
+
                 <li>
                   <strong>{{
                     $t('pages.leichteSprache.structure.header.menu.ul.l7.title')
                   }}</strong>
-                  <span class="structure-label">{{
-                    $t(
-                      'pages.leichteSprache.structure.header.menu.ul.l7.description'
-                    )
-                  }}</span>
+
+                  <i18n-t
+                    class="structure-label"
+                    keypath="pages.leichteSprache.structure.header.menu.ul.l7.description"
+                    tag="span"
+                  >
+                    <br class="leichte-sprache-break" />
+                  </i18n-t>
                 </li>
+
                 <li>
                   <strong>{{
                     $t('pages.leichteSprache.structure.header.menu.ul.l8.title')
                   }}</strong>
-                  <span class="structure-label">
-                    <span
-                      >{{
+                  <i18n-t
+                    class="structure-label"
+                    keypath="pages.leichteSprache.structure.header.menu.ul.l8.description.text"
+                    tag="span"
+                  >
+                    <template #lb>
+                      <br class="leichte-sprache-break" />
+                    </template>
+
+                    <template #link>
+                      <a href="#barrierefreiheit">{{
                         $t(
-                          'pages.leichteSprache.structure.header.menu.ul.l8.description.text'
+                          'pages.leichteSprache.structure.header.menu.ul.l8.description.link'
                         )
-                      }} </span
-                    ><br />
-                    <a href="#barrierefreiheit">{{
-                      $t(
-                        'pages.leichteSprache.structure.header.menu.ul.l8.description.link'
-                      )
-                    }}</a>
-                  </span>
+                      }}</a>
+                    </template>
+                  </i18n-t>
                 </li>
+
                 <li>
                   <strong>{{
                     $t('pages.leichteSprache.structure.header.menu.ul.l9.title')
                   }}</strong>
-                  <span class="structure-label">{{
-                    $t(
-                      'pages.leichteSprache.structure.header.menu.ul.l9.description'
-                    )
-                  }}</span>
+
+                  <i18n-t
+                    class="structure-label"
+                    keypath="pages.leichteSprache.structure.header.menu.ul.l9.description"
+                    tag="span"
+                  >
+                    <br class="leichte-sprache-break" />
+                  </i18n-t>
                 </li>
+
                 <li>
                   <strong>{{
                     $t(
                       'pages.leichteSprache.structure.header.menu.ul.l10.title'
                     )
                   }}</strong>
-                  <span class="structure-label">{{
-                    $t(
-                      'pages.leichteSprache.structure.header.menu.ul.l10.description'
-                    )
-                  }}</span>
+
+                  <i18n-t
+                    class="structure-label"
+                    keypath="pages.leichteSprache.structure.header.menu.ul.l10.description"
+                    tag="span"
+                  >
+                    <br class="leichte-sprache-break" />
+                  </i18n-t>
                 </li>
+
                 <li>
                   <strong>{{
                     $t(
                       'pages.leichteSprache.structure.header.menu.ul.l11.title'
                     )
                   }}</strong>
-                  <span class="structure-label">{{
-                    $t(
-                      'pages.leichteSprache.structure.header.menu.ul.l11.description'
-                    )
-                  }}</span>
+
+                  <i18n-t
+                    class="structure-label"
+                    keypath="pages.leichteSprache.structure.header.menu.ul.l11.description"
+                    tag="span"
+                  >
+                    <br class="leichte-sprache-break" />
+                  </i18n-t>
                 </li>
+
                 <li>
                   <strong>{{
                     $t(
                       'pages.leichteSprache.structure.header.menu.ul.l12.title'
                     )
                   }}</strong>
-                  <span class="structure-label">{{
-                    $t(
-                      'pages.leichteSprache.structure.header.menu.ul.l12.description'
-                    )
-                  }}</span>
+
+                  <i18n-t
+                    class="structure-label"
+                    keypath="pages.leichteSprache.structure.header.menu.ul.l12.description"
+                    tag="span"
+                  >
+                    <br class="leichte-sprache-break" />
+                  </i18n-t>
                 </li>
+
                 <li>
                   <strong>{{
                     $t(
                       'pages.leichteSprache.structure.header.menu.ul.l13.title'
                     )
                   }}</strong>
-                  <span class="structure-label">{{
-                    $t(
-                      'pages.leichteSprache.structure.header.menu.ul.l13.description'
-                    )
-                  }}</span>
+
+                  <i18n-t
+                    class="structure-label"
+                    keypath="pages.leichteSprache.structure.header.menu.ul.l13.description"
+                    tag="span"
+                  >
+                    <br class="leichte-sprache-break" />
+                  </i18n-t>
                 </li>
               </ul>
             </div>
@@ -853,7 +1107,13 @@
           <!-- Homepage -->
           <div class="structure-subsection">
             <h3>{{ $t('pages.leichteSprache.structure.homepage.h3') }}</h3>
-            <p>{{ $t('pages.leichteSprache.structure.homepage.p') }}</p>
+
+            <i18n-t
+              keypath="pages.leichteSprache.structure.homepage.p"
+              tag="p"
+            >
+              <br class="leichte-sprache-break" />
+            </i18n-t>
 
             <span class="structure-label">{{
               $t('pages.leichteSprache.structure.homepage.span')
@@ -864,6 +1124,7 @@
                 <strong>{{
                   $t('pages.leichteSprache.structure.homepage.ul.l1.title')
                 }}</strong>
+
                 <span class="structure-label">{{
                   $t('pages.leichteSprache.structure.homepage.ul.l1.span')
                 }}</span>
@@ -876,9 +1137,12 @@
                   "
                 />
 
-                <p>
-                  {{ $t('pages.leichteSprache.structure.homepage.ul.l1.p') }}
-                </p>
+                <i18n-t
+                  keypath="pages.leichteSprache.structure.homepage.ul.l1.p"
+                  tag="p"
+                >
+                  <br class="leichte-sprache-break" />
+                </i18n-t>
               </li>
               <li>
                 <strong>{{
@@ -896,9 +1160,12 @@
                   "
                 />
 
-                <p>
-                  {{ $t('pages.leichteSprache.structure.homepage.ul.l2.p') }}
-                </p>
+                <i18n-t
+                  keypath="pages.leichteSprache.structure.homepage.ul.l2.p"
+                  tag="p"
+                >
+                  <br class="leichte-sprache-break" />
+                </i18n-t>
               </li>
               <li>
                 <strong>{{
@@ -916,9 +1183,12 @@
                   "
                 />
 
-                <p>
-                  {{ $t('pages.leichteSprache.structure.homepage.ul.l3.p') }}
-                </p>
+                <i18n-t
+                  keypath="pages.leichteSprache.structure.homepage.ul.l3.p"
+                  tag="p"
+                >
+                  <br class="leichte-sprache-break" />
+                </i18n-t>
               </li>
             </ul>
           </div>
@@ -926,8 +1196,20 @@
           <!-- Footer -->
           <div class="structure-subsection">
             <h3>{{ $t('pages.leichteSprache.structure.footer.h3') }}</h3>
-            <p>{{ $t('pages.leichteSprache.structure.footer.p1') }}</p>
-            <p>{{ $t('pages.leichteSprache.structure.footer.p2') }}</p>
+
+            <i18n-t
+              keypath="pages.leichteSprache.structure.footer.p1"
+              tag="p"
+            >
+              <br class="leichte-sprache-break" />
+            </i18n-t>
+
+            <i18n-t
+              keypath="pages.leichteSprache.structure.footer.p2"
+              tag="p"
+            >
+              <br class="leichte-sprache-break" />
+            </i18n-t>
           </div>
 
           <!-- Zoom instruction -->
@@ -935,7 +1217,13 @@
             <h3>
               {{ $t('pages.leichteSprache.structure.zoomInstruction.h3') }}
             </h3>
-            <p>{{ $t('pages.leichteSprache.structure.zoomInstruction.p') }}</p>
+
+            <i18n-t
+              keypath="pages.leichteSprache.structure.zoomInstruction.p"
+              tag="p"
+            >
+              <br class="leichte-sprache-break" />
+            </i18n-t>
           </div>
         </div>
       </section>
@@ -945,20 +1233,74 @@
         <h2>{{ $t('pages.leichteSprache.accessibility.h2') }}</h2>
 
         <div class="section-content">
-          <p>{{ $t('pages.leichteSprache.accessibility.p1') }}</p>
-          <p>{{ $t('pages.leichteSprache.accessibility.p2') }}</p>
-          <p>{{ $t('pages.leichteSprache.accessibility.p3') }}</p>
-          <p>{{ $t('pages.leichteSprache.accessibility.p4') }}</p>
+          <i18n-t
+            keypath="pages.leichteSprache.accessibility.p1"
+            tag="p"
+          >
+            <br class="leichte-sprache-break" />
+          </i18n-t>
+
+          <i18n-t
+            keypath="pages.leichteSprache.accessibility.p1"
+            tag="p"
+          >
+            <br class="leichte-sprache-break" />
+          </i18n-t>
+
+          <i18n-t
+            keypath="pages.leichteSprache.accessibility.p2"
+            tag="p"
+          >
+            <br class="leichte-sprache-break" />
+          </i18n-t>
+
+          <i18n-t
+            keypath="pages.leichteSprache.accessibility.p3"
+            tag="p"
+          >
+            <br class="leichte-sprache-break" />
+          </i18n-t>
+
+          <i18n-t
+            keypath="pages.leichteSprache.accessibility.p4"
+            tag="p"
+          >
+            <br class="leichte-sprache-break" />
+          </i18n-t>
 
           <ul>
-            <li>{{ $t('pages.leichteSprache.accessibility.ul.li1') }}</li>
-            <li>{{ $t('pages.leichteSprache.accessibility.ul.l2') }}</li>
-            <li>{{ $t('pages.leichteSprache.accessibility.ul.l3') }}</li>
+            <i18n-t
+              keypath="pages.leichteSprache.accessibility.ul.li1"
+              tag="li"
+            >
+              <br class="leichte-sprache-break" />
+            </i18n-t>
+
+            <i18n-t
+              keypath="pages.leichteSprache.accessibility.ul.l2"
+              tag="li"
+            >
+              <br class="leichte-sprache-break" />
+            </i18n-t>
+
+            <i18n-t
+              keypath="pages.leichteSprache.accessibility.ul.l3"
+              tag="li"
+            >
+              <br class="leichte-sprache-break" />
+            </i18n-t>
           </ul>
 
           <div class="accessibility-subsection">
             <h3>{{ $t('pages.leichteSprache.accessibility.problems.h3') }}</h3>
-            <p>{{ $t('pages.leichteSprache.accessibility.problems.p1') }}</p>
+
+            <i18n-t
+              keypath="pages.leichteSprache.accessibility.problems.p1"
+              tag="p"
+            >
+              <br class="leichte-sprache-break" />
+            </i18n-t>
+
             <div class="problems-contact">
               <span>
                 {{
@@ -995,8 +1337,20 @@
             <h3>
               {{ $t('pages.leichteSprache.accessibility.arbitration.h3') }}
             </h3>
-            <p>{{ $t('pages.leichteSprache.accessibility.arbitration.p1') }}</p>
-            <p>{{ $t('pages.leichteSprache.accessibility.arbitration.p2') }}</p>
+
+            <i18n-t
+              keypath="pages.leichteSprache.accessibility.arbitration.p1"
+              tag="p"
+            >
+              <br class="leichte-sprache-break" />
+            </i18n-t>
+
+            <i18n-t
+              keypath="pages.leichteSprache.accessibility.arbitration.p2"
+              tag="p"
+            >
+              <br class="leichte-sprache-break" />
+            </i18n-t>
 
             <address>
               <span>{{
@@ -1062,16 +1416,16 @@
 </template>
 
 <style scoped>
+  .leichte-sprache-break {
+    @media (max-width: 390px) {
+      display: none;
+    }
+  }
+
   article {
     display: flex;
     flex-direction: column;
     gap: var(--space-l-xl);
-  }
-
-  p,
-  span,
-  li {
-    max-width: 40ch;
   }
 
   .intro {
@@ -1137,6 +1491,9 @@
   }
 
   .image-description {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
     width: fit-content;
     padding: var(--space-s-m);
     margin-top: var(--space-xs);

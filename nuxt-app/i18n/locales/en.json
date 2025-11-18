@@ -635,7 +635,7 @@
       "title": "Leichte Sprache",
       "intro": {
         "span": "Herzlich willkommen!",
-        "p": "Hier finden Sie Informationen in Leichter Sprache über das Projekt „Vom Prater aus“, über die Geschichte des Berliner Praters und den Aufbau dieser Internet-Seite.",
+        "p": "Hier finden Sie Informationen in Leichter Sprache{0} über das Projekt „Vom Prater aus“,{0} über die Geschichte des Berliner Praters{0} und den Aufbau dieser Internet-Seite.",
         "tableOfContents": {
           "title": "Die Informationen in Leichter Sprache haben 4 Teile:",
           "ol": {
@@ -646,12 +646,12 @@
           }
         },
         "capitoBerlin": {
-          "p1": "Der Text in Leichter Sprache ist von capito Berlin. X Personen mit Lernschwierigkeiten haben den Text auf Verständlichkeit geprüft."
+          "p1": "Der Text in Leichter Sprache ist von capito Berlin.{0} X Personen mit Lernschwierigkeiten{0} haben den Text auf Verständlichkeit geprüft."
         }
       },
       "project": {
         "h2": "1. Das Projekt „Vom Prater aus“",
-        "p1": "Der Berliner Prater ist ein besonderer Freizeit-Ort im Berliner Stadt-Teil Prenzlauer Berg. Es gibt ihn schon sehr lange: fast 200 Jahre. Viele Menschen gehen gerne in den Berliner Prater, denn es gibt dort zahlreiche Freizeit-Angebote:",
+        "p1": "Der Berliner Prater ist ein besonderer Freizeit-Ort{0} im Berliner Stadt-Teil Prenzlauer Berg.{0} Es gibt ihn schon sehr lange: fast 200 Jahre.{0} Viele Menschen gehen gerne in den Berliner Prater,{0} denn es gibt dort zahlreiche Freizeit-Angebote:",
         "ul1": {
           "l1": {
             "title": "Biergarten",
@@ -666,11 +666,11 @@
             "description": "Dort finden Theater- und Musik-Aufführungen statt."
           }
         },
-        "p2": "Von 2017 bis 2025 wurden die Gebäude des Berliner Praters saniert. Die Prater Galerie ist seit dem Jahr 2007 und der Theater-Saal seit dem Jahr 2010 wegen Sanierungs-Arbeiten weiterhin geschlossen.",
-        "p3": "Viele Menschen haben schöne Erinnerungen an den Berliner Prater. Die Mitarbeitenden der Prater Galerie und Prater Digital haben deshalb das Online-Archiv „Vom Prater aus“ gestartet. Alle Menschen können ihre Texte und Bilder auf dieser Internet-Seite hochladen. So entsteht ein buntes und vielfältiges Bild von diesem Ort.",
-        "p4": "Auch Sie können dort Ihre Erinnerungen und Fotos mit anderen Menschen teilen. So tragen Sie dazu bei, dass das Projekt ein Erfolg wird und es immer mehr Informationen über den Berliner Prater gibt. Das Team der Prater Galerie und Prater Digital kümmert sich durchgehend um das Projekt.",
-        "p5": "Die Prater Galerie gehört zum Bezirks-Amt Berlin-Pankow und beschäftigt sich mit der Vergangenheit und der Gegenwart des Berliner Praters. Sie zeigt Kunst-Werke aus der heutigen Zeit und aus ihrer eigenen Geschichte.",
-        "p6": "Lena Prents hatte die Idee für das Projekt „Vom Prater aus“. Diese Personen haben mit ihr zusammen das Projekt gestaltet und umgesetzt:",
+        "p2": "Von 2017 bis 2025 wurden die Gebäude{0} des Berliner Praters saniert.{0} Die Prater Galerie ist seit dem Jahr 2007{0} und der Theater-Saal seit dem Jahr 2010{0} wegen Sanierungs-Arbeiten weiterhin geschlossen.",
+        "p3": "Viele Menschen haben schöne Erinnerungen an den Berliner Prater.{0} Die Mitarbeitenden der Prater Galerie und Prater Digital{0} haben deshalb das Online-Archiv „Vom Prater aus“ gestartet.{0} Alle Menschen können ihre Texte und Bilder{0} auf dieser Internet-Seite hochladen.{0} So entsteht ein buntes und vielfältiges Bild von diesem Ort.",
+        "p4": "Auch Sie können dort Ihre Erinnerungen und Fotos{0} mit anderen Menschen teilen.{0} So tragen Sie dazu bei, dass das Projekt ein Erfolg wird{0} und es immer mehr Informationen über den Berliner Prater gibt.{0} Das Team der Prater Galerie und Prater Digital{0} kümmert sich durchgehend um das Projekt.",
+        "p5": "Die Prater Galerie gehört zum Bezirks-Amt Berlin-Pankow{0} und beschäftigt sich mit der Vergangenheit{0} und der Gegenwart des Berliner Praters.{0} Sie zeigt Kunst-Werke aus der heutigen Zeit{0} und aus ihrer eigenen Geschichte.",
+        "p6": "Lena Prents hatte die Idee für das Projekt „Vom Prater aus“.{0} Diese Personen haben mit ihr zusammen{0} das Projekt gestaltet und umgesetzt:",
         "ul2": {
           "li1": "Sigrid Melchior",
           "l2": "Helena Doppelbauer (Projekt-Leitung 2025 bis 2026)",
@@ -678,12 +678,12 @@
           "l4": "Katharina von Hagenow",
           "l5": "Tereza Havlíková (Projekt-Leitung 2023 bis 2024)"
         },
-        "p7": "Das Team bedankt sich besonders bei Mateus Knelsen. Er ist Computer-Programmierer und hat mit seiner Arbeit einen wichtigen Beitrag zum Projekt geleistet.",
+        "p7": "Das Team bedankt sich besonders bei Mateus Knelsen.{0} Er ist Computer-Programmierer und hat mit seiner Arbeit{0} einen wichtigen Beitrag zum Projekt geleistet.",
         "a": "zurück zur Inhalts-Übersicht"
       },
       "history": {
         "h2": "2. Geschichte des Berliner Praters",
-        "p1": "Hier finden Sie Informationen über die wichtigsten Ereignisse im Berliner Prater in diesen Zeit-Abschnitten:",
+        "p1": "Hier finden Sie Informationen{0} über die wichtigsten Ereignisse im Berliner Prater{0} in diesen Zeit-Abschnitten:",
         "ul": {
           "l1": "Die Anfangs-Jahre ab 1837",
           "l2": "Die Jahre von 1940 bis 1989",
@@ -693,23 +693,23 @@
           "h3": "Die Anfangs-Jahre ab 1837",
           "section1": {
             "h4": "Die Berliner Garten-Lokale",
-            "p1": "Am Anfang des 19. Jahrhunderts eröffnen viele Garten-Lokale in und um Berlin. Die Stadt wächst sehr schnell und die meisten Wohnungen sind sehr klein.",
-            "p2": "In den Garten-Lokalen können die Menschen gemeinsam draußen essen und trinken. So erholen sie sich vom anstrengenden Stadt-Leben und von der harten Arbeit. Besonders an schönen Sommer-Wochenenden sind die Garten-Lokale ein beliebtes Ausflugs-Ziel."
+            "p1": "Am Anfang des 19. Jahrhunderts eröffnen{0} viele Garten-Lokale in und um Berlin.{0} Die Stadt wächst sehr schnell{0} und die meisten Wohnungen sind sehr klein.",
+            "p2": "In den Garten-Lokalen können die Menschen{0} gemeinsam draußen essen und trinken.{0} So erholen sie sich vom anstrengenden Stadt-Leben{0} und von der harten Arbeit.{0} Besonders an schönen Sommer-Wochenenden{0} sind die Garten-Lokale ein beliebtes Ausflugs-Ziel."
           },
           "section2": {
             "h4": "Die Eröffnung des Berliner Praters",
-            "p1": "Der Berliner Prater wird im Jahr 1837 eröffnet. Er ist ein Garten-Lokal im heutigen Stadt-Bezirk Prenzlauer Berg. Dort ist damals der Stadt-Rand von Berlin mit viel Natur. Viele unterschiedliche Menschen besuchen den Ort: Beamte, Kaufleute und Dienst-Personal.",
-            "p2": "Schon kurze Zeit später finden drinnen im Saal und draußen auf der Bühne kulturelle Veranstaltungen statt, zum Beispiel Orchester-Konzerte, Theater-Stücke, Tanz-Veranstaltungen und Akrobatik-Vorführungen. Viele bekannte Künstler*innen treten damals im Berliner Prater auf.",
+            "p1": "Der Berliner Prater wird im Jahr 1837 eröffnet.{0} Er ist ein Garten-Lokal{0} im heutigen Stadt-Bezirk Prenzlauer Berg.{0} Dort ist damals der Stadt-Rand von Berlin mit viel Natur.{0} Viele unterschiedliche Menschen besuchen den Ort:{0} Beamte, Kaufleute und Dienst-Personal.",
+            "p2": "Schon kurze Zeit später finden drinnen im Saal{0} und draußen auf der Bühne kulturelle Veranstaltungen statt,{0} zum Beispiel Orchester-Konzerte, Theater-Stücke,{0} Tanz-Veranstaltungen und Akrobatik-Vorführungen.{0} Viele bekannte Künstler*innen treten damals im Berliner Prater auf.",
             "imageDescription": {
               "title": "Bild-Beschreibung",
-              "p1": "Das Bild zeigt eine alte Post-Karte des Berliner Praters. Die Post-Karte ist ungefähr aus dem Jahr 1895. Links oben sieht man das Haus in der Kastanien-Allee 7. Das Haus wurde im Jahr 1856 gebaut. Die Tor-Durchfahrt wurde im Jahr 1875 gebaut. Rechts oben sieht man den Tanz- und Veranstaltungs-Saal. Unten sieht man den Garten mit einer Sommer-Bühne. Dort gibt es auch eine offene Halle. In der Halle gibt es damals Schieß-Stände und Verkaufs-Buden."
+              "p1": "Das Bild zeigt eine alte Post-Karte des Berliner Praters.{0} Die Post-Karte ist ungefähr aus dem Jahr 1895.{0} Links oben sieht man das Haus in der Kastanien-Allee 7.{0} Das Haus wurde im Jahr 1856 gebaut.{0} Die Tor-Durchfahrt wurde im Jahr 1875 gebaut.{0} Rechts oben sieht man den Tanz- und Veranstaltungs-Saal.{0} Unten sieht man den Garten mit einer Sommer-Bühne.{0} Dort gibt es auch eine offene Halle.{0} In der Halle gibt es damals Schieß-Stände und Verkaufs-Buden."
             },
             "imageAlt": "Alte Ansichtskarte des Berliner Praters aus dem Jahr 1895."
           },
           "section3": {
             "h4": "Die Kaffee-Küche",
-            "p1": "Die Berliner Lokale dürfen damals nur Getränke verkaufen, wenn die Stadt-Verwaltung ihnen das erlaubt. Manchmal erlaubt die Stadt-Verwaltung das nicht. Viele Lokale nutzen deshalb einen Trick: Sie bieten ihren Gästen nur heißes Wasser und das Geschirr zum Kaffee-Kochen an. Das Kaffee-Pulver müssen die Gäste selbst mitbringen.",
-            "p2": "Manche Lokale machen das bis in die 1950er-Jahre so. Es gibt in Berlin ein bekanntes Sprichwort dazu: „Der alte Brauch wird nicht gebrochen, hier können Familien Kaffee kochen.“",
+            "p1": "Die Berliner Lokale dürfen damals nur Getränke verkaufen,{0} wenn die Stadt-Verwaltung ihnen das erlaubt.{0} Manchmal erlaubt die Stadt-Verwaltung das nicht.{0} Viele Lokale nutzen deshalb einen Trick:{0} Sie bieten ihren Gästen nur heißes Wasser{0} und das Geschirr zum Kaffee-Kochen an.{0} Das Kaffee-Pulver müssen die Gäste selbst mitbringen.",
+            "p2": "Manche Lokale machen das bis in die 1950er-Jahre so.{0} Es gibt in Berlin ein bekanntes Sprichwort dazu:{0} „Der alte Brauch wird nicht gebrochen,{0} hier können Familien Kaffee kochen.“",
             "imageAlt": "Schwarz-weiß-Fotografie einer weiblichen Bedienung am Ausschank um das Jahr 1900."
           },
           "a": "zurück zur Inhalts-Übersicht"
@@ -718,35 +718,35 @@
           "h3": "Die Jahre von 1940 bis 1989",
           "section1": {
             "h4": "Die Box-Kämpfe im Berliner Prater",
-            "p1": "Nach dem 2. Welt-Krieg mietet der ehemalige Ring-Kämpfer Hans Schwarz den Berliner Prater. Er betreibt dort ein Lokal und organisiert Box-Kämpfe.",
+            "p1": "Nach dem 2. Welt-Krieg mietet{0} der ehemalige Ring-Kämpfer Hans Schwarz den Berliner Prater.{0} Er betreibt dort ein Lokal{0} und organisiert Box-Kämpfe.",
             "imageDescription": {
               "title": "Bild-Beschreibung",
-              "p1": "Am 15. Mai 1949 findet im Prater-Garten ein Box-Kampf zwischen Gustav Scholz und Helmut Hörauf statt. Viele Menschen sehen dabei zu. Gustav Scholz kommt aus dem Berliner Stadt-Teil Prenzlauer Berg und ist zu dem Zeitpunkt 19 Jahre alt. Später wird er Europa-Meister im Boxen. Sein Spitz-Name ist „Bubi“.",
-              "p2": "Gustav Scholz gewinnt diesen Box-Kampf schon in der 1. Runde. Im Bild sieht man Helmut Hörauf auf dem Boden knien. Er ist nach einem Schlag auf die Leber k.o., das bedeutet: Er kann nicht mehr weiterkämpfen."
+              "p1": "Am 15. Mai 1949 findet im Prater-Garten ein Box-Kampf{0} zwischen Gustav Scholz und Helmut Hörauf statt.{0} Viele Menschen sehen dabei zu.{0} Gustav Scholz kommt aus dem Berliner Stadt-Teil Prenzlauer Berg{0} und ist zu dem Zeitpunkt 19 Jahre alt.{0} Später wird er Europa-Meister im Boxen.{0} Sein Spitz-Name ist „Bubi“.",
+              "p2": "Gustav Scholz gewinnt diesen Box-Kampf schon in der 1. Runde.{0} Im Bild sieht man Helmut Hörauf auf dem Boden knien.{0} Er ist nach einem Schlag auf die Leber k.o.,{0} das bedeutet: Er kann nicht mehr weiterkämpfen."
             },
             "imageAlt": "Ein Schiedsrichter und der im Boxring kniende Helmut Hörauf auf einer Schwarz-weiß-Fotografie."
           },
           "section2": {
             "h4": "Das DEFA Premieren-Kino",
-            "p1": "Die Berliner Volks-Bühne führt eine kurze Zeit lang Theater-Stücke im Saal des Berliner Praters auf. Im Jahr 1954 wird der Theater-Saal zu einem Kino-Saal umgebaut. Die Deutsche Film AG (DEFA) nutzt diesen Saal als Premieren-Kino, das heißt: Sie zeigt dort Kino-Filme zum 1. Mal. Die DEFA ist die größte Film-Gesellschaft der DDR.",
-            "p2": "Um das Jahr 1965 wird das Kino technisch verbessert. Trotzdem gibt es das Kino nur noch bis zum Jahr 1966, weil die DEFA ihre Filme ab dann in viel größeren Kinos zeigt.",
+            "p1": "Die Berliner Volks-Bühne führt eine kurze Zeit lang{0} Theater-Stücke im Saal des Berliner Praters auf.{0} Im Jahr 1954 wird der Theater-Saal zu einem Kino-Saal umgebaut.{0} Die Deutsche Film AG (DEFA) nutzt diesen Saal als Premieren-Kino,{0} das heißt: Sie zeigt dort Kino-Filme zum 1. Mal.{0} Die DEFA ist die größte Film-Gesellschaft der DDR.",
+            "p2": "Um das Jahr 1965 wird das Kino technisch verbessert.{0} Trotzdem gibt es das Kino nur noch bis zum Jahr 1966,{0} weil die DEFA ihre Filme ab dann in viel größeren Kinos zeigt.",
             "imageDescription": {
               "title": "Bild-Beschreibung",
-              "p1": "Auf dem Plakat im Bild wird der Film „Ernst Thälmann, Sohn seiner Klasse“ angekündigt. Ernst Thälmann war ein deutscher kommunistischer Politiker. Er wurde im Jahr 1944 von den Nazis ermordet. Die Menschen in der DDR verehrten ihn als mutigen Kämpfer gegen den Faschismus.",
-              "p2": "2 Mitarbeitende des DDR-Betriebs „Aktivist“ unterhalten sich über den Film. Die Sozialistische Einheits-Partei Deutschlands, kurz SED, hat den Film drehen lassen und sehr gelobt. Die SED war die Regierungs-Partei in der DDR, die dort alles bestimmte."
+              "p1": "Auf dem Plakat im Bild wird der Film{0} „Ernst Thälmann, Sohn seiner Klasse“ angekündigt.{0} Ernst Thälmann war ein deutscher kommunistischer Politiker.{0} Er wurde im Jahr 1944 von den Nazis ermordet.{0} Die Menschen in der DDR verehrten ihn{0} als mutigen Kämpfer gegen den Faschismus.",
+              "p2": "2 Mitarbeitende des DDR-Betriebs „Aktivist“{0} unterhalten sich über den Film.{0} Die Sozialistische Einheits-Partei Deutschlands, kurz SED,{0} hat den Film drehen lassen und sehr gelobt.{0} Die SED war die Regierungs-Partei in der DDR,{0} die dort alles bestimmte."
             },
             "imageAlt": "Schwarz-weiß-Fotografie einer mit einem Mann diskutierenden Frau vor dem Kino-Plakat „Ernst Thälmann, Sohn seiner Klasse“."
           },
           "section3": {
             "h4": "Der Umbau des Prater-Gartens",
-            "p1": "Mit der Zeit gehen immer mehr Dinge im Prater-Garten kaputt und niemand kümmert sich darum. Deshalb wird der Prater Garten ab dem Jahr 1958 zu einem Sport- und Kultur-Zentrum für den sogenannten Arbeiter-Bezirk umgebaut. Denn im Stadt-Bezirk Prenzlauer Berg leben zu dieser Zeit hauptsächlich Arbeiter*innen.",
-            "p2": "Freiwillige Helfer*innen des Nationalen Aufbau-Werks arbeiten über 50 Tausend Stunden lang am Umbau mit. So entstehen eine neue große Garten-Bühne mit Tanz-Fläche und neue Wirtschafts-Räume, zum Beispiel Lager-Räume für Lebens-Mittel. Außerdem wird das alte Tanz-Lokal renoviert und umgebaut.",
+            "p1": "Mit der Zeit gehen immer mehr Dinge im Prater-Garten kaputt{0} und niemand kümmert sich darum.{0} Deshalb wird der Prater Garten ab dem Jahr 1958 zu einem Sport-{0} und Kultur-Zentrum für den sogenannten Arbeiter-Bezirk umgebaut.{0} Denn im Stadt-Bezirk Prenzlauer Berg leben zu dieser Zeit{0} hauptsächlich Arbeiter*innen.",
+            "p2": "Freiwillige Helfer*innen des Nationalen Aufbau-Werks{0} arbeiten über 50 Tausend Stunden lang am Umbau mit.{0} So entstehen eine neue große Garten-Bühne mit Tanz-Fläche{0} und neue Wirtschafts-Räume,{0} zum Beispiel Lager-Räume für Lebens-Mittel.{0} Außerdem wird das alte Tanz-Lokal renoviert und umgebaut.",
             "imageAlt": "Schwarz-weiß-Fotografie helfender Personen während der Umbauarbeiten des Pratergartens in den 1950er-Jahren."
           },
           "section4": {
             "h4": "Die Wieder-Eröffnung des Prater-Gartens",
-            "p1": "Im Jahr 1960 wird der Prater-Garten wieder eröffnet. Dafür findet am 1. Mai 1960 ein Volks-Fest statt. Außerdem endet jetzt nach über 100 Jahren die Tradition des Kaffee-Kochens, denn ab jetzt betreibt die Handels-Organisation das Lokal. Dieses staatliche Einzelhandels-Unternehmen gehört der DDR.",
-            "p2": "Der Bezirk Prenzlauer Berg fördert den Prater-Garten. Es gibt dort viele verschiedene Freizeit-Angebote, zum Beispiel",
+            "p1": "Im Jahr 1960 wird der Prater-Garten wieder eröffnet.{0} Dafür findet am 1. Mai 1960 ein Volks-Fest statt.{0} Außerdem endet jetzt nach über 100 Jahren{0} die Tradition des Kaffee-Kochens,{0} denn ab jetzt betreibt die Handels-Organisation das Lokal.{0} Dieses staatliche Einzelhandels-Unternehmen{0} gehört der DDR.",
+            "p2": "Der Bezirk Prenzlauer Berg fördert den Prater-Garten.{0} Es gibt dort viele verschiedene Freizeit-Angebote, zum Beispiel",
             "ul": {
               "li1": "Musik- und Tanz-Veranstaltungen,",
               "li2": "politische Versammlungen der Massen-Organisationen der DDR,",
@@ -757,13 +757,13 @@
           },
           "section5": {
             "h4": "Die Freilicht-Bühne",
-            "p1": "Während der Umbau-Arbeiten des Berliner Praters entsteht auch die Freilicht-Bühne. Sie wird von den Architekten Wladimir Rubinow und Udo Schultz entworfen und im Jahr 1960 eröffnet.",
-            "p2": "Die schwungvolle Gestaltung der Freilicht-Bühne ist typisch für die Architektur der Nachkriegs-Moderne. In der DDR dürfen nur Kultur-Gebäude außergewöhnlich aussehen. Das sieht man auch bei anderen Kultur-Gebäuden von Rubinow, zum Beispiel bei der Stadt-Halle in Karl-Marx-Stadt, heute Chemnitz. Alle anderen Gebäude in der DDR sehen oft einfach und gleich aus, weil sich die Architekt*innen an bestimmte Vorgaben halten müssen.",
-            "p3": "Auf der Freilicht-Bühne findet ein vielfältiges Programm für alle Generationen statt, zum Beispiel Aufführungen von Musik- und Sprech-Theater, Tanz-Vorführungen und Feiern. Wegen der besonderen Form der Bühne kann das Publikum bei den Veranstaltungen oft mitmachen."
+            "p1": "Während der Umbau-Arbeiten des Berliner Praters{0} entsteht auch die Freilicht-Bühne.{0} Sie wird von den Architekten Wladimir Rubinow und Udo Schultz{0} entworfen und im Jahr 1960 eröffnet.",
+            "p2": "Die schwungvolle Gestaltung der Freilicht-Bühne{0} ist typisch für die Architektur der Nachkriegs-Moderne.{0} In der DDR dürfen nur Kultur-Gebäude außergewöhnlich aussehen.{0} Das sieht man auch bei anderen Kultur-Gebäuden von Rubinow,{0} zum Beispiel bei der Stadt-Halle in Karl-Marx-Stadt, heute Chemnitz.{0} Alle anderen Gebäude in der DDR sehen oft einfach und gleich aus,{0} weil sich die Architekt*innen an bestimmte Vorgaben halten müssen.",
+            "p3": "Auf der Freilicht-Bühne findet ein vielfältiges Programm{0} für alle Generationen statt, zum Beispiel{0} Aufführungen von Musik- und Sprech-Theater,{0} Tanz-Vorführungen und Feiern.{0} Wegen der besonderen Form der Bühne{0} kann das Publikum bei den Veranstaltungen oft mitmachen."
           },
           "section6": {
             "h4": "Das Kreiskultur-Haus",
-            "p1": "Nach dem Jahr 1967 wird der Berliner Prater zum Kreiskultur-Haus des Stadt-Bezirks Prenzlauer Berg. Es gibt dort ein abwechslungsreiches Programm für junge und ältere Menschen, zum Beispiel:",
+            "p1": "Nach dem Jahr 1967 wird der Berliner Prater{0} zum Kreiskultur-Haus des Stadt-Bezirks Prenzlauer Berg.{0} Es gibt dort ein abwechslungsreiches Programm{0} für junge und ältere Menschen, zum Beispiel:",
             "ul": {
               "li1": "Jugend-Tanz",
               "li2": "Blasmusik-Konzerte",
@@ -775,17 +775,17 @@
             },
             "imageAlt1": "Schwarz-weiß-Fotografie von auf einer Freilichtbühne tanzenden Paaren.",
             "imageAlt2": "Schwarz-weiß-Fotografie von einem Konzert im Pratergarten mit Publikum.",
-            "p2": "Viele freie Kunst-Gruppen des Bezirks können dort ihr Programm proben und aufführen. Immer mehr Besucher*innen kommen in den Berliner Prater. Mit der Zeit gibt es zu wenig Platz für alle. Deshalb zieht im Jahr 1986 ein großer Teil der Kultur-Arbeit in ein neues Kultur-Zentrum im Ernst-Thälmann-Park um."
+            "p2": "Viele freie Kunst-Gruppen des Bezirks können dort{0} ihr Programm proben und aufführen.{0} Immer mehr Besucher*innen kommen in den Berliner Prater.{0} Mit der Zeit gibt es zu wenig Platz für alle.{0} Deshalb zieht im Jahr 1986 ein großer Teil der Kultur-Arbeit{0} in ein neues Kultur-Zentrum im Ernst-Thälmann-Park um."
           },
           "section7": {
             "h4": "Die erste Galerie am Berliner Prater",
-            "p1": "Im Jahr 1967 eröffnet der Künstler Skip Pahler eine Kunst-Galerie gegenüber vom Berliner Prater. Er findet: Die Menschen in diesem Arbeiter*innen-Bezirk müssen einen besseren Zugang zu Kunst bekommen.",
-            "p2": "Die Galerie zeigt neben den Kunst-Werken auch die Skizzen, das Material und die Werkzeuge der Künstler*innen. Es gibt die Galerie bis zum Jahr 1969.",
+            "p1": "Im Jahr 1967 eröffnet der Künstler Skip Pahler{0} eine Kunst-Galerie gegenüber vom Berliner Prater.{0} Er findet: Die Menschen in diesem Arbeiter*innen-Bezirk{0} müssen einen besseren Zugang zu Kunst bekommen.",
+            "p2": "Die Galerie zeigt neben den Kunst-Werken auch die Skizzen,{0} das Material und die Werkzeuge der Künstler*innen.{0} Es gibt die Galerie bis zum Jahr 1969.",
             "imageAlt": "Farbfotografie einer Person, die ein Ausstellungsplakat der Galerie am Prater hochhält."
           },
           "section8": {
             "h4": "Die kommunale Galerie am Prater",
-            "p1": "Im Jahr 1973 finden die Weltjugend-Festspiele statt. Der Maler Wolfgang Leber eröffnet deshalb die kommunale Galerie am Prater in der Kastanien-Allee 100. Dort können vor allem junge Künstler*innen ihre Werke zeigen und auch verkaufen. Menschen aus der Kultur-Arbeit gestalten sehr frei das abwechslungsreiche Programm in der Galerie.",
+            "p1": "Im Jahr 1973 finden die Weltjugend-Festspiele statt.{0} Der Maler Wolfgang Leber eröffnet deshalb{0} die kommunale Galerie am Prater in der Kastanien-Allee 100.{0} Dort können vor allem junge Künstler*innen ihre Werke zeigen{0} und auch verkaufen.{0} Menschen aus der Kultur-Arbeit gestalten sehr frei{0} das abwechslungsreiche Programm in der Galerie.",
             "imageAlt": "Farbfotografie des Berliner Praters."
           },
           "a": "zurück zur Inhalts-Übersicht"
@@ -794,16 +794,16 @@
           "h3": "Die Jahre von 1989 bis 2007",
           "section1": {
             "h4": "Bau-Arbeiten nach der Wende",
-            "p1": "Im Jahr 1989 gibt es eine friedliche Revolution. Die Machthaber der DDR müssen die Grenze zu West-Deutschland öffnen. Deutschland wird wieder ein vereintes Land. Im Berliner Prater finden jetzt viele Veranstaltungen statt mit Kultur-Schaffenden aus Ost- und West-Berlin.",
-            "p2": "Aber der Prater ist in sehr schlechtem Zustand und muss dringend renoviert werden. Das kostet viel Geld. Deshalb gibt es viele Diskussionen, ob er an private Firmen verkauft werden soll.",
-            "p3": "Dann wird entschieden: Der Prater soll weiter der Stadt Berlin gehören. Es beginnen lange Bau-Arbeiten und der Prater bleibt für mehrere Jahre geschlossen.",
-            "p4": "Frank Castorf ist Anfang der 1990er-Jahre der Leiter der Berliner Volks-Bühne. Er möchte den Prater-Saal für Theater-Aufführungen nutzen. Jetzt gehen die Bau-Arbeiten schneller voran. Ab dem Jahr 1995 können die Besucher*innen Theater-Stücke der Volks-Bühne im Prater-Saal sehen."
+            "p1": "Im Jahr 1989 gibt es eine friedliche Revolution.{0} Die Machthaber der DDR müssen die Grenze zu West-Deutschland öffnen.{0} Deutschland wird wieder ein vereintes Land.{0} Im Berliner Prater finden jetzt viele Veranstaltungen statt{0} mit Kultur-Schaffenden aus Ost- und West-Berlin.",
+            "p2": "Aber der Prater ist in sehr schlechtem Zustand{0} und muss dringend renoviert werden.{0} Das kostet viel Geld.{0} Deshalb gibt es viele Diskussionen,{0} ob er an private Firmen verkauft werden soll.",
+            "p3": "Dann wird entschieden:{0} Der Prater soll weiter der Stadt Berlin gehören.{0} Es beginnen lange Bau-Arbeiten{0} und der Prater bleibt für mehrere Jahre geschlossen.",
+            "p4": "Frank Castorf ist Anfang der 1990er-Jahre{0} der Leiter der Berliner Volks-Bühne.{0} Er möchte den Prater-Saal für Theater-Aufführungen nutzen.{0} Jetzt gehen die Bau-Arbeiten schneller voran.{0} Ab dem Jahr 1995 können die Besucher*innen{0} Theater-Stücke der Volks-Bühne im Prater-Saal sehen."
           },
           "section2": {
             "h4": "Die Aktion „Chance 2000“",
-            "p1": "Im März 1998 findet im Prater die erste Veranstaltung der Aktion „Chance 2000“ statt. Der Aktions-Künstler Christoph Schlingensief hat sie gestartet.",
-            "p2": "Zur gleichen Zeit wird im Prater ein Zirkus-Zelt aufgebaut. Dort gründet Schlingensief die Partei „Chance 2000“. Er und die anderen Mitglieder nennen sie auch „Partei der letzten Chance“. Viele Menschen helfen Schlingensief bei der Gründung der Partei.",
-            "p3": "Außerdem gibt es im Prater ein Zelt-Lager mit dem Namen „Hotel Prora“. Im Mai können dort Menschen 9 Tage lang übernachten. Die Menschen sollen dort",
+            "p1": "Im März 1998 findet im Prater die erste Veranstaltung{0} der Aktion „Chance 2000“ statt.{0} Der Aktions-Künstler Christoph Schlingensief hat sie gestartet.",
+            "p2": "Zur gleichen Zeit wird im Prater ein Zirkus-Zelt aufgebaut.{0} Dort gründet Schlingensief die Partei „Chance 2000“.{0} Er und die anderen Mitglieder nennen sie auch „Partei der letzten Chance“.{0} Viele Menschen helfen Schlingensief{0} bei der Gründung der Partei.",
+            "p3": "Außerdem gibt es im Prater ein Zelt-Lager{0} mit dem Namen „Hotel Prora“.{0} Im Mai können dort Menschen 9 Tage lang übernachten.{0} Die Menschen sollen dort:",
             "ul": {
               "li1": "ausruhen und Sport machen,",
               "li2": "den Alltag vergessen",
@@ -812,22 +812,22 @@
           },
           "section3": {
             "h4": "Der „Bastard Club“",
-            "p1": "Zwischen den Jahren 1999 und 2007 gibt es im Berliner Prater auch den „Bastard Club“. Der Betreiber des Clubs hat auch den Club „Maria am Ostbahnhof“ mitgegründet. Der „Bastard Club“ ist viel kleiner als der Club „Maria am Ostbahnhof“.",
+            "p1": "Zwischen den Jahren 1999 und 2007{0} gibt es im Berliner Prater auch den „Bastard Club“.{0} Der Betreiber des Clubs hat auch den Club{0} „Maria am Ostbahnhof“ mitgegründet.{0} Der „Bastard Club“ ist viel kleiner als der Club „Maria am Ostbahnhof“.",
             "p2": {
-              "text": "Viele verschiedene Menschen gehen in den „Bastard-Club“: Kultur-Produzent*innen, frühere Besucher*innen vom Prater und BIPoC-Künstler*innen. Das sind Menschen, die Rassismus und Diskriminierung erfahren haben und die sich dagegen einsetzen. BIPoC ist die Abkürzung von {b}lack, {i}ndigenous und {p}eople of {c}olour. Das ist Englisch und bedeutet „Menschen mit schwarzer Hautfarbe, Menschen der ursprünglichen Bevölkerung und Menschen mit nicht-weißer Hautfarbe“.",
+              "text": "Viele verschiedene Menschen gehen in den „Bastard-Club“:{lb} Kultur-Produzent*innen, frühere Besucher*innen vom Prater{lb} und BIPoC-Künstler*innen.{lb} Das sind Menschen, die Rassismus und Diskriminierung erfahren haben{lb} und die sich dagegen einsetzen.{lb} BIPoC ist die Abkürzung von {b}lack, {i}ndigenous{0} und {p}eople of {c}olour.{lb} Das ist Englisch und bedeutet „Menschen mit schwarzer Hautfarbe,{lb} Menschen der ursprünglichen Bevölkerung{lb} und Menschen mit nicht-weißer Hautfarbe“.",
               "b": "B",
               "i": "I",
               "p": "P",
               "c": "C"
             },
-            "p3": "Unter anderem legt die Gruppe Femmes With Fatal Breaks Musik im „Bastard Club“ auf. Der Name ist eine Mischung aus Französisch und Englisch und bedeutet so viel wie „Frauen mit krassen Übergängen“. In der Gruppe sind nur Frauen und Menschen, die sich als Frauen fühlen. Ihre Auftritte heißen „Vollversammlung“.",
+            "p3": "Unter anderem legt die Gruppe Femmes With Fatal Breaks{0} Musik im „Bastard Club“ auf.{0} Der Name ist eine Mischung aus Französisch und Englisch{0} und bedeutet so viel wie „Frauen mit krassen Übergängen“.{0} In der Gruppe sind nur Frauen und Menschen,{0} die sich als Frauen fühlen.{0} Ihre Auftritte heißen „Vollversammlung“.",
             "imageAlt": "Plakat zur ersten Geburtstagsfeier des Bastard Clubs mit dem Bild von vier jungen Frauen, die eine Torte mit der Aufschrift \"Femmes with fatal breaks\" in die Kamera halten."
           },
           "section4": {
             "h4": "Die Galerie im Prater",
-            "p1": "Im Jahr 2005 wird die Kastanien-Allee 100 saniert. Deshalb muss die Galerie am Prater ausziehen. Sie zieht in eines der Berliner-Prater-Gebäude gegenüber. Die erste Ausstellung an dem neuen Ort heißt „jetzt hier!“. In den folgenden 2 Jahren finden dort noch 23 Ausstellungen statt.",
-            "p2": "Im Jahr 2007 wird der Berliner Prater saniert und die Galerie am Prater schließt während der Sanierungs-Arbeiten. Die Galerie am Prater hat bis dahin insgesamt 328 Ausstellungen gezeigt.",
-            "imageAlt": "Fehlt"
+            "p1": "Im Jahr 2005 wird die Kastanien-Allee 100 saniert.{0} Deshalb muss die Galerie am Prater ausziehen.{0} Sie zieht in eines der Berliner-Prater-Gebäude gegenüber.{0} Die erste Ausstellung an dem neuen Ort heißt „jetzt hier!“.{0} In den folgenden 2 Jahren finden dort noch 23 Ausstellungen statt.",
+            "p2": "Im Jahr 2007 wird der Berliner Prater saniert{0} und die Galerie am Prater schließt während der Sanierungs-Arbeiten.{0} Die Galerie am Prater hat bis dahin{0} insgesamt 328 Ausstellungen gezeigt.",
+            "imageAlt": "Das Gästebuch der Ausstellung ‚Jetzt hier‘ mit aufgeschlagener erster Seite."
           },
           "a": "zurück zur Inhalts-Übersicht"
         }
@@ -839,7 +839,7 @@
           "logo": {
             "span1": "Ganz oben links ist immer dieses Logo:",
             "imageAlt": "Logo aus rot-gelb-grünen, im Kreis angeordneten Formen auf hellgelbem Hintergrund, rechts darunter steht \"Vom Prater aus\".",
-            "span2": "Dort kommen Sie zur Start-Seite. Sie verlassen dann den Leichte-Sprache-Bereich."
+            "span2": "Dort kommen Sie zur Start-Seite.{0} Sie verlassen dann den Leichte-Sprache-Bereich."
           },
           "menu": {
             "span1": "Ganz oben rechts ist immer dieses Menü:",
@@ -852,15 +852,15 @@
               },
               "l2": {
                 "title": "Über den Berliner Prater",
-                "description": "Dort finden Sie Informationen über den Berliner Prater, zum Beispiel über seine Geschichte."
+                "description": "Dort finden Sie Informationen über den Berliner Prater,{0} zum Beispiel über seine Geschichte."
               },
               "l3": {
                 "title": "Erinnerungen entdecken",
-                "description": "Dort finden Sie die persönlichen Erinnerungen von anderen Menschen und alte Fotos vom Berliner Prater."
+                "description": "Dort finden Sie die persönlichen Erinnerungen von anderen Menschen{0} und alte Fotos vom Berliner Prater."
               },
               "l4": {
                 "title": "Schreibe deine Erinnerung",
-                "description": "Dort können Sie Ihre persönlichen Erinnerungen aufschreiben. Mehr dazu erfahren Sie weiter unten im Text."
+                "description": "Dort können Sie Ihre persönlichen Erinnerungen aufschreiben.{0} Mehr dazu erfahren Sie weiter unten im Text."
               },
               "l5": {
                 "title": "Über das Projekt",
@@ -868,89 +868,91 @@
               },
               "l6": {
                 "title": "Datenschutzerklärung",
-                "description": "Die Internet-Seite sammelt bestimmte Daten, zum Beispiel über Ihren Internet-Browser. Dort erfahren Sie, wie Ihre Daten verwendet werden."
+                "description": "Die Internet-Seite sammelt bestimmte Daten,{0} zum Beispiel über Ihren Internet-Browser.{0} Dort erfahren Sie, wie Ihre Daten verwendet werden."
               },
               "l7": {
                 "title": "Nutzungsbedingungen",
-                "description": "Dort erfahren Sie die Bedingungen, um persönliche Erinnerungen auf dieser Internet-Seite veröffentlichen zu können."
+                "description": "Dort erfahren Sie die Bedingungen, um persönliche Erinnerungen{0} auf dieser Internet-Seite veröffentlichen zu können."
               },
               "l8": {
                 "title": "Erklärung zur Barrierefreiheit",
                 "description": {
-                  "text": "Dort geht es um die Zugänglichkeit und Nutzbarkeit dieser Internet-Seite für Menschen mit Behinderungen. Mehr erfahren Sie unter {0}.",
+                  "text": "Dort geht es um die Zugänglichkeit und Nutzbarkeit{lb} dieser Internet-Seite für Menschen mit Behinderungen.{lb} Mehr erfahren Sie unter {link}.",
                   "link": "3. Erklärung zur Barriere-Freiheit."
                 }
               },
               "l9": {
                 "title": "Leichte Sprache",
-                "description": "Dort finden Sie Informationen in Leichter Sprache. Hier befinden Sie sich gerade."
+                "description": "Dort finden Sie Informationen in Leichter Sprache.{0} Hier befinden Sie sich gerade."
               },
               "l10": {
                 "title": "DGS",
-                "description": "Dort finden Sie Videos in Deutscher Gebärden-Sprache über den Berliner Prater und diese Internet-Seite."
+                "description": "Dort finden Sie Videos in Deutscher Gebärden-Sprache{0} über den Berliner Prater und diese Internet-Seite."
               },
               "l11": {
                 "title": "Deutsch",
-                "description": "Dieser Bereich ist schwarz auf hellbraunem Hintergrund und bedeutet: Sie lesen die Internet-Seite auf Deutsch."
+                "description": "Dieser Bereich ist schwarz auf hellbraunem Hintergrund{0} und bedeutet:{0} Sie lesen die Internet-Seite auf Deutsch."
               },
               "l12": {
                 "title": "Englisch",
-                "description": "Dort können Sie die Sprache der Internet-Seite von Deutsch zu Englisch ändern."
+                "description": "Dort können Sie die Sprache der Internet-Seite{0} von Deutsch zu Englisch ändern."
               },
               "l13": {
                 "title": "Größerer Text",
-                "description": "Beim Klick darauf vergrößert sich die Ansicht der Seite. Mehr Informationen zur Einstellung der Seiten-Ansicht finden Sie weiter unten im Text."
+                "description": "Beim Klick darauf vergrößert sich die Ansicht der Seite.{0} Mehr Informationen zur Einstellung der Seiten-Ansicht{0} finden Sie weiter unten im Text."
               }
             }
           }
         },
         "homepage": {
           "h3": "Start-Seite",
-          "p": "Auf der Start-Seite ist immer ein Bild vom Berliner Prater. Das Bild ändert sich regelmäßig, es wechselt. Die Bilder stammen von Nutzer*innen des Online-Archivs „Vom Prater aus“. Beim Klick auf die Bilder kommt man zu den persönlichen Erinnerungen der Nutzer*innen.",
+          "p": "Auf der Start-Seite ist immer ein Bild vom Berliner Prater.{0} Das Bild ändert sich regelmäßig, es wechselt.{0} Die Bilder stammen von Nutzer*innen{0} des Online-Archivs „Vom Prater aus“.{0} Beim Klick auf die Bilder kommt man{0} zu den persönlichen Erinnerungen der Nutzer*innen.",
           "span": "Dann folgen untereinander diese Abschnitte:",
           "ul": {
             "l1": {
               "title": "Ein Ort voller Erinnerungen",
-              "span": "Dort finden Sie diese Schalt-Fläche",
+              "span": "Dort finden Sie diese Schalt-Fläche:",
               "imageAlt": "Schaltfläche mit der Aufschrift \"Erinnerungen entdecken\"",
-              "p": "Beim Klick darauf können Sie die persönlichen Texte von anderen Menschen lesen. Diese Texte gibt es nicht in Leichter Sprache."
+              "p": "Beim Klick darauf können Sie die persönlichen Texte{0} von anderen Menschen lesen.{0} Diese Texte gibt es nicht in Leichter Sprache."
             },
             "l2": {
               "title": "Zur Geschichte des Berliner Praters",
               "span": "Dort finden Sie diese Schalt-Fläche:",
-              "p": "Beim Klick darauf erfahren Sie mehr über die Geschichte des Berliner Praters. Diesen Text gibt es in Leichter Sprache."
+              "imageAlt": "Schaltfläche mit der Aufschrift \"Über den Berliner Prater\"",
+              "p": "Beim Klick darauf erfahren Sie mehr{0} über die Geschichte des Berliner Praters.{0} Diesen Text gibt es in Leichter Sprache."
             },
             "l3": {
               "title": "Erzähle deine Prater Erinnerung",
               "span": "Dort finden Sie diese Schalt-Fläche:",
-              "p": "Beim Klick darauf bekommen Sie die Möglichkeit, Ihre persönliche Erinnerung aufzuschreiben. Dafür müssen Sie unter anderem Ihre E-Mail-Adresse, Ihren Namen und den Titel Ihrer Geschichte angeben.Außerdem müssen Sie verschiedenen Bedingungen zustimmen, zum Beispiel den Nutzungs-Bedingungen der Internet-Seite."
+              "imageAlt": "Schaltfläche mit der Aufschrift \"Schreibe deine Erinnerung\"",
+              "p": "Beim Klick darauf bekommen Sie die Möglichkeit,{0} Ihre persönliche Erinnerung aufzuschreiben.{0} Dafür müssen Sie unter anderem Ihre E-Mail-Adresse,{0} Ihren Namen und den Titel Ihrer Geschichte angeben.{0} Außerdem müssen Sie verschiedenen Bedingungen zustimmen,{0} zum Beispiel den Nutzungs-Bedingungen der Internet-Seite."
             }
           }
         },
         "footer": {
           "h3": "Unterer Seiten-Teil",
-          "p1": "Unten auf der Internet-Seite ist immer ein blauer Kasten. Dort finden Sie die Bereiche aus dem Menü. Außerdem finden Sie dort die E-Mail-Adresse der Prater Galerie und eine kurze Information zum Projekt „Vom Prater aus“.",
-          "p2": "Darunter sind die Logos der Prater-Galerie, der Kommunalen Galerien Berlin und des Hauptstadt-Portals des Landes Berlin. Beim Klick darauf öffnen sich die Internet-Seiten in einem neuen Browser-Tab."
+          "p1": "Unten auf der Internet-Seite ist immer ein blauer Kasten.{0} Dort finden Sie die Bereiche aus dem Menü.{0} Außerdem finden Sie dort die E-Mail-Adresse der Prater Galerie{0} und eine kurze Information zum Projekt „Vom Prater aus“.",
+          "p2": "Darunter sind die Logos der Prater-Galerie,{0} der Kommunalen Galerien Berlin{0} und des Hauptstadt-Portals des Landes Berlin.{0} Beim Klick darauf öffnen sich die Internet-Seiten{0} in einem neuen Browser-Tab."
         },
         "zoomInstruction": {
           "h3": "Seiten-Ansicht ändern",
-          "p": "Sie können die Ansicht der Seite vergrößern. Dafür drücken Sie gleichzeitig die Tasten „Strg“ und „+“.Wenn Sie die Ansicht der Seite verkleinern möchten, dann drücken Sie gleichzeitig die Tasten „Strg“ und „-“. Wenn Sie zur normalen Seiten-Ansicht zurück möchten, dann drücken Sie gleichzeitig die Tasten „Strg“ und „0“."
+          "p": "Sie können die Ansicht der Seite vergrößern.{0} Dafür drücken Sie gleichzeitig die Tasten „Strg“ und „+“.{0} Wenn Sie die Ansicht der Seite verkleinern möchten,{0} dann drücken Sie gleichzeitig die Tasten „Strg“ und „-“.{0} Wenn Sie zur normalen Seiten-Ansicht zurück möchten,{0} dann drücken Sie gleichzeitig die Tasten „Strg“ und „0“."
         }
       },
       "accessibility": {
         "h2": "4. Erklärung zur Barriere-Freiheit",
-        "p1": "Wir wollen unsere Internet-Seite barrierefrei machen. Barriere-Freiheit bedeutet: Alle Menschen sollen unsere Internet-Seite leicht nutzen können, zum Beispiel Menschen mit einer Seh-Behinderung oder mit Lern-Schwierigkeiten. Alle öffentlichen Stellen müssen ihre Internet-Seite barrierefrei machen, zum Beispiel die Polizei und das Ordnungs-Amt.Diese Pflicht gibt es seit dem Jahr 2019.",
-        "p2": "Das Recht auf Barriere-Freiheit steht in diesem Gesetz: Barrierefreie Informations- und Kommunikations-Technik Berlin (BIKTG Bln) Die Regeln für Barriere-Freiheit stehen in diesem Text: Barrierefreie Informations-Technik-Verordnung (BITV)",
-        "p3": "Die Barriere-Freiheit für diese Internet-Seite muss einmal im Jahr geprüft werden. Diese Erklärung ist vom 10. März 2025 und gilt für die Internet-Seite vomprateraus.pratergalerie.de. Das Prüf-Datum darf nicht älter als ein Jahr sein.",
-        "p4": "Das ist das Prüf-Ergebnis zur Barriere-Freiheit: Die Internet-Seite ist teilweise zugänglich. Diese Dinge sind zum Beispiel nicht barrierefrei:",
+        "p1": "Wir wollen unsere Internet-Seite barrierefrei machen.{0} Barriere-Freiheit bedeutet:{0} Alle Menschen sollen unsere Internet-Seite leicht nutzen können,{0} zum Beispiel Menschen mit einer Seh-Behinderung{0} oder mit Lern-Schwierigkeiten.{0} Alle öffentlichen Stellen müssen ihre Internet-Seite barrierefrei machen,{0} zum Beispiel die Polizei und das Ordnungs-Amt.{0} Diese Pflicht gibt es seit dem Jahr 2019.",
+        "p2": "Das Recht auf Barriere-Freiheit steht in diesem Gesetz:{0} Barrierefreie Informations- und Kommunikations-Technik Berlin (BIKTG Bln){0} Die Regeln für Barriere-Freiheit stehen in diesem Text:{0} Barrierefreie Informations-Technik-Verordnung (BITV)",
+        "p3": "Die Barriere-Freiheit für diese Internet-Seite{0} muss einmal im Jahr geprüft werden.{0} Diese Erklärung ist vom 10. März 2025{0} und gilt für die Internet-Seite vomprateraus.pratergalerie.de.{0} Das Prüf-Datum darf nicht älter als ein Jahr sein.",
+        "p4": "Das ist das Prüf-Ergebnis zur Barriere-Freiheit:{0} Die Internet-Seite ist teilweise zugänglich.{0} Diese Dinge sind zum Beispiel nicht barrierefrei:",
         "ul": {
-          "li1": "Die Bilder und Grafiken der Nutzer*innen des Online-Archivs „Vom Prater aus“ haben keine Text-Beschreibung.",
-          "l2": "Manche Text-Beiträge sind nicht lesbar für Bildschirm-Lese-Programme.",
-          "l3": "Manche Inhalte gibt es nicht in Leichter Sprache und in Deutscher Gebärden-Sprache. Dazu gehören zum Beispiel die Erinnerungen der Nutzer*innen des Online-Archivs „Vom Prater aus“."
+          "li1": "Die Bilder und Grafiken der Nutzer*innen{0} des Online-Archivs „Vom Prater aus“ haben keine Text-Beschreibung.",
+          "l2": "Manche Text-Beiträge sind nicht lesbar{0} für Bildschirm-Lese-Programme.",
+          "l3": "Manche Inhalte gibt es nicht in Leichter Sprache{0} und in Deutscher Gebärden-Sprache.{0} Dazu gehören zum Beispiel die Erinnerungen{0} der Nutzer*innen des Online-Archivs „Vom Prater aus“."
         },
         "problems": {
           "h3": "Probleme melden",
-          "p1": "Haben Sie Probleme bei der Nutzung dieser Internet-Seite? Dann melden Sie diese Probleme bitte an Katharina von Hagenow.",
+          "p1": "Haben Sie Probleme bei der Nutzung dieser Internet-Seite?{0} Dann melden Sie diese Probleme bitte an Katharina von Hagenow.",
           "phone": {
             "text": "Das ist ihre Telefon-Nummer:",
             "number": "030 90 29 53 832"
@@ -962,8 +964,8 @@
         },
         "arbitration": {
           "h3": "Schlichtungs-Verfahren",
-          "p1": "Sie haben Ihre Probleme mit der Internet-Seite gemeldet und sind nicht zufrieden mit unserer Reaktion? Oder Sie haben 4 Wochen nach Ihrer Meldung noch immer keine Antwort von uns bekommen? Dann können Sie sich beschweren bei der Schlichtungs-Stelle der Landesbeauftragten für digitale Barriere-Freiheit.",
-          "p2": "Die Schlichtungs-Stelle vermittelt bei Problemen zwischen Menschen mit Behinderungen und Bundes-Behörden. Diese Vermittlung nennt man auch Schlichtungs-Verfahren. Das Schlichtungs-Verfahren ist für Sie kostenlos. Das sind die Kontakt-Daten der Schlichtungs-Stelle:",
+          "p1": "Sie haben Ihre Probleme mit der Internet-Seite gemeldet{0} und sind nicht zufrieden mit unserer Reaktion?{0} Oder Sie haben 4 Wochen nach Ihrer Meldung{0} noch immer keine Antwort von uns bekommen?{0} Dann können Sie sich beschweren bei der Schlichtungs-Stelle{0} der Landesbeauftragten für digitale Barriere-Freiheit.",
+          "p2": "Die Schlichtungs-Stelle vermittelt bei Problemen{0} zwischen Menschen mit Behinderungen und Bundes-Behörden.{0} Diese Vermittlung nennt man auch Schlichtungs-Verfahren.{0} Das Schlichtungs-Verfahren ist für Sie kostenlos.{0} Das sind die Kontakt-Daten der Schlichtungs-Stelle:",
           "contact": {
             "organization": "Landesbeauftragte für digitale Barriere-Freiheit",
             "department": "Senatskanzlei | Abteilung 5",
