@@ -1,6 +1,4 @@
 <script setup lang="ts">
-  import { NuxtPicture } from '#components'
-
   const { t } = useI18n()
 
   useHead({
@@ -1449,7 +1447,7 @@
   ol {
     display: flex;
     flex-direction: column;
-    gap: var(--space-xs);
+    gap: var(--space-2xs);
     margin: 0;
   }
 
