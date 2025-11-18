@@ -17,7 +17,9 @@
       <p>{{ $t('pages.leichteSprache.intro.p') }}</p>
 
       <section>
-        <h2>{{ $t('pages.leichteSprache.intro.tableOfContents.title') }}</h2>
+        <span>{{
+          $t('pages.leichteSprache.intro.tableOfContents.title')
+        }}</span>
         <ol>
           <li>
             <a
