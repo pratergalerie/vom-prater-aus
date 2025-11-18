@@ -985,6 +985,7 @@
     },
     "dgs": {
       "title": "Deutsche Gebärdensprache (DGS)",
+      "tableOfContents": "Übersicht",
       "fischSigns": {
         "text": "Die Videos in Gebärdensprache wurden von {0}.",
         "link": {

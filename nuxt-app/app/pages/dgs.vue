@@ -54,11 +54,28 @@
           >{{ $t('pages.dgs.fischSigns.link.text') }}</a
         >
       </i18n-t>
+
+      <nav class="table-of-contents">
+        <h2>{{ t('pages.dgs.tableOfContents') }}</h2>
+        <ol>
+          <li
+            v-for="video in videos"
+            :key="video.key"
+          >
+            <a
+              class="dark"
+              :href="`#${video.key}`"
+              >{{ video.title }}</a
+            >
+          </li>
+        </ol>
+      </nav>
     </section>
 
     <div class="videos-container">
       <section
         v-for="(video, index) in videos"
+        :id="video.key"
         :key="video.key"
         class="video-section"
       >
@@ -95,6 +112,18 @@
     gap: var(--space-l);
   }
 
+  .table-of-contents {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+
+    & ol {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2xs);
+    }
+  }
+
   .videos-container {
     display: flex;
     flex-direction: column;
@@ -105,5 +134,6 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-l);
+    scroll-margin-top: 120px;
   }
 </style>
