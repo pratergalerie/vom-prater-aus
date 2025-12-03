@@ -645,12 +645,12 @@
           }
         },
         "capitoBerlin": {
-          "p1": "Der Text in Leichter Sprache ist von capito Berlin.{0} X Personen mit Lernschwierigkeiten{0} haben den Text auf Verständlichkeit geprüft."
+          "p1": "Der Text in Leichter Sprache ist von capito Berlin.{0} 3 Personen mit Lernschwierigkeiten{0} haben den Text auf Verständlichkeit geprüft."
         }
       },
       "project": {
         "h2": "1. Das Projekt „Vom Prater aus“",
-        "p1": "Der Berliner Prater ist ein besonderer Freizeit-Ort{0} im Berliner Stadt-Teil Prenzlauer Berg.{0} Es gibt ihn schon sehr lange: fast 200 Jahre.{0} Viele Menschen gehen gerne in den Berliner Prater,{0} denn es gibt dort zahlreiche Freizeit-Angebote:",
+        "p1": "Der Berliner Prater ist ein besonderer Freizeit-Ort{0} im Berliner Stadt-Teil Prenzlauer Berg.{0} Es gibt ihn schon fast 200 Jahre.{0} Viele Menschen gehen gerne in den Berliner Prater,{0} denn dort gibt es zahlreiche Freizeit-Angebote:",
         "ul1": {
           "l1": {
             "title": "Biergarten",
@@ -667,7 +667,7 @@
         },
         "p2": "Von 2017 bis 2025 wurden die Gebäude{0} des Berliner Praters saniert.{0} Die Prater Galerie ist seit dem Jahr 2007{0} und der Theater-Saal seit dem Jahr 2010{0} wegen Sanierungs-Arbeiten weiterhin geschlossen.",
         "p3": "Viele Menschen haben schöne Erinnerungen an den Berliner Prater.{0} Die Mitarbeitenden der Prater Galerie und Prater Digital{0} haben deshalb das Online-Archiv „Vom Prater aus“ gestartet.{0} Alle Menschen können ihre Texte und Bilder{0} auf dieser Internet-Seite hochladen.{0} So entsteht ein buntes und vielfältiges Bild von diesem Ort.",
-        "p4": "Auch Sie können dort Ihre Erinnerungen und Fotos{0} mit anderen Menschen teilen.{0} So tragen Sie dazu bei, dass das Projekt ein Erfolg wird{0} und es immer mehr Informationen über den Berliner Prater gibt.{0} Das Team der Prater Galerie und Prater Digital{0} kümmert sich durchgehend um das Projekt.",
+        "p4": "Auch Sie können Ihre Erinnerungen und Fotos{0} hier auf unserer Internet-Seite {0} mit anderen Menschen teilen.{0} So tragen Sie dazu bei, dass das Projekt ein Erfolg wird{0} und es immer mehr Informationen über den Berliner Prater gibt.{0} Das Team der Prater Galerie und Prater Digital{0} kümmert sich durchgehend um das Projekt.",
         "p5": "Die Prater Galerie gehört zum Bezirks-Amt Berlin-Pankow{0} und beschäftigt sich mit der Vergangenheit{0} und der Gegenwart des Berliner Praters.{0} Sie zeigt Kunst-Werke aus der heutigen Zeit{0} und aus ihrer eigenen Geschichte.",
         "p6": "Lena Prents hatte die Idee für das Projekt „Vom Prater aus“.{0} Diese Personen haben mit ihr zusammen{0} das Projekt gestaltet und umgesetzt:",
         "ul2": {
@@ -697,11 +697,11 @@
           },
           "section2": {
             "h4": "Die Eröffnung des Berliner Praters",
-            "p1": "Der Berliner Prater wird im Jahr 1837 eröffnet.{0} Er ist ein Garten-Lokal{0} im heutigen Stadt-Bezirk Prenzlauer Berg.{0} Dort ist damals der Stadt-Rand von Berlin mit viel Natur.{0} Viele unterschiedliche Menschen besuchen den Ort:{0} Beamte, Kaufleute und Dienst-Personal.",
+            "p1": "Der Berliner Prater wird im Jahr 1837 eröffnet.{0} Er ist ein Garten-Lokal{0} im heutigen Stadt-Bezirk Prenzlauer Berg.{0} Der Berliner Prater ist damals am Stadt-Rand von Berlin mit viel Natur.{0} Viele unterschiedliche Menschen besuchen den Ort:{0} Beamte, Kaufleute und Dienst-Personal.",
             "p2": "Schon kurze Zeit später finden drinnen im Saal{0} und draußen auf der Bühne kulturelle Veranstaltungen statt,{0} zum Beispiel Orchester-Konzerte, Theater-Stücke,{0} Tanz-Veranstaltungen und Akrobatik-Vorführungen.{0} Viele bekannte Künstler*innen treten damals im Berliner Prater auf.",
             "imageDescription": {
               "title": "Bild-Beschreibung",
-              "p1": "Das Bild zeigt eine alte Post-Karte des Berliner Praters.{0} Die Post-Karte ist ungefähr aus dem Jahr 1895.{0} Links oben sieht man das Haus in der Kastanien-Allee 7.{0} Das Haus wurde im Jahr 1856 gebaut.{0} Die Tor-Durchfahrt wurde im Jahr 1875 gebaut.{0} Rechts oben sieht man den Tanz- und Veranstaltungs-Saal.{0} Unten sieht man den Garten mit einer Sommer-Bühne.{0} Dort gibt es auch eine offene Halle.{0} In der Halle gibt es damals Schieß-Stände und Verkaufs-Buden."
+              "p1": "Das Bild zeigt eine alte Post-Karte des Berliner Praters.{0} Die Post-Karte ist ungefähr aus dem Jahr 1895.{0} Links oben sieht man das Haus in der Kastanien-Allee 7.{0} Das Haus wurde im Jahr 1856 gebaut.{0} Die Tor-Durchfahrt wurde im Jahr 1875 gebaut.{0} Rechts oben sieht man den Tanz- und Veranstaltungs-Saal.{0} Unten sieht man den Garten mit einer Sommer-Bühne.{0} Im Garten gibt es auch einen überdachten Bereich.{0} Dort gibt es damals Schieß-Stände und Verkaufs-Buden."
             },
             "imageAlt": "Alte Ansichtskarte des Berliner Praters aus dem Jahr 1895."
           },
