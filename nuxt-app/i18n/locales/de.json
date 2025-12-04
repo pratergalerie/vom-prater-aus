@@ -252,7 +252,7 @@
           "button": "Über den Berliner Prater"
         },
         "create": {
-          "title": "Erzähle deine Prater Erinnerung",
+          "title": "Deine Prater-Erinnerung",
           "text": "Es gibt nicht DIE eine Geschichte des Praters. Sie setzt sich aus vielen Geschichten zusammen – aus euren Erinnerungen und Bildern. Teilt sie mit uns!",
           "button": "Schreibe deine Erinnerung"
         }
@@ -720,14 +720,14 @@
             "p1": "Nach dem 2. Welt-Krieg mietet{0} der ehemalige Ring-Kämpfer Hans Schwarz den Berliner Prater.{0} Er betreibt dort ein Lokal{0} und organisiert Box-Kämpfe.",
             "imageDescription": {
               "title": "Bild-Beschreibung",
-              "p1": "Am 15. Mai 1949 findet im Prater-Garten ein Box-Kampf{0} zwischen Gustav Scholz und Helmut Hörauf statt.{0} Viele Menschen sehen dabei zu.{0} Gustav Scholz kommt aus dem Berliner Stadt-Teil Prenzlauer Berg{0} und ist zu dem Zeitpunkt 19 Jahre alt.{0} Später wird er Europa-Meister im Boxen.{0} Sein Spitz-Name ist „Bubi“.",
-              "p2": "Gustav Scholz gewinnt diesen Box-Kampf schon in der 1. Runde.{0} Im Bild sieht man Helmut Hörauf auf dem Boden knien.{0} Er ist nach einem Schlag auf die Leber k.o.,{0} das bedeutet: Er kann nicht mehr weiterkämpfen."
+              "p1": "Am 15. Mai 1949 findet im Prater-Garten ein Box-Kampf{0} zwischen Gustav Scholz und Helmut Hörauf statt.{0} Viele Menschen sehen dabei zu.{0} Gustav Scholz kommt aus dem Berliner Stadt-Teil Prenzlauer Berg{0} und ist zu diesem Zeitpunkt 19 Jahre alt.{0} Später wird er Europa-Meister im Boxen.{0} Sein Spitz-Name ist „Bubi“.",
+              "p2": "Gustav Scholz gewinnt diesen Box-Kampf schon in der 1. Runde.{0} Im Bild sieht man Helmut Hörauf auf dem Boden knien.{0} Er ist nach einem Schlag auf die Leber k.o. gegangen,{0} das bedeutet: Er kann nicht mehr weiterkämpfen."
             },
             "imageAlt": "Ein Schiedsrichter und der im Boxring kniende Helmut Hörauf auf einer Schwarz-weiß-Fotografie."
           },
           "section2": {
             "h4": "Das DEFA Premieren-Kino",
-            "p1": "Die Berliner Volks-Bühne führt eine kurze Zeit lang{0} Theater-Stücke im Saal des Berliner Praters auf.{0} Im Jahr 1954 wird der Theater-Saal zu einem Kino-Saal umgebaut.{0} Die Deutsche Film AG (DEFA) nutzt diesen Saal als Premieren-Kino,{0} das heißt: Sie zeigt dort Kino-Filme zum 1. Mal.{0} Die DEFA ist die größte Film-Gesellschaft der DDR.",
+            "p1": "Die Berliner Volks-Bühne führt eine kurze Zeit lang{0} Theater-Stücke im Saal des Berliner Praters auf.{0} Im Jahr 1954 wird der Theater-Saal zu einem Kino-Saal umgebaut.{0} Die Deutsche Film AG (DEFA) nutzt diesen Saal als Premieren-Kino,{0} das heißt: Sie zeigt dort Kino-Filme zum 1. Mal.{0} Die DEFA ist die größte Film-Gesellschaft der ehemaligen DDR.",
             "p2": "Um das Jahr 1965 wird das Kino technisch verbessert.{0} Trotzdem gibt es das Kino nur noch bis zum Jahr 1966,{0} weil die DEFA ihre Filme ab dann in viel größeren Kinos zeigt.",
             "imageDescription": {
               "title": "Bild-Beschreibung",
@@ -739,7 +739,7 @@
           "section3": {
             "h4": "Der Umbau des Prater-Gartens",
             "p1": "Mit der Zeit gehen immer mehr Dinge im Prater-Garten kaputt{0} und niemand kümmert sich darum.{0} Deshalb wird der Prater Garten ab dem Jahr 1958 zu einem Sport-{0} und Kultur-Zentrum für den sogenannten Arbeiter-Bezirk umgebaut.{0} Denn im Stadt-Bezirk Prenzlauer Berg leben zu dieser Zeit{0} hauptsächlich Arbeiter*innen.",
-            "p2": "Freiwillige Helfer*innen des Nationalen Aufbau-Werks{0} arbeiten über 50 Tausend Stunden lang am Umbau mit.{0} So entstehen eine neue große Garten-Bühne mit Tanz-Fläche{0} und neue Wirtschafts-Räume,{0} zum Beispiel Lager-Räume für Lebens-Mittel.{0} Außerdem wird das alte Tanz-Lokal renoviert und umgebaut.",
+            "p2": "Freiwillige Helfer*innen des Nationalen Aufbau-Werks{0} arbeiten insgesamt über 50 Tausend Stunden lang am Umbau mit.{0} So entstehen eine neue große Garten-Bühne mit Tanz-Fläche{0} und neue Wirtschafts-Räume,{0} zum Beispiel Lager-Räume für Lebens-Mittel.{0} Außerdem wird das alte Tanz-Lokal renoviert und umgebaut.",
             "imageAlt": "Schwarz-weiß-Fotografie helfender Personen während der Umbauarbeiten des Pratergartens in den 1950er-Jahren."
           },
           "section4": {
@@ -749,7 +749,7 @@
             "ul": {
               "li1": "Musik- und Tanz-Veranstaltungen,",
               "li2": "politische Versammlungen der Massen-Organisationen der DDR,",
-              "li3": "Trainings- und Wettkämpfe",
+              "li3": "Training und Sport-Wett-Kämpfe",
               "li4": "und das DEFA-Kino im Kino-Saal."
             },
             "imageAlt": "Schwarz-weiß-Fotografie von an einem Biergartentisch sitzenden Männern."
@@ -767,24 +767,24 @@
               "li1": "Jugend-Tanz",
               "li2": "Blasmusik-Konzerte",
               "li3": "Moden-Schauen",
-              "li4": "Wett-Kämpfe in Judo, Gewicht-Heben und Boxen",
+              "li4": "Wett-Kämpfe im Judo, Gewicht-Heben und Boxen",
               "li5": "Kinder-Programm",
               "li6": "Senioren-Veranstaltungen",
               "li7": "Hausfrauen-Nachmittage"
             },
             "imageAlt1": "Schwarz-weiß-Fotografie von auf einer Freilichtbühne tanzenden Paaren.",
             "imageAlt2": "Schwarz-weiß-Fotografie von einem Konzert im Pratergarten mit Publikum.",
-            "p2": "Viele freie Kunst-Gruppen des Bezirks können dort{0} ihr Programm proben und aufführen.{0} Immer mehr Besucher*innen kommen in den Berliner Prater.{0} Mit der Zeit gibt es zu wenig Platz für alle.{0} Deshalb zieht im Jahr 1986 ein großer Teil der Kultur-Arbeit{0} in ein neues Kultur-Zentrum im Ernst-Thälmann-Park um."
+            "p2": "Viele freie Kunst-Gruppen des Bezirks können dort{0} ihr Programm proben und aufführen.{0} Immer mehr Besucher*innen kommen in den Berliner Prater.{0} Mit der Zeit gibt es zu wenig Platz für alle.{0} Deshalb finden ab dem Jahr 1986 viele Kultur-Veranstaltungen{0} im neuen Kultur-Zentrum im Ernst-Thälmann-Park statt."
           },
           "section7": {
             "h4": "Die erste Galerie am Berliner Prater",
-            "p1": "Im Jahr 1967 eröffnet der Künstler Skip Pahler{0} eine Kunst-Galerie gegenüber vom Berliner Prater.{0} Er findet: Die Menschen in diesem Arbeiter*innen-Bezirk{0} müssen einen besseren Zugang zu Kunst bekommen.",
+            "p1": "Im Jahr 1967 eröffnet der Künstler Skip Pahler{0} eine Kunst-Galerie gegenüber vom Berliner Prater.{0} Er findet: Die Menschen in diesem Arbeiter*innen-Bezirk{0} müssen einen besseren Zugang zur Kunst bekommen.",
             "p2": "Die Galerie zeigt neben den Kunst-Werken auch die Skizzen,{0} das Material und die Werkzeuge der Künstler*innen.{0} Es gibt die Galerie bis zum Jahr 1969.",
             "imageAlt": "Farbfotografie einer Person, die ein Ausstellungsplakat der Galerie am Prater hochhält."
           },
           "section8": {
             "h4": "Die kommunale Galerie am Prater",
-            "p1": "Im Jahr 1973 finden die Weltjugend-Festspiele statt.{0} Der Maler Wolfgang Leber eröffnet deshalb{0} die kommunale Galerie am Prater in der Kastanien-Allee 100.{0} Dort können vor allem junge Künstler*innen ihre Werke zeigen{0} und auch verkaufen.{0} Menschen aus der Kultur-Arbeit gestalten sehr frei{0} das abwechslungsreiche Programm in der Galerie.",
+            "p1": "Im Jahr 1973 finden die Weltjugend-Festspiele statt.{0} Der Maler Wolfgang Leber eröffnet deshalb{0} die kommunale Galerie am Prater in der Kastanien-Allee 100.{0} Dort können vor allem junge Künstler*innen ihre Werke zeigen{0} und auch verkaufen.{0} Menschen aus der Kultur-Arbeit des Bezirks gestalten sehr frei{0} das abwechslungsreiche Programm in der Galerie.",
             "imageAlt": "Farbfotografie des Berliner Praters."
           },
           "a": "zurück zur Inhalts-Übersicht"
@@ -794,7 +794,7 @@
           "section1": {
             "h4": "Bau-Arbeiten nach der Wende",
             "p1": "Im Jahr 1989 gibt es eine friedliche Revolution.{0} Die Machthaber der DDR müssen die Grenze zu West-Deutschland öffnen.{0} Deutschland wird wieder ein vereintes Land.{0} Im Berliner Prater finden jetzt viele Veranstaltungen statt{0} mit Kultur-Schaffenden aus Ost- und West-Berlin.",
-            "p2": "Aber der Prater ist in sehr schlechtem Zustand{0} und muss dringend renoviert werden.{0} Das kostet viel Geld.{0} Deshalb gibt es viele Diskussionen,{0} ob er an private Firmen verkauft werden soll.",
+            "p2": "Aber der Prater ist in einem sehr schlechten Zustand{0} und muss dringend renoviert werden.{0} Das kostet viel Geld.{0} Deshalb gibt es viele Diskussionen,{0} ob er an private Firmen verkauft werden soll.",
             "p3": "Dann wird entschieden:{0} Der Prater soll weiter der Stadt Berlin gehören.{0} Es beginnen lange Bau-Arbeiten{0} und der Prater bleibt für mehrere Jahre geschlossen.",
             "p4": "Frank Castorf ist Anfang der 1990er-Jahre{0} der Leiter der Berliner Volks-Bühne.{0} Er möchte den Prater-Saal für Theater-Aufführungen nutzen.{0} Jetzt gehen die Bau-Arbeiten schneller voran.{0} Ab dem Jahr 1995 können die Besucher*innen{0} Theater-Stücke der Volks-Bühne im Prater-Saal sehen."
           },
