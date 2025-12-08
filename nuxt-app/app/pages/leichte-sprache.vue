@@ -676,13 +676,6 @@
               </i18n-t>
 
               <i18n-t
-                keypath="pages.leichteSprache.history.year1989.section1.p1"
-                tag="p"
-              >
-                <br class="leichte-sprache-break" />
-              </i18n-t>
-
-              <i18n-t
                 keypath="pages.leichteSprache.history.year1989.section1.p2"
                 tag="p"
               >
@@ -708,13 +701,6 @@
               <h4>
                 {{ $t('pages.leichteSprache.history.year1989.section2.h4') }}
               </h4>
-
-              <i18n-t
-                keypath="pages.leichteSprache.history.year1989.section2.p1"
-                tag="p"
-              >
-                <br class="leichte-sprache-break" />
-              </i18n-t>
 
               <i18n-t
                 keypath="pages.leichteSprache.history.year1989.section2.p1"
@@ -1231,13 +1217,6 @@
         <h2>{{ $t('pages.leichteSprache.accessibility.h2') }}</h2>
 
         <div class="section-content">
-          <i18n-t
-            keypath="pages.leichteSprache.accessibility.p1"
-            tag="p"
-          >
-            <br class="leichte-sprache-break" />
-          </i18n-t>
-
           <i18n-t
             keypath="pages.leichteSprache.accessibility.p1"
             tag="p"
