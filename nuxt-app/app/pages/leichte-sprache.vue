@@ -1421,6 +1421,7 @@
     flex-direction: column;
     gap: var(--space-xs);
     padding-left: var(--space-m);
+    margin: 0;
   }
 
   ol {
@@ -1439,7 +1440,7 @@
   section {
     display: flex;
     flex-direction: column;
-    gap: var(--space-m-l);
+    gap: var(--space-s-m);
     scroll-margin-top: 120px;
   }
 
