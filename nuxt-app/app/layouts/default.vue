@@ -1,5 +1,12 @@
 <script setup lang="ts">
   const { isOpen } = useMenu()
+  const route = useRoute()
+
+  // Pages where cutouts background should be hidden
+  const excludePageList = ['/leichte-sprache']
+
+  // Check if current page should show cutouts
+  const showCutouts = computed(() => !excludePageList.includes(route.path))
 
   // Setup body scroll lock when menu is open
   watch(isOpen, (open) => {
@@ -18,7 +25,7 @@
       <slot />
     </main>
     <Menu />
-    <CutoutsBackground />
+    <CutoutsBackground v-if="showCutouts" />
     <Footer />
   </div>
 </template>
