@@ -1419,7 +1419,7 @@
   ul {
     display: flex;
     flex-direction: column;
-    gap: var(--space-xs);
+    gap: var(--space-2xs);
     padding-left: var(--space-m);
     margin: 0;
   }
