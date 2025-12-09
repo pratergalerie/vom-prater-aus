@@ -6,7 +6,7 @@
     year: string
     quote: string | null
     author: string
-    caption: string
+    caption?: string
   }
 
   const _props = defineProps<Slide>()
@@ -22,7 +22,7 @@
       :img-attrs="{ style: 'aspect-ratio: 16/9; filter: grayscale(100%);' }"
       :src="img.src"
       :alt="img.alt"
-      :caption="`© ${caption}`"
+      :caption="`© ${caption ?? author}`"
     />
 
     <div class="info-quote">

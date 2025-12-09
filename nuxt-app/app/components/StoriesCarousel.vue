@@ -19,7 +19,7 @@
         return undefined
       }
 
-      const coverImageCaption = story.sections[0]?.image?.caption ?? ''
+      const coverImageCaption = story.sections[0]?.image?.caption
 
       return {
         id: story.documentId,
@@ -32,7 +32,7 @@
         year: story.year.toString(),
         quote: story.quote,
         author: story.authorName,
-        caption: coverImageCaption,
+        caption: coverImageCaption ?? story.authorName,
       }
     })
     .filter((story) => story !== undefined)
