@@ -69,7 +69,7 @@
             text-position="inline"
             :src="getStrapiImageUrl(coverSection.image.url)"
             :alt="coverSection.image.alternativeText ?? ''"
-            :caption="`© ${storyData.authorName}`"
+            :caption="`© ${coverSection.image.caption ?? ''}`"
           />
         </template>
 
@@ -105,7 +105,7 @@
             <CaptionImage
               :src="getStrapiImageUrl(section.image.url)"
               :alt="section.image.alternativeText ?? ''"
-              :caption="`© ${storyData.authorName}`"
+              :caption="`© ${section.image.caption ?? ''}`"
             />
           </section>
 
@@ -128,7 +128,7 @@
                 }"
                 :src="getStrapiImageUrl(section.image.url)"
                 :alt="section.image.alternativeText ?? ''"
-                :caption="`© ${storyData.authorName}`"
+                :caption="`© ${section.image.caption ?? ''}`"
               />
               <span>{{ section.text }}</span>
             </p>

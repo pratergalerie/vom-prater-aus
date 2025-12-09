@@ -19,6 +19,8 @@
         return undefined
       }
 
+      const coverImageCaption = story.sections[0]?.image?.caption ?? ''
+
       return {
         id: story.documentId,
         img: {
@@ -30,6 +32,7 @@
         year: story.year.toString(),
         quote: story.quote,
         author: story.authorName,
+        caption: coverImageCaption,
       }
     })
     .filter((story) => story !== undefined)
@@ -70,6 +73,7 @@
             :year="slide.year"
             :quote="slide.quote"
             :author="slide.author"
+            :caption="slide.caption"
           />
         </div>
       </div>
