@@ -988,9 +988,9 @@
       "title": "Deutsche Gebärdensprache (DGS)",
       "tableOfContents": "Übersicht",
       "fischSigns": {
-        "text": "Die Videos in Gebärdensprache wurden von {0}.",
+        "text": "Die Videos in Gebärdensprache wurden von {0} erstellt.",
         "link": {
-          "text": "FISCHSIGNS - Agentur für Gebärdensprachvideos erstellt",
+          "text": "FISCHSIGNS - Agentur für Gebärdensprachvideos",
           "url": "https://www.fischsigns.de"
         }
       },
