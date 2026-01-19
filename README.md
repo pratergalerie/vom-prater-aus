@@ -54,7 +54,7 @@ A bilingual (English/German) storytelling platform dedicated to the [Berliner Pr
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/your-username/vom-prater-aus.git
+   git clone git@github.com:pratergalerie/vom-prater-aus.git
    cd vom-prater-aus
    ```
 
