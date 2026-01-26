@@ -44,6 +44,7 @@ export const useGetStories = async (options?: Options) => {
           // language: { $eq: locale.value },
         },
         sort: ['createdAt:asc'],
+        // @ts-expect-error: strapi's type system can't narrow this down currently
         populate: {
           sections: { populate: '*' },
           keywords: { fields: ['name', 'documentId'] },
