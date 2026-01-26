@@ -16,3 +16,6 @@ initial-data/*
 
 # Database backups
 /backups/
+
+# Private project management
+TODO
