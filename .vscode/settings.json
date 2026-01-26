@@ -5,7 +5,7 @@
   "i18n-ally.keystyle": "nested",
   "i18n-ally.sourceLanguage": "de",
   "stylelint.configBasedir": "nuxt-app",
-  "stylelint.configFile": "nuxt-app/.stylelintrc.js",
+  "stylelint.configFile": ".stylelintrc.js",
   "stylelint.validate": ["css", "vue", "scss"],
   "cSpell.language": "en,de-DE",
   "cSpell.words": [

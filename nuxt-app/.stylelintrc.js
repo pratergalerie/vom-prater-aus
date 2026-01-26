@@ -66,7 +66,7 @@ export default {
       {
         importFrom: [
           process.env.STYLELINT_CSS_VARIABLES_PATH ||
-            'nuxt-app/app/assets/css/variables.css',
+            'app/assets/css/variables.css',
         ],
       },
     ],
