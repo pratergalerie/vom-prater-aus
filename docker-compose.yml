@@ -168,7 +168,7 @@ services:
     profiles:
       - dev
     ports:
-      - "8025:8025"
+      - "8027:8027"
       - "1025:1025"
     volumes:
       - mailpit-data:/data
